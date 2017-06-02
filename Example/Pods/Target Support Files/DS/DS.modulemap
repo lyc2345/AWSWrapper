@@ -1,0 +1,6 @@
+framework module DS {
+  umbrella header "DS-umbrella.h"
+
+  export *
+  module * { export * }
+}

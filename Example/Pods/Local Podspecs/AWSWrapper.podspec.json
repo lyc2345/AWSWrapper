@@ -39,6 +39,15 @@
       ],
       "AWSS3": [
 
+      ],
+      "DS": [
+
+      ],
+      "AFNetworking": [
+        "~> 3.0"
+      ],
+      "SAMKeychain": [
+
       ]
     },
     "vendored_frameworks": "AWSWrapper/*.{framework}"

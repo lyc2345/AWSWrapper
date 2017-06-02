@@ -41,6 +41,9 @@ TODO: Add long description of the pod here.
   s.ios.dependency 'AWSDynamoDB', '~> 2.5.7'
   s.ios.dependency 'AWSCore', '~> 2.5.7'
   s.ios.dependency 'AWSS3'
+  s.ios.dependency 'DS'
+  s.ios.dependency 'AFNetworking', '~> 3.0'
+  s.ios.dependency 'SAMKeychain'
 
 
   s.ios.vendored_frameworks = 'AWSWrapper/*.{framework}'

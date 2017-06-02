@@ -30,6 +30,10 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '8.0'
 
+  s.ios.resource_bundles    = {
+  'Resources' => ['AWSWrapper/**/*.{png,storyboard,lproj}']
+  }
+
   s.source_files = 'AWSWrapper/Classes/**/*'
 
   s.ios.dependency 'AWSCognito', '~> 2.5.7'
@@ -37,6 +41,7 @@ TODO: Add long description of the pod here.
   s.ios.dependency 'AWSDynamoDB', '~> 2.5.7'
   s.ios.dependency 'AWSCore', '~> 2.5.7'
   s.ios.dependency 'AWSS3'
+
 
   s.ios.vendored_frameworks = 'AWSWrapper/*.{framework}'
 

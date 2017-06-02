@@ -18,8 +18,12 @@
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "AWSWrapper/Classes/**/*",
   "ios": {
+    "resource_bundles": {
+      "Resources": [
+        "AWSWrapper/**/*.{png,storyboard,lproj}"
+      ]
+    },
     "dependencies": {
       "AWSCognito": [
         "~> 2.5.7"
@@ -38,5 +42,6 @@
       ]
     },
     "vendored_frameworks": "AWSWrapper/*.{framework}"
-  }
+  },
+  "source_files": "AWSWrapper/Classes/**/*"
 }

@@ -7,14 +7,20 @@
 //
 
 #import "AppDelegate.h"
+@import AWSWrapper;
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
-  
+  [[AWSMobileClient sharedInstance] didFinishLaunching: application withOptions: launchOptions];
   
   return YES;
+}
+  
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+  
+  return [[AWSMobileClient sharedInstance] withApplication: application withURL: url withSourceApplication:sourceApplication withAnnotation: annotation];
 }
 
   

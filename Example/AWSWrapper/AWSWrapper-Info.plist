@@ -45,5 +45,84 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>To select a file to upload.</string>
+  <key>NSAppTransportSecurity</key>
+  <dict>
+    <key>NSExceptionDomains</key>
+    <dict>
+      <key>amazonaws.com</key>
+      <dict>
+        <key>NSIncludesSubdomains</key>
+        <true/>
+        <key>NSThirdPartyExceptionMinimumTLSVersion</key>
+        <string>TLSv1.0</string>
+        <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+        <false/>
+      </dict>
+      <key>cloudfront.net</key>
+      <dict>
+        <key>NSIncludesSubdomains</key>
+        <true/>
+        <key>NSThirdPartyExceptionMinimumTLSVersion</key>
+        <string>TLSv1.0</string>
+        <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+        <false/>
+      </dict>
+    </dict>
+  </dict>
+  <key>AWS</key>
+  <dict>
+    <key>IdentityManager</key>
+    <dict>
+      <key>Default</key>
+      <dict/>
+    </dict>
+    <key>DynamoDBObjectMapper</key>
+    <dict>
+      <key>Default</key>
+      <dict>
+        <key>Region</key>
+        <string>us-east-1</string>
+      </dict>
+    </dict>
+    <key>CredentialsProvider</key>
+    <dict>
+      <key>CognitoIdentity</key>
+      <dict>
+        <key>Default</key>
+        <dict>
+          <key>PoolId</key>
+          <string>us-east-1:7d5a9cc2-ed5d-4ed1-ac26-14852b3324cb</string>
+          <key>Region</key>
+          <string>us-east-1</string>
+        </dict>
+      </dict>
+    </dict>
+    <key>Cognito</key>
+    <dict>
+      <key>Default</key>
+      <dict>
+        <key>Region</key>
+        <string>us-east-1</string>
+      </dict>
+    </dict>
+    <key>MobileHub</key>
+    <dict>
+      <key>ProjectClientId</key>
+      <string>MobileHub f1a59118-8508-43c9-b0c9-5c0017ebb1e0 aws-my-sample-app-ios-objc-v0.19</string>
+    </dict>
+    <key>UserFileManager</key>
+    <dict>
+      <key>Default</key>
+      <dict>
+        <key>S3Bucket</key>
+        <string>comick-userfiles-mobilehub-2020998507</string>
+        <key>Region</key>
+        <string>us-east-1</string>
+      </dict>
+    </dict>
+  </dict>
+
 </dict>
 </plist>

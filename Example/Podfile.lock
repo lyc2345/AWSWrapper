@@ -1,0 +1,41 @@
+PODS:
+  - AWSCognito (2.5.7):
+    - AWSCore (= 2.5.7)
+  - AWSCognitoIdentityProvider (2.5.7):
+    - AWSCore (= 2.5.7)
+  - AWSCore (2.5.7)
+  - AWSDynamoDB (2.5.7):
+    - AWSCore (= 2.5.7)
+  - AWSS3 (2.5.7):
+    - AWSCore (= 2.5.7)
+  - AWSWrapper (0.1.0):
+    - AWSCognito (~> 2.5.7)
+    - AWSCognitoIdentityProvider (~> 2.5.7)
+    - AWSCore (~> 2.5.7)
+    - AWSDynamoDB (~> 2.5.7)
+    - AWSS3
+  - Expecta (1.0.5)
+  - Specta (1.0.6)
+
+DEPENDENCIES:
+  - AWSWrapper (from `../`)
+  - Expecta
+  - Specta
+
+EXTERNAL SOURCES:
+  AWSWrapper:
+    :path: ../
+
+SPEC CHECKSUMS:
+  AWSCognito: 833e56f35762648f551ca77f60240a5d7c615e13
+  AWSCognitoIdentityProvider: 7b2ac768763bab6ea57830482267447c792f3358
+  AWSCore: 716d787cde0239b3e92f9b4151c052f55a117703
+  AWSDynamoDB: cd1dc9e938924c65d2af942fdcf560a96724f34d
+  AWSS3: a534d4f617fa1c3bd8f94a8b3bf12d7099536bd9
+  AWSWrapper: f917fc61aad085a788800d4be5e3cc3e7f75545d
+  Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
+  Specta: f506f3a8361de16bc0dcf3b17b75e269072ba465
+
+PODFILE CHECKSUM: 432280f7adc018b39882d2405de05583f8a7fc9a
+
+COCOAPODS: 1.2.1

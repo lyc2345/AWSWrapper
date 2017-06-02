@@ -13,8 +13,7 @@
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F598195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F596195388D20070C39A /* InfoPlist.strings */; };
 		6003F59A195388D20070C39A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F599195388D20070C39A /* main.m */; };
-		6003F59E195388D20070C39A /* QQAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* QQAppDelegate.m */; };
-		6003F5A7195388D20070C39A /* QQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* QQViewController.m */; };
+		6003F59E195388D20070C39A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* AppDelegate.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
 		6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F5AF195388D20070C39A /* XCTest.framework */; };
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
@@ -24,6 +23,7 @@
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		D448698D968525408A367F6F /* Pods_AWSWrapper_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8513427F95F3CFD033FB19C9 /* Pods_AWSWrapper_Example.framework */; };
+		F67524931EE16EA7001C0727 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F67524921EE16EA7001C0727 /* ViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,10 +37,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0B7EDF545D1A9E0717E96FB2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		0B7EDF545D1A9E0717E96FB2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		0B93212247F0EAB40000993D /* Pods_AWSWrapper_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWSWrapper_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DC6037ABCD2ADE584386D8A /* Pods-AWSWrapper_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSWrapper_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AWSWrapper_Tests/Pods-AWSWrapper_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		28B4E683417D0B6C0643B70C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		28B4E683417D0B6C0643B70C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		37A2156AD4709723B94DB48C /* Pods-AWSWrapper_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSWrapper_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-AWSWrapper_Example/Pods-AWSWrapper_Example.release.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* AWSWrapper_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWSWrapper_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -50,10 +50,8 @@
 		6003F597195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6003F599195388D20070C39A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6003F59B195388D20070C39A /* AWSWrapper-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AWSWrapper-Prefix.pch"; sourceTree = "<group>"; };
-		6003F59C195388D20070C39A /* QQAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QQAppDelegate.h; sourceTree = "<group>"; };
-		6003F59D195388D20070C39A /* QQAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QQAppDelegate.m; sourceTree = "<group>"; };
-		6003F5A5195388D20070C39A /* QQViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QQViewController.h; sourceTree = "<group>"; };
-		6003F5A6195388D20070C39A /* QQViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QQViewController.m; sourceTree = "<group>"; };
+		6003F59C195388D20070C39A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		6003F59D195388D20070C39A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		6003F5A8195388D20070C39A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6003F5AE195388D20070C39A /* AWSWrapper_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWSWrapper_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -65,8 +63,10 @@
 		84D339A1B6B02B94CDEC9BBB /* Pods-AWSWrapper_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSWrapper_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AWSWrapper_Example/Pods-AWSWrapper_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		8513427F95F3CFD033FB19C9 /* Pods_AWSWrapper_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWSWrapper_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		B5188F011B4E597A16A63948 /* AWSWrapper.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = AWSWrapper.podspec; path = ../AWSWrapper.podspec; sourceTree = "<group>"; };
+		B5188F011B4E597A16A63948 /* AWSWrapper.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = AWSWrapper.podspec; path = ../AWSWrapper.podspec; sourceTree = "<group>"; };
 		E64CEB5FC6FE6452E4603179 /* Pods-AWSWrapper_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSWrapper_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AWSWrapper_Tests/Pods-AWSWrapper_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		F67524911EE16EA7001C0727 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		F67524921EE16EA7001C0727 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,11 +132,11 @@
 		6003F593195388D20070C39A /* Example for AWSWrapper */ = {
 			isa = PBXGroup;
 			children = (
-				6003F59C195388D20070C39A /* QQAppDelegate.h */,
-				6003F59D195388D20070C39A /* QQAppDelegate.m */,
+				6003F59C195388D20070C39A /* AppDelegate.h */,
+				6003F59D195388D20070C39A /* AppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
-				6003F5A5195388D20070C39A /* QQViewController.h */,
-				6003F5A6195388D20070C39A /* QQViewController.m */,
+				F67524911EE16EA7001C0727 /* ViewController.h */,
+				F67524921EE16EA7001C0727 /* ViewController.m */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
@@ -394,8 +394,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6003F59E195388D20070C39A /* QQAppDelegate.m in Sources */,
-				6003F5A7195388D20070C39A /* QQViewController.m in Sources */,
+				F67524931EE16EA7001C0727 /* ViewController.m in Sources */,
+				6003F59E195388D20070C39A /* AppDelegate.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,0 +1,6 @@
+framework module AWSWrapper {
+  umbrella header "AWSWrapper-umbrella.h"
+
+  export *
+  module * { export * }
+}

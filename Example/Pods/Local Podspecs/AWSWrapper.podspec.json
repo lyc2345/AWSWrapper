@@ -1,0 +1,42 @@
+{
+  "name": "AWSWrapper",
+  "version": "0.1.0",
+  "summary": "A short description of AWSWrapper.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/lyc2345/AWSWrapper",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "lyc2345": "lyc2345@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/lyc2345/AWSWrapper.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "AWSWrapper/Classes/**/*",
+  "ios": {
+    "dependencies": {
+      "AWSCognito": [
+        "~> 2.5.7"
+      ],
+      "AWSCognitoIdentityProvider": [
+        "~> 2.5.7"
+      ],
+      "AWSDynamoDB": [
+        "~> 2.5.7"
+      ],
+      "AWSCore": [
+        "~> 2.5.7"
+      ],
+      "AWSS3": [
+
+      ]
+    },
+    "vendored_frameworks": "AWSWrapper/*.{framework}"
+  }
+}

@@ -31,12 +31,15 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'AWSWrapper/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'AWSWrapper' => ['AWSWrapper/Assets/*.png']
-  # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.ios.dependency 'AWSCognito', '~> 2.5.7'
+  s.ios.dependency 'AWSCognitoIdentityProvider', '~> 2.5.7'
+  s.ios.dependency 'AWSDynamoDB', '~> 2.5.7'
+  s.ios.dependency 'AWSCore', '~> 2.5.7'
+  s.ios.dependency 'AWSS3'
+
+  s.ios.vendored_frameworks = 'AWSWrapper/*.{framework}'
+
+
+
 end

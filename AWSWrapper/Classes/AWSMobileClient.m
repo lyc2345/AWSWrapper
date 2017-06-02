@@ -12,7 +12,7 @@
 //
 #import "AWSMobileClient.h"
 #import "AWSConfiguration.h"
-#import "AWSMobileHubHelper/AWSMobileHubHelper.h"
+#import <AWSMobileHubHelper/AWSMobileHubHelper.h>
 
 @interface AWSMobileClient ()
 

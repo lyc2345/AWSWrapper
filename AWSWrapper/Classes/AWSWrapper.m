@@ -7,7 +7,7 @@
 //
 
 #import "AWSWrapper.h"
-#import "AWSMobileHubHelper/AWSMobileHubHelper.h"
+#import <AWSMobileHubHelper/AWSMobileHubHelper.h>
 
 @implementation AWSWrapper
   

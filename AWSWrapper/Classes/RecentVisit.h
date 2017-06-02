@@ -13,7 +13,6 @@
 
 @import UIKit;
 #import <AWSDynamoDB/AWSDynamoDB.h>
-#import "NoSQLModelHelpers.h"
 #import "RecordSuitable.h"
 
 NS_ASSUME_NONNULL_BEGIN

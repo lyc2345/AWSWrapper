@@ -15,7 +15,6 @@
 #import "AWSWrapper.h"
 #import "Bookmark.h"
 #import "NoSQLModelHelpers.h"
-#import "NoSQLSampleDataGenerator.h"
 #import "RecentVisit.h"
 #import "RecordSuitable.h"
 

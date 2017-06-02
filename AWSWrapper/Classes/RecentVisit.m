@@ -13,8 +13,6 @@
 
 
 #import "RecentVisit.h"
-#import "NoSQLSampleDataGenerator.h"
-#import <AWSMobileHubHelper/AWSMobileHubHelper.h>
 #import <sys/utsname.h>
 
 

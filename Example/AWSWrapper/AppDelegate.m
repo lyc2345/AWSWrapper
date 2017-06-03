@@ -14,8 +14,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
-  [[AFNetworkReachabilityManager manager] startMonitoring];
+  [[AFNetworkReachabilityManager sharedManager] startMonitoring];
   [AWSLogger defaultLogger].logLevel = AWSLogLevelVerbose;
+  NSLog(@"is online: %@", [AFNetworkReachabilityManager sharedManager].isReachable == YES ? @"YES" : @"NO");
   
   return [[AWSMobileClient sharedInstance] didFinishLaunching: application withOptions: launchOptions];
 }
@@ -27,7 +28,7 @@
 
 -(void)applicationDidEnterBackground:(UIApplication *)application {
   
-  [[AFNetworkReachabilityManager manager] stopMonitoring];
+  [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
 }
 
 

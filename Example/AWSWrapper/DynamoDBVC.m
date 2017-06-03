@@ -7,11 +7,7 @@
 //
 
 #import "DynamoDBVC.h"
-#import "Bookmark.h"
-#import "RecentVisit.h"
-#import "BookmarkManager.h"
-#import "LoginManager.h"
-#import "DSWrapper.h"
+@import AWSWrapper;
 
 NSString *const cellIdentifier = @"cell";
 

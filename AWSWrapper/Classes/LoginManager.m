@@ -16,7 +16,7 @@
 NSString * const __CURRENT_USER = @"__CURRENT_USER";
 NSString * const __USER_LIST		= @"__USER_LIST";
 
-@interface LoginManager ()
+@interface LoginManager () <AWSCognitoUserPoolsSignInHandler>
 
 @property (readonly) NSString *hashPassword;
 @property (nonatomic, strong) NSString *tmpPassword;
@@ -242,7 +242,33 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 	return isQualified;
 }
 
+
+#pragma mark - AWSCognitoUserPoolsSignInHandler
+
+-(void)handleUserPoolSignInFlowStart {
+  
+  NSString *username;
+  NSString *password;
+  
+  if (!self.userPoolSignInFlowStartUserName && !self.userPoolSignInFlowStartPassword) {
+    
+    NSLog(@"handleUserPoolSignInFlowStart is error in function: %s, line: %d", __FUNCTION__, __LINE__);
+    NSLog(@"userPoolSignInFlowStartUserName || userPoolSignInFlowStartPassword is null");
+    username = self.user;
+    password = self.password;
+    
+  } else {
+    username = self.userPoolSignInFlowStartUserName();
+    password = self.userPoolSignInFlowStartPassword();
+  }
+  
+  self.passwordAuthenticationCompletion.result = [[AWSCognitoIdentityPasswordAuthenticationDetails alloc] initWithUsername: username password: password];
+}
+
+
 @end
+
+
 
 #pragma mark - Offline
 
@@ -482,28 +508,6 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 	} else {
 		assert(false);
 	}
-}
-
-#pragma mark - AWSCognitoUserPoolsSignInHandler
-
--(void)handleUserPoolSignInFlowStart {
-
-	NSString *username;
-	NSString *password;
-	
-	if (!self.userPoolSignInFlowStartUserName && !self.userPoolSignInFlowStartPassword) {
-		
-		NSLog(@"handleUserPoolSignInFlowStart is error in function: %s, line: %d", __FUNCTION__, __LINE__);
-		NSLog(@"userPoolSignInFlowStartUserName || userPoolSignInFlowStartPassword is null");
-		username = self.user;
-		password = self.password;
-		
-	} else {
-		username = self.userPoolSignInFlowStartUserName();
-		password = self.userPoolSignInFlowStartPassword();
-	}
-	
-	self.passwordAuthenticationCompletion.result = [[AWSCognitoIdentityPasswordAuthenticationDetails alloc] initWithUsername: username password: password];
 }
 
 #pragma mark - AWSCognitoIdentityInteractiveAuthentication Delegate

@@ -21,9 +21,10 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
-		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		D448698D968525408A367F6F /* Pods_AWSWrapper_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8513427F95F3CFD033FB19C9 /* Pods_AWSWrapper_Example.framework */; };
-		F67524931EE16EA7001C0727 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F67524921EE16EA7001C0727 /* ViewController.m */; };
+		F64BAC7C1EE269BA00051399 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC7A1EE269BA00051399 /* ViewController.m */; };
+		F64BAC7D1EE269BA00051399 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F64BAC7B1EE269BA00051399 /* Main.storyboard */; };
+		F64BAC821EE26BA700051399 /* DynamoDBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC811EE26BA700051399 /* DynamoDBVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,11 +63,13 @@
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84D339A1B6B02B94CDEC9BBB /* Pods-AWSWrapper_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSWrapper_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AWSWrapper_Example/Pods-AWSWrapper_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		8513427F95F3CFD033FB19C9 /* Pods_AWSWrapper_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWSWrapper_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B5188F011B4E597A16A63948 /* AWSWrapper.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = AWSWrapper.podspec; path = ../AWSWrapper.podspec; sourceTree = "<group>"; };
 		E64CEB5FC6FE6452E4603179 /* Pods-AWSWrapper_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSWrapper_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AWSWrapper_Tests/Pods-AWSWrapper_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		F67524911EE16EA7001C0727 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		F67524921EE16EA7001C0727 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		F64BAC791EE269BA00051399 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		F64BAC7A1EE269BA00051399 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		F64BAC7B1EE269BA00051399 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		F64BAC801EE26BA700051399 /* DynamoDBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamoDBVC.h; sourceTree = "<group>"; };
+		F64BAC811EE26BA700051399 /* DynamoDBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamoDBVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,9 +137,11 @@
 			children = (
 				6003F59C195388D20070C39A /* AppDelegate.h */,
 				6003F59D195388D20070C39A /* AppDelegate.m */,
-				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
-				F67524911EE16EA7001C0727 /* ViewController.h */,
-				F67524921EE16EA7001C0727 /* ViewController.m */,
+				F64BAC791EE269BA00051399 /* ViewController.h */,
+				F64BAC7A1EE269BA00051399 /* ViewController.m */,
+				F64BAC801EE26BA700051399 /* DynamoDBVC.h */,
+				F64BAC811EE26BA700051399 /* DynamoDBVC.m */,
+				F64BAC7B1EE269BA00051399 /* Main.storyboard */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
@@ -279,10 +284,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
+				F64BAC7D1EE269BA00051399 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,8 +399,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F67524931EE16EA7001C0727 /* ViewController.m in Sources */,
+				F64BAC7C1EE269BA00051399 /* ViewController.m in Sources */,
 				6003F59E195388D20070C39A /* AppDelegate.m in Sources */,
+				F64BAC821EE26BA700051399 /* DynamoDBVC.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -528,6 +534,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AWSWrapper/AWSWrapper-Prefix.pch";
 				INFOPLIST_FILE = "AWSWrapper/AWSWrapper-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -544,6 +551,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AWSWrapper/AWSWrapper-Prefix.pch";
 				INFOPLIST_FILE = "AWSWrapper/AWSWrapper-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";

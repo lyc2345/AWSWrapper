@@ -24,6 +24,7 @@
 #import "RecentVisit.h"
 #import "RecordSuitable.h"
 #import "SignInViewController.h"
+#import "SyncManager.h"
 #import "UserPoolForgotPasswordViewController.h"
 #import "UserPoolMFAViewController.h"
 #import "UserPoolSignUpViewController.h"

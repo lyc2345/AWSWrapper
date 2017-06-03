@@ -86,7 +86,7 @@ static NSString *LOG_TAG;
 	};
 	
 	NSBundle *bundle = [NSBundle bundleForClass: [UserPoolMFAViewController class]];
-	NSURL *url = [bundle URLForResource: @"StandardUtils" withExtension: @"bundle"];
+	NSURL *url = [bundle URLForResource: @"Resources" withExtension: @"bundle"];
 	NSBundle *podBundle = [NSBundle bundleWithURL: url];
 	UIStoryboard *storyboard = [UIStoryboard storyboardWithName: @"UserPools" bundle: podBundle];
 	UserPoolMFAViewController *mfaViewController = [storyboard instantiateViewControllerWithIdentifier: NSStringFromClass([UserPoolMFAViewController class])];
@@ -176,7 +176,7 @@ static NSString *LOG_TAG;
 - (void)handleUserPoolSignUp {
 	
 	NSBundle *bundle = [NSBundle bundleForClass: [UserPoolSignUpViewController class]];
-	NSURL *url = [bundle URLForResource: @"StandardUtils" withExtension: @"bundle"];
+	NSURL *url = [bundle URLForResource: @"Resources" withExtension: @"bundle"];
 	NSBundle *podBundle = [NSBundle bundleWithURL: url];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName: @"UserPools" bundle: podBundle];
     UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier: NSStringFromClass([UserPoolSignUpViewController class])];
@@ -187,7 +187,7 @@ static NSString *LOG_TAG;
 - (void)handleUserPoolForgotPassWord {
 	
 	NSBundle *bundle = [NSBundle bundleForClass: [UserPoolForgotPasswordViewController class]];
-	NSURL *url = [bundle URLForResource: @"StandardUtils" withExtension: @"bundle"];
+	NSURL *url = [bundle URLForResource: @"Resources" withExtension: @"bundle"];
 	NSBundle *podBundle = [NSBundle bundleWithURL: url];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName: @"UserPools" bundle: podBundle];
     UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier: NSStringFromClass([UserPoolForgotPasswordViewController class])];

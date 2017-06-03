@@ -53,7 +53,7 @@
 
 #pragma mark - AWS Extension
 
-@interface LoginManager (AWS)
+@interface LoginManager (AWS) <AWSCognitoIdentityInteractiveAuthenticationDelegate, AWSCognitoIdentityPasswordAuthentication, AWSCognitoIdentityMultiFactorAuthentication>
 
 /**
  Check AWS login status

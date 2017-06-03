@@ -26,19 +26,19 @@
     },
     "dependencies": {
       "AWSCognito": [
-        "~> 2.5.7"
+        "~> 2.5.2"
       ],
       "AWSCognitoIdentityProvider": [
-        "~> 2.5.7"
+        "~> 2.5.2"
       ],
       "AWSDynamoDB": [
-        "~> 2.5.7"
+        "~> 2.5.2"
       ],
       "AWSCore": [
-        "~> 2.5.7"
+        "~> 2.5.2"
       ],
       "AWSS3": [
-
+        "~> 2.5.2"
       ],
       "DS": [
 

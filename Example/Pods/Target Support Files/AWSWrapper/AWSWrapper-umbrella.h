@@ -18,6 +18,7 @@
 #import "BookmarkManager.h"
 #import "DSWrapper.h"
 #import "Encrypt.h"
+#import "LoginManager.h"
 #import "PlistManager.h"
 #import "Random.h"
 #import "RecentVisit.h"

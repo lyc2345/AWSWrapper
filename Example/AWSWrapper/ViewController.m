@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-@import AWSWrapper;
+@import AWSWrapper.AWSWrapper;
 
 @interface ViewController ()
 

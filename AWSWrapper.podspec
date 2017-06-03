@@ -36,11 +36,11 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'AWSWrapper/Classes/**/*'
 
-  s.ios.dependency 'AWSCognito', '~> 2.5.7'
-  s.ios.dependency 'AWSCognitoIdentityProvider', '~> 2.5.7'
-  s.ios.dependency 'AWSDynamoDB', '~> 2.5.7'
-  s.ios.dependency 'AWSCore', '~> 2.5.7'
-  s.ios.dependency 'AWSS3'
+  s.ios.dependency 'AWSCognito', '~> 2.5.2'
+  s.ios.dependency 'AWSCognitoIdentityProvider', '~> 2.5.2'
+  s.ios.dependency 'AWSDynamoDB', '~> 2.5.2'
+  s.ios.dependency 'AWSCore', '~> 2.5.2'
+  s.ios.dependency 'AWSS3', '~> 2.5.2'
   s.ios.dependency 'DS'
   s.ios.dependency 'AFNetworking', '~> 3.0'
   s.ios.dependency 'SAMKeychain'

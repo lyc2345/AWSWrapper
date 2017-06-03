@@ -13,11 +13,11 @@
 		00C05031BBA5BA48A00FE41348F41BDA /* UIRefreshControl+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 2478005FEAD35F85B197A128A020E4AB /* UIRefreshControl+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		00D59A0D0CBC6A3214916BB62A7DDF4E /* FABAttributes.h in Headers */ = {isa = PBXBuildFile; fileRef = 9456871CAA7C183F8C05DE89284E2785 /* FABAttributes.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		00E545DDF514EF8B5391DF1B1DBC41D2 /* AWSFMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C8BF0C7AA0799C5C4978739A186F0CC /* AWSFMDatabaseAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		011EECE23B311551379223D5C353C8F8 /* SpectaDSL.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1520A965B55581179E04B75190E489 /* SpectaDSL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		01A80EFDB0B8453A329E7C6F0EC894DD /* Random.m in Sources */ = {isa = PBXBuildFile; fileRef = A1D1294A08D721F884071B4B3582F805 /* Random.m */; };
 		01F278A54C85C2C865DDAD4090C559B6 /* EXPDoubleTuple.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AB4828249CADE943ED86690363B53A /* EXPDoubleTuple.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		02A893C04F125A1132F820FE9889CC1B /* SignIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED53937B7CB3B44888BD68311B7B4FFE /* SignIn.storyboard */; };
 		02BD44105B79ED4A3DFB2958CC6FE9E3 /* Alert.h in Headers */ = {isa = PBXBuildFile; fileRef = CA3AF7F36557A4671F1173AA03182917 /* Alert.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		02D21622540F95CEA2B67E68931D5858 /* Specta-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1700280FA043BBCF3524C520D98CB65F /* Specta-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0341353CF25858742C658EE76DB26373 /* SAMKeychainQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = E3E4460D945DE0074249CDE55940D2CC /* SAMKeychainQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0436DDE8201F6AF6E5FCF8CC6D9BF81E /* AWSExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A1F7EEC8E812D13280E4E8DA12D691 /* AWSExecutor.m */; };
 		05F9127B9E71D6B676FAC35AE9B881FE /* AWSInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6804AFECC7E25ABD8C8908B29F412794 /* AWSInfo.m */; };
@@ -43,7 +43,7 @@
 		10C8ED64C04688003BAC8F2C3B02482B /* AWSMTLManagedObjectAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F51BEBD86E042D0A392B126E878C13E /* AWSMTLManagedObjectAdapter.m */; };
 		113A8B6AC2F9F3283DEB8BA0F5A2EEC4 /* AWSDDMultiFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5F6168B1D07C8658B7EF32510CE086 /* AWSDDMultiFormatter.m */; };
 		11948E16BF3548C7BABF77C532966B84 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F100114FF16224F44542C021AD0277F /* XCTest.framework */; };
-		122F5466D98DA14C965EB1556F0DAEDE /* SpectaUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 117C81EC11F136579A02A16258C796A3 /* SpectaUtility.m */; };
+		1299FDB85DAFD9168CA7CED084191456 /* SPTGlobalBeforeAfterEach.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A4CE4E9BF3E68DB97045028D679AC8C /* SPTGlobalBeforeAfterEach.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		140F458AB7312414FC423FEED70A3733 /* UIActivityIndicatorView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E76E8F0347D447E215CCB9D8B1B9BD /* UIActivityIndicatorView+AFNetworking.m */; };
 		150503B99F77D3D8897EFFC68C09A351 /* EXPMatcherHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 84611501457792E2D6F5FF818082A402 /* EXPMatcherHelpers.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		150AAF5CB02F123639A1B07AA8D4451C /* AWSCognitoIdentityProviderResources.m in Sources */ = {isa = PBXBuildFile; fileRef = C70481DF026D8C1D54B78673DE6D19EF /* AWSCognitoIdentityProviderResources.m */; };
@@ -56,7 +56,7 @@
 		1CF52735A9F650AF5BC7E9A0B5F4EA3D /* AWSExecutor.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C23756DCCE4320817B6D8179991F224 /* AWSExecutor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D676445A1446539D4B722E6EF0C802A /* ExpectaSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = DE23C6318B1A196D0A396C04C0DF0548 /* ExpectaSupport.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1E2A6D057E20BE8F5ED3E594F7B8C286 /* AFNetworking-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C7B2DB1A1E350BC7C15B01299C3D177 /* AFNetworking-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1EC986D957D1D6A78D0E33FB23286DA5 /* XCTest+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 0856676BE68C9D373059CD0285B3D6F0 /* XCTest+Private.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2070553EA0D323BA53D2228E91A5676C /* Specta-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 34422132DC8C2987BFC001186131ED70 /* Specta-dummy.m */; };
 		210BF1D73846D5781A1D8D44B6515817 /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C5212FA1330392AF4A8D57322DCA9BC /* AFNetworking.framework */; };
 		214256FA017281813B2A23332700553D /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270EAF222313F233B062189C697830DE /* SignInViewController.m */; };
 		214F8D721940BD9AA4BAB0E5AE2E8A1C /* EXPBlockDefinedMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 47604A3E7A43D5AA04466224136BE324 /* EXPBlockDefinedMatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -65,7 +65,6 @@
 		23B4631398CC3A0036C054F6EA004C0B /* AWSTMCache.h in Headers */ = {isa = PBXBuildFile; fileRef = FBE4CDD299507100338AF9611E0D7880 /* AWSTMCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2431821FFAAE6CA3398290692C107752 /* NSError+AWSMTLModelException.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B98FEFA92D3A9A3E1E40914B5DFC50 /* NSError+AWSMTLModelException.m */; };
 		2552D1E2CEEAD339CD61CA347CB959BB /* Fabric.h in Headers */ = {isa = PBXBuildFile; fileRef = E7B1DA313077301BD220E7F97BA61FD8 /* Fabric.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		25A5279EA70559B111AD4603FC98B271 /* SPTSpec.h in Headers */ = {isa = PBXBuildFile; fileRef = C3F799C8D8B7B7DFEB9299B5CADD2BFC /* SPTSpec.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		25CD54E5E82ACFE1F5C3E93C26E67FC2 /* AWSS3RequestRetryHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F99F0F0299641BF7EB7986E3487C0DD0 /* AWSS3RequestRetryHandler.m */; };
 		272B10048BDC5EB1B8647AE4A5C97EA9 /* AWSS3TransferUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 2463E7D4BFECB2E23DC1E0C523011E50 /* AWSS3TransferUtility.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2783ED430829AD55F39881D057D84704 /* AWSMTLJSONAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 177A7C184AE307BB538FCE3D778A84AE /* AWSMTLJSONAdapter.m */; };
@@ -75,10 +74,9 @@
 		2AA641DD68A41B487AA8E678AD8679A4 /* AWSMTLReflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 714E93B9AA6ED1B2A3DA551125EACA61 /* AWSMTLReflection.m */; };
 		2B0705CC26A4CBEE32A5A60284AED35B /* UIButton+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 056769F5CB2FA45E91A2481C701D9130 /* UIButton+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2C86F8CE228E58351B5D6573B6488CFC /* AWSCore.h in Headers */ = {isa = PBXBuildFile; fileRef = AB982420E450B4A16D4CE5242F49F1AF /* AWSCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2CA2DD1A54D3FF2F1C7ED3238FB818F8 /* SPTTestSuite.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7BAEC2486295CC0484AF6106E707A6 /* SPTTestSuite.m */; };
 		2EB6533A735C60966708AE98E7C234ED /* NSObject+AWSMTLComparisonAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 1652E6CE8ADDD2121E2F7B115682AEE8 /* NSObject+AWSMTLComparisonAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EC9F4B970052163616B0C93BB4AA712 /* AWSMobileClient.m in Sources */ = {isa = PBXBuildFile; fileRef = CF4C8C6D1CC6DDCF6E60B13A5687FBD3 /* AWSMobileClient.m */; };
-		2EDDD5762A3975FA271F21DF79C998D5 /* Specta-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 34422132DC8C2987BFC001186131ED70 /* Specta-dummy.m */; };
-		2EFD65E471964F477B2C75304BE60FB5 /* SPTExampleGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = B2001249D80566A305C9830EA3DC72A7 /* SPTExampleGroup.m */; };
 		2F4DC7E8D3BA2EE898A467ECD6C91405 /* AWSXMLDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 7FFB2B7641C86ECF7FF4DC79683CE89B /* AWSXMLDictionary.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2FD7F9C669C31DB64D33B149661F046C /* AWSService.h in Headers */ = {isa = PBXBuildFile; fileRef = CE69C4AFBCA7FBA9A9517D6E92D3C1EF /* AWSService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		30F0BAE1DBB79BBB6CBD957EA8B89E4B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDB14D54CCC3919BFA456C4877C59784 /* MobileCoreServices.framework */; };
@@ -88,11 +86,11 @@
 		34C88657FE7ABE9F833623F94952D253 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BD0D031D9870B8698406EC8B248440 /* UIProgressView+AFNetworking.m */; };
 		34EDC0F5AD13605E04D5D9A6A8CBA660 /* AWSCognitoSyncResources.m in Sources */ = {isa = PBXBuildFile; fileRef = 48B1EECC454594E88B3F29545CCD40A3 /* AWSCognitoSyncResources.m */; };
 		358B95DCDB827089BB86D66B23D6831F /* SyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B2F8512728045966A4E4D281F44F6A5 /* SyncManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		35995A3090E192CC0BD0E909447C8ECB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD72E73E8337A2ECF20B0853D1AC91 /* Foundation.framework */; };
 		35CBB7B255FD8D412AFCECBC4311A847 /* AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 11690A89FB57DF4972BC7EC9EF95D0AF /* AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		35EDFEA5E10BCC9AF7547C298D1CFB1E /* AWSTask.m in Sources */ = {isa = PBXBuildFile; fileRef = FB68759968A910E6F127B5678EEBA801 /* AWSTask.m */; };
 		361B58CE2A28E03CA83A73617ED739F2 /* EXPMatchers+raise.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ED7BFA3C4DFE07E1158CD4CF3BA2729 /* EXPMatchers+raise.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3660E5E8F611FAEBD5868B5178109683 /* AWSCognitoIdentityUser_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FBED2C0655122B5A9DD9259B4CA2C46 /* AWSCognitoIdentityUser_Internal.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		36A1FF23463AEE318D4C1C5367B4512E /* SPTExample.h in Headers */ = {isa = PBXBuildFile; fileRef = 2430718550FF30BE6882CD9A914722E3 /* SPTExample.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		36AB125C28951856BC8CBF0FE2DC2065 /* AWSS3Service.h in Headers */ = {isa = PBXBuildFile; fileRef = 800DA14919CE94E97C0C3E4D94F67528 /* AWSS3Service.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		36FB16D1739105CD7C14D33609994946 /* AWSS3PreSignedURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 3329C4FE8E581C303057F849268E0396 /* AWSS3PreSignedURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3726710C3C7C421056392ADBF14E1BC3 /* AWSDynamoDB.h in Headers */ = {isa = PBXBuildFile; fileRef = 9608B5F6728112333A9B7DA05705686B /* AWSDynamoDB.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -104,12 +102,12 @@
 		3AA4E7AD6297A05B44EB2DD096BF5B7C /* AWSBolts.h in Headers */ = {isa = PBXBuildFile; fileRef = 96B6708AA4AFA9461DDDA551A357A24A /* AWSBolts.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3B442346BC697B1B3887AF68E81C3824 /* AWSS3Model.m in Sources */ = {isa = PBXBuildFile; fileRef = FA89E998DA8D9A70F4431233D6E6C1C9 /* AWSS3Model.m */; };
 		3C006008C4872975C3A43BD0E75DFB7B /* NSValueTransformer+AWSMTLPredefinedTransformerAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2352F60DA8D010653C901088A2EC64FE /* NSValueTransformer+AWSMTLPredefinedTransformerAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C71EB5883E370C8BE920D3DA6B181B2 /* Specta.h in Headers */ = {isa = PBXBuildFile; fileRef = 00CA4BD1A27B9B50FEBC8475CFE947C7 /* Specta.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3D0E825277658A74876FA6A522FF62E0 /* aws_tommath.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DAB0F05714A3E9176EDC354C08E212A /* aws_tommath.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		3D4869E030694B49E25A187FF64AA5E7 /* SPTCallSite.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A0B7552279FA8D1DBFB0040CD58CA23 /* SPTCallSite.m */; };
+		3EB5CD196118602BDDBB1F3322A661A1 /* SPTExampleGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = B2001249D80566A305C9830EA3DC72A7 /* SPTExampleGroup.m */; };
 		3F65980CC4210A0079A524AA01E53181 /* AWSTMMemoryCache.h in Headers */ = {isa = PBXBuildFile; fileRef = DBE1E15944548A02D0019A5152405273 /* AWSTMMemoryCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3F762905FEC9E228A057DAF0C8B440B3 /* AWSXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = C74E08A43F896E46B8204470598FF625 /* AWSXMLWriter.m */; };
 		4079C1BC5085F6E826F64D36F98AC238 /* AWSURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BB7C244250A2FB7CE7F64FD13A0F52E /* AWSURLRequestSerialization.m */; };
+		40E4ACF5D1B649091A3132A7F36ADAAC /* SPTCallSite.h in Headers */ = {isa = PBXBuildFile; fileRef = 0834A08C12FD7467090ED3D961270C02 /* SPTCallSite.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		415358EB4E9F42698A36D6A691FBD058 /* AWSCognitoIdentityProviderHKDF.m in Sources */ = {isa = PBXBuildFile; fileRef = 99CBAC992F35AACF737C5D0741B98B89 /* AWSCognitoIdentityProviderHKDF.m */; };
 		4175C56AAFEAF09D473B220DC23F4C4A /* AWSCancellationTokenRegistration.h in Headers */ = {isa = PBXBuildFile; fileRef = 7209ED64916F1D6D36E56B84411BA448 /* AWSCancellationTokenRegistration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		41CC214541946B82A25CE427BB81ABEA /* EXPMatchers+beKindOf.h in Headers */ = {isa = PBXBuildFile; fileRef = D78CB019618B56D6C98021CBEFF547C8 /* EXPMatchers+beKindOf.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -133,12 +131,13 @@
 		4CA4F8F64565882DCFA174872749C0EF /* EXPFloatTuple.h in Headers */ = {isa = PBXBuildFile; fileRef = D32093BBC13629F2FC6D45878C80B4CD /* EXPFloatTuple.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4E10A333A84D8A00858C63D536B217D2 /* AWSTMCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECC99B0F0E72C15EC747EC8703A18B2 /* AWSTMCache.m */; };
 		4EA5E179E27ED07A8A20C8B4BDF82894 /* AWSDDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4EC5A1F21DACA43C5B50DAB5210D15 /* AWSDDFileLogger.m */; };
-		5075A8ED5C850166A9B31E320B09D3D4 /* XCTestCase+Specta.m in Sources */ = {isa = PBXBuildFile; fileRef = 069328508D539095138377576E65CD16 /* XCTestCase+Specta.m */; };
+		50852FA0D66ACDB9DD0B0623B3424C49 /* SPTExampleGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F66B6836E36345D510345158D5688B0 /* SPTExampleGroup.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		508B6D0572C0C3B4A3E019B814595D4A /* EXPMatchers+beInTheRangeOf.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C34FC08FEDC5510C0526853864785A /* EXPMatchers+beInTheRangeOf.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		50FE1AC754938E311A82E2AAEFC0333F /* DS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C88B607251AAEEFA25A216CBBA85214 /* DS.framework */; };
 		51047C1945103943F70BEADE83725630 /* UIWebView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 74F5677499253FDD5EE12AE521DDCDE3 /* UIWebView+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		510AED6E7361209B1C764D9F80505723 /* AWSSTSModel.h in Headers */ = {isa = PBXBuildFile; fileRef = FC10BECEF5E8C89D43439C55BA842FD2 /* AWSSTSModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		51FCC9EDD6B60BF63B5EF7CAC94CCF23 /* EXPMatchers+conformTo.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C9F1C3AD9CDB886F7D45CB8805FDF2 /* EXPMatchers+conformTo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5238A82C14AED6F56A18BE47A33BFB84 /* SPTSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 289BF65344004A4740ECE13E886705FF /* SPTSpec.m */; };
 		53651FC79CD95AFBBFBB4333759B11B8 /* AWSDynamoDBService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E5C29E94AA16114EC245B903F918347 /* AWSDynamoDBService.m */; };
 		53FB0DE1BCD4D57FD0EB619305B0FC30 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD72E73E8337A2ECF20B0853D1AC91 /* Foundation.framework */; };
 		548CA0962FD4077138F8708BEAE5CEC1 /* Pods-AWSWrapper_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5510CB590BD4906A36187CDAC1FD14B8 /* Pods-AWSWrapper_Example-dummy.m */; };
@@ -157,14 +156,15 @@
 		5B58EC5606F01C073174A7E484D780AA /* DS.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AEB5702D314F11D8C32AD3D748434EA /* DS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5BAB56D71C48808C7E2E537124758330 /* AWSCognito-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7FB32EF8C7BFA740D5CC6D7C307A27 /* AWSCognito-dummy.m */; };
 		5BDCB146921E61DDD35F4C0E990C44F4 /* AWSGeneric.h in Headers */ = {isa = PBXBuildFile; fileRef = ED4D3DDE81A7DD75AEECCE66FB7B6F6D /* AWSGeneric.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5C6EB466E96E9C6CC4F17FD125B842AE /* SpectaDSL.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1520A965B55581179E04B75190E489 /* SpectaDSL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5C788CE16885DBE53C632DF9DD0AB891 /* AWSCognitoDataset.h in Headers */ = {isa = PBXBuildFile; fileRef = 9FF8B3DF5C86230BEA5025B452938682 /* AWSCognitoDataset.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5CB40B8E7B7A673575F4267F64C42288 /* AWSMTLValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = C33E2B0287DA42A48ADC5AF711F05E28 /* AWSMTLValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D080B0B010132EDC082D08B9C433450 /* AWSDDLog+LOGV.h in Headers */ = {isa = PBXBuildFile; fileRef = E90E23883D0070F210ED69B25509BD6F /* AWSDDLog+LOGV.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D0E21BB600C2B805FC84B5DE13F6A88 /* AWSMTLModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D429E341FEB2808F5C8A04C87ED3F870 /* AWSMTLModel.m */; };
 		5D3538865E1E55F94B26E06B7BCF84D6 /* AWSCognitoSyncService.h in Headers */ = {isa = PBXBuildFile; fileRef = FBBE0852D2ECE0AA571D9245C816336B /* AWSCognitoSyncService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D4700451D6C9DFC6D5FFB86671EA2AC /* EXPDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = A28EDF826741E3A4BED2688BE6A8058D /* EXPDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5D81BC53487574D294E2B55D42D1F4E2 /* SPTSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 289BF65344004A4740ECE13E886705FF /* SPTSpec.m */; };
 		5DF1E406C7F337527D322DA4B121966F /* UserPools.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7515787EAD4C232D2C0F5CC717CDDD9 /* UserPools.storyboard */; };
+		5DFC33ED2A7E563D7D65B2002ED58BC1 /* SPTCompiledExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F2A91BD2825BC443163E272681A844E /* SPTCompiledExample.m */; };
 		5E25576CA3C8EBDCD9DB5FBD02AB6CA6 /* AWSCore-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 79586BE25BD3BFADADAEDF52466D8102 /* AWSCore-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5E27358C79CCD668E21A61DF4E00DCE8 /* AWSDDLog.h in Headers */ = {isa = PBXBuildFile; fileRef = A178A45750AE000F7D518E244F17A48B /* AWSDDLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5E4F55D319FF771D658CCE335E7CB498 /* EXPFloatTuple.m in Sources */ = {isa = PBXBuildFile; fileRef = D15F7B9D732CC2DCDAD52A03E1084D9E /* EXPFloatTuple.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -180,12 +180,10 @@
 		652C4631B454BC79E76C79233EDC0718 /* AWSMTLReflection.h in Headers */ = {isa = PBXBuildFile; fileRef = A79D74C19949013DC50997F37345F7E0 /* AWSMTLReflection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6569B0442ED7E01C62EBD7FAF15BB643 /* AWSDDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C2691BB10A5D8313E4B7081D04A61C41 /* AWSDDTTYLogger.m */; };
 		6573AF9ABA59AC8D1F52B07088197F71 /* AFSecurityPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 23DE44D99F1E27776CFD76FBF4DC763B /* AFSecurityPolicy.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		65D18A5E02EB9E275BC9B56AFAB4CF99 /* SPTSharedExampleGroups.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE23B93B1BA1C6D298A58ECF3B3B5C3 /* SPTSharedExampleGroups.m */; };
 		676C23D4097BCE465180A0E67AC30D64 /* AWSGZIP.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D515ABF9BD3256D09C2C0976B46B7ED /* AWSGZIP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6879B7FCC114A3FC57AE6772B720EDFF /* AWSSTSService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0674529C4E207FCC30A25E8EB625143E /* AWSSTSService.m */; };
 		69158926FF62CD10075D839D1CDB4B54 /* AWSDynamoDBRequestRetryHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8692D328C6D0DD6BAE1316C8E4E4A2 /* AWSDynamoDBRequestRetryHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6919CBEDD358AB6F121D250B227A0C2B /* AWSFMDatabase+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 4020DAA1461982FF7536EB22E83ED203 /* AWSFMDatabase+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		69A4564D132E1138E4E64F1F2FD4FAD5 /* SPTTestSuite.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7BAEC2486295CC0484AF6106E707A6 /* SPTTestSuite.m */; };
 		69B804C88D5C1D516A141D3A55220E85 /* RecentVisit.m in Sources */ = {isa = PBXBuildFile; fileRef = B6AA278C49ABC9292A9A5FB2793C5A73 /* RecentVisit.m */; };
 		6A67F777D81F1D104FEFF5D031A42E32 /* AWSCognitoRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 284997848D83047A6C2A98EDC91F2CA5 /* AWSCognitoRecord.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6A8FFDB4B80682315DBA1E8FBDBBF697 /* AWSUICKeyChainStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FCB82D07925A297FEE068FAE442E6CA /* AWSUICKeyChainStore.m */; };
@@ -194,15 +192,12 @@
 		6B8C7E47EB676A5084EF57C47CEAF471 /* AWSLogging.h in Headers */ = {isa = PBXBuildFile; fileRef = 251426CCCC10C06A2782E179EE301763 /* AWSLogging.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6BF9A177A9DF261FFE6B7F050C40C706 /* AWSValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = B8585A7CF24DC0DC4265108BAFA25AA1 /* AWSValidation.m */; };
 		6CDFA12D14C158F0B3FBF81ECC372A2F /* Bookmark.h in Headers */ = {isa = PBXBuildFile; fileRef = B071A18C172630FF63DC360CF1017659 /* Bookmark.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6D8A70C23524B6948FBF6706DD05319E /* SPTCallSite.h in Headers */ = {isa = PBXBuildFile; fileRef = 0834A08C12FD7467090ED3D961270C02 /* SPTCallSite.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6D98AE9A66438B979E34DDB5F9C86DA8 /* AWSDDFileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = F35F19563B243ADA23DDC728BC5D6126 /* AWSDDFileLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6E3B43D0B4C3F4A0BC8C534CC7ECD0EF /* XCTest+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 0856676BE68C9D373059CD0285B3D6F0 /* XCTest+Private.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6E5DFE9D14BDD5BBA203AF56082D7FDF /* LoginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E0AA29D56FCF5F1B5301E930AB106C /* LoginManager.m */; };
-		6F25D43CC1C82E50DC90DF1B7246C15B /* SPTTestSuite.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FFE20F06EDCA96293E2B5EFAEF6E292 /* SPTTestSuite.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6F4B8E434191FA8CCB8A76134B15D3DE /* AWSCognitoIdentityUserPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D831625522DA912BD0446E44F95C6FE /* AWSCognitoIdentityUserPool.m */; };
 		703CBA956C1DFEC7DD0D5F8AFCD188C5 /* AWSDynamoDBModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 8531584A137FF5C143D1AD94E32701F0 /* AWSDynamoDBModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		70D886C0A2F64EAE631D2682694934CC /* AWSCognitoIdentityUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4790C5E537D872A66AF4609F917C276E /* AWSCognitoIdentityUser.m */; };
-		7152D1BBC42EF4CA99C090E3B182AA91 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD72E73E8337A2ECF20B0853D1AC91 /* Foundation.framework */; };
-		718D01C1846ACD3C1A4E0EDFDE9F32E1 /* SPTCompiledExample.h in Headers */ = {isa = PBXBuildFile; fileRef = BEE1A7ECA9F8727B36AE50D84CFF6053 /* SPTCompiledExample.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		71CFE35B90DB3C0F7F349CB88457A5C4 /* AWSDynamoDBObjectMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFA6E4C42407B0A052C1E0BF65F4944 /* AWSDynamoDBObjectMapper.m */; };
 		731616635A016AF1104CEDBD04D6AFA7 /* Fabric+FABKits.h in Headers */ = {isa = PBXBuildFile; fileRef = A5472AB2F9FDD8B958830CFA13B48887 /* Fabric+FABKits.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7318A50943F035C6E77310021074955D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD72E73E8337A2ECF20B0853D1AC91 /* Foundation.framework */; };
@@ -228,7 +223,6 @@
 		7CE16B1BF75DF396768A0A3CFD968DB1 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D5F14D2AFBBA99057D339FE60DC631C /* UIWebView+AFNetworking.m */; };
 		7D8598658663404347069665A1C4F009 /* AWSMTLModel.h in Headers */ = {isa = PBXBuildFile; fileRef = D61787A55AE2817D366F8E09C14C6A24 /* AWSMTLModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7D8D716B3487A4E761583FF68FBCC8D3 /* Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D9CCEC8EDB91E4758B677F11F783588 /* Alert.m */; };
-		7DE5E3297AEEC0248D35E5F1775A33D8 /* SPTExcludeGlobalBeforeAfterEach.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D2CB08FDB0FEA2E55C50665AD85A2E3 /* SPTExcludeGlobalBeforeAfterEach.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7E41B63019D22DE819FE75B2537C5462 /* AWSEXTRuntimeExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CFA256C7F9B08D2AEED530344E0B127A /* AWSEXTRuntimeExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7E81176499F06E523CE3039B08AB5051 /* EXPMatchers+beGreaterThan.h in Headers */ = {isa = PBXBuildFile; fileRef = D403130CD140B9A3C1B74236A425D3FE /* EXPMatchers+beGreaterThan.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7EF1C9F6E01C26C2539F55AE82723D0D /* AWSTMDiskCache.h in Headers */ = {isa = PBXBuildFile; fileRef = D1E5D0080512626C4FBDC4E67FC22CD2 /* AWSTMDiskCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -240,11 +234,14 @@
 		80CB1EEE8D6D3E57D62F0C96B4D3D9EB /* UserPoolSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3698133BBE4B3D91BDB951284FE7A5FA /* UserPoolSignUpViewController.m */; };
 		818CCC9DFF3980F66BC8A03DDDC6A85D /* AWSCognitoIdentityResources.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B810EBB0BD72627AD0E7D49CE90485 /* AWSCognitoIdentityResources.m */; };
 		81AE136A17B6BA41F926257CC68F3A04 /* SAMKeychain.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6CFA8453A6F71E7CCCE8846CC06ECDAF /* SAMKeychain.bundle */; };
+		81DE7B1784E30B24D47A691C8B7F2916 /* Pods-AWSWrapper_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 24FE4DCA841BAA1D5568C4109D9CA1DB /* Pods-AWSWrapper_Tests-dummy.m */; };
 		8220368E5F7EA70947BAD2B6F216C61B /* EXPMatchers+beFalsy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CE931817D3726C53DFF1F8EBE54F013 /* EXPMatchers+beFalsy.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		82D554EC9FB9A62D935B6555325F5898 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F4F1C621592091C21784D351C3C5433 /* Security.framework */; };
 		82FF0574F26964A508DBEB865DA2F4E1 /* UserPoolMFAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5114770A7566AC63F04A2C9DB32256A /* UserPoolMFAViewController.m */; };
 		83556FB85EAD6220B808DEFB5BE5F310 /* AWSMTLValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E72710F687886F422595BEA1E869E56 /* AWSMTLValueTransformer.m */; };
 		83E3A0B3060913A2F88C4E8A467B8028 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD72E73E8337A2ECF20B0853D1AC91 /* Foundation.framework */; };
+		8428BA1E9AF01133316E3FE235FCB980 /* SPTSharedExampleGroups.h in Headers */ = {isa = PBXBuildFile; fileRef = FBAFAF916D481F994B82655B173D3451 /* SPTSharedExampleGroups.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		844EE65A2F7A1FCC367D811F13E7A526 /* SPTExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DE19C33F99F7BE99C127081BC4227DE /* SPTExample.m */; };
 		84B2B8CA79F44622A5C29D1DB0A87080 /* AWSWrapper-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B92EB2B7B998B8F675A087C33C4963E9 /* AWSWrapper-dummy.m */; };
 		85EB5055D776378E72A10608F16F3963 /* AWSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A8C4536A1B20A0220284A5A81169DE2 /* AWSModel.m */; };
 		861A7567843A0FB56BC4050A0756F546 /* AWSFMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB2D0463E804F993344AB4486779E20 /* AWSFMDatabaseQueue.m */; };
@@ -262,9 +259,9 @@
 		8CC053622D93D0EECC150BD5E8D10E2D /* AWSConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EFAF36D008A7029D5FAA5DBCBB4BF659 /* AWSConfiguration.m */; };
 		8DF5EEED84CF978AFCEEF80B48C0FC6D /* AWSS3TransferManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 13367EE2BC4C179D19F52F53D7EB592E /* AWSS3TransferManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8E51B9229C932356D23356290B918652 /* AWSS3Resources.h in Headers */ = {isa = PBXBuildFile; fileRef = 73494A10EBC494106EA11F68C8DE2B8D /* AWSS3Resources.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8EA5D134452CA4219DFBEFF7B09CC352 /* SPTExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DE19C33F99F7BE99C127081BC4227DE /* SPTExample.m */; };
 		8EABC86C9EA00B1FFEC574FFA5A0BE2F /* AWSDDTTYLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = CE61363C51F6F6E3948E72CBA37760E7 /* AWSDDTTYLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8EDF6AEF6BDF96C8F3E115FC6D80D124 /* DS.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369F1ADAF955B533A1788F5E8C247EC /* DS.m */; };
+		8EFC0C111645D4D0D929B1DDEDF423F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD72E73E8337A2ECF20B0853D1AC91 /* Foundation.framework */; };
 		8F0D1A654F56FF5876B681646337541F /* SyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1359DBA7035C50FA995CB2AD79BF7888 /* SyncManager.m */; };
 		8F2EE22D05A3FE9D3B833C787145C092 /* AWSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 154C304578E685822AF1033430495083 /* AWSNetworking.m */; };
 		8F66783159C3253187C5C613846D5B09 /* AWSCognitoSyncResources.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CA87F95FF8F436BB6A337D01F228DC9 /* AWSCognitoSyncResources.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -281,7 +278,9 @@
 		9342C812088F21BB719B334CBCDFF0C6 /* AWSCancellationTokenRegistration.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D57A993D5CFF55581BDFB7E23D1505 /* AWSCancellationTokenRegistration.m */; };
 		937EFE4D478BF0659386CBF0325BB4D3 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45FCE9420C93826DA318074795214CD3 /* AWSCore.framework */; };
 		93DFC0CC12E763AE770017349EE009D1 /* AFNetworkReachabilityManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 11A88CFB3EFB16A7E75FEEDD82B07920 /* AFNetworkReachabilityManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		93E4C69866EDB864BA01F12E8B360B82 /* SPTCallSite.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A0B7552279FA8D1DBFB0040CD58CA23 /* SPTCallSite.m */; };
 		9403226C56E2F4CF0669C7779C914344 /* AWSMTLJSONAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = C1CC0E2D88579D762B19C972EF7761F1 /* AWSMTLJSONAdapter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		94370D3DC339197BF93A9BEE8D7E1EF0 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F100114FF16224F44542C021AD0277F /* XCTest.framework */; };
 		948458DC0A9308A2D8C018C37FB7BBDD /* AFURLResponseSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = CBC10CD8A0EB29945320553237AEA912 /* AFURLResponseSerialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94B87568C67B4AC25AE7F7EE7F3F5101 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD72E73E8337A2ECF20B0853D1AC91 /* Foundation.framework */; };
 		960492E427FA119D38DD9AAC1ED454F1 /* AWSCognito.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92ED218DA2FBE17957F71DCA4D6EA28B /* AWSCognito.framework */; };
@@ -306,14 +305,12 @@
 		A0B36C4898CD3A75ED692AE1B945EFED /* Expecta.h in Headers */ = {isa = PBXBuildFile; fileRef = A0CB3EF7709030DDD892A2C58A40EA7A /* Expecta.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A0FDFAB1D92F9534F65C6ED7B41B977B /* AWSDDASLLogCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = FC3A88ED51F3521D00ADED309E5805D0 /* AWSDDASLLogCapture.m */; };
 		A118B6F62DEE0CD5F8FE54DC5CC521CA /* AWSDynamoDBRequestRetryHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C80A071A61FF04DDDFB76CE82AF04F /* AWSDynamoDBRequestRetryHandler.m */; };
-		A156F51F96D0995B23A2C818E3B9E83D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F100114FF16224F44542C021AD0277F /* XCTest.framework */; };
 		A1B7203703CE2436A7EAA1DAA0453244 /* AWSSTSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC6B22485A0D627A0476118B431BCA /* AWSSTSModel.m */; };
 		A250AD23B08254ED041933B8ABD97006 /* AWSService.m in Sources */ = {isa = PBXBuildFile; fileRef = D6973B5992979961B132A78C2C05725D /* AWSService.m */; };
 		A2D3CFFEBD3AEA2164A535192492F3B8 /* EXPMatchers+postNotification.h in Headers */ = {isa = PBXBuildFile; fileRef = 91572BDCF610526A591EBC4EC43F1019 /* EXPMatchers+postNotification.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A3591DEDA776B48C026E7F9144981E58 /* AFAutoPurgingImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = F4935E2910D404F3CC705B70BE2BD569 /* AFAutoPurgingImageCache.m */; };
 		A398D63C8DED664D99A864D79881A13C /* AFImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 223B907581F5284B3EDC2E9FAAC9C884 /* AFImageDownloader.m */; };
 		A48EE7570BD266BA6C141EB275918561 /* AWSCognitoConflict.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C547F3D17A252A8089995D61CF8405E /* AWSCognitoConflict.m */; };
-		A524FB077CA64573371918FA391041C0 /* Pods-AWSWrapper_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B9FB3C2A93EEB4C7CE13755ECC88364F /* Pods-AWSWrapper_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A5E0172A5DECAEC795C491630D0FA2CA /* AWSGZIP.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF61C25CBBAED5844BC5CFF1DF5E92D /* AWSGZIP.m */; };
 		A63382B3DE41D21C6AAFCCD360940CFF /* AWSURLResponseSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 747B6C2E9A142CF92E1384D3A9B52908 /* AWSURLResponseSerialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6CC81FC886EE8FF27EF4DD48D6F8F56 /* NSValue+Expecta.m in Sources */ = {isa = PBXBuildFile; fileRef = 16CF53FD6F79FDA08A905C0DCF9DA692 /* NSValue+Expecta.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -322,13 +319,13 @@
 		A8446D8224F103BE7F4A5237A60F0EFB /* EXPMatchers+raise.h in Headers */ = {isa = PBXBuildFile; fileRef = 662F777018A956973F384B3AFAD5769F /* EXPMatchers+raise.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A84BB8041BD76506D6AEC7DABB678835 /* AWSCognitoIdentityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EB19ADA6BF377708F5C915B3EC14375B /* AWSCognitoIdentityModel.m */; };
 		A8C297643282E0CF5E7DF9CB6E23A0D4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD72E73E8337A2ECF20B0853D1AC91 /* Foundation.framework */; };
-		A90DF284CE7E50981F73FA3D8299A6B1 /* SpectaUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 87021FC8BEB465602076A15305375C16 /* SpectaUtility.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A9F87D62375AC706B8447BFF27C75270 /* SPTExcludeGlobalBeforeAfterEach.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D2CB08FDB0FEA2E55C50665AD85A2E3 /* SPTExcludeGlobalBeforeAfterEach.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA5060419F1307F5F03ECBEA70DB186C /* EXPMatchers+beLessThanOrEqualTo.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AB3CEFD75C0C536D749384D78B5608F /* EXPMatchers+beLessThanOrEqualTo.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AADC8D9F82FE6398B07A4AAC4A62BC52 /* SPTCompiledExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F2A91BD2825BC443163E272681A844E /* SPTCompiledExample.m */; };
 		AB056BD3CD3897B1146FF770FA5EC59E /* AWSSignature.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF0BF051F4B89D99C3497ACE24835E9 /* AWSSignature.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ABBDD0372C687211E68EDCE0166F3632 /* ExpectaSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E7F4EEFC8C4B202B6E45F6AC39D5024 /* ExpectaSupport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AC0AB78F3A7629ED1C7F3F82BBB3F471 /* EXPMatchers+beSupersetOf.m in Sources */ = {isa = PBXBuildFile; fileRef = F5AD9ED13C11802E91B36C46CBB63109 /* EXPMatchers+beSupersetOf.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		AC6EBE226F5CC423C9631A63C1E5F83E /* DSWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = A72E6491A6E5F916EB777D946DDE1026 /* DSWrapper.m */; };
+		AC8B6B85A185AFFFFF3AA7E58913DD72 /* SPTSharedExampleGroups.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE23B93B1BA1C6D298A58ECF3B3B5C3 /* SPTSharedExampleGroups.m */; };
 		AE160C50AB8479D89988EFF8EE3D613F /* AWSS3TransferUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC71177711266C8AA2A160DE75B079F /* AWSS3TransferUtility.m */; };
 		AE39B8035FAC520FD93187D56C290322 /* AWSDDMultiFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 94FE0F632F368D132D51395B1AB0AD70 /* AWSDDMultiFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE52AFCA5F19467097219D4D97459EB5 /* AWSDDASLLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C568A1DCD7CC1D1F4FC1C8A9138B560 /* AWSDDASLLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -341,8 +338,10 @@
 		B0FC962D35E1845AA3C882ED0C817B09 /* AWSS3Model.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A837A30087ECF9FDAD775DE4448D272 /* AWSS3Model.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B1487AC2DD502CCE46631C123E047D28 /* EXPMatchers+beFalsy.h in Headers */ = {isa = PBXBuildFile; fileRef = 77A80EB0DA3672FE93BEAB3F177E0431 /* EXPMatchers+beFalsy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B16A078FC7FBC172A266A336AEF7F673 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E4E05FB81DD93316FFF075AB3A24645 /* UIRefreshControl+AFNetworking.m */; };
+		B32B42DF46FAAD2BC335EDAE71D2F986 /* SPTExample.h in Headers */ = {isa = PBXBuildFile; fileRef = 2430718550FF30BE6882CD9A914722E3 /* SPTExample.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B3A60EAB4DB7490AAD3C34CB810DA9C0 /* AWSMTLManagedObjectAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 217B8166A2765CF04FA024FD140CCB0D /* AWSMTLManagedObjectAdapter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B3F189747A7A3CEDA9200CB2749AC7D8 /* EXPMatchers+raiseWithReason.h in Headers */ = {isa = PBXBuildFile; fileRef = A6CD3F049632AC18255B1566CE4E1071 /* EXPMatchers+raiseWithReason.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B437D0673E94A16F8979E20705ABC879 /* SPTSpec.h in Headers */ = {isa = PBXBuildFile; fileRef = C3F799C8D8B7B7DFEB9299B5CADD2BFC /* SPTSpec.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B44ACD8C35238B8858943C5F95A71FA9 /* AWSJKBigInteger.h in Headers */ = {isa = PBXBuildFile; fileRef = 620E581F9BB1E5CF3D0049A07D015999 /* AWSJKBigInteger.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		B45699A54266FD1EECEB72884E8E9271 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D2A0DF1DC7C7246A4ED572DA502D0F1 /* SystemConfiguration.framework */; };
 		B4D8DADE3C43386429472130FA74F592 /* AWSDDAssertMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 418D17A5A889E8F3C1E8CE7A1365D72D /* AWSDDAssertMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -368,7 +367,9 @@
 		C14CD98EE4DDC0B7689F058D5B79CC47 /* EXPMatchers+beGreaterThanOrEqualTo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAB7570E721FDBB768DFD55BD0341CD /* EXPMatchers+beGreaterThanOrEqualTo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C1612D01EB86FBDC208851C6E4D16519 /* AWSCognitoIdentityProvider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 000FAD54254A5AE724D861A505E05FFB /* AWSCognitoIdentityProvider.framework */; };
 		C1EF93E008E93E1343354D5D0B096B57 /* AWSMantle.h in Headers */ = {isa = PBXBuildFile; fileRef = D9B7566CB60AB750B185F97BE0E423F4 /* AWSMantle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C2469D43FBAE9A3FD8E629C1177B9BB0 /* Specta.h in Headers */ = {isa = PBXBuildFile; fileRef = 00CA4BD1A27B9B50FEBC8475CFE947C7 /* Specta.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C28B2EC52BC2986CF62846CEE383BB4B /* AWSSynchronizedMutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 8811DBDD49435F33926C7B6559DE5FF6 /* AWSSynchronizedMutableDictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C29687FB93F602CD860A32A38881D358 /* SpectaTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FEB1C287FBE1AF1EC300D660D80854F /* SpectaTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C2B52A7C34108091296EF522ADDEA628 /* AWSDDLegacyMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = CBE1D1DDF48ADB1A1DA5541EBE6B7228 /* AWSDDLegacyMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C30295EEF8C25103175448DC330A1BAE /* AWSMobileClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 848CFC34C5FE192D181959C2666968D8 /* AWSMobileClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4CD94F0E1B472138F2124077C311FA8 /* aws_tommath_class.h in Headers */ = {isa = PBXBuildFile; fileRef = 17CAA93667CCCDEBD006A22CA7CC191A /* aws_tommath_class.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -394,6 +395,7 @@
 		CD5FDDA250BB71541586F89D18F64D53 /* Pods-AWSWrapper_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 99680C50D1B3535681FDE1D3550966D1 /* Pods-AWSWrapper_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CD66900813CFE317343F5A4053AE73EC /* EXPMatchers+beNil.m in Sources */ = {isa = PBXBuildFile; fileRef = 646E41E5E505ED184FD321BE1BA6075E /* EXPMatchers+beNil.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CE7E4C141657D23213C7FAE616D7FA75 /* EXPMatchers+beLessThanOrEqualTo.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CC214AF38A1EE55E78D6B1D2F2FE8E /* EXPMatchers+beLessThanOrEqualTo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CEAECD876971F4AA8733832081E3ABBF /* XCTestCase+Specta.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C7619E1643CFF227627828935365987 /* XCTestCase+Specta.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CEB11E2857090C5E148A246ED18F753B /* FABKitProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = C26652F2F74B48E3AD9A59770880DD49 /* FABKitProtocol.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CEB2F0E229EF841D92C780C3FFDF1BEA /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = F17D7144BA70D5D2FFAC0C7401DC902E /* AFSecurityPolicy.m */; };
 		CF287829627F26B2EB4382B897D06A0E /* AFNetworking-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BD0EBD3BD5DC70FC0B67A0009A0419A5 /* AFNetworking-dummy.m */; };
@@ -403,28 +405,24 @@
 		D4B87A499450EA22DC1FA138F89F4053 /* NSValueTransformer+AWSMTLInversionAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = D7860F0AD51CF931FA70FD08609197F8 /* NSValueTransformer+AWSMTLInversionAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4E80BD7EAAB83200183110578A80591 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3629063E6945C9EB2B0B245E73037E24 /* AFURLSessionManager.m */; };
 		D5968D7D0220F78DC292997EF89B2FEF /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BCF3405450D203E91249A49284C4C52 /* AWSS3.framework */; };
-		D6324AEC461FD89349D12904E605F8B2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD72E73E8337A2ECF20B0853D1AC91 /* Foundation.framework */; };
 		D6D28035A644CF40D1B4FE3941B6F774 /* AWSTMCacheBackgroundTaskManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F3F226F2B980DF57F44CEFE570FC04BC /* AWSTMCacheBackgroundTaskManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D789F37BD89E9040406CFA657B629386 /* AWSS3Serializer.h in Headers */ = {isa = PBXBuildFile; fileRef = F678E7AF23AF7F082BF2A5A1E92F7498 /* AWSS3Serializer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D80567B28761ECFA2B0F66C9B2CF0EB2 /* XCTestCase+Specta.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C7619E1643CFF227627828935365987 /* XCTestCase+Specta.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D8D4A7A674A9017145B59585E0C54134 /* SPTSharedExampleGroups.h in Headers */ = {isa = PBXBuildFile; fileRef = FBAFAF916D481F994B82655B173D3451 /* SPTSharedExampleGroups.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D969096A39F6D755FDED4FD07FA409EE /* AWSLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DC8DA345DF09B45E3063645A3E20CC /* AWSLogging.m */; };
 		DA41EFA53E288F8FA4A89DFE36DD658A /* AWSKSReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 53ED243BF246DD0B856D2A7BCE74F2CA /* AWSKSReachability.m */; };
 		DA55B966A4A07920F906A871EC61D286 /* AWSInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ADB382E72EEC50BF69A4C9115284056 /* AWSInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA6F424E60A4AF98FD3413C80D16FFE0 /* AWSURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 021257BF2663E997DB8AA652DF7EE7BA /* AWSURLSessionManager.m */; };
+		DA8D40159A06D14BC4A4273DFB14366F /* SpectaUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 117C81EC11F136579A02A16258C796A3 /* SpectaUtility.m */; };
 		DB3A372BB1290E9484F56170E8DCC76B /* AWSCognitoIdentityProviderModel.h in Headers */ = {isa = PBXBuildFile; fileRef = F724972E1B8619F598A5CC919D8BD036 /* AWSCognitoIdentityProviderModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB8F3665E9E382DF52E0DCB4DECE5EAE /* NSObject+Expecta.h in Headers */ = {isa = PBXBuildFile; fileRef = A454067A087D11A73F7E14A079E8A29A /* NSObject+Expecta.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DBCD239ACA92E55E162AC10A53A9A71D /* AWSCognitoSyncModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 74F30BFB91995127922427B866338D1A /* AWSCognitoSyncModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DC423A980C991970F4D637AC4C47D863 /* EXPMatchers+conformTo.h in Headers */ = {isa = PBXBuildFile; fileRef = FA1E0793F0899B3446F2650390BB0CE2 /* EXPMatchers+conformTo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DCDAEB4E6F2D3A72C38577C065D6C0E7 /* AWSCognitoIdentityService.h in Headers */ = {isa = PBXBuildFile; fileRef = 6953C0DD1484F51345DBBBA4A223DDB4 /* AWSCognitoIdentityService.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DCEDE3C173C0ECC709A287C5DF1C86C0 /* SPTGlobalBeforeAfterEach.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A4CE4E9BF3E68DB97045028D679AC8C /* SPTGlobalBeforeAfterEach.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DD887A93A200A87A51B3D00BD1B80D20 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C7D6F51F896E48027A83D5602908F9A /* AFNetworkReachabilityManager.m */; };
 		DDA75B13389869B3809D5385295EA4C0 /* AWSCognitoUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 20269E6B53BC763DE31F0177ECE48CCE /* AWSCognitoUtil.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		DED9AE33B24B462D4B44FE94383B35F4 /* EXPMatchers+respondTo.h in Headers */ = {isa = PBXBuildFile; fileRef = 3B8B867F8DA52FF545BAAB9CEC137048 /* EXPMatchers+respondTo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DF018F60F139D664E29B7C57DFE2295D /* AWSMTLModel+NSCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEDB10D346B9C85ADCA160C3525B062 /* AWSMTLModel+NSCoding.m */; };
 		DF69933592C04CDFC5AC635B2B40ADFE /* AWSCognitoIdentity.h in Headers */ = {isa = PBXBuildFile; fileRef = 890E3909B00CAF4E8DC8D19A0BA6E4E8 /* AWSCognitoIdentity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DF883524C3F35145D74166C01BCFCFC3 /* EXPMatchers+beKindOf.m in Sources */ = {isa = PBXBuildFile; fileRef = C6B139F654A21D84B8D18BA9038CD039 /* EXPMatchers+beKindOf.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		E00C8E4919720E9E3B753AF4101C5A90 /* Specta-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1700280FA043BBCF3524C520D98CB65F /* Specta-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E159353AC8CE8E614B83C8FC4E3D9259 /* AWSCognitoIdentityUser.h in Headers */ = {isa = PBXBuildFile; fileRef = ACF0AD0D4D7890568DCD76A978FB06CD /* AWSCognitoIdentityUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E1E727A8D8DDBD9CE3BD5699FECD0917 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F4F1C621592091C21784D351C3C5433 /* Security.framework */; };
 		E233F5CF4BF16CFB539804C4E995C355 /* EXPMatchers+beLessThan.h in Headers */ = {isa = PBXBuildFile; fileRef = D17F4FC08B99F3215FD6A59164CEB476 /* EXPMatchers+beLessThan.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -435,9 +433,9 @@
 		E574ECBF0DF175EA891D8D133396761C /* AWSModel.h in Headers */ = {isa = PBXBuildFile; fileRef = E53FE8D7707E7687DCE9102CDF8E376E /* AWSModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5B74BAD4A52D3B4C891E0549F8E7CD0 /* NSValueTransformer+AWSMTLInversionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 32230C181F8213A218095479E5B9C099 /* NSValueTransformer+AWSMTLInversionAdditions.m */; };
 		E61E28B50602F353D95914765667969F /* EXPMatcherHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 6235D7340C3D2A39B60C2A51ABDAB2C5 /* EXPMatcherHelpers.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E6415C18F1E38023BF200B46C1A5BDA7 /* SpectaUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 87021FC8BEB465602076A15305375C16 /* SpectaUtility.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E659E69F4ACBD5298A45FF771E3D4F9D /* AWSCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B4E71112037FE90BDB85324BE13B3ED0 /* AWSCategory.m */; };
 		E6D59CAA2A6E134A4643254406ED11F2 /* EXPMatchers+equal.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A8729A08B844C2B4699DA350C26A5E /* EXPMatchers+equal.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		E704AA5FF63CAD72890EAEA2608397AF /* Pods-AWSWrapper_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 24FE4DCA841BAA1D5568C4109D9CA1DB /* Pods-AWSWrapper_Tests-dummy.m */; };
 		E79281AA15F33EF154668E17CD7C6556 /* AWSCognitoSyncModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9856B0FA44C522932ED25C3313FAD55E /* AWSCognitoSyncModel.m */; };
 		E8A34CB034D7EBF31DAC314451BEB502 /* AWSDynamoDBResources.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE90397A3D16DAF7576A30F1B891220 /* AWSDynamoDBResources.m */; };
 		E9024CA88BD4F0E0530B81DD64691AFB /* AWSUICKeyChainStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 778D2589AFBC7EDD646E94C97AD9B0F7 /* AWSUICKeyChainStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -448,11 +446,13 @@
 		EAF16633DB3C992CF975BE4A2932D41C /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 82744FA40B5AD04B585ECF7E90E87D6A /* AFHTTPSessionManager.m */; };
 		EC2B0D33FA08C9D6EB1E27E7C51A712F /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45FCE9420C93826DA318074795214CD3 /* AWSCore.framework */; };
 		EC406D0FBFD16A97BE4D6419EE2C8328 /* NSData+AWSCognitoIdentityProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4A02973497E87A277E7C4331056646 /* NSData+AWSCognitoIdentityProvider.m */; };
-		ED13FAA3BB81F2CF0C8382B589C5F5ED /* SPTExampleGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F66B6836E36345D510345158D5688B0 /* SPTExampleGroup.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EE7CD9100C76B93F547D21C5D45D2055 /* AWSValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = B25F0D8118FAB4EA568BA9CF33698979 /* AWSValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EEBECC861345B8E97C61CE88E9F9FE26 /* XCTestCase+Specta.m in Sources */ = {isa = PBXBuildFile; fileRef = 069328508D539095138377576E65CD16 /* XCTestCase+Specta.m */; };
 		EFC1FA8BCA2D44B430524D9BF4AEE893 /* AWSDynamoDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D830D13B60E61D0225E433F86B1821 /* AWSDynamoDB.framework */; };
 		F00EC8785853D9527CB051C7A1BF52DA /* Encrypt.h in Headers */ = {isa = PBXBuildFile; fileRef = 9E6DD509A38584BEC1C93BB4543E401C /* Encrypt.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F01A1DFD6E461139841AF4F1611259F3 /* SPTCompiledExample.h in Headers */ = {isa = PBXBuildFile; fileRef = BEE1A7ECA9F8727B36AE50D84CFF6053 /* SPTCompiledExample.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F1CAA2EBDDFF558DEF98684F2479A7AF /* AFURLRequestSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 7290252E6D82AFBAB567CEC4E6BA538A /* AFURLRequestSerialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F2644282C5DFF3F6897381551DE7D666 /* Pods-AWSWrapper_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B9FB3C2A93EEB4C7CE13755ECC88364F /* Pods-AWSWrapper_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F2D899C7AA0D7FC20160091BB9D31CF3 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB2A4165FB06A721B57AEEAE9F5A3CC /* UIImageView+AFNetworking.m */; };
 		F344B2AC573EE182BE2C5F69773BBB8E /* AWSJKBigDecimal.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEB35E2CEE3F42AFA7DAD64ABE91D7F /* AWSJKBigDecimal.m */; };
 		F3DA637688E314F78BBAADD43F558CED /* NSDictionary+AWSMTLManipulationAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = EF4648367DD209557B76E2AF2C477627 /* NSDictionary+AWSMTLManipulationAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -464,18 +464,18 @@
 		F64B780488487B38310AAB5E9308FF4C /* AWSDDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F4E9BB2AD85E8644FB1814314AE37D3 /* AWSDDAbstractDatabaseLogger.m */; };
 		F6B8C5A750F243594E65F5C40E92C2DF /* NSArray+AWSMTLManipulationAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F39BAEB7F45265C7CDD231F33401FC4 /* NSArray+AWSMTLManipulationAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F7151BED11203A8E9C4165504619C057 /* AWSDDContextFilterLogFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = B1C9525024BA70AD45DF7348C1A4D638 /* AWSDDContextFilterLogFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F71B19DAEDE416188E917E643FD00BFE /* SpectaDSL.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D1A3204FB9DDAA981684D4B55891433 /* SpectaDSL.m */; };
 		F74F0174B426B7EAB501A3788E5D381F /* EXPMatchers+beTruthy.h in Headers */ = {isa = PBXBuildFile; fileRef = BE008009B84C10F9C3BF28CCCC49A6BD /* EXPMatchers+beTruthy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F7FB9E59A55578FCF6CAAAD8389956AB /* AWSDDLogMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 711294AF2ADABA1B439E7406201B24F3 /* AWSDDLogMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F84DD74BB7F612DE372F8C051420DF72 /* UIProgressView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 3B72FCF60C43CC7B6F58F514BC4CCB6E /* UIProgressView+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F91EC49682E945D495EA8973F1F27F20 /* UserPoolForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B30685910240E1A9466B1935D7A45650 /* UserPoolForgotPasswordViewController.m */; };
 		F9C12BDAAE70842F0302581C87B8E16B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD72E73E8337A2ECF20B0853D1AC91 /* Foundation.framework */; };
+		FB56B983D2AEB60A089FB0B6BA0F5A12 /* SPTTestSuite.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FFE20F06EDCA96293E2B5EFAEF6E292 /* SPTTestSuite.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FB83ADD0F69BEA5362F649C8D4F9FE59 /* AWSFMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = C58F2245D6911CB4CA5535207E95F4F3 /* AWSFMDatabasePool.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FBBB6AFA015135A5420B6825650CFC2D /* AWSCognitoIdentityService.m in Sources */ = {isa = PBXBuildFile; fileRef = 81456ECD46E8D53CD116385716A6F7DB /* AWSCognitoIdentityService.m */; };
 		FC223395BCEE46EB920CECD38AFD4402 /* EXPMatchers+beInTheRangeOf.h in Headers */ = {isa = PBXBuildFile; fileRef = F82AB383BB4FD753F70A2C1D3EBA5AE8 /* EXPMatchers+beInTheRangeOf.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FC6474103AA989EBD5368772037BE0BB /* EXPMatchers+beSupersetOf.h in Headers */ = {isa = PBXBuildFile; fileRef = 86E8E80A7523FF2FC3B3950C0C084701 /* EXPMatchers+beSupersetOf.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FD39ACDEA6F0B6D6DBB730547CE18BA6 /* EXPExpect.h in Headers */ = {isa = PBXBuildFile; fileRef = E9279D2D94F1C6D07F7E550809418B3F /* EXPExpect.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FE248F37B293D2B09538F584291E5393 /* SpectaTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FEB1C287FBE1AF1EC300D660D80854F /* SpectaTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FE89DCE91C849C92F35EF07F77F4E4B3 /* SpectaDSL.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D1A3204FB9DDAA981684D4B55891433 /* SpectaDSL.m */; };
 		FEF6EACE962EAE70E2EAC5F3C83EF7C8 /* AFImageDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 7EB69847A4BF5D9E725300DCFA5772A2 /* AFImageDownloader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF070F340DBC5901DE5F4C9C1FF54452 /* AWSSTSResources.h in Headers */ = {isa = PBXBuildFile; fileRef = 88D23C5B6AFB07C34FDD0421C960722D /* AWSSTSResources.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF394D6FEA84206182301180AE4CB957 /* EXPMatchers+beGreaterThan.m in Sources */ = {isa = PBXBuildFile; fileRef = F6AE8FD204F4936643C7AC7E5CCE1E8C /* EXPMatchers+beGreaterThan.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -524,6 +524,20 @@
 			remoteGlobalIDString = CF671F7E57B92905F1CC91D036D6B4A7;
 			remoteInfo = AFNetworking;
 		};
+		2BE2180C86EDC8FE2DB94280C6102255 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CF671F7E57B92905F1CC91D036D6B4A7;
+			remoteInfo = AFNetworking;
+		};
+		393CC38893B88385A100FC1259261296 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2A702D9AD9081CD774C50A0774582BE3;
+			remoteInfo = AWSWrapper;
+		};
 		4D1F56747DFA680AD06DFD7759B40F58 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
@@ -552,7 +566,35 @@
 			remoteGlobalIDString = C83B0F8778708382BFD09745CBCD1CBA;
 			remoteInfo = AWSCore;
 		};
+		7777172E364C3103F708D6EABBD044BC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 764BF5F8A7793010994AF3D12E8FB7BF;
+			remoteInfo = AWSDynamoDB;
+		};
 		7D2A207C4E595F3629B732F2260A31E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6BE1114DD9253849F24595DCCDC82CFC;
+			remoteInfo = SAMKeychain;
+		};
+		7FB56BA1CC43648F8DFE4537121C086A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F7098779713B711F6C591B62A41F242;
+			remoteInfo = AWSS3;
+		};
+		8F162624A771984DABC9B21BDA0EC05C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 53C6112213829CB147F47E473C93F271;
+			remoteInfo = AWSCognito;
+		};
+		9CD207FE5BB3A16A7EC5E5CD68E9FC1E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
@@ -580,6 +622,13 @@
 			remoteGlobalIDString = C83B0F8778708382BFD09745CBCD1CBA;
 			remoteInfo = AWSCore;
 		};
+		B398C012676FECBD50E784BED9BC3C77 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 30F0FE12309D711B08B5CFE34F5C349A;
+			remoteInfo = Specta;
+		};
 		B78E747FBFCC6905EEDEFDAE5E4E1B5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
@@ -593,6 +642,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 9F7098779713B711F6C591B62A41F242;
 			remoteInfo = AWSS3;
+		};
+		C41912C1171A8DF9D2E60B127863B402 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 162CAD95CC0F402AED98F345659DC633;
+			remoteInfo = AWSCognitoIdentityProvider;
 		};
 		C52D2F4E4D991DE27C3074AD9162FCA3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -622,19 +678,26 @@
 			remoteGlobalIDString = 2A702D9AD9081CD774C50A0774582BE3;
 			remoteInfo = AWSWrapper;
 		};
-		D6C02B53A9FDC9299B1C29D0345113D3 /* PBXContainerItemProxy */ = {
+		DF3F03E885A8E7638BFB887BC194AF50 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C83B0F8778708382BFD09745CBCD1CBA;
+			remoteInfo = AWSCore;
+		};
+		E76D14F2B678A97B3B23249553BD8D42 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 5D161BA711701D7E41E02A5702FD024E;
 			remoteInfo = Expecta;
 		};
-		F289EE2FE89BF2AE8968960B15D9FC9D /* PBXContainerItemProxy */ = {
+		E8C423BE770F828E3C61CE0AA84DA1D1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = B63349F392F2D09F9BECD8BA11E2DA44;
-			remoteInfo = Specta;
+			remoteGlobalIDString = 3730343FC951EB3399A86CDC3890B282;
+			remoteInfo = DS;
 		};
 		F389A7BF8874006AA16586A6B95C0DD6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1185,6 +1248,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		083595D739529B3D7E938E30DDBBB583 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35995A3090E192CC0BD0E909447C8ECB /* Foundation.framework in Frameworks */,
+				94370D3DC339197BF93A9BEE8D7E1EF0 /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1D12DFAE26AB849C5430F663E62CC635 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1229,14 +1301,6 @@
 			files = (
 				9AEF2A773C929E2978FDA682BA28E2C0 /* AWSCore.framework in Frameworks */,
 				94B87568C67B4AC25AE7F7EE7F3F5101 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		824A01885DAD1F438F4B133F734281A5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D6324AEC461FD89349D12904E605F8B2 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1308,12 +1372,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EE66C9FC615E8BA96E30D40017DBB246 /* Frameworks */ = {
+		FC3A59A12625BD276D4FE54F8D4D882B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7152D1BBC42EF4CA99C090E3B182AA91 /* Foundation.framework in Frameworks */,
-				A156F51F96D0995B23A2C818E3B9E83D /* XCTest.framework in Frameworks */,
+				8EFC0C111645D4D0D929B1DDEDF423F8 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2222,6 +2285,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		14C196DCAC736763B990F963816D6664 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2644282C5DFF3F6897381551DE7D666 /* Pods-AWSWrapper_Tests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4DB1BA0692068D4918BE76E15E5EEE63 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -2248,35 +2319,35 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		586FA3C91E6A49339C00A3DC5EA48AAF /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E00C8E4919720E9E3B753AF4101C5A90 /* Specta-umbrella.h in Headers */,
-				3C71EB5883E370C8BE920D3DA6B181B2 /* Specta.h in Headers */,
-				011EECE23B311551379223D5C353C8F8 /* SpectaDSL.h in Headers */,
-				FE248F37B293D2B09538F584291E5393 /* SpectaTypes.h in Headers */,
-				A90DF284CE7E50981F73FA3D8299A6B1 /* SpectaUtility.h in Headers */,
-				6D8A70C23524B6948FBF6706DD05319E /* SPTCallSite.h in Headers */,
-				718D01C1846ACD3C1A4E0EDFDE9F32E1 /* SPTCompiledExample.h in Headers */,
-				36A1FF23463AEE318D4C1C5367B4512E /* SPTExample.h in Headers */,
-				ED13FAA3BB81F2CF0C8382B589C5F5ED /* SPTExampleGroup.h in Headers */,
-				7DE5E3297AEEC0248D35E5F1775A33D8 /* SPTExcludeGlobalBeforeAfterEach.h in Headers */,
-				DCEDE3C173C0ECC709A287C5DF1C86C0 /* SPTGlobalBeforeAfterEach.h in Headers */,
-				D8D4A7A674A9017145B59585E0C54134 /* SPTSharedExampleGroups.h in Headers */,
-				25A5279EA70559B111AD4603FC98B271 /* SPTSpec.h in Headers */,
-				6F25D43CC1C82E50DC90DF1B7246C15B /* SPTTestSuite.h in Headers */,
-				1EC986D957D1D6A78D0E33FB23286DA5 /* XCTest+Private.h in Headers */,
-				D80567B28761ECFA2B0F66C9B2CF0EB2 /* XCTestCase+Specta.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		65C7A9334031F2434EA90B99FEE5526A /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				554566C9BD2CA40651F16C3C39FCDFAE /* DS-umbrella.h in Headers */,
 				5B58EC5606F01C073174A7E484D780AA /* DS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		692147CEE5E259D7BED9598C9616FD9D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02D21622540F95CEA2B67E68931D5858 /* Specta-umbrella.h in Headers */,
+				C2469D43FBAE9A3FD8E629C1177B9BB0 /* Specta.h in Headers */,
+				5C6EB466E96E9C6CC4F17FD125B842AE /* SpectaDSL.h in Headers */,
+				C29687FB93F602CD860A32A38881D358 /* SpectaTypes.h in Headers */,
+				E6415C18F1E38023BF200B46C1A5BDA7 /* SpectaUtility.h in Headers */,
+				40E4ACF5D1B649091A3132A7F36ADAAC /* SPTCallSite.h in Headers */,
+				F01A1DFD6E461139841AF4F1611259F3 /* SPTCompiledExample.h in Headers */,
+				B32B42DF46FAAD2BC335EDAE71D2F986 /* SPTExample.h in Headers */,
+				50852FA0D66ACDB9DD0B0623B3424C49 /* SPTExampleGroup.h in Headers */,
+				A9F87D62375AC706B8447BFF27C75270 /* SPTExcludeGlobalBeforeAfterEach.h in Headers */,
+				1299FDB85DAFD9168CA7CED084191456 /* SPTGlobalBeforeAfterEach.h in Headers */,
+				8428BA1E9AF01133316E3FE235FCB980 /* SPTSharedExampleGroups.h in Headers */,
+				B437D0673E94A16F8979E20705ABC879 /* SPTSpec.h in Headers */,
+				FB56B983D2AEB60A089FB0B6BA0F5A12 /* SPTTestSuite.h in Headers */,
+				6E3B43D0B4C3F4A0BC8C534CC7ECD0EF /* XCTest+Private.h in Headers */,
+				CEAECD876971F4AA8733832081E3ABBF /* XCTestCase+Specta.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2393,14 +2464,6 @@
 				60CD83FA1B2BF6E93B59834C1E0CBEF0 /* EXPUnsupportedObject.h in Headers */,
 				DB8F3665E9E382DF52E0DCB4DECE5EAE /* NSObject+Expecta.h in Headers */,
 				5922E3B61E351E2A21095BD92E4FE8AC /* NSValue+Expecta.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		994E18946592FE6F03FF06A70EB212C7 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A524FB077CA64573371918FA391041C0 /* Pods-AWSWrapper_Tests-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2601,23 +2664,21 @@
 			productReference = B39CB4D17F52690F9A7E5210C5828D67 /* AWSWrapper.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		33A0F3F94354D70FC15E4A9053D0466F /* Pods-AWSWrapper_Tests */ = {
+		30F0FE12309D711B08B5CFE34F5C349A /* Specta */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 24CC1F49BC017BD77551D3BFE4232DE8 /* Build configuration list for PBXNativeTarget "Pods-AWSWrapper_Tests" */;
+			buildConfigurationList = F3B5BA8DE9F1C873F94EEFE0EA19DDD4 /* Build configuration list for PBXNativeTarget "Specta" */;
 			buildPhases = (
-				618990238C506B7E181B00B09D5CA17C /* Sources */,
-				824A01885DAD1F438F4B133F734281A5 /* Frameworks */,
-				994E18946592FE6F03FF06A70EB212C7 /* Headers */,
+				D52E1AB6C4C33C2EBF15A2B46FEEF9E1 /* Sources */,
+				083595D739529B3D7E938E30DDBBB583 /* Frameworks */,
+				692147CEE5E259D7BED9598C9616FD9D /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				0D03F6D162C85E9A5F1B707D1F6C967D /* PBXTargetDependency */,
-				59288B42AB2617AC1D64731B0814C7C4 /* PBXTargetDependency */,
 			);
-			name = "Pods-AWSWrapper_Tests";
-			productName = "Pods-AWSWrapper_Tests";
-			productReference = A6F492EA52E4D69233FEDB6BA8315140 /* Pods_AWSWrapper_Tests.framework */;
+			name = Specta;
+			productName = Specta;
+			productReference = 584276574CD6D640C96A26AC3298F4D0 /* Specta.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		3730343FC951EB3399A86CDC3890B282 /* DS */ = {
@@ -2635,6 +2696,34 @@
 			name = DS;
 			productName = DS;
 			productReference = 95C9683896B293234DE9FF68DBF2B1E2 /* DS.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		3DD140F81088E5A25BB37E6A02391438 /* Pods-AWSWrapper_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD2B35E1971628B2CC31E48B1F64A6A7 /* Build configuration list for PBXNativeTarget "Pods-AWSWrapper_Tests" */;
+			buildPhases = (
+				D4237E2B5D6D0681F6931B09DCCC064B /* Sources */,
+				FC3A59A12625BD276D4FE54F8D4D882B /* Frameworks */,
+				14C196DCAC736763B990F963816D6664 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BFED24929903249686F2B53C63FBE119 /* PBXTargetDependency */,
+				463C05D834C49CB5456EE4BB622E9845 /* PBXTargetDependency */,
+				B8F4CD5FB41E68B304E69B2A10A69456 /* PBXTargetDependency */,
+				DAAF24C569DABE4AE2AD36596F561A2A /* PBXTargetDependency */,
+				251768F139EE50D17F0E7F31E4617ED6 /* PBXTargetDependency */,
+				D65711ABCCF65ACB3A08CE10C35CDA01 /* PBXTargetDependency */,
+				A743B12A367339CE7452A4500D85662F /* PBXTargetDependency */,
+				2F28CDA1D9A675D8EE869090F139C8BE /* PBXTargetDependency */,
+				6D7FB81E255E7DE4EBF1EAC668438BD8 /* PBXTargetDependency */,
+				065DAAAAFCFDA06992F65B23519CE10D /* PBXTargetDependency */,
+				C4580EA47A6860A93DEAAC46ED31085E /* PBXTargetDependency */,
+			);
+			name = "Pods-AWSWrapper_Tests";
+			productName = "Pods-AWSWrapper_Tests";
+			productReference = A6F492EA52E4D69233FEDB6BA8315140 /* Pods_AWSWrapper_Tests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		53C6112213829CB147F47E473C93F271 /* AWSCognito */ = {
@@ -2724,23 +2813,6 @@
 			name = AWSS3;
 			productName = AWSS3;
 			productReference = 354F6B2C682EDE590C8C5C430B28CA6C /* AWSS3.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		B63349F392F2D09F9BECD8BA11E2DA44 /* Specta */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 95322C903D807FCB65CFA8FE9F73D565 /* Build configuration list for PBXNativeTarget "Specta" */;
-			buildPhases = (
-				EC6F7326AE42B21414D487BC557464A7 /* Sources */,
-				EE66C9FC615E8BA96E30D40017DBB246 /* Frameworks */,
-				586FA3C91E6A49339C00A3DC5EA48AAF /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Specta;
-			productName = Specta;
-			productReference = 584276574CD6D640C96A26AC3298F4D0 /* Specta.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		C677CB63FBABB92ED1A145EB9D886E5E /* AWSWrapper-Resources */ = {
@@ -2852,9 +2924,9 @@
 				3730343FC951EB3399A86CDC3890B282 /* DS */,
 				5D161BA711701D7E41E02A5702FD024E /* Expecta */,
 				C971E2B0F828129E6A200275D4EE6EC9 /* Pods-AWSWrapper_Example */,
-				33A0F3F94354D70FC15E4A9053D0466F /* Pods-AWSWrapper_Tests */,
+				3DD140F81088E5A25BB37E6A02391438 /* Pods-AWSWrapper_Tests */,
 				6BE1114DD9253849F24595DCCDC82CFC /* SAMKeychain */,
-				B63349F392F2D09F9BECD8BA11E2DA44 /* Specta */,
+				30F0FE12309D711B08B5CFE34F5C349A /* Specta */,
 			);
 		};
 /* End PBXProject section */
@@ -2958,14 +3030,6 @@
 				34EDC0F5AD13605E04D5D9A6A8CBA660 /* AWSCognitoSyncResources.m in Sources */,
 				62D880D401C1CDD50087D809277B1A96 /* AWSCognitoSyncService.m in Sources */,
 				88212437E73C931EAF05C1FD886B4193 /* AWSCognitoUtil.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		618990238C506B7E181B00B09D5CA17C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E704AA5FF63CAD72890EAEA2608397AF /* Pods-AWSWrapper_Tests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3095,6 +3159,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D4237E2B5D6D0681F6931B09DCCC064B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81DE7B1784E30B24D47A691C8B7F2916 /* Pods-AWSWrapper_Tests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D52E1AB6C4C33C2EBF15A2B46FEEF9E1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2070553EA0D323BA53D2228E91A5676C /* Specta-dummy.m in Sources */,
+				F71B19DAEDE416188E917E643FD00BFE /* SpectaDSL.m in Sources */,
+				DA8D40159A06D14BC4A4273DFB14366F /* SpectaUtility.m in Sources */,
+				93E4C69866EDB864BA01F12E8B360B82 /* SPTCallSite.m in Sources */,
+				5DFC33ED2A7E563D7D65B2002ED58BC1 /* SPTCompiledExample.m in Sources */,
+				844EE65A2F7A1FCC367D811F13E7A526 /* SPTExample.m in Sources */,
+				3EB5CD196118602BDDBB1F3322A661A1 /* SPTExampleGroup.m in Sources */,
+				AC8B6B85A185AFFFFF3AA7E58913DD72 /* SPTSharedExampleGroups.m in Sources */,
+				5238A82C14AED6F56A18BE47A33BFB84 /* SPTSpec.m in Sources */,
+				2CA2DD1A54D3FF2F1C7ED3238FB818F8 /* SPTTestSuite.m in Sources */,
+				EEBECC861345B8E97C61CE88E9F9FE26 /* XCTestCase+Specta.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D879DBDCD161D7F114103885190AE066 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3162,32 +3252,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EC6F7326AE42B21414D487BC557464A7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2EDDD5762A3975FA271F21DF79C998D5 /* Specta-dummy.m in Sources */,
-				FE89DCE91C849C92F35EF07F77F4E4B3 /* SpectaDSL.m in Sources */,
-				122F5466D98DA14C965EB1556F0DAEDE /* SpectaUtility.m in Sources */,
-				3D4869E030694B49E25A187FF64AA5E7 /* SPTCallSite.m in Sources */,
-				AADC8D9F82FE6398B07A4AAC4A62BC52 /* SPTCompiledExample.m in Sources */,
-				8EA5D134452CA4219DFBEFF7B09CC352 /* SPTExample.m in Sources */,
-				2EFD65E471964F477B2C75304BE60FB5 /* SPTExampleGroup.m in Sources */,
-				65D18A5E02EB9E275BC9B56AFAB4CF99 /* SPTSharedExampleGroups.m in Sources */,
-				5D81BC53487574D294E2B55D42D1F4E2 /* SPTSpec.m in Sources */,
-				69A4564D132E1138E4E64F1F2FD4FAD5 /* SPTTestSuite.m in Sources */,
-				5075A8ED5C850166A9B31E320B09D3D4 /* XCTestCase+Specta.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0D03F6D162C85E9A5F1B707D1F6C967D /* PBXTargetDependency */ = {
+		065DAAAAFCFDA06992F65B23519CE10D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = Expecta;
-			target = 5D161BA711701D7E41E02A5702FD024E /* Expecta */;
-			targetProxy = D6C02B53A9FDC9299B1C29D0345113D3 /* PBXContainerItemProxy */;
+			name = SAMKeychain;
+			target = 6BE1114DD9253849F24595DCCDC82CFC /* SAMKeychain */;
+			targetProxy = 9CD207FE5BB3A16A7EC5E5CD68E9FC1E /* PBXContainerItemProxy */;
+		};
+		251768F139EE50D17F0E7F31E4617ED6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AWSDynamoDB;
+			target = 764BF5F8A7793010994AF3D12E8FB7BF /* AWSDynamoDB */;
+			targetProxy = 7777172E364C3103F708D6EABBD044BC /* PBXContainerItemProxy */;
+		};
+		2F28CDA1D9A675D8EE869090F139C8BE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DS;
+			target = 3730343FC951EB3399A86CDC3890B282 /* DS */;
+			targetProxy = E8C423BE770F828E3C61CE0AA84DA1D1 /* PBXContainerItemProxy */;
 		};
 		2FA366F3DC82D0BAECD54DF078046A15 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3207,17 +3291,17 @@
 			target = 6BE1114DD9253849F24595DCCDC82CFC /* SAMKeychain */;
 			targetProxy = C52D2F4E4D991DE27C3074AD9162FCA3 /* PBXContainerItemProxy */;
 		};
+		463C05D834C49CB5456EE4BB622E9845 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AWSCognito;
+			target = 53C6112213829CB147F47E473C93F271 /* AWSCognito */;
+			targetProxy = 8F162624A771984DABC9B21BDA0EC05C /* PBXContainerItemProxy */;
+		};
 		4899F9C4D6B12323B65E68969E3D6B5C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AWSWrapper;
 			target = 2A702D9AD9081CD774C50A0774582BE3 /* AWSWrapper */;
 			targetProxy = CB366220A49FE973D7FFAADC759561DA /* PBXContainerItemProxy */;
-		};
-		59288B42AB2617AC1D64731B0814C7C4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Specta;
-			target = B63349F392F2D09F9BECD8BA11E2DA44 /* Specta */;
-			targetProxy = F289EE2FE89BF2AE8968960B15D9FC9D /* PBXContainerItemProxy */;
 		};
 		5DD3EAD7EB2344CEC3B8CB9519BD05F9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3230,6 +3314,12 @@
 			name = AWSCore;
 			target = C83B0F8778708382BFD09745CBCD1CBA /* AWSCore */;
 			targetProxy = B78E747FBFCC6905EEDEFDAE5E4E1B5E /* PBXContainerItemProxy */;
+		};
+		6D7FB81E255E7DE4EBF1EAC668438BD8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Expecta;
+			target = 5D161BA711701D7E41E02A5702FD024E /* Expecta */;
+			targetProxy = E76D14F2B678A97B3B23249553BD8D42 /* PBXContainerItemProxy */;
 		};
 		74905886B3830A0B9AAA5BEFAED8A70E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3279,6 +3369,12 @@
 			target = 53C6112213829CB147F47E473C93F271 /* AWSCognito */;
 			targetProxy = CAFAA80CBC1D7CC60BDF973E714471AE /* PBXContainerItemProxy */;
 		};
+		A743B12A367339CE7452A4500D85662F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AWSWrapper;
+			target = 2A702D9AD9081CD774C50A0774582BE3 /* AWSWrapper */;
+			targetProxy = 393CC38893B88385A100FC1259261296 /* PBXContainerItemProxy */;
+		};
 		B050095A0B0E10180987FAE809D2D506 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AWSS3;
@@ -3291,11 +3387,29 @@
 			target = C83B0F8778708382BFD09745CBCD1CBA /* AWSCore */;
 			targetProxy = CB035034993B015D996D277F6357A8A7 /* PBXContainerItemProxy */;
 		};
+		B8F4CD5FB41E68B304E69B2A10A69456 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AWSCognitoIdentityProvider;
+			target = 162CAD95CC0F402AED98F345659DC633 /* AWSCognitoIdentityProvider */;
+			targetProxy = C41912C1171A8DF9D2E60B127863B402 /* PBXContainerItemProxy */;
+		};
 		BC0D5CA7852F2B345C1D454F1C7F5312 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AWSDynamoDB;
 			target = 764BF5F8A7793010994AF3D12E8FB7BF /* AWSDynamoDB */;
 			targetProxy = F389A7BF8874006AA16586A6B95C0DD6 /* PBXContainerItemProxy */;
+		};
+		BFED24929903249686F2B53C63FBE119 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AFNetworking;
+			target = CF671F7E57B92905F1CC91D036D6B4A7 /* AFNetworking */;
+			targetProxy = 2BE2180C86EDC8FE2DB94280C6102255 /* PBXContainerItemProxy */;
+		};
+		C4580EA47A6860A93DEAAC46ED31085E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Specta;
+			target = 30F0FE12309D711B08B5CFE34F5C349A /* Specta */;
+			targetProxy = B398C012676FECBD50E784BED9BC3C77 /* PBXContainerItemProxy */;
 		};
 		C98833FA022D14BA4EE8C31510F708E7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3309,11 +3423,23 @@
 			target = 162CAD95CC0F402AED98F345659DC633 /* AWSCognitoIdentityProvider */;
 			targetProxy = A398A33437F58494FC04760FBFFEF56B /* PBXContainerItemProxy */;
 		};
+		D65711ABCCF65ACB3A08CE10C35CDA01 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AWSS3;
+			target = 9F7098779713B711F6C591B62A41F242 /* AWSS3 */;
+			targetProxy = 7FB56BA1CC43648F8DFE4537121C086A /* PBXContainerItemProxy */;
+		};
 		D87DC161F5D1FA7139FD1C4F8953D40E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AFNetworking;
 			target = CF671F7E57B92905F1CC91D036D6B4A7 /* AFNetworking */;
 			targetProxy = 2232683319626A375E6C4A1BF49B3CB4 /* PBXContainerItemProxy */;
+		};
+		DAAF24C569DABE4AE2AD36596F561A2A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AWSCore;
+			target = C83B0F8778708382BFD09745CBCD1CBA /* AWSCore */;
+			targetProxy = DF3F03E885A8E7638BFB887BC194AF50 /* PBXContainerItemProxy */;
 		};
 		E8856AB3F02184367F1A4A85FE17335B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3518,6 +3644,38 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
+		};
+		4BBC43A30905E71AD3FF2D49DADB84A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 373C5A673CEDC58198071F0883F9DED8 /* Specta.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Specta/Specta-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Specta/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Specta/Specta.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = Specta;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
 		};
 		4DBBE47FB1F6525985AB5C486449FCF3 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -3824,7 +3982,7 @@
 			};
 			name = Debug;
 		};
-		A2F56B1B68BA02A426FB486D4DBD3576 /* Release */ = {
+		A0174F22ED832F296BD7C30E41DADC41 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BC93E4268C4C7794399A0BEDE58AD9AB /* Pods-AWSWrapper_Tests.release.xcconfig */;
 			buildSettings = {
@@ -3892,7 +4050,7 @@
 			};
 			name = Release;
 		};
-		AE2577F21BE1A407A755A927A3C6E0DC /* Debug */ = {
+		ACFEC243F7B3168DEE6031A92DE71F9C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 48532EFEEA55958A882F1565CE88CFED /* Pods-AWSWrapper_Tests.debug.xcconfig */;
 			buildSettings = {
@@ -3927,6 +4085,38 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
+		};
+		B08BD4E5C910F48F25A4F58AE12CEF42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 373C5A673CEDC58198071F0883F9DED8 /* Specta.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Specta/Specta-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Specta/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Specta/Specta.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = Specta;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		C104F7F091290C3D1E248192F07FE689 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -4011,70 +4201,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
-		};
-		E523F06206016D122478513D3801ED69 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 373C5A673CEDC58198071F0883F9DED8 /* Specta.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/Specta/Specta-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Specta/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/Specta/Specta.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = Specta;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		E86F2E8DBE7E40BDCE97981E121E0793 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 373C5A673CEDC58198071F0883F9DED8 /* Specta.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/Specta/Specta-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Specta/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/Specta/Specta.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = Specta;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
 		};
 		EA4177DF2198BFF221D2EEAC63474A85 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -4343,15 +4469,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		24CC1F49BC017BD77551D3BFE4232DE8 /* Build configuration list for PBXNativeTarget "Pods-AWSWrapper_Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AE2577F21BE1A407A755A927A3C6E0DC /* Debug */,
-				A2F56B1B68BA02A426FB486D4DBD3576 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -4424,20 +4541,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		95322C903D807FCB65CFA8FE9F73D565 /* Build configuration list for PBXNativeTarget "Specta" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E86F2E8DBE7E40BDCE97981E121E0793 /* Debug */,
-				E523F06206016D122478513D3801ED69 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		C998A13526700A905A0655CA40FF62FE /* Build configuration list for PBXNativeTarget "AWSWrapper-Resources" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8807230377F8431DEED1D608D868E295 /* Debug */,
 				047525C4FADF74FFC0549A16A4B9EC18 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD2B35E1971628B2CC31E48B1F64A6A7 /* Build configuration list for PBXNativeTarget "Pods-AWSWrapper_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACFEC243F7B3168DEE6031A92DE71F9C /* Debug */,
+				A0174F22ED832F296BD7C30E41DADC41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F3B5BA8DE9F1C873F94EEFE0EA19DDD4 /* Build configuration list for PBXNativeTarget "Specta" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4BBC43A30905E71AD3FF2D49DADB84A8 /* Debug */,
+				B08BD4E5C910F48F25A4F58AE12CEF42 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

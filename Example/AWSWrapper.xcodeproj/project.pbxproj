@@ -25,6 +25,7 @@
 		F64BAC7C1EE269BA00051399 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC7A1EE269BA00051399 /* ViewController.m */; };
 		F64BAC7D1EE269BA00051399 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F64BAC7B1EE269BA00051399 /* Main.storyboard */; };
 		F64BAC821EE26BA700051399 /* DynamoDBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC811EE26BA700051399 /* DynamoDBVC.m */; };
+		F64BAC841EE29F6700051399 /* DSWrapperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC831EE29F6700051399 /* DSWrapperTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		F64BAC7B1EE269BA00051399 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		F64BAC801EE26BA700051399 /* DynamoDBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamoDBVC.h; sourceTree = "<group>"; };
 		F64BAC811EE26BA700051399 /* DynamoDBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamoDBVC.m; sourceTree = "<group>"; };
+		F64BAC831EE29F6700051399 /* DSWrapperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSWrapperTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				6003F5BB195388D20070C39A /* Tests.m */,
+				F64BAC831EE29F6700051399 /* DSWrapperTests.m */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 			);
 			path = Tests;
@@ -259,6 +262,7 @@
 						DevelopmentTeam = 29DN3FMVP9;
 					};
 					6003F5AD195388D20070C39A = {
+						DevelopmentTeam = 29DN3FMVP9;
 						TestTargetID = 6003F589195388D20070C39A;
 					};
 				};
@@ -413,6 +417,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F64BAC841EE29F6700051399 /* DSWrapperTests.m in Sources */,
 				6003F5BC195388D20070C39A /* Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -569,6 +574,7 @@
 			baseConfigurationReference = E64CEB5FC6FE6452E4603179 /* Pods-AWSWrapper_Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 29DN3FMVP9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -593,6 +599,7 @@
 			baseConfigurationReference = 1DC6037ABCD2ADE584386D8A /* Pods-AWSWrapper_Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 29DN3FMVP9;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

@@ -17,8 +17,20 @@ AWSWrapper is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod "AWSWrapper"
+pod "AWSWrapper", :git => 'https://github.com/lyc2345/AWSWrapper.git'
 ```
+
+### import
+```
+@import AWSWrapper;
+```
+
+1. Sign up for AWSMobileHub Service
+2. create Bookmark and RecentVisit "Amazon DynamoDb Tables" 
+3. create "Amazon Cognito Idnentity Pools", User sign-in only use Email and Password. 
+4. set up .plist according to Integrate > iOS Obj-C > Getting Started > OPTION 2
+   OR You can see the plist in DEMO project.
+
 
 ## Author
 

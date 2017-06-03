@@ -23,6 +23,10 @@
 #import "Random.h"
 #import "RecentVisit.h"
 #import "RecordSuitable.h"
+#import "SignInViewController.h"
+#import "UserPoolForgotPasswordViewController.h"
+#import "UserPoolMFAViewController.h"
+#import "UserPoolSignUpViewController.h"
 
 FOUNDATION_EXPORT double AWSWrapperVersionNumber;
 FOUNDATION_EXPORT const unsigned char AWSWrapperVersionString[];

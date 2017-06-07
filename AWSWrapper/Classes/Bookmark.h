@@ -24,7 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *_userId;
 @property (nonatomic, strong) NSString *_id;
+// This is like git commit id, everytime you push, this will change when push success
 @property (nonatomic, strong) NSString *_commitId;
+// This is for record server status, if remoteHash is different or empty, means server table datas must be set or clean.
 @property (nonatomic, strong) NSString *_remoteHash;
 @property (nonatomic, strong) NSDictionary *_dicts;
 

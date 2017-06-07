@@ -1,3 +1,4 @@
+
 //
 //  BookmarkManager.m
 //
@@ -50,6 +51,27 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 #pragma mark BookmarkManager (Bookmark&RecentlyVisit Format)
 
 @implementation BookmarkManager
+
+-(NSDictionary *)convert:(AWSDynamoDBAttributeValue *)dictionaryValue {
+  
+  NSDictionary *dicts = dictionaryValue.M;
+  NSMutableDictionary *pureRecord = [NSMutableDictionary dictionary];
+  
+  for (NSString *key in dicts.allKeys) {
+    
+    NSMutableDictionary *info = [NSMutableDictionary dictionary];
+    AWSDynamoDBAttributeValue *infoValue = dicts[key];
+    NSDictionary *comic = infoValue.M;
+    AWSDynamoDBAttributeValue *authorValue = comic[@"author"];
+    AWSDynamoDBAttributeValue *urlValue = comic[@"url"];
+    
+    [info setObject: authorValue.S forKey: @"author"];
+    [info setObject: urlValue.S forKey: @"url"];
+    [pureRecord setObject: info forKey: key];
+    NSLog(@"%@", key);
+  }
+  return @{@"dicts": pureRecord};
+}
 
 -(NSDictionary *)recordFormatOFIdentity:(NSString *)identity commitId:(NSString *)commitId andList:(NSArray *)list remoteHash:(NSString *)remoteHash {
 	
@@ -239,6 +261,46 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 
 @implementation BookmarkManager (AWS)
 
+-(void)pull:(RecordType)type withUserId:(NSString *)userId completion:(void(^)(NSDictionary *item, NSError *error))completionHandler {
+  
+  AWSDynamoDB *dynamoDB = [AWSDynamoDB defaultDynamoDB];
+  AWSDynamoDBQueryInput *queryInput = [AWSDynamoDBQueryInput new];
+  
+  AWSDynamoDBAttributeValue *identityValue = [AWSDynamoDBAttributeValue new];
+  identityValue.S = userId;
+  
+  queryInput.tableName =  type == RecordTypeBookmark ? [Bookmark dynamoDBTableName] : [RecentVisit dynamoDBTableName];
+  queryInput.projectionExpression = @"userId, dicts, commitId, remoteHash";
+  queryInput.keyConditionExpression = [NSString stringWithFormat: @"userId = :val"];
+  queryInput.expressionAttributeValues = @{@":val": identityValue};
+  
+  [dynamoDB query: queryInput completionHandler:^(AWSDynamoDBQueryOutput * _Nullable response, NSError * _Nullable error) {
+    
+    if (error) {
+      NSLog(@"AWS DynamoDB load error: %@", error);
+      completionHandler(nil, error);
+      return;
+    }
+    NSLog(@"AWS DynamoDB load successfull");
+    NSLog(@"With data: %@", response);
+    
+    NSDictionary *attributeDictionary = response.items.firstObject;
+    AWSDynamoDBAttributeValue *dicts = attributeDictionary[@"dicts"];
+    AWSDynamoDBAttributeValue *remoteHash = attributeDictionary[@"remoteHash"];
+    AWSDynamoDBAttributeValue *commitId = attributeDictionary[@"commitId"];
+    AWSDynamoDBAttributeValue *userId = attributeDictionary[@"userId"];
+    
+    NSMutableDictionary *record = [[self convert: dicts] mutableCopy];
+    [record setObject: remoteHash.S forKey: @"remoteHash"];
+    [record setObject: commitId.S forKey: @"commitId"];
+    [record setObject: userId.S forKey: @"userId"];
+    [record setObject: userId.S forKey: @"id"];
+    
+    completionHandler(record, nil);
+
+  }];
+}
+
 -(void)pull:(Class)aClass withUser:(NSString *)userId  completion:(void(^)(NSArray *items, NSError *error))completionHandler {
 	
 	AWSDynamoDBObjectMapper *objectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
@@ -420,13 +482,13 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 	}
 }
 
--(void)mergePushWithObjct:(NSArray *)object commitId:(NSString *)commitId remoteHash:(NSString *)remoteHash type:(RecordType)type ofUserId:(NSString *)userId completion:(void(^)(NSError *error))mergeCompletion {
+-(void)mergePushWithType:(RecordType)type records:(NSArray *)records commitId:(NSString *)commitId remoteHash:(NSString *)remoteHash ofUserId:(NSString *)userId completion:(void(^)(NSError *error))mergeCompletion {
 	
 	if (type == RecordTypeBookmark) {
 		Bookmark *book = [Bookmark new];
 		book._id = userId;
 		book._userId = userId;
-		book._dicts = [DSWrapper dictFromArray: object];
+		book._dicts = [DSWrapper dictFromArray: records];
 		book._commitId = commitId;
 		book._remoteHash = remoteHash;
 		
@@ -439,7 +501,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 		RecentVisit *visit = [RecentVisit new];
 		visit._id = userId;
 		visit._userId = userId;
-		visit._dicts = [DSWrapper dictFromArray: object];
+		visit._dicts = [DSWrapper dictFromArray: records];
 		visit._commitId = commitId;
 		visit._remoteHash = remoteHash;
 		
@@ -452,22 +514,6 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 		assert(@"you need to specfic a type use RecordType enum");
 	}
 }
-/*
--(void)mergePushWithBook:(id<RecordSuitable>)book completion:(void(^)(NSError *error))mergeCompletion {
-	
-	Bookmark *remote = [Bookmark new];
-	Bookmark *new = [Bookmark new];
-	
-	[self mergePushWithClient: book remote: remote new: new completion: mergeCompletion];
-}
-
--(void)mergePushWithRecentlyVisit:(id<RecordSuitable>)visit completion:(void(^)(NSError *error))mergeCompletion {
-	
-	RecentVisit *remote = [RecentVisit new];
-	RecentVisit *new = [RecentVisit new];
-	
-	[self mergePushWithClient: visit remote: remote new: new completion: mergeCompletion];
-}*/
 
 -(void)pushWithObject:(id<RecordSuitable>)record diff:(NSDictionary *)diff completion:(void(^)(AWSDynamoDBUpdateItemOutput *response, NSError *error, NSString *commitId))completion {
 	

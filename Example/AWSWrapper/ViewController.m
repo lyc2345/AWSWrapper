@@ -128,6 +128,12 @@
 	self.userHistoryConsole.text = [NSString stringWithFormat:@"current: %@,\n list: %@", currentUser, userList];
 	
 	[self refreshLoginStatusThroughNotification];
+  
+  [[BookmarkManager new] pull: RecordTypeBookmark withUserId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *item, NSError *error) {
+    
+    NSLog(@"%@", item);
+    
+  }];
 }
 
 

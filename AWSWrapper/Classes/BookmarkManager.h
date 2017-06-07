@@ -34,6 +34,15 @@ typedef NS_ENUM(NSInteger, RecordType) {
 
 /**
  pull Bookmark or RecentlyVisit data by userId and Class
+ 
+ @param type AWS Model Type (e.g. RecordTypebookmark)
+ @param userId AWS identityID
+ @param completionHandler The handler will be ran once the task is completion.
+ */
+-(void)pull:(RecordType)type withUserId:(NSString *)userId completion:(void(^)(NSDictionary *item, NSError *error))completionHandler;
+
+/**
+ pull Bookmark or RecentlyVisit data by userId and Class
 
  @param aClass AWS Model Class
  @param userId AWS identityID
@@ -70,13 +79,13 @@ typedef NS_ENUM(NSInteger, RecordType) {
  7. diff new remote_client and remote, also apply client_shadow_diff into remote_client
  8. push the diffs by remote diff new_remote_client
 
- @param object The dictionary of Bookmark or RecentlyVisit
+ @param type Bookmark or RecentlyVisit
+ @param records The dictionary of Bookmark or RecentlyVisit of Array
  @param commitId commit id if you wanna control your commit id by yourself
  @param remoteHash remote hash for detect server is reseted or not
- @param type Bookmark or RecentlyVisit
  @param userId AWS identity id
  @param mergeCompletion return error
  */
--(void)mergePushWithObjct:(NSArray *)object commitId:(NSString *)commitId remoteHash:(NSString *)remoteHash type:(RecordType)type ofUserId:(NSString *)userId completion:(void(^)(NSError *error))mergeCompletion;
+-(void)mergePushWithType:(RecordType)type records:(NSArray *)records commitId:(NSString *)commitId remoteHash:(NSString *)remoteHash ofUserId:(NSString *)userId completion:(void(^)(NSError *error))mergeCompletion;
 
 @end

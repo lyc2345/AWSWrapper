@@ -482,13 +482,14 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 	}
 }
 
--(void)mergePushWithType:(RecordType)type records:(NSArray *)records commitId:(NSString *)commitId remoteHash:(NSString *)remoteHash ofUserId:(NSString *)userId completion:(void(^)(NSError *error))mergeCompletion {
+-(void)mergePushWithType:(RecordType)type records:(NSDictionary *)records commitId:(NSString *)commitId remoteHash:(NSString *)remoteHash ofUserId:(NSString *)userId completion:(void(^)(NSError *error))mergeCompletion {
 	
 	if (type == RecordTypeBookmark) {
 		Bookmark *book = [Bookmark new];
 		book._id = userId;
 		book._userId = userId;
-		book._dicts = [DSWrapper dictFromArray: records];
+		//book._dicts = [DSWrapper dictFromArray: records];
+    book._dicts = records;
 		book._commitId = commitId;
 		book._remoteHash = remoteHash;
 		
@@ -501,7 +502,8 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 		RecentVisit *visit = [RecentVisit new];
 		visit._id = userId;
 		visit._userId = userId;
-		visit._dicts = [DSWrapper dictFromArray: records];
+		//visit._dicts = [DSWrapper dictFromArray: records];
+    visit._dicts = records;
 		visit._commitId = commitId;
 		visit._remoteHash = remoteHash;
 		

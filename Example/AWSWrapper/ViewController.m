@@ -146,11 +146,11 @@
 		
 		[[BookmarkManager new] addOffline: bookmark type: RecordTypeBookmark ofIdentity: [LoginManager shared].awsIdentityId];
 	}
+  NSDictionary *record = [[BookmarkManager new] getOfflineRecordOfIdentity: [LoginManager shared].awsIdentityId type: RecordTypeBookmark];
+  /*
 	Bookmark *bk = [Bookmark new];
 	bk._id = [LoginManager shared].awsIdentityId;
 	bk._userId = [LoginManager shared].awsIdentityId;
-	NSDictionary *record = [[BookmarkManager new] getOfflineRecordOfIdentity: [LoginManager shared].awsIdentityId type: RecordTypeBookmark];
-	
 	bk._dicts = record[@"_dicts"];
 	bk._remoteHash = record[@"_remoteHash"];
 	bk._commitId = record[@"_commitId"];
@@ -161,7 +161,15 @@
 			NSLog(@"error: %@", error);
 			return;
 		}
-	}];
+	}];*/
+  
+  [[BookmarkManager new] mergePushWithType: RecordTypeBookmark records: record[@"_dicts"] commitId: record[@"_commitId"] remoteHash: record[@"_remoteHash"] ofUserId:[LoginManager shared].awsIdentityId completion:^(NSError *error) {
+    
+    if (error) {
+      NSLog(@"error: %@", error);
+      return;
+    }
+  }];
 }
 
 - (IBAction)delete:(id)sender {

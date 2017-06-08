@@ -17,7 +17,7 @@
 +(NSDictionary *)dictFromArray:(NSArray *)array;
 
 +(NSDictionary *)shadowIsBookmark:(BOOL)isBookmark;
-+(void)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark;
++(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark;
 
 
 +(NSDictionary *)diffShadowAndClient:(NSDictionary *)client isBookmark:(BOOL)isBookmark;

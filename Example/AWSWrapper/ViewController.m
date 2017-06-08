@@ -129,7 +129,7 @@
 	
 	[self refreshLoginStatusThroughNotification];
   
-  [[BookmarkManager new] pull: RecordTypeBookmark withUserId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *item, NSError *error) {
+  [[BookmarkManager new] pullType: RecordTypeBookmark user: [LoginManager shared].awsIdentityId completion:^(NSDictionary *item, NSError *error) {
     
     NSLog(@"%@", item);
     
@@ -146,30 +146,31 @@
 		
 		[[BookmarkManager new] addOffline: bookmark type: RecordTypeBookmark ofIdentity: [LoginManager shared].awsIdentityId];
 	}
-  NSDictionary *record = [[BookmarkManager new] getOfflineRecordOfIdentity: [LoginManager shared].awsIdentityId type: RecordTypeBookmark];
-  /*
-	Bookmark *bk = [Bookmark new];
-	bk._id = [LoginManager shared].awsIdentityId;
-	bk._userId = [LoginManager shared].awsIdentityId;
-	bk._dicts = record[@"_dicts"];
-	bk._remoteHash = record[@"_remoteHash"];
-	bk._commitId = record[@"_commitId"];
-	
-	[[BookmarkManager new] mergePushWithRecord: bk type: RecordTypeBookmark completion:^(NSError *error) {
-		
-		if (error) {
-			NSLog(@"error: %@", error);
-			return;
-		}
-	}];*/
-  
-  [[BookmarkManager new] mergePushWithType: RecordTypeBookmark records: record[@"_dicts"] commitId: record[@"_commitId"] remoteHash: record[@"_remoteHash"] ofUserId:[LoginManager shared].awsIdentityId completion:^(NSError *error) {
+
+  [[BookmarkManager new] mergePushType: RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSError *error) {
     
     if (error) {
       NSLog(@"error: %@", error);
       return;
     }
   }];
+  /*
+   NSDictionary *record = [[BookmarkManager new] getOfflineRecordOfIdentity: [LoginManager shared].awsIdentityId type: RecordTypeBookmark];
+   
+   Bookmark *bk = [Bookmark new];
+   bk._id = [LoginManager shared].awsIdentityId;
+   bk._userId = [LoginManager shared].awsIdentityId;
+   bk._dicts = record[@"_dicts"];
+   bk._remoteHash = record[@"_remoteHash"];
+   bk._commitId = record[@"_commitId"];
+   
+   [[BookmarkManager new] mergePushWithRecord: bk type: RecordTypeBookmark completion:^(NSError *error) {
+   
+   if (error) {
+			NSLog(@"error: %@", error);
+			return;
+   }
+   }];*/
 }
 
 - (IBAction)delete:(id)sender {
@@ -192,6 +193,7 @@
 		[[BookmarkManager new] addOffline: recentlyVisit type: RecordTypeRecentlyVisit ofIdentity: [LoginManager shared].awsIdentityId];
 		
 	}
+  /*
 	RecentVisit *rv = [RecentVisit new];
 	rv._id = [LoginManager shared].awsIdentityId;
 	rv._userId = [LoginManager shared].awsIdentityId;
@@ -207,7 +209,14 @@
 			NSLog(@"error: %@", error);
 			return;
 		}
-	}];
+	}];*/
+  [[BookmarkManager new] mergePushType: RecordTypeRecentlyVisit userId:[LoginManager shared].awsIdentityId completion:^(NSError *error) {
+    
+    if (error) {
+      NSLog(@"error: %@", error);
+      return;
+    }
+  }];
 }
 
 
@@ -232,22 +241,23 @@
 
 - (IBAction)logRecentData:(id)sender {
 	
-	[[BookmarkManager new] pull: [RecentVisit class] withUser: [LoginManager shared].awsIdentityId completion:^(NSArray *items, NSError *error) {
+  [[BookmarkManager new] pullType: RecordTypeRecentlyVisit user: [LoginManager shared].awsIdentityId completion:^(NSDictionary *item, NSError *error) {
 		
-		NSLog(@"recent data: %@", items);
+		NSLog(@"recent data: %@", item);
 		dispatch_async(dispatch_get_main_queue(), ^{
-			self.console.text = [NSString stringWithFormat:@"%@", items];
+			self.console.text = [NSString stringWithFormat:@"%@", item];
 		});
 	}];
 }
 
 - (IBAction)logBookmark:(id)sender {
 	
-	[[BookmarkManager new] pull: [Bookmark class] withUser: [LoginManager shared].awsIdentityId completion:^(NSArray *items, NSError *error) {
+  [[BookmarkManager new] pullType: RecordTypeBookmark user: [LoginManager shared].awsIdentityId completion:^(NSDictionary *item, NSError *error) {
+
 		
-		NSLog(@"recent data: %@", items);
+		NSLog(@"recent data: %@", item);
 		dispatch_async(dispatch_get_main_queue(), ^{
-				self.console.text = [NSString stringWithFormat:@"%@", items];
+				self.console.text = [NSString stringWithFormat:@"%@", item];
 		});
 		
 	}];

@@ -107,20 +107,17 @@
 	BookmarkManager *bookmarkManager = [BookmarkManager new];
 	NSDictionary *localBookmarkRecord = [bookmarkManager getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
 
-	Bookmark *clientBookmark = [Bookmark new];
-	clientBookmark._id = userId;
-	clientBookmark._userId = userId;
-	clientBookmark._dicts = localBookmarkRecord[@"_dicts"];
-	clientBookmark._commitId = localBookmarkRecord[@"_commitId"];
-	clientBookmark._remoteHash = localBookmarkRecord[@"_remoteHash"];
+  NSMutableDictionary *bookmark = [localBookmarkRecord mutableCopy];
+  [bookmark setObject: userId forKey: @"_id"];
+  [bookmark setObject: userId forKey: @"_userId"];
 	
-	[bookmarkManager mergePushWithRecord: clientBookmark type: RecordTypeBookmark completion:^(NSError *error) {
-		
-		if (error) {
-			NSLog(@"SyncManager mergePush error: %@", error);
-			return;
-		}
-	}];
+  [bookmarkManager mergePushType: RecordTypeBookmark userId: userId completion:^(NSError *error) {
+    
+    if (error) {
+      NSLog(@"SyncManager mergePush error: %@", error);
+      return;
+    }
+  }];
 }
 
 

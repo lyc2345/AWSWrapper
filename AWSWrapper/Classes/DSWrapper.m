@@ -37,9 +37,10 @@ NSString *const _recently_shadow = @"_client_shadow_RecentlyVisit";
 	return [[NSUserDefaults standardUserDefaults] dictionaryForKey: isBookmark ? _bookmark_shadow : _recently_shadow];
 }
 
-+(void)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark {
++(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark {
 
-	return [[NSUserDefaults standardUserDefaults] setObject: dict forKey: isBookmark ? _bookmark_shadow : _recently_shadow];
+  [[NSUserDefaults standardUserDefaults] setObject: dict forKey: isBookmark ? _bookmark_shadow : _recently_shadow];
+  return [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 +(NSDictionary *)diffFormatFromConditionArray:(NSArray *)conditions {

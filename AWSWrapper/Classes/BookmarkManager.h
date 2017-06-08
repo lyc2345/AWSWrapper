@@ -38,6 +38,8 @@ typedef NS_ENUM(NSInteger, RecordType) {
  @param type AWS Model Type (e.g. RecordTypebookmark)
  @param userId AWS identityID
  @param completionHandler The handler will be ran once the task is completion.
+ 
+ item is pure dictionary object for bookmark record.
  */
 -(void)pull:(RecordType)type withUserId:(NSString *)userId completion:(void(^)(NSDictionary *item, NSError *error))completionHandler;
 
@@ -47,6 +49,8 @@ typedef NS_ENUM(NSInteger, RecordType) {
  @param aClass AWS Model Class
  @param userId AWS identityID
  @param completionHandler The handler will be ran once the task is completion.
+ 
+ items is a AWS Table Model array.
  */
 -(void)pull:(Class)aClass withUser:(NSString *)userId completion:(void(^)(NSArray *items, NSError *error))completionHandler;
 

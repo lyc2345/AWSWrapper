@@ -15,34 +15,6 @@
 NSString * const __BOOKMARKS_LIST				= @"__BOOKMARKS_LIST";
 NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 
-@implementation Bookmark (JSON)
-
-+(Bookmark *)bookmarkWithDictionary:(NSDictionary *)dict {
-	
-	Bookmark *bookmark = [Bookmark new];
-	bookmark._id = dict[@"_id"];
-	bookmark._userId = dict[@"_userId"];
-	bookmark._dicts = dict[@"_dicts"];
-	bookmark._commitId = dict[@"_commitId"];
-	bookmark._remoteHash = dict[@"_remoteHash"];
-	return bookmark;
-}
-@end
-
-@implementation RecentVisit (JSON)
-
-+(RecentVisit *)bookmarkWithDictionary:(NSDictionary *)dict {
-	
-	RecentVisit *recentlyVisit = [RecentVisit new];
-	recentlyVisit._id = dict[@"_id"];
-	recentlyVisit._userId = dict[@"_userId"];
-	recentlyVisit._dicts = dict[@"_dicts"];
-	recentlyVisit._commitId = dict[@"_commitId"];
-	recentlyVisit._remoteHash = dict[@"_remoteHash"];
-	return recentlyVisit;
-}
-@end
-
 // bookmark = Dictionary
 // bookmarkList = Array(Dicionary)
 // bookmarkRecord = Dicionary(list: bookmarkList)
@@ -52,10 +24,15 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 
 @implementation BookmarkManager
 
--(NSDictionary *)convert:(AWSDynamoDBAttributeValue *)dictionaryValue {
+-(NSDictionary *)convert:(NSDictionary *)attributeDictionary {
   
-  NSDictionary *dicts = dictionaryValue.M;
-  NSMutableDictionary *pureRecord = [NSMutableDictionary dictionary];
+  AWSDynamoDBAttributeValue *dictsValue = attributeDictionary[@"dicts"];
+  AWSDynamoDBAttributeValue *remoteHash = attributeDictionary[@"remoteHash"];
+  AWSDynamoDBAttributeValue *commitId = attributeDictionary[@"commitId"];
+  AWSDynamoDBAttributeValue *userId = attributeDictionary[@"userId"];
+  
+  NSDictionary *dicts = dictsValue.M;
+  NSMutableDictionary *pureDicts = [NSMutableDictionary dictionary];
   
   for (NSString *key in dicts.allKeys) {
     
@@ -67,10 +44,18 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
     
     [info setObject: authorValue.S forKey: @"author"];
     [info setObject: urlValue.S forKey: @"url"];
-    [pureRecord setObject: info forKey: key];
+    [pureDicts setObject: info forKey: key];
     NSLog(@"%@", key);
   }
-  return @{@"dicts": pureRecord};
+  
+  NSMutableDictionary *record = [NSMutableDictionary dictionary];
+  [record setObject: pureDicts forKey: @"dicts"];
+  [record setObject: remoteHash.S forKey: @"remoteHash"];
+  [record setObject: commitId.S forKey: @"commitId"];
+  [record setObject: userId.S forKey: @"userId"];
+  [record setObject: userId.S forKey: @"id"];
+  
+  return record;
 }
 
 -(NSDictionary *)recordFormatOFIdentity:(NSString *)identity commitId:(NSString *)commitId andList:(NSArray *)list remoteHash:(NSString *)remoteHash {
@@ -282,19 +267,9 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
       return;
     }
     NSLog(@"AWS DynamoDB load successfull");
-    NSLog(@"With data: %@", response);
     
     NSDictionary *attributeDictionary = response.items.firstObject;
-    AWSDynamoDBAttributeValue *dicts = attributeDictionary[@"dicts"];
-    AWSDynamoDBAttributeValue *remoteHash = attributeDictionary[@"remoteHash"];
-    AWSDynamoDBAttributeValue *commitId = attributeDictionary[@"commitId"];
-    AWSDynamoDBAttributeValue *userId = attributeDictionary[@"userId"];
-    
-    NSMutableDictionary *record = [[self convert: dicts] mutableCopy];
-    [record setObject: remoteHash.S forKey: @"remoteHash"];
-    [record setObject: commitId.S forKey: @"commitId"];
-    [record setObject: userId.S forKey: @"userId"];
-    [record setObject: userId.S forKey: @"id"];
+    NSDictionary *record = [self convert: attributeDictionary];
     
     completionHandler(record, nil);
 
@@ -321,12 +296,6 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 				return;
 			}
 			NSLog(@"AWS DynamoDB load successfull");
-			NSLog(@"With data: %@", response);
-			/*
-			 for (Bookmark *bk in response.items) {
-			 NSLog(@"bookmark: %@", bk);
-			 }
-			 */
 			completionHandler(response.items, nil);
 		}];
 }
@@ -353,14 +322,18 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 
 -(void)mergePushWithClient:(id<RecordSuitable>)client remote:(id<RecordSuitable>)remote new:(id<RecordSuitable>)new completion:(void (^)(NSError *))mergeCompletion {
 	
+  // Diff local and shadow first, should know the modifies.
 	NSDictionary *diff_client_shadow = [DSWrapper diffShadowAndClient: client._dicts isBookmark: [client isKindOfClass: [Bookmark class]]];
-	
+  
+  NSLog(@"start: 1");
+  // push local AWS model and the diff we get before.
 	[self pushWithObject: client diff: diff_client_shadow completion:^(AWSDynamoDBUpdateItemOutput *response, NSError *error, NSString *commitId) {
-		NSLog(@"1: Done");
+    
+    NSLog(@"done 1");
 		if (!error) {
 			// expected commit id meet localBookmarkRecord commit id
 			// successed!
-			NSLog(@"please success here la");
+			NSLog(@"push success by merge push at the first place");
 			//NSLog(@"first push success with object: %@", response);
 			[self pushSuccessThenSaveLocalRecord: client type: [client isKindOfClass: [Bookmark class]] ? RecordTypeBookmark : RecordTypeRecentlyVisit newCommitId: commitId];
 			
@@ -368,13 +341,13 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 			return;
 			
 		} else {
-			NSLog(@"conditional error: %@", error);
+			NSLog(@"first conditional write error: %@", error);
 			
-			NSLog(@"starting pull...");
-			NSLog(@"2");
+			NSLog(@"starting pulling...");
+			NSLog(@"start 2");
 			
 			[self pull: [client class] withUser: client._userId completion:^(NSArray *items, NSError *error) {
-				NSLog(@"2: Done");
+				NSLog(@"done 2");
 				NSLog(@"pull finished");
 				if (error) {
 					NSLog(@"BookmarkManager pull error: %@", error);
@@ -383,7 +356,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 				} else {
 					id<RecordSuitable> cloud = items.firstObject;
 					
-					NSLog(@"3");
+					NSLog(@"start 3");
 					if (!cloud) {
 						
 						remote._id = client._userId;
@@ -395,7 +368,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 						
 						[self forcePushWithObject: remote completion:^(NSError *error) {
 							if (!error) { NSLog(@"FORCE push success with reocrd: %@", remote); }
-							NSLog(@"3: Done");
+							NSLog(@"done 3");
 							RecordType type = [client isKindOfClass: [Bookmark class]] ? RecordTypeBookmark : RecordTypeRecentlyVisit;
 							[self pushSuccessThenSaveLocalRecord: remote type: type newCommitId: commitId];
 							
@@ -404,12 +377,12 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 						
 					} else {
 						
-						NSLog(@"3: Done");
+						NSLog(@"done 3");
 						NSLog(@"remote version: %@, local version: %@", cloud._remoteHash, client._remoteHash);
 						NSLog(@"remote timestamp: %@, local timestamp: %@", cloud._commitId, client._commitId);
 						NSLog(@"starting diffmerge...");
 						// diff
-						NSLog(@"4");
+						NSLog(@"start 4: diffmerge");
 						NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: cloud._dicts andLoses: client._dicts];
 						NSDictionary *newClient = [DSWrapper applyInto: client._dicts From: need_to_apply_to_client];
 						
@@ -418,15 +391,15 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 						new._dicts = newClient;
 						new._commitId = cloud._commitId;
 						new._remoteHash = cloud._remoteHash;
-						
-						NSLog(@"5");
+            NSLog(@"done 4");
+						NSLog(@"start 5");
 						if (!cloud._remoteHash) {
 							
 							new._commitId = [Random string];
 							new._remoteHash = [Random string];
 							NSLog(@"Remote hash is nil, force push whole local record");
 							[self forcePushWithObject: new completion:^(NSError *error) {
-								NSLog(@"5: Done by force");
+								NSLog(@"5: Done by force push");
 								
 								RecordType type = [client isKindOfClass: [Bookmark class]] ? RecordTypeBookmark : RecordTypeRecentlyVisit;
 								[self pushSuccessThenSaveLocalRecord: new type: type newCommitId: commitId];
@@ -442,7 +415,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 								
 								if (error) {
 									NSLog(@"conditional push error: %@", error);
-									NSLog(@"fuckkkkkkkkkkkkkkkk");
+									NSLog(@"fuckkkkkkkkkkkkkkkk erorrrrrrrrr");
 									return;
 								}
 								NSLog(@"push success after diffmerge");

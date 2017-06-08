@@ -124,7 +124,10 @@
 	NSString *currentUser = [[NSUserDefaults standardUserDefaults] stringForKey: @"__CURRENT_USER"];
   self.currentUser = currentUser;
   self.userList = userList;
-  [_userTable reloadData];
+  
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [_userTable reloadData];
+  });
   
 	
 	[self refreshLoginStatusThroughNotification];
@@ -144,7 +147,7 @@
 		[[BookmarkManager new] addOffline: bookmark type: RecordTypeBookmark ofIdentity: [LoginManager shared].awsIdentityId];
 	}
 
-  [[BookmarkManager new] mergePushType: RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSError *error) {
+  [[BookmarkManager new] mergePushType: RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
     
     if (error) {
       NSLog(@"error: %@", error);
@@ -164,7 +167,7 @@
 		[[BookmarkManager new] addOffline: recentlyVisit type: RecordTypeRecentlyVisit ofIdentity: [LoginManager shared].awsIdentityId];
 		
 	}
-  [[BookmarkManager new] mergePushType: RecordTypeRecentlyVisit userId:[LoginManager shared].awsIdentityId completion:^(NSError *error) {
+  [[BookmarkManager new] mergePushType: RecordTypeRecentlyVisit userId:[LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
     
     if (error) {
       NSLog(@"error: %@", error);
@@ -178,13 +181,13 @@
 	
 	//[[SyncManager shared] startLoginFlow];
   NSString *userId = [LoginManager shared].awsIdentityId;
-  [[BookmarkManager new] mergePushType: RecordTypeBookmark userId: userId completion:^(NSError *error) {
+  [[BookmarkManager new] mergePushType: RecordTypeBookmark userId: userId completion:^(NSDictionary *responseItem, NSError *error) {
     
     dispatch_sync(dispatch_get_main_queue(), ^{
       [self reloadBookmarks];
     });
   }];
-  [[BookmarkManager new] mergePushType: RecordTypeRecentlyVisit userId: userId completion:^(NSError *error) {
+  [[BookmarkManager new] mergePushType: RecordTypeRecentlyVisit userId: userId completion:^(NSDictionary *responseItem, NSError *error) {
     
     dispatch_sync(dispatch_get_main_queue(), ^{
       [self reloadRecentlyVisit];
@@ -201,7 +204,9 @@
   NSDictionary *localBookmarkRecord = [bookmarkManager getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
   
   self.localBookmark = localBookmarkRecord;
-  [_tableView reloadData];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [_tableView reloadData];
+  });
   
   if ([LoginManager shared].awsIdentityId) {
     [bookmarkManager pullType: RecordTypeBookmark user: loginManager.awsIdentityId completion:^(NSDictionary *item, NSError *error) {
@@ -223,7 +228,10 @@
   NSDictionary *localRecentlyVisit = [bookmarkManager getOfflineRecordOfIdentity: userId type: RecordTypeRecentlyVisit];
   
   self.localRecentVisitItems = localRecentlyVisit;
-  [_tableView reloadData];
+  
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [_tableView reloadData];
+  });
   
   if ([LoginManager shared].awsIdentityId) {
     
@@ -320,7 +328,7 @@
     if (indexPath.section == 0) {
       
       [tableView beginUpdates];
-      self.localBookmark = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localBookmark[@"_dicts"]][indexPath.row] type: RecordTypeBookmark ofIdentity: self.localBookmark[@"_identity"]];
+      self.localBookmark = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localBookmark[@"_dicts"]][indexPath.row] type: RecordTypeBookmark ofIdentity: self.localBookmark[@"_userId"]];
       [tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationLeft];
       [tableView reloadSectionIndexTitles];
       [tableView endUpdates];
@@ -328,7 +336,7 @@
     } else if (indexPath.section == 2) {
       
       [tableView beginUpdates];
-      self.localRecentVisitItems = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localRecentVisitItems[@"_dicts"]][indexPath.row] type: RecordTypeRecentlyVisit ofIdentity: self.localRecentVisitItems[@"_identity"]];
+      self.localRecentVisitItems = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localRecentVisitItems[@"_dicts"]][indexPath.row] type: RecordTypeRecentlyVisit ofIdentity: self.localRecentVisitItems[@"_userId"]];
       [tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationLeft];
       [tableView reloadSectionIndexTitles];
       [tableView endUpdates];
@@ -356,7 +364,7 @@
       default: {
         
         NSDictionary *user = self.userList[indexPath.row];
-        cell.textLabel.text = user[@"_identity"];
+        cell.textLabel.text = user[@"_userId"];
         cell.detailTextLabel.text = [NSString stringWithFormat: @"user: %@, password: %@", user[@"_user"], user[@"_password"]];
         return cell;
       }

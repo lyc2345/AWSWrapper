@@ -86,14 +86,14 @@ NSString *const cellIdentifier = @"cell";
 	
 	BookmarkManager *bookmarkManager = [BookmarkManager new];
 	
-  [bookmarkManager mergePushType:RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSError *error) {
+  [bookmarkManager mergePushType:RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
 		
 		dispatch_sync(dispatch_get_main_queue(), ^{
 			[self reloadBookmarks];
 		});
 	}];
 	
-   [bookmarkManager mergePushType:RecordTypeRecentlyVisit userId: [LoginManager shared].awsIdentityId completion:^(NSError *error) {
+   [bookmarkManager mergePushType:RecordTypeRecentlyVisit userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
 		
 		dispatch_sync(dispatch_get_main_queue(), ^{
 			[self reloadRecentlyVisit];
@@ -148,7 +148,7 @@ NSString *const cellIdentifier = @"cell";
 		if (indexPath.section == 0) {
 			
 			[tableView beginUpdates];
-			self.localBookmark = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localBookmark[@"_dicts"]][indexPath.row] type: RecordTypeBookmark ofIdentity: self.localBookmark[@"_identity"]];
+			self.localBookmark = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localBookmark[@"_dicts"]][indexPath.row] type: RecordTypeBookmark ofIdentity: self.localBookmark[@"_userId"]];
 			[tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationLeft];
 			[tableView reloadSectionIndexTitles];
 			[tableView endUpdates];
@@ -156,7 +156,7 @@ NSString *const cellIdentifier = @"cell";
 		} else if (indexPath.section == 2) {
 			
 			[tableView beginUpdates];
-			self.localRecentVisitItems = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localRecentVisitItems[@"_dicts"]][indexPath.row] type: RecordTypeRecentlyVisit ofIdentity: self.localRecentVisitItems[@"_identity"]];
+			self.localRecentVisitItems = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localRecentVisitItems[@"_dicts"]][indexPath.row] type: RecordTypeRecentlyVisit ofIdentity: self.localRecentVisitItems[@"_userId"]];
 			[tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationLeft];
 			[tableView reloadSectionIndexTitles];
 			[tableView endUpdates];

@@ -70,6 +70,6 @@ typedef NS_ENUM(NSInteger, RecordType) {
  @param userId AWS identity id
  @param mergeCompletion return error
  */
--(void)mergePushType:(RecordType)type userId:(NSString *)userId completion:(void(^)(NSError *error))mergeCompletion;
+-(void)mergePushType:(RecordType)type userId:(NSString *)userId completion:(void(^)(NSDictionary *responseItem, NSError *error))mergeCompletion;
 
 @end

@@ -45,7 +45,6 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
     [info setObject: authorValue.S forKey: @"author"];
     [info setObject: urlValue.S forKey: @"url"];
     [pureDicts setObject: info forKey: key];
-    NSLog(@"%@", key);
   }
   
   NSMutableDictionary *record = [NSMutableDictionary dictionary];

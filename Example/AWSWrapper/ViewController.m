@@ -13,14 +13,17 @@
 @interface ViewController () <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource> {
   
   __weak IBOutlet UITableView *_tableView;
+  __weak IBOutlet UITableView *_userTable;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *identityLabel;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 @property (weak, nonatomic) IBOutlet UITextField *nameTF;
-@property (weak, nonatomic) IBOutlet UITextView *userHistoryConsole;
 @property (weak, nonatomic) IBOutlet UILabel *checkLoginLabel;
+
+@property NSString *currentUser;
+@property NSArray *userList;
 
 @property NSDictionary *localBookmark;
 @property NSDictionary *remoteBookmark;
@@ -51,6 +54,13 @@
   
   [_tableView registerClass: [UITableViewCell class] forCellReuseIdentifier: @"cell"];
   
+  _userTable.delegate = self;
+  _userTable.dataSource = self;
+  
+  [_userTable registerClass: [UITableViewCell class] forCellReuseIdentifier: @"usercell"];
+  
+  self.userList = [NSArray array];
+  self.currentUser = @"";
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -110,13 +120,12 @@
 
 - (IBAction)load:(id)sender {
 	
-	NSDictionary *userBookmark = [[BookmarkManager new] getOfflineRecordOfIdentity: [LoginManager shared].awsIdentityId type: RecordTypeBookmark];
-	//self.console.text = [NSString stringWithFormat:@"%@", userBookmark];
-	
-	
 	NSArray *userList = [[NSUserDefaults standardUserDefaults] arrayForKey: @"__USER_LIST"];
 	NSString *currentUser = [[NSUserDefaults standardUserDefaults] stringForKey: @"__CURRENT_USER"];
-	self.userHistoryConsole.text = [NSString stringWithFormat:@"current: %@,\n list: %@", currentUser, userList];
+  self.currentUser = currentUser;
+  self.userList = userList;
+  [_userTable reloadData];
+  
 	
 	[self refreshLoginStatusThroughNotification];
   
@@ -238,10 +247,23 @@
 // MARK: TableViewDelegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   
+  if (tableView == _userTable) {
+    return 2;
+  }
   return 4;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+  
+  if (tableView == _userTable) {
+    switch (section) {
+      case 0:
+        return 1;
+        break;
+      default:
+        return self.userList.count;
+    }
+  }
   
   if (section == 0) {
     return [(NSArray *)self.localBookmark[@"_dicts"] count];
@@ -257,6 +279,16 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
   
+  if (tableView == _userTable) {
+    switch (section) {
+      case 0:
+        return @"current";
+        break;
+      default:
+        return @"user list";
+    }
+  }
+  
   if (section == 0) {
     return [NSString stringWithFormat:@"Local B count %lu- %@", (unsigned long)[(NSArray *)self.localBookmark[@"_dicts"] count], [self.localBookmark[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.localBookmark[@"_commitId"]).length - 10, 10)]];
   } else if (section == 1) {
@@ -271,6 +303,11 @@
 }
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  if (tableView == _userTable) {
+    return NO;
+  }
+  
   return indexPath.section % 2 == 0 ? YES : NO;
 }
 
@@ -303,6 +340,30 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  if (tableView == _userTable) {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"usercell"];
+    if (!cell) {
+      cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier: @"cell"];
+    }
+    
+    switch (indexPath.section) {
+      case 0:
+        cell.textLabel.text = self.currentUser;
+        cell.detailTextLabel.text = [LoginManager shared].awsIdentityId;
+        return cell;
+        break;
+      default: {
+        
+        NSDictionary *user = self.userList[indexPath.row];
+        cell.textLabel.text = user[@"_identity"];
+        cell.detailTextLabel.text = [NSString stringWithFormat: @"user: %@, password: %@", user[@"_user"], user[@"_password"]];
+        return cell;
+      }
+    }
+    
+    return cell;
+  }
   
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
   

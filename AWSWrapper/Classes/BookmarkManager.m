@@ -353,7 +353,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
   
   NSLog(@"start: 1");
   // push local AWS model and the diff we get before.
-  [self pushWithObject: local type: type diff: diff_client_shadow completion:^(NSDictionary *responseItem, NSError *error, NSString *commitId) {
+  [self pushWithObject: local type: type diff: diff_client_shadow userId: userId completion:^(NSDictionary *responseItem, NSError *error, NSString *commitId) {
     
     NSLog(@"done 1");
 		if (!error) {
@@ -371,7 +371,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 			
 			NSLog(@"starting pulling...");
 			NSLog(@"start 2");
-      [self pullType: type user: local[@"_userId"] completion:^(NSDictionary *item, NSError *error) {
+      [self pullType: type user: userId completion:^(NSDictionary *item, NSError *error) {
 
 				NSLog(@"done 2");
 				NSLog(@"pull finished");
@@ -444,7 +444,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 							newClientDicts = [DSWrapper applyInto: newClientDicts From: diff_client_shadow];
 							NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClientDicts andLoses: cloud[@"_dicts"]];
 							
-              [self pushWithObject: new type: type diff: need_to_apply_to_remote completion:^(NSDictionary *responseItem, NSError *error, NSString *commitId) {
+              [self pushWithObject: new type: type diff: need_to_apply_to_remote userId: userId completion:^(NSDictionary *responseItem, NSError *error, NSString *commitId) {
 								
 								if (error) {
 									NSLog(@"conditional push error: %@", error);
@@ -467,7 +467,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 	}];
 }
 
--(void)pushWithObject:(NSDictionary *)record type:(RecordType)type diff:(NSDictionary *)diff completion:(void(^)(NSDictionary *responseItem, NSError *error, NSString *commitId))completion {
+-(void)pushWithObject:(NSDictionary *)record type:(RecordType)type diff:(NSDictionary *)diff userId:(NSString *)userId completion:(void(^)(NSDictionary *responseItem, NSError *error, NSString *commitId))completion {
 	
 	NSString *commitId = [Random string];
 	NSString *remoteHash = record[@"_remoteHash"] != nil ? record[@"_remoteHash"] : [Random string];
@@ -477,7 +477,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 	
 	AWSDynamoDBAttributeValue *identityValue = [AWSDynamoDBAttributeValue new];
   // Identity is the key for offline record
-  identityValue.S = record[@"_userId"] != nil ? record[@"_userId"] : record[@"_identity"];
+  identityValue.S = userId;
 	
 	if (type == RecordTypeBookmark) {
 		
@@ -485,7 +485,6 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 	} else {
 		updateInput.tableName = [RecentVisit dynamoDBTableName];
 	}
-	
 	
 	updateInput.key = @{ @"userId": identityValue, @"id": identityValue };
 	

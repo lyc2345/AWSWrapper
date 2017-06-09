@@ -16,8 +16,6 @@ typedef NS_ENUM(NSInteger, RecordType) {
 
 @interface BookmarkManager : NSObject
 
-+(NSDictionary *)convert:(NSDictionary *)attributeDictionary;
-
 @end
 
 @interface BookmarkManager (Offline)
@@ -44,18 +42,6 @@ typedef NS_ENUM(NSInteger, RecordType) {
 -(void)pullType:(RecordType)type user:(NSString *)userId completion:(void(^)(NSDictionary *item, NSError *error))completionHandler;
 
 /**
- pull Bookmark or RecentlyVisit data by userId and Class
-
- @param aClass AWS Model Class
- @param userId AWS identityID
- @param completionHandler The handler will be ran once the task is completion.
- 
- items is a AWS Table Model array.
- */
--(void)pullClass:(Class)aClass withUser:(NSString *)userId  completion:(void(^)(NSArray *items, NSError *error))completionHandler;
-
-
-/**
  1. It will compare record and shadow first and generate a client_shadow_diff
  2. If client's commit Id equal to remote's, it will push the diff to remote on AWS
  3. If commit Id is not the same.
@@ -66,7 +52,6 @@ typedef NS_ENUM(NSInteger, RecordType) {
  8. push the diffs by remote diff new_remote_client
 
  @param type Bookmark or RecentlyVisit
- @param record The dictionary include userId, commitId, remotHash, dicts
  @param userId AWS identity id
  @param mergeCompletion return error
  */

@@ -52,12 +52,8 @@
   _tableView.delegate = self;
   _tableView.dataSource = self;
   
-  [_tableView registerClass: [UITableViewCell class] forCellReuseIdentifier: @"cell"];
-  
   _userTable.delegate = self;
   _userTable.dataSource = self;
-  
-  [_userTable registerClass: [UITableViewCell class] forCellReuseIdentifier: @"usercell"];
   
   self.userList = [NSArray array];
   self.currentUser = @"";
@@ -180,21 +176,23 @@
 - (IBAction)syncRemote:(id)sender {
 	
 	//[[SyncManager shared] startLoginFlow];
-  NSString *userId = [LoginManager shared].awsIdentityId;
-  [[BookmarkManager new] mergePushType: RecordTypeBookmark userId: userId completion:^(NSDictionary *responseItem, NSError *error) {
+  [[BookmarkManager new] mergePushType: RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
     
     dispatch_sync(dispatch_get_main_queue(), ^{
       [self reloadBookmarks];
     });
   }];
-  [[BookmarkManager new] mergePushType: RecordTypeRecentlyVisit userId: userId completion:^(NSDictionary *responseItem, NSError *error) {
+}
+
+- (IBAction)syncRecently:(id)sender {
+  [[BookmarkManager new] mergePushType: RecordTypeRecentlyVisit userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
     
     dispatch_sync(dispatch_get_main_queue(), ^{
       [self reloadRecentlyVisit];
     });
   }];
-}
 
+}
 
 -(void)reloadBookmarks {
   
@@ -354,6 +352,8 @@
     if (!cell) {
       cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier: @"cell"];
     }
+    cell.textLabel.font = [UIFont systemFontOfSize: 10];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize: 8];
     
     switch (indexPath.section) {
       case 0:
@@ -383,25 +383,29 @@
     
     NSArray *bks = [DSWrapper arrayFromDict: self.localBookmark[@"_dicts"]];
     NSDictionary *bk = bks[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat: @"%@, %@, %@", bk[@"comicName"], bk[@"author"], bk[@"url"]];
+    cell.textLabel.text = [NSString stringWithFormat: @"%@", bk[@"comicName"]];
+    cell.detailTextLabel.text = [NSString stringWithFormat: @"%@, %@", bk[@"author"], bk[@"url"]];
     
   } else if (indexPath.section == 1) {
     
     NSArray *comics = [DSWrapper arrayFromDict: self.remoteBookmark[@"_dicts"]];
     NSDictionary *bk = comics[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat: @"%@, %@, %@", bk[@"comicName"], bk[@"author"], bk[@"url"]];
+    cell.textLabel.text = [NSString stringWithFormat: @"%@", bk[@"comicName"]];
+    cell.detailTextLabel.text = [NSString stringWithFormat: @"%@, %@", bk[@"author"], bk[@"url"]];
     
   } else if (indexPath.section == 2)  {
     
     NSArray *bks = [DSWrapper arrayFromDict: self.localRecentVisitItems[@"_dicts"]];
     NSDictionary *bk = bks[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat: @"%@, %@, %@", bk[@"comicName"], bk[@"author"], bk[@"url"]];
+    cell.textLabel.text = [NSString stringWithFormat: @"%@", bk[@"comicName"]];
+    cell.detailTextLabel.text = [NSString stringWithFormat: @"%@, %@", bk[@"author"], bk[@"url"]];
     
   } else if (indexPath.section == 3)  {
     
     NSArray *comics = [DSWrapper arrayFromDict: self.remoteRecentVisitItems[@"_dicts"]];
     NSDictionary *bk = comics[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat: @"%@, %@, %@", bk[@"comicName"], bk[@"author"], bk[@"url"]];
+    cell.textLabel.text = [NSString stringWithFormat: @"%@", bk[@"comicName"]];
+    cell.detailTextLabel.text = [NSString stringWithFormat: @"%@, %@", bk[@"author"], bk[@"url"]];
   }
   return cell;
 }

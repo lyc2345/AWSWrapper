@@ -31,6 +31,10 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
   AWSDynamoDBAttributeValue *commitId = attributeDictionary[@"commitId"];
   AWSDynamoDBAttributeValue *userId = attributeDictionary[@"userId"];
   
+  if (dictsValue == nil || remoteHash == nil || commitId == nil) {
+    return nil;
+  }
+  
   NSDictionary *dicts = dictsValue.M;
   NSMutableDictionary *pureDicts = [NSMutableDictionary dictionary];
   
@@ -283,11 +287,15 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
     }
     NSLog(@"AWS DynamoDB load successfull");
     
-    NSDictionary *attributeDictionary = response.items.firstObject;
-    NSDictionary *record = [BookmarkManager convert: attributeDictionary];
-    
-    completionHandler(record, nil);
-
+    if (response.items != nil && response.items.count > 0) {
+      
+      NSDictionary *attributeDictionary = response.items.firstObject;
+      NSDictionary *record = [BookmarkManager convert: attributeDictionary];
+      completionHandler(record, nil);
+      
+    } else {
+      completionHandler(nil, nil);
+    }
   }];
 }
 
@@ -393,9 +401,11 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 						NSLog(@"remote is empty, push...");
 						
 						[self forcePushWithObject: [cloud copy] completion:^(NSError *error, NSDictionary *item) {
-							if (!error) { NSLog(@"FORCE push success with reocrd: %@", cloud); }
+							if (!error) {
+                NSLog(@"FORCE push success with reocrd: %@", cloud);
+                [self pushSuccessThenSaveLocalRecord: cloud type: type newCommitId: commitId];
+              }
 							NSLog(@"done 3");
-							[self pushSuccessThenSaveLocalRecord: cloud type: type newCommitId: commitId];
 							
 							mergeCompletion(item, error);
 						}];
@@ -418,19 +428,14 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
             [new setObject: cloud[@"_commitId"] forKey: @"_commitId"];
             [new setObject: cloud[@"_remoteHash"] forKey: @"_remoteHash"];
             [new setObject: cloud[@"_dicts"] forKey: @"_dicts"];
-//						new._id = cloud._userId;
-//						new._userId = cloud._userId;
-//						new._dicts = newClient;
-//						new._commitId = cloud._commitId;
-//						new._remoteHash = cloud._remoteHash;
+
             NSLog(@"done 4");
 						NSLog(@"start 5");
 						if (!cloud[@"_remoteHash"]) {
 							
               [new setObject: [Random string] forKey: @"_commidId"];
               [new setObject: [Random string] forKey: @"_remoteHash"];
-//							new._commitId = [Random string];
-//							new._remoteHash = [Random string];
+
 							NSLog(@"Remote hash is nil, force push whole local record");
 							[self forcePushWithObject: [new copy] completion:^(NSError *error, NSDictionary *item) {
 								NSLog(@"5: Done by force push");
@@ -453,7 +458,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 								}
 								NSLog(@"push success after diffmerge");
 								NSLog(@"5: Done by conditonal update");
-								//new._dicts = newClient;
+								
                 [new setObject: newClientDicts forKey: @"_dicts"];
 								
 								[self pushSuccessThenSaveLocalRecord: new type: type newCommitId: commitId];

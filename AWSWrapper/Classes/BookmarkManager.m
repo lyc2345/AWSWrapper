@@ -373,8 +373,6 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
     putItemInput.tableName = [RecentVisit dynamoDBTableName];
   }
   
-  //putItemInput.key = @{ @"userId": identityValue, @"id": identityValue };
-  
   // commit id
   AWSDynamoDBAttributeValue *newCommitIdValue = [AWSDynamoDBAttributeValue new];
   newCommitIdValue.S = commitId;
@@ -386,45 +384,13 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
   
   // attributeValues
   NSMutableDictionary *attributeValues = [NSMutableDictionary dictionary];
-  // attributeNames
-//  NSMutableDictionary *attributeNames = [NSMutableDictionary dictionary];
-  
-//  NSMutableString *addString = [NSMutableString string];
-  AWSDynamoDBAttributeValue *eachValue = [AWSDynamoDBAttributeValue new];
   [addList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
     
     NSString *additionAttributeValueKey = [NSString stringWithFormat: @"%@", obj[@"comicName"]];
-    //NSString *additionAttributeNameKey = [NSString stringWithFormat: @"#%@", obj[@"comicName"]];
     
     [attributeValues setObject: [BookmarkManager AWSFormatFromDict: obj] forKey: additionAttributeValueKey];
-//    [attributeValues setObject: [BookmarkManager AWSFormatFromDict: obj] forKey: additionAttributeValueKey];
-    //[attributeNames setObject: obj[@"comicName"] forKey: additionAttributeNameKey];
-    
-    //NSString *key = [NSString stringWithFormat: @", #dicts.%@ = %@", additionAttributeNameKey, additionAttributeValueKey];
-    //[addString appendString: key];
   }];
   
-//  [attributeValues setObject: newCommitIdValue forKey: @":nci"];
-//  [attributeValues setObject: remoteHashValue forKey: @":exprh"];
-//  [attributeValues setObject: identityValue forKey: @":uid"];
-  //putItemInput.expressionAttributeValues = attributeValues;
-  
-//  NSMutableString *updateExpressionString = [NSMutableString string];
-  // first append commit id everytime.
-////  [updateExpressionString appendString: @"SET #commitId = :nci, #remoteHash = :exprh"];
-//  [attributeNames setObject: @"commitId" forKey: @"#commitId"];
-//  [attributeNames setObject: @"remoteHash" forKey: @"#remoteHash"];
-//  
-//  // second append the expression if needed
-//  if (!addString || ![addString isEqualToString: @""]) {
-//    
-//    [attributeNames setObject: @"dicts" forKey: @"#dicts"];
-//    [updateExpressionString appendString: addString];
-//  }
-  
-  
-  //putItemInput.expressionAttributeNames = @{@":uid": identityValue};
-  //putItemInput.expressionAttributeNames = attributeNames;
   AWSDynamoDBAttributeValue *dictsValue = [AWSDynamoDBAttributeValue new];
   dictsValue.M = attributeValues;
   
@@ -434,21 +400,6 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
                         @"remoteHash": remoteHashValue,
                         @"dicts": dictsValue
                         };
-  //putItemInput.conditionExpression = @"userId = :uid and attribute_not_exists(dicts)";
-  //putItemInput.conditionExpression = @"userId = :uid";
-  
-  
-  /*
-  NSMutableString *conditionString = [NSMutableString string];
-  // condition append commit id for define server is reset or not
-  [conditionString appendString: @"remoteHash = :exprh "];
-  
-  [addList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-    
-    [conditionString appendString: [NSString stringWithFormat: @"and attribute_not_exists(dict.#%@) ", obj[@"comicName"]]];
-  }];
-  updateInput.conditionExpression = conditionString;
-   */
   
   putItemInput.returnValues = AWSDynamoDBReturnValueNone;
   
@@ -507,19 +458,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 					
 					NSLog(@"start 3");
 					if (!cloud) {
-            
 						NSLog(@"remote is empty, push...");
-#if 0
-            Bookmark *bk = [Bookmark new];
-            bk._userId = userId;
-            bk._id = userId;
-            bk._commitId = [Random string];
-            bk._remoteHash = [Random string];
-            bk._dicts = local[@"_dicts"];
-            [self forcePushWithObject:bk completion:^(NSError *error, NSDictionary *item) {
-              
-            }];*/
-#else
             [self forcePushWithType: type record: local userId: userId completion:^(NSDictionary *item, NSError *error, NSString *commitId) {
               
               NSLog(@"done 3");
@@ -529,7 +468,6 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
               }
 							mergeCompletion(item, error);
 						}];
-#endif
 					} else {
 						
 						NSLog(@"done 3");

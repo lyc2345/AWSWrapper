@@ -15,34 +15,6 @@
 NSString * const __BOOKMARKS_LIST				= @"__BOOKMARKS_LIST";
 NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 
-@implementation Bookmark (JSON)
-
-+(Bookmark *)bookmarkWithDictionary:(NSDictionary *)dict {
-	
-	Bookmark *bookmark = [Bookmark new];
-	bookmark._id = dict[@"_id"];
-	bookmark._userId = dict[@"_userId"];
-	bookmark._dicts = dict[@"_dicts"];
-	bookmark._commitId = dict[@"_commitId"];
-	bookmark._remoteHash = dict[@"_remoteHash"];
-	return bookmark;
-}
-@end
-
-@implementation RecentVisit (JSON)
-
-+(RecentVisit *)bookmarkWithDictionary:(NSDictionary *)dict {
-	
-	RecentVisit *recentlyVisit = [RecentVisit new];
-	recentlyVisit._id = dict[@"_id"];
-	recentlyVisit._userId = dict[@"_userId"];
-	recentlyVisit._dicts = dict[@"_dicts"];
-	recentlyVisit._commitId = dict[@"_commitId"];
-	recentlyVisit._remoteHash = dict[@"_remoteHash"];
-	return recentlyVisit;
-}
-@end
-
 // bookmark = Dictionary
 // bookmarkList = Array(Dicionary)
 // bookmarkRecord = Dicionary(list: bookmarkList)
@@ -52,10 +24,19 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 
 @implementation BookmarkManager
 
--(NSDictionary *)convert:(AWSDynamoDBAttributeValue *)dictionaryValue {
++(NSDictionary *)convert:(NSDictionary *)attributeDictionary {
   
-  NSDictionary *dicts = dictionaryValue.M;
-  NSMutableDictionary *pureRecord = [NSMutableDictionary dictionary];
+  AWSDynamoDBAttributeValue *dictsValue = attributeDictionary[@"dicts"];
+  AWSDynamoDBAttributeValue *remoteHash = attributeDictionary[@"remoteHash"];
+  AWSDynamoDBAttributeValue *commitId = attributeDictionary[@"commitId"];
+  AWSDynamoDBAttributeValue *userId = attributeDictionary[@"userId"];
+  
+  if (dictsValue == nil || remoteHash == nil || commitId == nil) {
+    return nil;
+  }
+  
+  NSDictionary *dicts = dictsValue.M;
+  NSMutableDictionary *pureDicts = [NSMutableDictionary dictionary];
   
   for (NSString *key in dicts.allKeys) {
     
@@ -67,15 +48,22 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
     
     [info setObject: authorValue.S forKey: @"author"];
     [info setObject: urlValue.S forKey: @"url"];
-    [pureRecord setObject: info forKey: key];
-    NSLog(@"%@", key);
+    [pureDicts setObject: info forKey: key];
   }
-  return @{@"dicts": pureRecord};
+  
+  NSMutableDictionary *record = [NSMutableDictionary dictionary];
+  [record setObject: pureDicts forKey: @"_dicts"];
+  [record setObject: remoteHash.S forKey: @"_remoteHash"];
+  [record setObject: commitId.S forKey: @"_commitId"];
+  [record setObject: userId.S forKey: @"_userId"];
+  [record setObject: userId.S forKey: @"_id"];
+  
+  return record;
 }
 
 -(NSDictionary *)recordFormatOFIdentity:(NSString *)identity commitId:(NSString *)commitId andList:(NSArray *)list remoteHash:(NSString *)remoteHash {
 	
-	return @{@"_commitId": commitId != nil ? commitId : @"", @"_dicts": list, @"_identity": identity, @"_remoteHash": remoteHash};
+	return @{@"_commitId": commitId != nil ? commitId : @"", @"_dicts": list, @"_userId": identity, @"_remoteHash": remoteHash};
 }
 
 #pragma mark - Conditional Write Format
@@ -104,7 +92,10 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 // obtain the whole bookmark records of different users.
 -(NSMutableArray *)obtainOfflineMutableRecordsOfType:(RecordType)type {
 	
+  // get the multiple users record first
 	NSArray *offlineRecords = [[NSUserDefaults standardUserDefaults] arrayForKey: type == RecordTypeBookmark ? __BOOKMARKS_LIST : __RECENTLY_VISIT_LIST];
+  
+  // create it if dosen't exist any
 	if (!offlineRecords) {
 		offlineRecords = [NSArray array];
 	}
@@ -118,13 +109,14 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 	return [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-// obtain the record of THE login user. ["_identity": xxxxx, "_commitId": XXXXXX , "_list": [String: Dictionary]]
+// get the record of the current login user.
+// ["_identity": xxxxx, "_commitId": XXXXXX , "_list": [String: Dictionary]]
 -(NSDictionary *)obtainOfflineExistRecordFromRecords:(NSArray *)records ofIdentity:(NSString *)identity {
 	
 	__block NSDictionary *dict;
 	[records enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
 		
-		NSString *localIdentity = obj[@"_identity"];
+		NSString *localIdentity = obj[@"_userId"];
 		if ([localIdentity isEqualToString: identity]) {
 			
 			//NSLog(@"identity: %@, has exist record: %@", identity, obj);
@@ -134,14 +126,14 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 	return (dict != nil) ? dict : [NSDictionary dictionary];
 }
 
-// replace the new bookmark list into the exist record in whole records.
+// replace the new bookmark list into the exist record in multiple records.
 -(NSArray *)modifyOfflineRecords:(NSArray *)records withRecord:(NSDictionary *)record ofIdentity:(NSString *)identity {
 	
 	NSMutableArray *mutableRecords = [records mutableCopy];
 	__block bool isExist = false;
 	[mutableRecords enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
 		isExist = false;
-		if ([obj[@"_identity"] isEqualToString: identity]) {
+		if ([obj[@"_userId"] isEqualToString: identity]) {
 			isExist = true;
 			*stop = true;
 			//NSLog(@"identity: %@, has exist record: %@", identity, obj);
@@ -149,8 +141,14 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 		if (stop) {
 			NSMutableDictionary *mutableInfo = [obj mutableCopy];
 			[mutableInfo setObject: record[@"_dicts"] forKey: @"_dicts"];
-			[mutableInfo setObject: record[@"_commitId"] != nil ? record[@"_commitId"] : [Random string] forKey: @"_commitId"];
-			[mutableInfo setObject: record[@"_remoteHash"] != nil ? record[@"_remoteHash"] : [Random string] forKey: @"_remoteHash"];
+      
+      // if commit and remoteHash is nil, set a new one
+			[mutableInfo setObject:
+       record[@"_commitId"] != nil ? record[@"_commitId"] : [Random string]
+                      forKey: @"_commitId"];
+			[mutableInfo setObject:
+       record[@"_remoteHash"] != nil ? record[@"_remoteHash"] : [Random string]
+                      forKey: @"_remoteHash"];
 			[mutableRecords replaceObjectAtIndex: idx withObject: mutableInfo];
 			return;
 		}
@@ -181,23 +179,34 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 	}
 }
 
--(void)pushSuccessThenSaveLocalRecord:(id<RecordSuitable>)newRecord type:(RecordType)type newCommitId:(NSString *)commitId {
+-(BOOL)pushSuccessThenSaveLocalRecord:(NSDictionary *)newRecord type:(RecordType)type newCommitId:(NSString *)commitId {
 	
 	NSArray *records = [self obtainOfflineMutableRecordsOfType: type];
 	
-	NSMutableDictionary *oldRecord = [[self obtainOfflineExistRecordFromRecords: records ofIdentity: newRecord._userId] mutableCopy];
-	[oldRecord setValue: newRecord._dicts				forKey: @"_dicts"];
-	[oldRecord setValue: commitId						forKey: @"_commitId"];
-	[oldRecord setValue: newRecord._remoteHash	forKey: @"_remoteHash"];
-	NSArray *modifiedOfflineRecords = [self modifyOfflineRecords: records withRecord: oldRecord ofIdentity: newRecord._userId];
+	NSMutableDictionary *oldRecord = [[self obtainOfflineExistRecordFromRecords: records ofIdentity: newRecord[@"_userId"]] mutableCopy];
+	[oldRecord setValue: newRecord[@"_dicts"]	forKey: @"_dicts"];
+	[oldRecord setValue: commitId	forKey: @"_commitId"];
+	[oldRecord setValue: newRecord[@"_remoteHash"] forKey: @"_remoteHash"];
+  [oldRecord setValue: newRecord[@"_userId"] forKey: @"_userId"];
+	NSArray *modifiedOfflineRecords = [self modifyOfflineRecords: records withRecord: oldRecord ofIdentity: newRecord[@"_userId"]];
 	
-	[self setUserDefaultWithRecords: modifiedOfflineRecords isBookmark: type == RecordTypeBookmark];
-	[DSWrapper setShadow: newRecord._dicts isBookmark: type == RecordTypeBookmark];
+	BOOL success = [self setUserDefaultWithRecords: modifiedOfflineRecords isBookmark: type == RecordTypeBookmark];
+  if (success) {
+    BOOL saveShadowSuccess = [DSWrapper setShadow: newRecord[@"_dicts"] isBookmark: type == RecordTypeBookmark];
+    return saveShadowSuccess;
+  } else {
+    return NO;
+  }
 }
 
 #pragma mark - Bookmark (Open)
 
 -(void)addOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity {
+  
+  if ([r[@"author"] isEqualToString: @""] || [r[@"comicName"] isEqualToString: @""] || [r[@"url"] isEqualToString: @""]) {
+    NSLog(@"author, comicName, url is nil in Dictionary");
+    return;
+  }
 	
 	NSArray *records = [self obtainOfflineMutableRecordsOfType: type];
 	
@@ -261,7 +270,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 
 @implementation BookmarkManager (AWS)
 
--(void)pull:(RecordType)type withUserId:(NSString *)userId completion:(void(^)(NSDictionary *item, NSError *error))completionHandler {
+-(void)pullType:(RecordType)type user:(NSString *)userId completion:(void(^)(NSDictionary *item, NSError *error))completionHandler {
   
   AWSDynamoDB *dynamoDB = [AWSDynamoDB defaultDynamoDB];
   AWSDynamoDBQueryInput *queryInput = [AWSDynamoDBQueryInput new];
@@ -282,26 +291,20 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
       return;
     }
     NSLog(@"AWS DynamoDB load successfull");
-    NSLog(@"With data: %@", response);
     
-    NSDictionary *attributeDictionary = response.items.firstObject;
-    AWSDynamoDBAttributeValue *dicts = attributeDictionary[@"dicts"];
-    AWSDynamoDBAttributeValue *remoteHash = attributeDictionary[@"remoteHash"];
-    AWSDynamoDBAttributeValue *commitId = attributeDictionary[@"commitId"];
-    AWSDynamoDBAttributeValue *userId = attributeDictionary[@"userId"];
-    
-    NSMutableDictionary *record = [[self convert: dicts] mutableCopy];
-    [record setObject: remoteHash.S forKey: @"remoteHash"];
-    [record setObject: commitId.S forKey: @"commitId"];
-    [record setObject: userId.S forKey: @"userId"];
-    [record setObject: userId.S forKey: @"id"];
-    
-    completionHandler(record, nil);
-
+    if (response.items != nil && response.items.count > 0) {
+      
+      NSDictionary *attributeDictionary = response.items.firstObject;
+      NSDictionary *record = [BookmarkManager convert: attributeDictionary];
+      completionHandler(record, nil);
+      
+    } else {
+      completionHandler(nil, nil);
+    }
   }];
 }
 
--(void)pull:(Class)aClass withUser:(NSString *)userId  completion:(void(^)(NSArray *items, NSError *error))completionHandler {
+-(void)pullClass:(Class)aClass withUser:(NSString *)userId  completion:(void(^)(NSArray *items, NSError *error))completionHandler {
 	
 	AWSDynamoDBObjectMapper *objectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
 	
@@ -321,136 +324,203 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 				return;
 			}
 			NSLog(@"AWS DynamoDB load successfull");
-			NSLog(@"With data: %@", response);
-			/*
-			 for (Bookmark *bk in response.items) {
-			 NSLog(@"bookmark: %@", bk);
-			 }
-			 */
 			completionHandler(response.items, nil);
 		}];
 }
 
--(void)forcePushWithObject:(id<RecordSuitable>)bkSuitable completion:(void(^)(NSError *error))completion {
-	
-	AWSDynamoDBObjectMapper *objectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
-	
-	bkSuitable._commitId = [Random string];
-	
-	[objectMapper save: (AWSDynamoDBObjectModel<AWSDynamoDBModeling> *)bkSuitable completionHandler:^(NSError * _Nullable error) {
-		
-		if (error) {
-			NSLog(@"AWS DynamoDB save error: %@", error);
-			completion(error);
-			return;
-		}
-		NSLog(@"AWS DynamoDB save successful");
-		RecordType type = [bkSuitable isKindOfClass: [Bookmark class]] ? RecordTypeBookmark : RecordTypeRecentlyVisit;
-		[self pushSuccessThenSaveLocalRecord: bkSuitable type: type newCommitId: bkSuitable._commitId];
-		completion(nil);
-	}];
+-(void)forcePushWithObject:(id<RecordSuitable>)bkSuitable completion:(void(^)(NSError *error, NSDictionary *item))completion {
+  
+  AWSDynamoDBObjectMapper *objectMapper = [AWSDynamoDBObjectMapper defaultDynamoDBObjectMapper];
+  
+  bkSuitable._commitId = [Random string];
+  [objectMapper save: (AWSDynamoDBObjectModel<AWSDynamoDBModeling> *)bkSuitable completionHandler:^(NSError * _Nullable error) {
+    
+    if (error) {
+      NSLog(@"AWS DynamoDB save error: %@", error);
+      completion(error, nil);
+      return;
+    }
+    NSLog(@"AWS DynamoDB save successful");
+    RecordType type = [bkSuitable isKindOfClass: [Bookmark class]] ? RecordTypeBookmark : RecordTypeRecentlyVisit;
+    NSMutableDictionary *record = [NSMutableDictionary dictionary];
+    [record setObject: bkSuitable._commitId forKey: @"_commitId"];
+    [record setObject: bkSuitable._remoteHash forKey: @"_remoteHash"];
+    [record setObject: bkSuitable._id forKey: @"_id"];
+    [record setObject: bkSuitable._userId forKey: @"_userId"];
+    [record setObject: bkSuitable._dicts forKey: @"_dicts"];
+    BOOL success = [self pushSuccessThenSaveLocalRecord: record type: type newCommitId: bkSuitable._commitId];
+    success == YES ? completion(nil, record) : completion;
+  }];
 }
 
--(void)mergePushWithClient:(id<RecordSuitable>)client remote:(id<RecordSuitable>)remote new:(id<RecordSuitable>)new completion:(void (^)(NSError *))mergeCompletion {
+
+-(void)forcePushWithType:(RecordType)type record:(NSDictionary *)record userId:(NSString *)userId completion:(void(^)(NSDictionary *item, NSError *error, NSString *commitId))completion {
 	
-	NSDictionary *diff_client_shadow = [DSWrapper diffShadowAndClient: client._dicts isBookmark: [client isKindOfClass: [Bookmark class]]];
+  NSString *commitId = [Random string];
+  NSString *remoteHash = [Random string];
+  
+  AWSDynamoDB *dynamoDB = [AWSDynamoDB defaultDynamoDB];
+  AWSDynamoDBPutItemInput *putItemInput = [AWSDynamoDBPutItemInput new];
+  
+  AWSDynamoDBAttributeValue *identityValue = [AWSDynamoDBAttributeValue new];
+  // Identity is the key for offline record
+  identityValue.S = userId;
+  
+  if (type == RecordTypeBookmark) {
+    
+    putItemInput.tableName = [Bookmark dynamoDBTableName];
+  } else {
+    putItemInput.tableName = [RecentVisit dynamoDBTableName];
+  }
+  
+  // commit id
+  AWSDynamoDBAttributeValue *newCommitIdValue = [AWSDynamoDBAttributeValue new];
+  newCommitIdValue.S = commitId;
+  
+  AWSDynamoDBAttributeValue *remoteHashValue = [AWSDynamoDBAttributeValue new];
+  remoteHashValue.S = remoteHash;
+  
+  NSArray *addList = [DSWrapper arrayFromDict: record[@"_dicts"]];
+  
+  // attributeValues
+  NSMutableDictionary *attributeValues = [NSMutableDictionary dictionary];
+  [addList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    
+    NSString *additionAttributeValueKey = [NSString stringWithFormat: @"%@", obj[@"comicName"]];
+    
+    [attributeValues setObject: [BookmarkManager AWSFormatFromDict: obj] forKey: additionAttributeValueKey];
+  }];
+  
+  AWSDynamoDBAttributeValue *dictsValue = [AWSDynamoDBAttributeValue new];
+  dictsValue.M = attributeValues;
+  
+  putItemInput.item = @{@"userId": identityValue,
+                        @"id": identityValue,
+                        @"commitId": newCommitIdValue,
+                        @"remoteHash": remoteHashValue,
+                        @"dicts": dictsValue
+                        };
+  
+  putItemInput.returnValues = AWSDynamoDBReturnValueNone;
+  
+  [[dynamoDB putItem: putItemInput] continueWithBlock:^id(AWSTask *task) {
+    
+    if (task.error) {
+      NSLog(@"force push error: %@", task.error);
+      completion(nil, task.error, nil);
+      return nil;
+    } else {
+      AWSDynamoDBUpdateItemOutput *result = task.result;
+      NSDictionary *resultValue = result.dictionaryValue;
+      NSDictionary *pureResult = [BookmarkManager convert: resultValue[@"attributes"]];
+      completion(pureResult, task.error, commitId);
+    }
+    return nil;
+  }];
+}
+
+-(void)mergePushType:(RecordType)type userId:(NSString *)userId completion:(void(^)(NSDictionary *responseItem, NSError *error))mergeCompletion {
 	
-	[self pushWithObject: client diff: diff_client_shadow completion:^(AWSDynamoDBUpdateItemOutput *response, NSError *error, NSString *commitId) {
-		NSLog(@"1: Done");
+  // Diff local and shadow first, should know the modifies.
+  NSDictionary *local = [self getOfflineRecordOfIdentity: userId type: type];
+	NSDictionary *diff_client_shadow = [DSWrapper diffShadowAndClient: local[@"_dicts"] isBookmark: type == RecordTypeBookmark];
+  
+  NSLog(@"start: 1");
+  // push local AWS model and the diff we get before.
+  [self pushWithObject: local type: type diff: diff_client_shadow userId: userId completion:^(NSDictionary *responseItem, NSError *error, NSString *commitId) {
+    
+    NSLog(@"done 1");
 		if (!error) {
 			// expected commit id meet localBookmarkRecord commit id
 			// successed!
-			NSLog(@"please success here la");
+			NSLog(@"push success by merge push at the first place");
 			//NSLog(@"first push success with object: %@", response);
-			[self pushSuccessThenSaveLocalRecord: client type: [client isKindOfClass: [Bookmark class]] ? RecordTypeBookmark : RecordTypeRecentlyVisit newCommitId: commitId];
+			[self pushSuccessThenSaveLocalRecord: local type: type newCommitId: commitId];
 			
-			mergeCompletion(error);
+			mergeCompletion(responseItem, error);
 			return;
 			
 		} else {
-			NSLog(@"conditional error: %@", error);
+			NSLog(@"first conditional write error: %@", error);
 			
-			NSLog(@"starting pull...");
-			NSLog(@"2");
-			
-			[self pull: [client class] withUser: client._userId completion:^(NSArray *items, NSError *error) {
-				NSLog(@"2: Done");
+			NSLog(@"starting pulling...");
+			NSLog(@"start 2");
+      [self pullType: type user: userId completion:^(NSDictionary *item, NSError *error) {
+
+				NSLog(@"done 2");
 				NSLog(@"pull finished");
 				if (error) {
 					NSLog(@"BookmarkManager pull error: %@", error);
 					return;
 					
 				} else {
-					id<RecordSuitable> cloud = items.firstObject;
+          NSMutableDictionary *cloud = [item mutableCopy];
 					
-					NSLog(@"3");
+					NSLog(@"start 3");
 					if (!cloud) {
-						
-						remote._id = client._userId;
-						remote._userId = client._userId;
-						remote._dicts = client._dicts;
-						remote._commitId = [Random string];
-						remote._remoteHash = [Random string];
 						NSLog(@"remote is empty, push...");
-						
-						[self forcePushWithObject: remote completion:^(NSError *error) {
-							if (!error) { NSLog(@"FORCE push success with reocrd: %@", remote); }
-							NSLog(@"3: Done");
-							RecordType type = [client isKindOfClass: [Bookmark class]] ? RecordTypeBookmark : RecordTypeRecentlyVisit;
-							[self pushSuccessThenSaveLocalRecord: remote type: type newCommitId: commitId];
-							
-							mergeCompletion(error);
+            [self forcePushWithType: type record: local userId: userId completion:^(NSDictionary *item, NSError *error, NSString *commitId) {
+              
+              NSLog(@"done 3");
+							if (!error) {
+                NSLog(@"FORCE push success with reocrd: %@", local);
+                [self pushSuccessThenSaveLocalRecord: local type: type newCommitId: commitId];
+              }
+							mergeCompletion(item, error);
 						}];
-						
 					} else {
 						
-						NSLog(@"3: Done");
-						NSLog(@"remote version: %@, local version: %@", cloud._remoteHash, client._remoteHash);
-						NSLog(@"remote timestamp: %@, local timestamp: %@", cloud._commitId, client._commitId);
+						NSLog(@"done 3");
+						NSLog(@"remote version: %@, local version: %@", cloud[@"_remoteHash"], local[@"_remoteHash"]);
+						NSLog(@"remote timestamp: %@, local timestamp: %@", cloud[@"_commitId"], local[@"_commitId"]);
 						NSLog(@"starting diffmerge...");
 						// diff
-						NSLog(@"4");
-						NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: cloud._dicts andLoses: client._dicts];
-						NSDictionary *newClient = [DSWrapper applyInto: client._dicts From: need_to_apply_to_client];
+						NSLog(@"start 4: diffmerge");
+						NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: cloud[@"_dicts"] andLoses: local[@"_dicts"]];
+						NSDictionary *newClientDicts = [DSWrapper applyInto: local[@"_dicts"] From: need_to_apply_to_client];
 						
-						new._id = cloud._userId;
-						new._userId = cloud._userId;
-						new._dicts = newClient;
-						new._commitId = cloud._commitId;
-						new._remoteHash = cloud._remoteHash;
-						
-						NSLog(@"5");
-						if (!cloud._remoteHash) {
+            NSMutableDictionary *new = [NSMutableDictionary dictionary];
+            
+            [new setObject: cloud[@"_id"] forKey: @"_id"];
+            [new setObject: cloud[@"_userId"] forKey: @"_userId"];
+            [new setObject: cloud[@"_commitId"] forKey: @"_commitId"];
+            [new setObject: cloud[@"_remoteHash"] forKey: @"_remoteHash"];
+            [new setObject: cloud[@"_dicts"] forKey: @"_dicts"];
+
+            NSLog(@"done 4");
+						NSLog(@"start 5");
+						if (!cloud[@"_remoteHash"]) {
 							
-							new._commitId = [Random string];
-							new._remoteHash = [Random string];
+              [new setObject: [Random string] forKey: @"_commidId"];
+              [new setObject: [Random string] forKey: @"_remoteHash"];
+
 							NSLog(@"Remote hash is nil, force push whole local record");
-							[self forcePushWithObject: new completion:^(NSError *error) {
-								NSLog(@"5: Done by force");
-								
-								RecordType type = [client isKindOfClass: [Bookmark class]] ? RecordTypeBookmark : RecordTypeRecentlyVisit;
-								[self pushSuccessThenSaveLocalRecord: new type: type newCommitId: commitId];
-								mergeCompletion(error);
+							[self forcePushWithType: type record: cloud userId: userId completion:^(NSDictionary *item, NSError *error, NSString *commitId) {
+								NSLog(@"5: Done by force push");
+
+								[self pushSuccessThenSaveLocalRecord: [new copy] type: type newCommitId: commitId];
+								mergeCompletion(item, error);
 							}];
 						} else {
 							
 							NSLog(@"conditional push whole local record");
-							newClient = [DSWrapper applyInto: newClient From: diff_client_shadow];
-							NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient andLoses: cloud._dicts];
+							newClientDicts = [DSWrapper applyInto: newClientDicts From: diff_client_shadow];
+							NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClientDicts andLoses: cloud[@"_dicts"]];
 							
-							[self pushWithObject: new diff: need_to_apply_to_remote completion:^(AWSDynamoDBUpdateItemOutput *response, NSError *error, NSString *commitId) {
+              [self pushWithObject: new type: type diff: need_to_apply_to_remote userId: userId completion:^(NSDictionary *responseItem, NSError *error, NSString *commitId) {
 								
 								if (error) {
 									NSLog(@"conditional push error: %@", error);
-									NSLog(@"fuckkkkkkkkkkkkkkkk");
+									NSLog(@"fuckkkkkkkkkkkkkkkk erorrrrrrrrr");
 									return;
 								}
 								NSLog(@"push success after diffmerge");
 								NSLog(@"5: Done by conditonal update");
-								new._dicts = newClient;
-								RecordType type = [client isKindOfClass: [Bookmark class]] ? RecordTypeBookmark : RecordTypeRecentlyVisit;
+								
+                [new setObject: newClientDicts forKey: @"_dicts"];
+								
 								[self pushSuccessThenSaveLocalRecord: new type: type newCommitId: commitId];
-								mergeCompletion(error);
+								mergeCompletion(responseItem, error);
 							}];
 						}
 					}
@@ -460,85 +530,30 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 	}];
 }
 
--(void)mergePushWithRecord:(id<RecordSuitable>)record type:(RecordType)type completion:(void(^)(NSError *error))mergeCompletion {
-	
-	if (type == RecordTypeBookmark) {
-		
-		Bookmark *remote = [Bookmark new];
-		Bookmark *new = [Bookmark new];
-		[self mergePushWithClient: record remote: remote new: new completion: mergeCompletion];
-		return;
-		
-	} else if (type == RecordTypeRecentlyVisit) {
-
-		
-		RecentVisit *remote = [RecentVisit new];
-		RecentVisit *new = [RecentVisit new];
-		[self mergePushWithClient: record remote: remote new: new completion: mergeCompletion];
-		return;
-		
-	} else {
-		assert(@"you need to specfic a type use RecordType enum");
-	}
-}
-
--(void)mergePushWithType:(RecordType)type records:(NSArray *)records commitId:(NSString *)commitId remoteHash:(NSString *)remoteHash ofUserId:(NSString *)userId completion:(void(^)(NSError *error))mergeCompletion {
-	
-	if (type == RecordTypeBookmark) {
-		Bookmark *book = [Bookmark new];
-		book._id = userId;
-		book._userId = userId;
-		book._dicts = [DSWrapper dictFromArray: records];
-		book._commitId = commitId;
-		book._remoteHash = remoteHash;
-		
-		Bookmark *remote = [Bookmark new];
-		Bookmark *new = [Bookmark new];
-		[self mergePushWithClient: book remote: remote new: new completion: mergeCompletion];
-		return;
-		
-	} else if (type == RecordTypeRecentlyVisit) {
-		RecentVisit *visit = [RecentVisit new];
-		visit._id = userId;
-		visit._userId = userId;
-		visit._dicts = [DSWrapper dictFromArray: records];
-		visit._commitId = commitId;
-		visit._remoteHash = remoteHash;
-		
-		RecentVisit *remote = [RecentVisit new];
-		RecentVisit *new = [RecentVisit new];
-		[self mergePushWithClient: visit remote: remote new: new completion: mergeCompletion];
-		return;
-		
-	} else {
-		assert(@"you need to specfic a type use RecordType enum");
-	}
-}
-
--(void)pushWithObject:(id<RecordSuitable>)record diff:(NSDictionary *)diff completion:(void(^)(AWSDynamoDBUpdateItemOutput *response, NSError *error, NSString *commitId))completion {
+-(void)pushWithObject:(NSDictionary *)record type:(RecordType)type diff:(NSDictionary *)diff userId:(NSString *)userId completion:(void(^)(NSDictionary *responseItem, NSError *error, NSString *commitId))completion {
 	
 	NSString *commitId = [Random string];
-	NSString *remoteHash = record._remoteHash != nil ? record._remoteHash : [Random string];
+	NSString *remoteHash = record[@"_remoteHash"] != nil ? record[@"_remoteHash"] : [Random string];
 	
 	AWSDynamoDB *dynamoDB = [AWSDynamoDB defaultDynamoDB];
 	AWSDynamoDBUpdateItemInput *updateInput = [AWSDynamoDBUpdateItemInput new];
 	
 	AWSDynamoDBAttributeValue *identityValue = [AWSDynamoDBAttributeValue new];
-	identityValue.S = record._userId;
+  // Identity is the key for offline record
+  identityValue.S = userId;
 	
-	if ([record isKindOfClass: [Bookmark class]]) {
+	if (type == RecordTypeBookmark) {
 		
 		updateInput.tableName = [Bookmark dynamoDBTableName];
 	} else {
 		updateInput.tableName = [RecentVisit dynamoDBTableName];
 	}
 	
-	
 	updateInput.key = @{ @"userId": identityValue, @"id": identityValue };
 	
 	// commit id
 	AWSDynamoDBAttributeValue *oldCommitIdValue = [AWSDynamoDBAttributeValue new];
-	oldCommitIdValue.S = record._commitId;
+	oldCommitIdValue.S = record[@"_commitId"];
 	
 	AWSDynamoDBAttributeValue *newCommitIdValue = [AWSDynamoDBAttributeValue new];
 	newCommitIdValue.S = commitId;
@@ -556,6 +571,10 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 	
 	NSMutableString *addString = [NSMutableString string];
 	[addList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    
+    if([obj[@"comicName"] isEqualToString: @""]) {
+      return;
+    }
 		
 		NSString *additionAttributeValueKey = [NSString stringWithFormat: @":%@", obj[@"comicName"]];
 		NSString *additionAttributeNameKey = [NSString stringWithFormat: @"#%@", obj[@"comicName"]];
@@ -615,6 +634,9 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 	
 	[addList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
 		
+    if([obj[@"comicName"] isEqualToString: @""]) {
+      return;
+    }
 		[conditionString appendString: [NSString stringWithFormat: @"and attribute_not_exists(dict.#%@) ", obj[@"comicName"]]];
 	}];
 	
@@ -623,9 +645,17 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 	updateInput.returnValues = AWSDynamoDBReturnValueAllNew;
 	
 	[[dynamoDB updateItem: updateInput] continueWithBlock:^id(AWSTask *task) {
-		
-		completion(task.result, task.error, commitId);
-		return nil;
+    
+    if (task.error) {
+      completion(nil, task.error, commitId);
+      return nil;
+    } else {
+      AWSDynamoDBUpdateItemOutput *result = task.result;
+      NSDictionary *resultValue = result.dictionaryValue;
+      NSDictionary *pureResult = [BookmarkManager convert: resultValue[@"attributes"]];
+      completion(pureResult, task.error, commitId);
+    }
+    return nil;
 	}];
 }
 

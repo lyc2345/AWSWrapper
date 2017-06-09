@@ -17,9 +17,9 @@ NSString *const cellIdentifier = @"cell";
 }
 
 @property NSDictionary *localBookmark;
-@property Bookmark *remoteBookmark;
+@property NSDictionary *remoteBookmark;
 @property NSDictionary *localRecentVisitItems;
-@property RecentVisit *remoteRecentVisitItems;
+@property NSDictionary *remoteRecentVisitItems;
 
 @end
 
@@ -48,12 +48,11 @@ NSString *const cellIdentifier = @"cell";
 	[_tableView reloadData];
 	
 	if ([LoginManager shared].awsIdentityId) {
-		
-		[bookmarkManager pull: [Bookmark class] withUser: loginManager.awsIdentityId completion:^(NSArray *items, NSError *error) {
+		[bookmarkManager pullType: RecordTypeBookmark user: loginManager.awsIdentityId completion:^(NSDictionary *item, NSError *error) {
 			
 			dispatch_async(dispatch_get_main_queue(), ^{
 				
-				self.remoteBookmark = items.firstObject;
+				self.remoteBookmark = item;
 				[_tableView reloadSections: [NSIndexSet indexSetWithIndex: 1] withRowAnimation: UITableViewRowAnimationNone];
 			});
 		}];
@@ -72,11 +71,11 @@ NSString *const cellIdentifier = @"cell";
 	
 	if ([LoginManager shared].awsIdentityId) {
 		
-		[bookmarkManager pull: [RecentVisit class] withUser: loginManager.awsIdentityId completion:^(NSArray *items, NSError *error) {
+    [bookmarkManager pullType: RecordTypeRecentlyVisit user: loginManager.awsIdentityId completion:^(NSDictionary *item, NSError *error) {
 			
 			dispatch_async(dispatch_get_main_queue(), ^{
 				
-				self.remoteRecentVisitItems = items.firstObject;
+        self.remoteRecentVisitItems = item;
 				[_tableView reloadSections: [NSIndexSet indexSetWithIndex: 3] withRowAnimation: UITableViewRowAnimationNone];
 			});
 		}];
@@ -87,28 +86,14 @@ NSString *const cellIdentifier = @"cell";
 	
 	BookmarkManager *bookmarkManager = [BookmarkManager new];
 	
-	Bookmark *bookmark = [Bookmark new];
-	bookmark._id = self.localBookmark[@"_identity"];
-	bookmark._userId = self.localBookmark[@"_identity"];
-	bookmark._dicts = self.localBookmark[@"_dicts"];
-	bookmark._remoteHash = self.localBookmark[@"_remoteHash"];
-	bookmark._commitId = self.localBookmark[@"_commitId"];
-	
-	[bookmarkManager mergePushWithRecord: bookmark type: RecordTypeBookmark completion:^(NSError *error) {
+  [bookmarkManager mergePushType:RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
 		
 		dispatch_sync(dispatch_get_main_queue(), ^{
 			[self reloadBookmarks];
 		});
 	}];
 	
-	RecentVisit *recentVisit = [RecentVisit new];
-	recentVisit._id = self.localRecentVisitItems[@"_identity"];
-	recentVisit._userId = self.localRecentVisitItems[@"_identity"];
-	recentVisit._dicts = self.localRecentVisitItems[@"_dicts"];
-	recentVisit._remoteHash = self.localRecentVisitItems[@"_remoteHash"];
-	recentVisit._commitId = self.localRecentVisitItems[@"_commitId"];
-	
-	[bookmarkManager mergePushWithRecord: recentVisit type: RecordTypeRecentlyVisit completion:^(NSError *error) {
+   [bookmarkManager mergePushType:RecordTypeRecentlyVisit userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
 		
 		dispatch_sync(dispatch_get_main_queue(), ^{
 			[self reloadRecentlyVisit];
@@ -126,11 +111,11 @@ NSString *const cellIdentifier = @"cell";
 	if (section == 0) {
 		return [(NSArray *)self.localBookmark[@"_dicts"] count];
 	} else if (section == 1) {
-		return self.remoteBookmark._dicts.count;
+    return [(NSArray *)self.remoteBookmark[@"_dicts"] count];
 	} else if (section == 2) {
 		return [(NSArray *)self.localRecentVisitItems[@"_dicts"] count];
 	} else if (section == 3){
-		return self.remoteRecentVisitItems._dicts.count;
+    return [(NSArray *)self.remoteRecentVisitItems[@"_dicts"] count];
 	}
 	return 0;
 }
@@ -140,11 +125,12 @@ NSString *const cellIdentifier = @"cell";
 	if (section == 0) {
 		return [NSString stringWithFormat:@"LB: %lu- %@", (unsigned long)[(NSArray *)self.localBookmark[@"_dicts"] count], [self.localBookmark[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.localBookmark[@"_commitId"]).length - 10, 10)]];
 	} else if (section == 1) {
-		return [NSString stringWithFormat:@"B: %lu - %@",(unsigned long)self.remoteBookmark._dicts.count, [self.remoteBookmark._commitId substringWithRange: NSMakeRange(self.remoteBookmark._commitId.length - 10, 10)]];
+    return [NSString stringWithFormat:@"LB: %lu- %@", (unsigned long)[(NSArray *)self.remoteBookmark[@"_dicts"] count], [self.remoteBookmark[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.remoteBookmark[@"_commitId"]).length - 10, 10)]];
+
 	} else if (section == 2) {
 		return [NSString stringWithFormat:@"LB: %lu- %@", (unsigned long)[(NSArray *)self.localRecentVisitItems[@"_dicts"] count], [self.localRecentVisitItems[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.localRecentVisitItems[@"_commitId"]).length - 10, 10)]];
 	} else if (section == 3) {
-		return [NSString stringWithFormat:@"B: %lu - %@",(unsigned long)self.remoteRecentVisitItems._dicts.count, [self.remoteRecentVisitItems._commitId substringWithRange: NSMakeRange(self.remoteRecentVisitItems._commitId.length - 10, 10)]];
+    return [NSString stringWithFormat:@"LB: %lu- %@", (unsigned long)[(NSArray *)self.remoteRecentVisitItems[@"_dicts"] count], [self.remoteRecentVisitItems[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.remoteRecentVisitItems[@"_commitId"]).length - 10, 10)]];
 	}
 	return @"";
 }
@@ -162,7 +148,7 @@ NSString *const cellIdentifier = @"cell";
 		if (indexPath.section == 0) {
 			
 			[tableView beginUpdates];
-			self.localBookmark = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localBookmark[@"_dicts"]][indexPath.row] type: RecordTypeBookmark ofIdentity: self.localBookmark[@"_identity"]];
+			self.localBookmark = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localBookmark[@"_dicts"]][indexPath.row] type: RecordTypeBookmark ofIdentity: self.localBookmark[@"_userId"]];
 			[tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationLeft];
 			[tableView reloadSectionIndexTitles];
 			[tableView endUpdates];
@@ -170,7 +156,7 @@ NSString *const cellIdentifier = @"cell";
 		} else if (indexPath.section == 2) {
 			
 			[tableView beginUpdates];
-			self.localRecentVisitItems = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localRecentVisitItems[@"_dicts"]][indexPath.row] type: RecordTypeRecentlyVisit ofIdentity: self.localRecentVisitItems[@"_identity"]];
+			self.localRecentVisitItems = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localRecentVisitItems[@"_dicts"]][indexPath.row] type: RecordTypeRecentlyVisit ofIdentity: self.localRecentVisitItems[@"_userId"]];
 			[tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationLeft];
 			[tableView reloadSectionIndexTitles];
 			[tableView endUpdates];
@@ -214,13 +200,9 @@ NSString *const cellIdentifier = @"cell";
 		
 	} else if (indexPath.section == 1) {
 		
-		NSArray *comics = [DSWrapper arrayFromDict: self.remoteBookmark._dicts];
-		NSDictionary *comic = comics[indexPath.row];
-		NSString *comicName = comic[@"comicName"];
-		NSString *author = comic[@"author"];
-		NSString *url = comic[@"url"];
-		cell.textLabel.text = [NSString stringWithFormat: @"%@, %@, %@", comicName, author, url];
-		cell.detailTextLabel.text = [NSString stringWithFormat: @"url: %@", url];
+		NSArray *comics = [DSWrapper arrayFromDict: self.remoteBookmark[@"_dicts"]];
+    NSDictionary *bk = comics[indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat: @"%@, %@, %@", bk[@"comicName"], bk[@"author"], bk[@"url"]];
 		
 	} else if (indexPath.section == 2)  {
 		
@@ -231,15 +213,11 @@ NSString *const cellIdentifier = @"cell";
 		cell.textLabel.text = [NSString stringWithFormat: @"%@, %@, %@", bk[@"comicName"], bk[@"author"], bk[@"url"]];
 		
 	} else if (indexPath.section == 3)  {
-		
-		NSArray *comics = [DSWrapper arrayFromDict: self.remoteRecentVisitItems._dicts];
-		NSDictionary *comic = comics[indexPath.row];
-		NSString *comicName = comic[@"comicName"];
-		NSString *author = comic[@"author"];
-		NSString *url = comic[@"url"];
-		cell.textLabel.text = [NSString stringWithFormat: @"%@, %@, %@", comicName, author, url];
-		cell.detailTextLabel.text = [NSString stringWithFormat: @"url: %@", url];
-	}
+    
+    NSArray *comics = [DSWrapper arrayFromDict: self.remoteRecentVisitItems[@"_dicts"]];
+    NSDictionary *bk = comics[indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat: @"%@, %@, %@", bk[@"comicName"], bk[@"author"], bk[@"url"]];
+  }
 	return cell;
 }
 

@@ -138,7 +138,7 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 	
 	NSString *hashPassword = [Encrypt SHA512From: password];
 	
-	return @{@"_user": user, @"_password": hashPassword, @"_identity": identity != nil ? identity : @""};
+	return @{@"_user": user, @"_password": hashPassword, @"_userId": identity != nil ? identity : @""};
 }
 
 -(NSMutableArray *)obtainOfflineUserMutableList {
@@ -162,7 +162,7 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 	[offlineUserMutableList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
 		
 		NSString *localUsername = obj[@"_user"];
-		NSString *localIdentity = obj[@"_identity"];
+		NSString *localIdentity = obj[@"_userId"];
 		
 		if (![localUsername isEqualToString: user] &&
 				![localIdentity isEqualToString: identity]) {
@@ -233,7 +233,7 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 				[obj[@"_password"] isEqualToString: hashPassword]) {
 			
 			isQualified = true;
-			self.tmpIdentity = obj[@"_identity"];
+			self.tmpIdentity = obj[@"_userId"];
 			*stop = YES;
 			return;
 		}

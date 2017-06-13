@@ -10,4 +10,10 @@
 
 @interface DetailVC : UIViewController
 
+@property NSString *t;
+@property NSString *c;
+
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *detailLabel;
+
 @end

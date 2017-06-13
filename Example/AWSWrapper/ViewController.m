@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "DynamoDBVC.h"
 @import AWSWrapper;
+#import "DetailVC.h"
 
 @interface ViewController () <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource> {
   
@@ -62,8 +63,8 @@
 -(void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear: animated];
   
-  [self reloadBookmarks];
-  [self reloadRecentlyVisit];
+
+  [self load: nil];
 }
 
 -(void)refreshLoginStatusThroughNotification {
@@ -251,6 +252,21 @@
 }
 
 // MARK: TableViewDelegate
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  NSDictionary *user = self.userList[indexPath.row];
+  
+  if (tableView == _userTable && indexPath.section == 1) {
+    
+    DetailVC *detailVC = [self.storyboard instantiateViewControllerWithIdentifier: NSStringFromClass([DetailVC class])];
+    UINavigationController *navi = self.navigationController;
+    detailVC.t = [NSString stringWithFormat: @"username: %@", user[@"_user"]];
+    detailVC.c = [NSString stringWithFormat:@"userId: %@, \n\n\npassword: %@", user[@"_userId"], user[@"_password"]];
+    [navi showViewController: detailVC sender: nil];
+  }
+}
+
+// MARK: TableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   
   if (tableView == _userTable) {

@@ -190,7 +190,7 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 	NSLog(@"is qualified: %@", isQualified ? @"YES" : @"NO");
 	if (!isQualified) {
 		[self modifyUser: user password: password identity: identity];
-	}
+  }
 }
 
 //TODO: maybe use when AWS identity changed or forget password.
@@ -204,10 +204,10 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 		
 		if ([obj[@"_user"] isEqualToString: user]) {
 			
-			*stop = true;
+			*stop = YES;
 		}
 		
-		if (stop) {
+		if (*stop) {
 			NSLog(@"modify offline user: %@, with password: %@", user, [Encrypt SHA512From: password]);
 			NSDictionary *userInfo = [LoginManager userFormatOfUser: user password: password identity: identity];
 			[offlineUserMutableList replaceObjectAtIndex: idx withObject: userInfo];

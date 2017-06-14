@@ -85,8 +85,10 @@ if (![LoginManager shared].isAWSLogin) {
 -(void)logoutOfflineCompletion:(void(^)(NSError *error))completion;
 ```
 
+
 **Example**
-``` objective-c
+
+```objective-c
 if ([LoginManager shared].isLogin) {
   [[LoginManager shared] loginOfflineWithUser: username password: password completion:^(NSError *error) {
     if (!error) {
@@ -94,6 +96,7 @@ if ([LoginManager shared].isLogin) {
     }
   }];
 }
+
 ```
 
 **Bookmark**
@@ -122,14 +125,70 @@ if ([LoginManager shared].isLogin) {
 -(void)mergePushType:(RecordType)type userId:(NSString *)userId completion:(void(^)(NSDictionary *responseItem, NSError *error))mergeCompletion;
 ```
 
+
 ```objective-c
 // Offline
 -(NSDictionary *)getOfflineRecordOfIdentity:(NSString *)identity type:(RecordType)type;
 -(void)addOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity;
 -(NSDictionary *)deleteOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity;
+
 ```
 
 
+**Example**
+
+
+```objective-c
+NSDictionary *bookmark = @{@"comicName": @"One Piece",
+                              @"author": @"尾田榮一郎",
+                                 @"url": @"https://zh.wikipedia.org/wiki/ONE_PIECE"};
+[[BookmarkManager new] addOffline: bookmark type: RecordTypeBookmark ofIdentity: [LoginManager shared].awsIdentityId];
+
+```
+
+
+```objective-c
+NSDictionary *bookmark = @{@"comicName": @"One Piece",
+                              @"author": @"尾田榮一郎",
+                                 @"url": @"https://zh.wikipedia.org/wiki/ONE_PIECE"};
+self.localBookmark = [bookmarkManager deleteOffline: bookmark type: RecordTypeBookmark ofIdentity: [LoginManager shared].awsIdentityId];
+
+self.localBookmark = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localBookmark[@"_dicts"]][indexPath.row] type: RecordTypeBookmark ofIdentity: self.localBookmark[@"_userId"]];
+
+// print(self.localBookmark)
+/*
+{
+    "_commitId" = "7E155DB3-ACF8-4B32-9C61-974A8EED985D-38221-0000271ECA47394B";
+    "_dicts" =     {
+        One Piece =         {
+            author = 尾田榮一郎;
+            url = https://zh.wikipedia.org/wiki/ONE_PIECE;
+        };
+        Naruto =         {
+            author = 岸本齊史;
+            url = https://zh.wikipedia.org/wiki/火影忍者;
+        };
+    };
+    "_remoteHash" = "CDDF146E-47D7-4D7F-92B1-904F0BEF3D19-38221-0000271ECA473DE5";
+    "_userId" = "us-east-1:2bf27e82-e169-429c-9a32-deebf6570eb8";
+}
+*/
+
+```
+
+
+```objective-c
+NSArray *bookmarks = [DSWrapper arrayFromDict: self.localBookmark[@"_dicts"]];
+NSDictionary *bookmark = bookmarks[indexPath.row];
+/*
+Bookmark:   {
+               comicName = One Piece;
+               author = 尾田榮一郎;
+               url = https://zh.wikipedia.org/wiki/ONE_PIECE;
+           };
+*/
+
+```
 
 
 ## Author

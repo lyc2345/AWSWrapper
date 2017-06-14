@@ -270,7 +270,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 
 @implementation BookmarkManager (AWS)
 
--(void)pullType:(RecordType)type user:(NSString *)userId completion:(void(^)(NSDictionary *item, NSError *error))completionHandler {
+-(void)pullType:(RecordType)type user:(NSString *)userId completion:(void(^)(NSDictionary *item, DSError *error))completionHandler {
   
   AWSDynamoDB *dynamoDB = [AWSDynamoDB defaultDynamoDB];
   AWSDynamoDBQueryInput *queryInput = [AWSDynamoDBQueryInput new];
@@ -287,7 +287,8 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
     
     if (error) {
       NSLog(@"AWS DynamoDB load error: %@", error);
-      completionHandler(nil, error);
+      //completionHandler(nil, error);
+      completionHandler(nil, [DSError pullFailed]);
       return;
     }
     NSLog(@"AWS DynamoDB load successfull");
@@ -299,7 +300,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
       completionHandler(record, nil);
       
     } else {
-      completionHandler(nil, nil);
+      completionHandler(nil, [DSError remoteDataNil]);
     }
   }];
 }
@@ -419,7 +420,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
   }];
 }
 
--(void)mergePushType:(RecordType)type userId:(NSString *)userId completion:(void(^)(NSDictionary *responseItem, NSError *error))mergeCompletion {
+-(void)mergePushType:(RecordType)type userId:(NSString *)userId completion:(void(^)(NSDictionary *responseItem, DSError *error))mergeCompletion {
 	
   // Diff local and shadow first, should know the modifies.
   NSDictionary *local = [self getOfflineRecordOfIdentity: userId type: type];
@@ -437,7 +438,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 			//NSLog(@"first push success with object: %@", response);
 			[self pushSuccessThenSaveLocalRecord: local type: type newCommitId: commitId];
 			
-			mergeCompletion(responseItem, error);
+			mergeCompletion(responseItem, nil);
 			return;
 			
 		} else {
@@ -451,6 +452,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 				NSLog(@"pull finished");
 				if (error) {
 					NSLog(@"BookmarkManager pull error: %@", error);
+          mergeCompletion(nil, [DSError pullFailed]);
 					return;
 					
 				} else {
@@ -465,8 +467,10 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 							if (!error) {
                 NSLog(@"FORCE push success with reocrd: %@", local);
                 [self pushSuccessThenSaveLocalRecord: local type: type newCommitId: commitId];
+                mergeCompletion(item, nil);
+                return;
               }
-							mergeCompletion(item, error);
+							mergeCompletion(item, [DSError forcePushFailed]);
 						}];
 					} else {
 						
@@ -496,10 +500,15 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 
 							NSLog(@"Remote hash is nil, force push whole local record");
 							[self forcePushWithType: type record: cloud userId: userId completion:^(NSDictionary *item, NSError *error, NSString *commitId) {
-								NSLog(@"5: Done by force push");
-
-								[self pushSuccessThenSaveLocalRecord: [new copy] type: type newCommitId: commitId];
-								mergeCompletion(item, error);
+                
+                if (!error) {
+                  NSLog(@"5: Done by force push");
+                  
+                  [self pushSuccessThenSaveLocalRecord: [new copy] type: type newCommitId: commitId];
+                  mergeCompletion(item, nil);
+                } else {
+                  mergeCompletion(nil, [DSError forcePushFailed]);
+                }
 							}];
 						} else {
 							
@@ -512,6 +521,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 								if (error) {
 									NSLog(@"conditional push error: %@", error);
 									NSLog(@"fuckkkkkkkkkkkkkkkk erorrrrrrrrr");
+                  mergeCompletion(nil, [DSError mergePushFailed]);
 									return;
 								}
 								NSLog(@"push success after diffmerge");
@@ -520,7 +530,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
                 [new setObject: newClientDicts forKey: @"_dicts"];
 								
 								[self pushSuccessThenSaveLocalRecord: new type: type newCommitId: commitId];
-								mergeCompletion(responseItem, error);
+								mergeCompletion(responseItem, nil);
 							}];
 						}
 					}

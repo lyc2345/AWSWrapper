@@ -16,6 +16,7 @@
 #import "AWSWrapper.h"
 #import "Bookmark.h"
 #import "BookmarkManager.h"
+#import "DSError.h"
 #import "DSWrapper.h"
 #import "Encrypt.h"
 #import "LoginManager.h"

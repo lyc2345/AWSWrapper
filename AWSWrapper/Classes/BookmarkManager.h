@@ -8,6 +8,7 @@
 
 @import Foundation;
 #import "RecordSuitable.h"
+#import "DSError.h"
 
 typedef NS_ENUM(NSInteger, RecordType) {
 	RecordTypeBookmark = 0,
@@ -39,7 +40,7 @@ typedef NS_ENUM(NSInteger, RecordType) {
  
  item is pure dictionary object for bookmark record.
  */
--(void)pullType:(RecordType)type user:(NSString *)userId completion:(void(^)(NSDictionary *item, NSError *error))completionHandler;
+-(void)pullType:(RecordType)type user:(NSString *)userId completion:(void(^)(NSDictionary *item, DSError *error))completionHandler;
 
 /**
  1. It will compare record and shadow first and generate a client_shadow_diff
@@ -55,6 +56,6 @@ typedef NS_ENUM(NSInteger, RecordType) {
  @param userId AWS identity id
  @param mergeCompletion return error
  */
--(void)mergePushType:(RecordType)type userId:(NSString *)userId completion:(void(^)(NSDictionary *responseItem, NSError *error))mergeCompletion;
+-(void)mergePushType:(RecordType)type userId:(NSString *)userId completion:(void(^)(NSDictionary *responseItem, DSError *error))mergeCompletion;
 
 @end

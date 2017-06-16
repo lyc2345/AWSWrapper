@@ -424,7 +424,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 	
   // Diff local and shadow first, should know the modifies.
   NSDictionary *local = [self getOfflineRecordOfIdentity: userId type: type];
-	NSDictionary *diff_client_shadow = [DSWrapper diffShadowAndClient: local[@"_dicts"] isBookmark: type == RecordTypeBookmark];
+	__block NSDictionary *diff_client_shadow = [DSWrapper diffShadowAndClient: local[@"_dicts"] isBookmark: type == RecordTypeBookmark];
   
   NSLog(@"start: 1");
   // push local AWS model and the diff we get before.
@@ -444,18 +444,21 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 		} else {
 			NSLog(@"first conditional write error: %@", error);
 			
-			NSLog(@"starting pulling...");
+			NSLog(@"starting pull...");
 			NSLog(@"start 2");
-      [self pullType: type user: userId completion:^(NSDictionary *item, NSError *error) {
+      [self pullType: type user: userId completion:^(NSDictionary *item, DSError *error) {
 
 				NSLog(@"done 2");
-				NSLog(@"pull finished");
-				if (error) {
-					NSLog(@"BookmarkManager pull error: %@", error);
-          mergeCompletion(nil, [DSError pullFailed]);
+				if (error && (error && error.code != 4)) {
+          
+          NSLog(@"BookmarkManager pulling error: %@", error);
+            // com.BookmarkManager.pullError
+            mergeCompletion(nil, error);
 					return;
 					
 				} else {
+          
+          NSLog(@"pulling Success");
           NSMutableDictionary *cloud = [item mutableCopy];
 					
 					NSLog(@"start 3");
@@ -477,12 +480,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 						NSLog(@"done 3");
 						NSLog(@"remote version: %@, local version: %@", cloud[@"_remoteHash"], local[@"_remoteHash"]);
 						NSLog(@"remote timestamp: %@, local timestamp: %@", cloud[@"_commitId"], local[@"_commitId"]);
-						NSLog(@"starting diffmerge...");
-						// diff
-						NSLog(@"start 4: diffmerge");
-						NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: cloud[@"_dicts"] andLoses: local[@"_dicts"]];
-						NSDictionary *newClientDicts = [DSWrapper applyInto: local[@"_dicts"] From: need_to_apply_to_client];
-						
+            
             NSMutableDictionary *new = [NSMutableDictionary dictionary];
             
             [new setObject: cloud[@"_id"] forKey: @"_id"];
@@ -490,16 +488,16 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
             [new setObject: cloud[@"_commitId"] forKey: @"_commitId"];
             [new setObject: cloud[@"_remoteHash"] forKey: @"_remoteHash"];
             [new setObject: cloud[@"_dicts"] forKey: @"_dicts"];
-
-            NSLog(@"done 4");
-						NSLog(@"start 5");
-						if (!cloud[@"_remoteHash"]) {
-							
+            
+            NSLog(@"start 4: check remote Hash");
+            // remote Hash is nil
+            if (!cloud[@"_remoteHash"]) {
+              
               [new setObject: [Random string] forKey: @"_commidId"];
               [new setObject: [Random string] forKey: @"_remoteHash"];
-
-							NSLog(@"Remote hash is nil, force push whole local record");
-							[self forcePushWithType: type record: cloud userId: userId completion:^(NSDictionary *item, NSError *error, NSString *commitId) {
+              
+              NSLog(@"RemoteHash is nil, force push whole local record");
+              [self forcePushWithType: type record: cloud userId: userId completion:^(NSDictionary *item, NSError *error, NSString *commitId) {
                 
                 if (!error) {
                   NSLog(@"5: Done by force push");
@@ -509,31 +507,47 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
                 } else {
                   mergeCompletion(nil, [DSError forcePushFailed]);
                 }
-							}];
-						} else {
-							
-							NSLog(@"conditional push whole local record");
-							newClientDicts = [DSWrapper applyInto: newClientDicts From: diff_client_shadow];
-							NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClientDicts andLoses: cloud[@"_dicts"]];
-							
-              [self pushWithObject: new type: type diff: need_to_apply_to_remote userId: userId completion:^(NSDictionary *responseItem, NSError *error, NSString *commitId) {
-								
-								if (error) {
-									NSLog(@"conditional push error: %@", error);
-									NSLog(@"fuckkkkkkkkkkkkkkkk erorrrrrrrrr");
-                  mergeCompletion(nil, [DSError mergePushFailed]);
-									return;
-								}
-								NSLog(@"push success after diffmerge");
-								NSLog(@"5: Done by conditonal update");
-								
-                [new setObject: newClientDicts forKey: @"_dicts"];
-								
-								[self pushSuccessThenSaveLocalRecord: new type: type newCommitId: commitId];
-								mergeCompletion(responseItem, nil);
-							}];
-						}
-					}
+              }];
+              return;
+            } else if (![cloud[@"_remoteHash"] isEqualToString: local[@"_remoteHash"]]) {
+              
+              NSLog(@"RemoteHash is changed, Now empty shadow...");
+              [DSWrapper setShadow: @{} isBookmark: type == RecordTypeBookmark];
+              // diff client shadow again. becasue shadow is empty.
+              diff_client_shadow = [DSWrapper diffShadowAndClient: local[@"_dicts"] isBookmark: type == RecordTypeBookmark];
+              NSLog(@"Get a new diff from client and empty shadow");
+            }
+            NSLog(@"done 4");
+            
+						NSLog(@"starting diffmerge...");
+						NSLog(@"start 4-1: diffmerge");
+						NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: cloud[@"_dicts"] andLoses: local[@"_dicts"]];
+            NSDictionary *newClientDicts = [DSWrapper applyInto: local[@"_dicts"] From: need_to_apply_to_client];
+            
+            NSLog(@"done 4-1");
+            NSLog(@"start 5");
+            
+            NSLog(@"conditional push whole local record");
+            newClientDicts = [DSWrapper applyInto: newClientDicts From: diff_client_shadow];
+            NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClientDicts andLoses: cloud[@"_dicts"]];
+            
+            [self pushWithObject: new type: type diff: need_to_apply_to_remote userId: userId completion:^(NSDictionary *responseItem, NSError *error, NSString *commitId) {
+              
+              if (error) {
+                NSLog(@"conditional push error: %@", error);
+                NSLog(@"fuckkkkkkkkkkkkkkkk erorrrrrrrrr");
+                mergeCompletion(nil, [DSError mergePushFailed]);
+                return;
+              }
+              NSLog(@"push success after diffmerge");
+              NSLog(@"5: Done by conditonal update");
+              
+              [new setObject: newClientDicts forKey: @"_dicts"];
+              
+              [self pushSuccessThenSaveLocalRecord: new type: type newCommitId: commitId];
+              mergeCompletion(responseItem, nil);
+            }];
+          }
 				}
 			}];
 		}

@@ -254,9 +254,11 @@
 // MARK: TableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  NSDictionary *user = self.userList[indexPath.row];
+  
   
   if (tableView == _userTable && indexPath.section == 1) {
+    
+    NSDictionary *user = self.userList[indexPath.row];
     
     DetailVC *detailVC = [self.storyboard instantiateViewControllerWithIdentifier: NSStringFromClass([DetailVC class])];
     UINavigationController *navi = self.navigationController;
@@ -312,9 +314,11 @@
   }
   
   if (section == 0) {
-    return [NSString stringWithFormat:@"Local B count %lu- %@", (unsigned long)[(NSArray *)self.localBookmark[@"_dicts"] count], [self.localBookmark[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.localBookmark[@"_commitId"]).length - 10, 10)]];
+    return [NSString stringWithFormat:@"LB c:%lu- %@, rh: %@", (unsigned long)[(NSArray *)self.localBookmark[@"_dicts"] count],
+            [self.localBookmark[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.localBookmark[@"_commitId"]).length - 10, 10)], [self.localBookmark[@"_remoteHash"] substringWithRange: NSMakeRange(((NSString *)self.localBookmark[@"_remoteHash"]).length - 10, 10)]];
   } else if (section == 1) {
-    return [NSString stringWithFormat:@"Remote B count %lu- %@", (unsigned long)[(NSArray *)self.remoteBookmark[@"_dicts"] count], [self.remoteBookmark[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.remoteBookmark[@"_commitId"]).length - 10, 10)]];
+    return [NSString stringWithFormat:@"RB c:%lu- %@, rh: %@", (unsigned long)[(NSArray *)self.remoteBookmark[@"_dicts"] count], [self.remoteBookmark[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.remoteBookmark[@"_commitId"]).length - 10, 10)],
+      [self.remoteBookmark[@"_remoteHash"] substringWithRange: NSMakeRange(((NSString *)self.remoteBookmark[@"_remoteHash"]).length - 10, 10)]];
     
   } else if (section == 2) {
     return [NSString stringWithFormat:@"Local R count %lu- %@", (unsigned long)[(NSArray *)self.localRecentVisitItems[@"_dicts"] count], [self.localRecentVisitItems[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.localRecentVisitItems[@"_commitId"]).length - 10, 10)]];

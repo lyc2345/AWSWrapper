@@ -268,6 +268,58 @@
                 [newRemote isEqualToDictionary: expect]);
 }
 
+-(void)testScenarioSeeRemoteFirstMergeClient5 {
+  
+  // B, C, D
+  NSDictionary *remote = @{
+                           @"B": @{@"author": @"B", @"url": @"B"},
+                           @"C": @{@"author": @"C", @"url": @"C"},
+                           @"D": @{@"author": @"D", @"url": @"D"}
+                           };
+  // A, C, D
+  NSDictionary *client = @{
+                           @"A": @{@"author": @"A", @"url": @"A"},
+                           @"C": @{@"author": @"C", @"url": @"C"},
+                           @"D": @{@"author": @"D", @"url": @"D"}
+                           };
+  
+  NSDictionary *shadow = @{
+                           @"A": @{@"author": @"A", @"url": @"A"},
+                           @"B": @{@"author": @"B", @"url": @"B"},
+                           @"C": @{@"author": @"C", @"url": @"C"},
+                           @"D": @{@"author": @"D", @"url": @"D"}
+                           };
+  
+  // A, B, C, D
+  [DSWrapper setShadow: shadow isBookmark: YES];
+  
+  // -B
+  NSDictionary *need_to_apply_to_remote = [DSWrapper diffShadowAndClient: client isBookmark: YES];
+  
+  // -A, +B
+  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
+  
+  // B, C, D
+  NSDictionary *newClient = [DSWrapper applyInto: client From: need_to_apply_to_client];
+  
+  // C, D
+  newClient = [DSWrapper applyInto: newClient From: need_to_apply_to_remote];
+  
+  // [B, C, D] + [-B] = C, D
+  NSDictionary *newRemote = [DSWrapper applyInto: remote From: need_to_apply_to_remote];
+  
+  [DSWrapper setShadow: newRemote];
+  
+  NSDictionary *expect = @{
+                           @"C": @{@"author": @"C", @"url": @"C"},
+                           @"D": @{@"author": @"D", @"url": @"D"}
+                           };
+  
+  XCTAssertTrue([newRemote isEqualToDictionary: newClient] &&
+                [newRemote isEqualToDictionary: [DSWrapper shadow]] &&
+                [newRemote isEqualToDictionary: expect]);
+}
+
 -(void)testScenarioRemoteWasReseted {
   
   NSDictionary *remote = @{};
@@ -276,6 +328,37 @@
   
   NSDictionary *diff_client_shadow = [DSWrapper diffShadowAndClient: client isBookmark: YES];
   
+  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
+  NSDictionary *newClient = [DSWrapper applyInto: client From: need_to_apply_to_client];
+  newClient = [DSWrapper applyInto: newClient From: diff_client_shadow];
+  
+  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient andLoses: remote];
+  NSDictionary *newRemote = [DSWrapper applyInto: remote From: need_to_apply_to_remote];
+  
+  [DSWrapper setShadow: newRemote];
+  
+  XCTAssertTrue([newRemote isEqualToDictionary: newClient] &&
+                [newRemote isEqualToDictionary: [DSWrapper shadow]] && newRemote != nil);
+}
+
+-(void)testScenarioRemoteWasReseted2 {
+  
+  NSDictionary *remote = @{};
+  NSDictionary *client = @{
+                           @"A": @{@"author": @"A", @"url": @"A"},
+                           @"B": @{@"author": @"B", @"url": @"B"},
+                           };
+  NSDictionary *shadow = @{
+                           @"A": @{@"author": @"A", @"url": @"A"},
+                           @"B": @{@"author": @"B", @"url": @"B"},
+                           @"C": @{@"author": @"C", @"url": @"C"}
+                           }
+  [DSWrapper setShadow: shadow isBookmark: YES];
+  
+  // -C
+  NSDictionary *diff_client_shadow = [DSWrapper diffShadowAndClient: client isBookmark: YES];
+  
+  // 
   NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
   NSDictionary *newClient = [DSWrapper applyInto: client From: need_to_apply_to_client];
   newClient = [DSWrapper applyInto: newClient From: diff_client_shadow];

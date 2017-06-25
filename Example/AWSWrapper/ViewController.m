@@ -131,13 +131,40 @@
   
   [self reloadBookmarks];
   [self reloadRecentlyVisit];
+  
+  DynamoSync *dsync = [DynamoSync new];
+//  [dsync syncWithUserId: @"" tableName: @"" dictionary: [NSDictionary dictionary] shouldReplace: BOOL^(id oldValue, id newValue) {
+//    
+//    
+//  } completion: ^(NSDictionary *diff, NSError *error) {
+//    
+//    
+//  }];
+  
+  NSString *userId = @"";
+  NSDictionary *local = [[BookmarkManager new] getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
+  
+  
+  [dsync syncWithUserId: userId tableName: @"Bookmark" dictionary: local[@"_dict"] shouldReplace:^BOOL(id oldValue, id newValue) {
+    
+    if (oldValue) {
+      return NO;
+    } else {
+      return YES;
+    }
+    
+  } completion:^(NSDictionary *diff, NSError *error) {
+    
+    
+  }];
 }
 
 
 - (IBAction)save:(id)sender {
 	
 	// Save local
- NSDictionary *bookmark = @{@"comicName": self.nameTF.text, @"author": self.nameTF.text, @"url": self.nameTF.text};
+ NSDictionary *bookmark = @{@"comicName": self.nameTF.text, @"author": [NSString stringWithFormat: @"author %@", self.nameTF.text], @"url": [NSString stringWithFormat: @"http://www.wikipedia/%@", self.nameTF.text]};
+  //NSDictionary *bookmark = @{@"comicName": self.nameTF.text, @"author": self.nameTF.text, @"url": self.nameTF.text};
 	
 	if ([LoginManager shared].isLogin) {
 		

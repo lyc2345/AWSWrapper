@@ -18,6 +18,7 @@
 #import "BookmarkManager.h"
 #import "DSError.h"
 #import "DSWrapper.h"
+#import "DynamoSync.h"
 #import "Encrypt.h"
 #import "LoginManager.h"
 #import "PlistManager.h"

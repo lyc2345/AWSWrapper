@@ -352,7 +352,7 @@
                            @"A": @{@"author": @"A", @"url": @"A"},
                            @"B": @{@"author": @"B", @"url": @"B"},
                            @"C": @{@"author": @"C", @"url": @"C"}
-                           }
+                           };
   [DSWrapper setShadow: shadow isBookmark: YES];
   
   // -C

@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameTF;
 @property (weak, nonatomic) IBOutlet UILabel *checkLoginLabel;
 
+@property (strong, nonatomic) OfflineDB *offlineDB;
+
 @property NSString *currentUser;
 @property NSArray *userList;
 
@@ -135,7 +137,7 @@
   DynamoSync *dsync = [DynamoSync new];
   
   NSString *userId = @"";
-  NSDictionary *local = [[BookmarkManager new] getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
+  NSDictionary *local = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
   
   NSDictionary *client = @{
                            @"B": @{@"author": @"B", @"url": @"B1"},
@@ -164,7 +166,7 @@
 	
 	if ([LoginManager shared].isLogin) {
 		
-		[[BookmarkManager new] addOffline: bookmark type: RecordTypeBookmark ofIdentity: [LoginManager shared].awsIdentityId];
+		[self.offlineDB addOffline: bookmark type: RecordTypeBookmark ofIdentity: [LoginManager shared].awsIdentityId];
 	}
 
   [[BookmarkManager new] mergePushType: RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
@@ -184,7 +186,7 @@
 	
 	if ([LoginManager shared].isLogin) {
 		
-		[[BookmarkManager new] addOffline: recentlyVisit type: RecordTypeRecentlyVisit ofIdentity: [LoginManager shared].awsIdentityId];
+		[self.offlineDB addOffline: recentlyVisit type: RecordTypeRecentlyVisit ofIdentity: [LoginManager shared].awsIdentityId];
 		
 	}
   [[BookmarkManager new] mergePushType: RecordTypeRecentlyVisit userId:[LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
@@ -223,7 +225,7 @@
   BookmarkManager *bookmarkManager = [BookmarkManager new];
   LoginManager *loginManager = [LoginManager shared];
   NSString *userId = loginManager.awsIdentityId != nil ? loginManager.awsIdentityId : loginManager.offlineIdentity;
-  NSDictionary *localBookmarkRecord = [bookmarkManager getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
+  NSDictionary *localBookmarkRecord = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
   
   self.localBookmark = localBookmarkRecord;
   dispatch_async(dispatch_get_main_queue(), ^{
@@ -247,7 +249,7 @@
   BookmarkManager *bookmarkManager = [BookmarkManager new];
   LoginManager *loginManager = [LoginManager shared];
   NSString *userId = loginManager.awsIdentityId != nil ? loginManager.awsIdentityId : loginManager.offlineIdentity;
-  NSDictionary *localRecentlyVisit = [bookmarkManager getOfflineRecordOfIdentity: userId type: RecordTypeRecentlyVisit];
+  NSDictionary *localRecentlyVisit = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeRecentlyVisit];
   
   self.localRecentVisitItems = localRecentlyVisit;
   

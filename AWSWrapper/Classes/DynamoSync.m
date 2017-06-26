@@ -29,7 +29,7 @@
 
 @interface DynamoSync ()
 
-@property (strong, nonatomic) BookmarkManager *bmm;
+@property (strong, nonatomic) OfflineDB *offlineDB;
 
 @end
 
@@ -40,7 +40,7 @@
   self = [super init];
   if (self) {
     
-    self.bmm = [BookmarkManager new];
+    self.offlineDB = [OfflineDB new];
     
   }
   return self;
@@ -55,7 +55,7 @@
   RecordType type = [tableName isEqualToString: @"Bookmark"] ? RecordTypeBookmark : RecordTypeRecentlyVisit ;
   BOOL isBookmark = [tableName isEqualToString: @"Bookmark"] ? YES : NO;
   
-  NSDictionary *local = [self.bmm getOfflineRecordOfIdentity: userId type: type];
+  NSDictionary *local = [self.offlineDB getOfflineRecordOfIdentity: userId type: type];
   
   __block NSDictionary *diff_client_shadow = [DSWrapper diffShadowAndClient: dict
                                                                  primaryKey: @"comicName"

@@ -55,13 +55,36 @@
   RecordType type = [tableName isEqualToString: @"Bookmark"] ? RecordTypeBookmark : RecordTypeRecentlyVisit ;
   BOOL isBookmark = [tableName isEqualToString: @"Bookmark"] ? YES : NO;
   
+  NSDictionary *local = [self.bmm getOfflineRecordOfIdentity: userId type: type];
+  
+  __block NSDictionary *diff_client_shadow = [DSWrapper diffShadowAndClient: dict
+                                                                 primaryKey: @"comicName"
+                                                                 isBookmark: isBookmark
+                                                              shouldReplace: shouldReplace];
+  
+  
   // dictionary is the data that will be synced
-  NSDictionary *diff_dict_shadow = [DSWrapper diffShadowAndClient: dict isBookmark: isBookmark];
+  //NSDictionary *diff_dict_shadow = [DSWrapper diffShadowAndClient: dict isBookmark: isBookmark];
   
   // 如果要取代用newValue, otherwise use newValue
-  NSDictionary *oldValue = diff_dict_shadow[@"_delete"];
-  NSDictionary *newValue = diff_dict_shadow[@"_add"];
-  BOOL replace = shouldReplace(oldValue, newValue);
+  //NSDictionary *oldValue = diff_dict_shadow[@"_delete"];
+  //NSDictionary *newValue = diff_dict_shadow[@"_add"];
+  //BOOL replace = shouldReplace(oldValue, newValue);
+  
+  NSDictionary *fakeShadow = @{
+                           @"B": @{@"author": @"B", @"url": @"B"},
+                           @"C": @{@"author": @"C", @"url": @"C"}
+                           };
+  
+  NSDictionary *diff = [DSWrapper diffWins: dict
+                                  andLoses: fakeShadow
+                                primaryKey: @"comicName"
+                             shouldReplace: shouldReplace];
+  
+  
+  
+  
+  completion(diff, nil);
   
   //[self.bmm pushWithObject:<#(NSDictionary *)#> type:<#(RecordType)#> diff:<#(NSDictionary *)#> userId:<#(NSString *)#> completion:<#^(NSDictionary *responseItem, NSError *error, NSString *commitId)completion#>]
   

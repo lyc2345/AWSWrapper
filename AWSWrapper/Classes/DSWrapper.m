@@ -113,10 +113,29 @@ NSString *const _recently_shadow = @"_client_shadow_RecentlyVisit";
 									 shadow: [DSWrapper arrayFromDict: [DSWrapper shadowIsBookmark: isBookmark]]];
 }
 
++(NSDictionary *)diffShadowAndClient:(NSDictionary *)client primaryKey:(NSString *)key isBookmark:(BOOL)isBookmark shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace {
+  
+  return [DS diffWins: [DSWrapper arrayFromDict: client]
+             andLoses: [DSWrapper arrayFromDict: [DSWrapper shadowIsBookmark: isBookmark]]
+           primaryKey: key
+        shouldReplace: shouldReplace];
+}
+
 +(NSDictionary *)diffWins:(NSDictionary *)wins andLoses:(NSDictionary *)loses {
 
 	return [DS diffWins: [DSWrapper arrayFromDict: wins]
 						 andLoses: [DSWrapper arrayFromDict: loses]];
+}
+
++(NSDictionary *)diffWins:(NSDictionary *)wins
+                 andLoses:(NSDictionary *)loses
+               primaryKey:(NSString *)key
+            shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace {
+  
+  return [DS diffWins: [DSWrapper arrayFromDict: wins]
+             andLoses: [DSWrapper arrayFromDict: loses]
+           primaryKey: key
+        shouldReplace: shouldReplace];
 }
 
 +(NSDictionary *)mergeInto:(NSDictionary *)into applyDiff:(NSDictionary *)diff {

@@ -133,29 +133,25 @@
   [self reloadRecentlyVisit];
   
   DynamoSync *dsync = [DynamoSync new];
-//  [dsync syncWithUserId: @"" tableName: @"" dictionary: [NSDictionary dictionary] shouldReplace: BOOL^(id oldValue, id newValue) {
-//    
-//    
-//  } completion: ^(NSDictionary *diff, NSError *error) {
-//    
-//    
-//  }];
   
   NSString *userId = @"";
   NSDictionary *local = [[BookmarkManager new] getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
   
+  NSDictionary *client = @{
+                           @"B": @{@"author": @"B", @"url": @"B1"},
+                           @"D": @{@"author": @"D", @"url": @"D"}
+                           };
   
-  [dsync syncWithUserId: userId tableName: @"Bookmark" dictionary: local[@"_dict"] shouldReplace:^BOOL(id oldValue, id newValue) {
+  [dsync syncWithUserId: userId
+              tableName: @"Bookmark"
+             dictionary: client //local[@"_dict"]
+          shouldReplace:^BOOL(id oldValue, id newValue) {
     
-    if (oldValue) {
-      return NO;
-    } else {
-      return YES;
-    }
+            return YES;
     
   } completion:^(NSDictionary *diff, NSError *error) {
     
-    
+    NSLog(@"diff: %@", diff);
   }];
 }
 

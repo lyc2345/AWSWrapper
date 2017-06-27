@@ -15,8 +15,14 @@ typedef NS_ENUM(NSInteger, RecordType) {
 	RecordTypeRecentlyVisit = 1
 };
 
-@interface OfflineDB: NSObject
 
+
+
+
+
+
+
+@interface OfflineDB: NSObject
 
 #pragma mark Offline Format
 
@@ -52,9 +58,25 @@ typedef NS_ENUM(NSInteger, RecordType) {
 
 @end
 
-@interface BookmarkManager : NSObject
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@interface BookmarkManager : NSObject
 @end
+
+
 
 @interface BookmarkManager (Offline)
 

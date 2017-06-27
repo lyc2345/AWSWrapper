@@ -20,6 +20,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 // bookmarkRecord = Dicionary(list: bookmarkList)
 // bookmarkRecords = Array(bookmarkRecords)
 
+
 @interface OfflineDB ()
 
 
@@ -218,6 +219,26 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @interface BookmarkManager ()

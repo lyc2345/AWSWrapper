@@ -42,7 +42,7 @@ NSString *const cellIdentifier = @"cell";
 	BookmarkManager *bookmarkManager = [BookmarkManager new];
 	LoginManager *loginManager = [LoginManager shared];
 	NSString *userId = loginManager.awsIdentityId != nil ? loginManager.awsIdentityId : loginManager.offlineIdentity;
-	NSDictionary *localBookmarkRecord = [bookmarkManager getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
+	NSDictionary *localBookmarkRecord = [[OfflineDB new] getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
 	
 	self.localBookmark = localBookmarkRecord;
 	[_tableView reloadData];
@@ -64,7 +64,7 @@ NSString *const cellIdentifier = @"cell";
 	BookmarkManager *bookmarkManager = [BookmarkManager new];
 	LoginManager *loginManager = [LoginManager shared];
 	NSString *userId = loginManager.awsIdentityId != nil ? loginManager.awsIdentityId : loginManager.offlineIdentity;
-	NSDictionary *localRecentlyVisit = [bookmarkManager getOfflineRecordOfIdentity: userId type: RecordTypeRecentlyVisit];
+	NSDictionary *localRecentlyVisit = [[OfflineDB new] getOfflineRecordOfIdentity: userId type: RecordTypeRecentlyVisit];
 	
 	self.localRecentVisitItems = localRecentlyVisit;
 	[_tableView reloadData];
@@ -148,7 +148,7 @@ NSString *const cellIdentifier = @"cell";
 		if (indexPath.section == 0) {
 			
 			[tableView beginUpdates];
-			self.localBookmark = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localBookmark[@"_dicts"]][indexPath.row] type: RecordTypeBookmark ofIdentity: self.localBookmark[@"_userId"]];
+			self.localBookmark = [[OfflineDB new] deleteOffline: [DSWrapper arrayFromDict: self.localBookmark[@"_dicts"]][indexPath.row] type: RecordTypeBookmark ofIdentity: self.localBookmark[@"_userId"]];
 			[tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationLeft];
 			[tableView reloadSectionIndexTitles];
 			[tableView endUpdates];
@@ -156,7 +156,7 @@ NSString *const cellIdentifier = @"cell";
 		} else if (indexPath.section == 2) {
 			
 			[tableView beginUpdates];
-			self.localRecentVisitItems = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localRecentVisitItems[@"_dicts"]][indexPath.row] type: RecordTypeRecentlyVisit ofIdentity: self.localRecentVisitItems[@"_userId"]];
+			self.localRecentVisitItems = [[OfflineDB new] deleteOffline: [DSWrapper arrayFromDict: self.localRecentVisitItems[@"_dicts"]][indexPath.row] type: RecordTypeRecentlyVisit ofIdentity: self.localRecentVisitItems[@"_userId"]];
 			[tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationLeft];
 			[tableView reloadSectionIndexTitles];
 			[tableView endUpdates];

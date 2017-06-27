@@ -60,6 +60,8 @@
   
   self.userList = [NSArray array];
   self.currentUser = @"";
+  
+  self.offlineDB = [[OfflineDB alloc] init];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -371,7 +373,7 @@
     if (indexPath.section == 0) {
       
       [tableView beginUpdates];
-      self.localBookmark = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localBookmark[@"_dicts"]][indexPath.row] type: RecordTypeBookmark ofIdentity: self.localBookmark[@"_userId"]];
+      self.localBookmark = [self.offlineDB deleteOffline: [DSWrapper arrayFromDict: self.localBookmark[@"_dicts"]][indexPath.row] type: RecordTypeBookmark ofIdentity: self.localBookmark[@"_userId"]];
       [tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationLeft];
       [tableView reloadSectionIndexTitles];
       [tableView endUpdates];
@@ -379,7 +381,7 @@
     } else if (indexPath.section == 2) {
       
       [tableView beginUpdates];
-      self.localRecentVisitItems = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localRecentVisitItems[@"_dicts"]][indexPath.row] type: RecordTypeRecentlyVisit ofIdentity: self.localRecentVisitItems[@"_userId"]];
+      self.localRecentVisitItems = [self.offlineDB deleteOffline: [DSWrapper arrayFromDict: self.localRecentVisitItems[@"_dicts"]][indexPath.row] type: RecordTypeRecentlyVisit ofIdentity: self.localRecentVisitItems[@"_userId"]];
       [tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationLeft];
       [tableView reloadSectionIndexTitles];
       [tableView endUpdates];

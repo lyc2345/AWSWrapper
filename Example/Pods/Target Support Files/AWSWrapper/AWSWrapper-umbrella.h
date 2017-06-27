@@ -21,6 +21,7 @@
 #import "DynamoSync.h"
 #import "Encrypt.h"
 #import "LoginManager.h"
+#import "OfflineDB.h"
 #import "PlistManager.h"
 #import "Random.h"
 #import "RecentVisit.h"

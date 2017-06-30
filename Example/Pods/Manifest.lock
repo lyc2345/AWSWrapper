@@ -30,9 +30,9 @@ PODS:
     - AWSCore (~> 2.5.2)
     - AWSDynamoDB (~> 2.5.2)
     - AWSS3 (~> 2.5.2)
-    - DS (~> 0.1.4)
+    - DS (~> 0.1.6)
     - SAMKeychain
-  - DS (0.1.5)
+  - DS (0.1.6)
   - Expecta (1.0.5)
   - SAMKeychain (1.5.2)
   - Specta (1.0.6)
@@ -53,8 +53,8 @@ SPEC CHECKSUMS:
   AWSCore: cf101c44d2cc5da32abc27d5529cddc63c010415
   AWSDynamoDB: 53ead656801e1a40b415fc0bebd85f1dc0dc0ead
   AWSS3: addf558f9cf2368e7fb520440867fea5596db0fb
-  AWSWrapper: c8263d03c97d72bc97ddd035b097aa6636b2ad80
-  DS: 76415f84af7e93de6e2753ffb76b2c0949b4d97a
+  AWSWrapper: 6d9bf0162a5cf2039261c9052c0b43a85dd55bda
+  DS: 1da881119dd70a3821ed1e37af8d992c7c17407b
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   SAMKeychain: 1865333198217411f35327e8da61b43de79b635b
   Specta: f506f3a8361de16bc0dcf3b17b75e269072ba465

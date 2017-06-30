@@ -24,6 +24,9 @@
 +(NSDictionary *)diffShadowAndClient:(NSArray *)client shadow:(NSArray *)shadow {
   
   NSDictionary *sets = [DS diffSetWins: client losesSet: shadow];
+  if (!sets) {
+    return nil;
+  }
   
   NSMutableSet *winsMutableSet = sets[@"_winSet"];
   NSMutableSet *losesMutableSet = sets[@"_loseSet"];
@@ -66,6 +69,9 @@
   // e.g. [B, C, D] - [B, C] = [D], because wait to be added = +D
   [winsMutableSet minusSet: commonSet];
   
+  if (!(winsMutableSet.count > 0 || losesMutableSet.count > 0)) {
+    return nil;
+  }
   // e.g. diff = Add: [+D], Delete: [-A]
   NSDictionary *diffSet = [DS diffSetsFormatFromWin: winsMutableSet loses: losesMutableSet];
   NSLog(@"diffSet: %@", diffSet);
@@ -75,6 +81,9 @@
 +(NSDictionary *)diffWins:(NSArray *)wins andLoses:(NSArray *)loses {
   
   NSDictionary *sets = [DS diffSetWins: wins losesSet: loses];
+  if (!sets) {
+    return nil;
+  }
   
   NSMutableSet *winsMutableSet = sets[@"_winSet"];
   NSMutableSet *losesMutableSet = sets[@"_loseSet"];
@@ -93,6 +102,9 @@
             shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace {
   
   NSDictionary *sets = [DS diffSetWins: wins losesSet: loses];
+  if (!sets) {
+    return nil;
+  }
   
   NSMutableSet *winsMutableSet = sets[@"_winSet"];
   NSMutableSet *losesMutableSet = sets[@"_loseSet"];

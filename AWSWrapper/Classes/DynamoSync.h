@@ -8,8 +8,20 @@
 
 
 #import <Foundation/Foundation.h>
+#import "BookmarkManager.h"
+
+@protocol DynamoSyncDelegate <NSObject>
+
+-(void)dynamoPushSuccessWithType:(RecordType)type data:(NSDictionary *)data newCommitId:(NSString *)commitId;
+-(void)dynamoPushConflictWithType:(RecordType)type pullingData:(NSDictionary *)data;
+-(void)dynamoPullFailureWithType:(RecordType)type error:(NSError *)error;
+
+@end
+
 
 @interface DynamoSync : NSObject
+
+@property (weak, nonatomic) id<DynamoSyncDelegate> delegate;
 
 /**
  * @param userId AWS identityID

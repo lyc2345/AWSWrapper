@@ -11,10 +11,12 @@
 @import AWSWrapper;
 #import "DetailVC.h"
 
-@interface ViewController () <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface ViewController () <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, DynamoSyncDelegate> {
   
   __weak IBOutlet UITableView *_tableView;
   __weak IBOutlet UITableView *_userTable;
+  
+  DynamoSync *_dsync;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *identityLabel;
@@ -62,6 +64,9 @@
   self.currentUser = @"";
   
   self.offlineDB = [[OfflineDB alloc] init];
+  
+  _dsync = [[DynamoSync alloc] init];
+  _dsync.delegate = self;
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -135,28 +140,6 @@
   
   [self reloadBookmarks];
   [self reloadRecentlyVisit];
-  
-  DynamoSync *dsync = [DynamoSync new];
-  
-  NSString *userId = @"";
-  NSDictionary *local = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
-  
-  NSDictionary *client = @{
-                           @"B": @{@"author": @"B", @"url": @"B1"},
-                           @"D": @{@"author": @"D", @"url": @"D"}
-                           };
-  
-  [dsync syncWithUserId: userId
-              tableName: @"Bookmark"
-             dictionary: client //local[@"_dict"]
-          shouldReplace:^BOOL(id oldValue, id newValue) {
-    
-            return YES;
-    
-  } completion:^(NSDictionary *diff, NSError *error) {
-    
-    NSLog(@"diff: %@", diff);
-  }];
 }
 
 
@@ -171,6 +154,7 @@
 		[self.offlineDB addOffline: bookmark type: RecordTypeBookmark ofIdentity: [LoginManager shared].awsIdentityId];
 	}
 
+  /*
   [[BookmarkManager new] mergePushType: RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
     
     if (error) {
@@ -178,7 +162,23 @@
       return;
     }
     [self reloadBookmarks];
-  }];
+  }];*/
+  
+  NSString *userId = [LoginManager shared].awsIdentityId;
+  NSDictionary *local = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
+  
+  [_dsync syncWithUserId: userId
+              tableName: @"Bookmark"
+             dictionary: local
+          shouldReplace:^BOOL(id oldValue, id newValue) {
+            
+            
+            return YES;
+            
+          } completion:^(NSDictionary *diff, NSError *error) {
+            
+            NSLog(@"diff: %@", diff);
+          }];
 }
 
 - (IBAction)saveRecentlyVisit:(id)sender {
@@ -271,6 +271,26 @@
     }];
   }
 }
+
+// MARK: DynamoSyncDelegate
+
+-(void)dynamoPushSuccessWithType:(RecordType)type data:(NSDictionary *)data newCommitId:(NSString *)commitId {
+  
+  
+}
+
+-(void)dynamoPushConflictWithType:(RecordType)type pullingData:(NSDictionary *)data {
+  
+  
+}
+
+-(void)dynamoPullFailureWithType:(RecordType)type pullingData:(NSDictionary *)data {
+  
+  
+}
+
+
+
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
 	

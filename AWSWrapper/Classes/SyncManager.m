@@ -112,13 +112,13 @@
   [bookmark setObject: userId forKey: @"_id"];
   [bookmark setObject: userId forKey: @"_userId"];
 	
-  [bookmarkManager mergePushType: RecordTypeBookmark userId: userId completion:^(NSDictionary *responseItem, NSError *error) {
-    
-    if (error) {
-      NSLog(@"SyncManager mergePush error: %@", error);
-      return;
-    }
-  }];
+//  [bookmarkManager mergePushType: RecordTypeBookmark userId: userId completion:^(NSDictionary *responseItem, NSError *error) {
+//    
+//    if (error) {
+//      NSLog(@"SyncManager mergePush error: %@", error);
+//      return;
+//    }
+//  }];
 }
 
 

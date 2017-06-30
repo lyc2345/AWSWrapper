@@ -165,6 +165,12 @@
             newClientDicts = [DSWrapper mergeInto: newClientDicts applyDiff: diff_client_shadow];
             NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClientDicts andLoses: cloud[@"_dicts"]];
             
+            if (!([need_to_apply_to_remote allValues].count > 0)) {
+              
+              [_delegate dynamoPushSuccessWithType: type data: new newCommitId: new[@"_commitId"]];
+              return;
+            }
+            
             [bookmarkManager pushWithObject: new type: type diff: need_to_apply_to_remote userId: userId completion:^(NSDictionary *responseItem, NSError *error, NSString *commitId) {
               
               if (error) {
@@ -178,7 +184,7 @@
               
               [new setObject: newClientDicts forKey: @"_dicts"];
               
-              [_delegate dynamoPushSuccessWithType: type data: dict newCommitId: commitId];
+              [_delegate dynamoPushSuccessWithType: type data: new newCommitId: commitId];
               completion(need_to_apply_to_remote, nil);
             }];
           }

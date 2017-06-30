@@ -166,7 +166,6 @@
   
   NSString *userId = [LoginManager shared].awsIdentityId;
   NSDictionary *local = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
-  
   [_dsync syncWithUserId: userId
               tableName: @"Bookmark"
              dictionary: local
@@ -189,37 +188,55 @@
 	if ([LoginManager shared].isLogin) {
 		
 		[self.offlineDB addOffline: recentlyVisit type: RecordTypeRecentlyVisit ofIdentity: [LoginManager shared].awsIdentityId];
-		
 	}
-  [[BookmarkManager new] mergePushType: RecordTypeRecentlyVisit userId:[LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
-    
-    if (error) {
-      NSLog(@"error: %@", error);
-      return;
-    }
-    [self reloadRecentlyVisit];
-  }];
+  NSString *userId = [LoginManager shared].awsIdentityId;
+  NSDictionary *bk = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
+  [_dsync syncWithUserId: userId
+               tableName: @"Bookmark"
+              dictionary: bk
+           shouldReplace:^BOOL(id oldValue, id newValue) {
+             return YES;
+           } completion:^(NSDictionary *diff, NSError *error) {
+             [self reloadBookmarks];
+           }];
+  NSDictionary *rv = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeRecentlyVisit];
+  
+  [_dsync syncWithUserId: userId
+               tableName: @"Bookmark"
+              dictionary: rv
+           shouldReplace:^BOOL(id oldValue, id newValue) {
+             return YES;
+           } completion:^(NSDictionary *diff, NSError *error) {
+             [self reloadRecentlyVisit];
+           }];
 }
 
 - (IBAction)syncRemote:(id)sender {
 	
-	//[[SyncManager shared] startLoginFlow];
-  [[BookmarkManager new] mergePushType: RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
-    
-    dispatch_sync(dispatch_get_main_queue(), ^{
-      [self reloadBookmarks];
-    });
-  }];
+  NSString *userId = [LoginManager shared].awsIdentityId;
+  NSDictionary *bk = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
+  [_dsync syncWithUserId: userId
+               tableName: @"Bookmark"
+              dictionary: bk
+           shouldReplace:^BOOL(id oldValue, id newValue) {
+             return YES;
+           } completion:^(NSDictionary *diff, NSError *error) {
+             [self reloadBookmarks];
+           }];
 }
 
 - (IBAction)syncRecently:(id)sender {
-  [[BookmarkManager new] mergePushType: RecordTypeRecentlyVisit userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
-    
-    dispatch_sync(dispatch_get_main_queue(), ^{
-      [self reloadRecentlyVisit];
-    });
-  }];
-
+  
+  NSString *userId = [LoginManager shared].awsIdentityId;
+  NSDictionary *rv = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeRecentlyVisit];
+  [_dsync syncWithUserId: userId
+               tableName: @"Bookmark"
+              dictionary: rv
+           shouldReplace:^BOOL(id oldValue, id newValue) {
+             return YES;
+           } completion:^(NSDictionary *diff, NSError *error) {
+             [self reloadRecentlyVisit];
+           }];
 }
 
 -(void)reloadBookmarks {
@@ -276,7 +293,7 @@
 
 -(void)dynamoPushSuccessWithType:(RecordType)type data:(NSDictionary *)data newCommitId:(NSString *)commitId {
   
-  
+  [self.offlineDB pushSuccessThenSaveLocalRecord: data type: type newCommitId: commitId];
 }
 
 -(void)dynamoPushConflictWithType:(RecordType)type pullingData:(NSDictionary *)data {
@@ -284,9 +301,9 @@
   
 }
 
--(void)dynamoPullFailureWithType:(RecordType)type pullingData:(NSDictionary *)data {
+-(void)dynamoPullFailureWithType:(RecordType)type error:(NSError *)error {
   
-  
+  NSLog(@"pull failure: %@", error);
 }
 
 

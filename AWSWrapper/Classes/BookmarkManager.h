@@ -48,6 +48,6 @@
  @param userId AWS identity id
  @param mergeCompletion return error
  */
--(void)mergePushType:(RecordType)type userId:(NSString *)userId completion:(void(^)(NSDictionary *responseItem, DSError *error))mergeCompletion;
+//-(void)mergePushType:(RecordType)type userId:(NSString *)userId completion:(void(^)(NSDictionary *responseItem, DSError *error))mergeCompletion;
 
 @end

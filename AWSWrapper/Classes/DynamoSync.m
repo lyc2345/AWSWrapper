@@ -46,17 +46,18 @@
   return self;
 }
 
-- (void)syncWithUserId:(NSString*)userId
-             tableName:(NSString*)tableName
-            dictionary:(NSDictionary*)dict
+- (void)syncWithUserId:(NSString *)userId
+             tableName:(NSString *)tableName
+            dictionary:(NSDictionary *)dict
+                shadow:(NSDictionary *)shadow
          shouldReplace:(BOOL (^)(id oldValue, id newValue))shouldReplace
             completion:(void (^)(NSDictionary* diff, NSError* error))completion {
   
   RecordType type = [tableName isEqualToString: @"Bookmark"] ? RecordTypeBookmark : RecordTypeRecentlyVisit ;
   BOOL isBookmark = [tableName isEqualToString: @"Bookmark"] ? YES : NO;
   
-  __block NSDictionary *diff_client_shadow = [DSWrapper diffShadowAndClient: dict[@"_dicts"]
-                                                                 isBookmark: isBookmark];
+  __block NSDictionary *diff_client_shadow = [DSWrapper diffWins: dict[@"_dicts"] andLoses: shadow];
+
   BookmarkManager *bookmarkManager = [[BookmarkManager alloc] init];
   
   NSLog(@"start: 1");
@@ -64,7 +65,7 @@
   [bookmarkManager pushWithObject: dict type: type diff: diff_client_shadow userId: userId completion:^(NSDictionary *responseItem, NSError *error, NSString *commitId) {
     
     NSLog(@"done 1");
-    if (!error) {
+    if (!error && commitId) {
       // expected commit id meet localBookmarkRecord commit id
       // successed!
       NSLog(@"push success by merge push at the first place");
@@ -135,7 +136,6 @@
                 
                 if (!error) {
                   NSLog(@"5: Done by force push");
-                  
                   [_delegate dynamoPushSuccessWithType: type data: dict newCommitId: commitId];
                   completion(diff_client_shadow, nil);
                 } else {
@@ -156,6 +156,11 @@
             NSLog(@"starting diffmerge...");
             NSLog(@"start 4-1: diffmerge");
             NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: cloud[@"_dicts"] andLoses: dict[@"_dicts"] primaryKey: @"comicName" shouldReplace: shouldReplace];
+            if (!need_to_apply_to_client) {
+              completion(nil, nil);
+              return;
+            }
+            
             NSDictionary *newClientDicts = [DSWrapper mergeInto: dict[@"_dicts"] applyDiff: need_to_apply_to_client];
             
             NSLog(@"done 4-1");
@@ -165,9 +170,10 @@
             newClientDicts = [DSWrapper mergeInto: newClientDicts applyDiff: diff_client_shadow];
             NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClientDicts andLoses: cloud[@"_dicts"]];
             
-            if (!([need_to_apply_to_remote allValues].count > 0)) {
+            if (!need_to_apply_to_remote) {
               
               [_delegate dynamoPushSuccessWithType: type data: new newCommitId: new[@"_commitId"]];
+              completion(nil, nil);
               return;
             }
             

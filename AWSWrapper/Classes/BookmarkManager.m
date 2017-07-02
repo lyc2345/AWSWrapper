@@ -224,7 +224,7 @@
                         @"dicts": dictsValue
                         };
   
-  putItemInput.returnValues = AWSDynamoDBReturnValueNone;
+  putItemInput.returnValues = AWSDynamoDBReturnValueAllOld;
   
   [[dynamoDB putItem: putItemInput] continueWithBlock:^id(AWSTask *task) {
     
@@ -377,6 +377,11 @@
 }
 
 -(void)pushWithObject:(NSDictionary *)record type:(RecordType)type diff:(NSDictionary *)diff userId:(NSString *)userId completion:(void(^)(NSDictionary *responseItem, NSError *error, NSString *commitId))completion {
+  
+  if (!diff) {
+    completion(nil, nil, nil);
+    return;
+  }
 	
 	NSString *commitId = [Random string];
 	NSString *remoteHash = record[@"_remoteHash"] != nil ? record[@"_remoteHash"] : [Random string];

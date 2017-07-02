@@ -95,7 +95,7 @@
   NSDictionary *client = self.scenario1[@"client"];
   
   NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
-  NSDictionary *newClient = [DSWrapper applyInto: client From: need_to_apply_to_client];
+  NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
   
   XCTAssertTrue([remote isEqualToDictionary: newClient]);
 }
@@ -108,7 +108,7 @@
   [DSWrapper setShadow: remote isBookmark: YES];
   NSDictionary *need_to_apply_to_remote = [DSWrapper diffShadowAndClient: client isBookmark: YES];
   
-  NSDictionary *newRemote = [DSWrapper applyInto: remote From: need_to_apply_to_remote];
+  NSDictionary *newRemote = [DSWrapper mergeInto: remote applyDiff: need_to_apply_to_remote];
   
   [DSWrapper setShadow: newRemote];
   
@@ -125,11 +125,11 @@
   
   NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
   
-  NSDictionary *newClient = [DSWrapper applyInto: client From: need_to_apply_to_client];
+  NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
   
   NSDictionary *need_to_apply_to_remote = [DSWrapper diffShadowAndClient: newClient isBookmark: YES];
   
-  NSDictionary *newRemote = [DSWrapper applyInto: remote From: need_to_apply_to_remote];
+  NSDictionary *newRemote = [DSWrapper mergeInto: remote applyDiff: need_to_apply_to_remote];
   
   [DSWrapper setShadow: newRemote];
   
@@ -156,13 +156,13 @@
   NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
   
   // A, C
-  NSDictionary *newClient = [DSWrapper applyInto: client From: need_to_apply_to_client];
+  NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
   
   // B, C, D, E
-  newClient = [DSWrapper applyInto: newClient From: need_to_apply_to_remote];
+  newClient = [DSWrapper mergeInto: newClient applyDiff: need_to_apply_to_remote];
   
   // B, D, E
-  NSDictionary *newRemote = [DSWrapper applyInto: remote From: need_to_apply_to_remote];
+  NSDictionary *newRemote = [DSWrapper mergeInto: remote applyDiff: need_to_apply_to_remote];
   
   [DSWrapper setShadow: newRemote];
   
@@ -201,12 +201,12 @@
   NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
   
   // A, B, C, D
-  NSDictionary *newClient = [DSWrapper applyInto: client From: need_to_apply_to_client];
+  NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
   
-  newClient = [DSWrapper applyInto: newClient From: need_to_apply_to_remote];
+  newClient = [DSWrapper mergeInto: newClient applyDiff: need_to_apply_to_remote];
   
   // B, C, D
-  NSDictionary *newRemote = [DSWrapper applyInto: remote From: need_to_apply_to_remote];
+  NSDictionary *newRemote = [DSWrapper mergeInto: remote applyDiff: need_to_apply_to_remote];
   
   [DSWrapper setShadow: newRemote];
   
@@ -246,13 +246,13 @@
   NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
   
   // A, B
-  NSDictionary *newClient = [DSWrapper applyInto: client From: need_to_apply_to_client];
+  NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
   
   // A, B, C, D
-  newClient = [DSWrapper applyInto: newClient From: need_to_apply_to_remote];
+  newClient = [DSWrapper mergeInto: newClient applyDiff: need_to_apply_to_remote];
   
   // A, B, C, D
-  NSDictionary *newRemote = [DSWrapper applyInto: remote From: need_to_apply_to_remote];
+  NSDictionary *newRemote = [DSWrapper mergeInto: remote applyDiff: need_to_apply_to_remote];
   
   [DSWrapper setShadow: newRemote];
   
@@ -300,13 +300,13 @@
   NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
   
   // B, C, D
-  NSDictionary *newClient = [DSWrapper applyInto: client From: need_to_apply_to_client];
+  NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
   
   // C, D
-  newClient = [DSWrapper applyInto: newClient From: need_to_apply_to_remote];
+  newClient = [DSWrapper mergeInto: newClient applyDiff: need_to_apply_to_remote];
   
   // [B, C, D] + [-B] = C, D
-  NSDictionary *newRemote = [DSWrapper applyInto: remote From: need_to_apply_to_remote];
+  NSDictionary *newRemote = [DSWrapper mergeInto: remote applyDiff: need_to_apply_to_remote];
   
   [DSWrapper setShadow: newRemote];
   
@@ -329,11 +329,11 @@
   NSDictionary *diff_client_shadow = [DSWrapper diffShadowAndClient: client isBookmark: YES];
   
   NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
-  NSDictionary *newClient = [DSWrapper applyInto: client From: need_to_apply_to_client];
-  newClient = [DSWrapper applyInto: newClient From: diff_client_shadow];
+  NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+  newClient = [DSWrapper mergeInto: newClient applyDiff: diff_client_shadow];
   
   NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient andLoses: remote];
-  NSDictionary *newRemote = [DSWrapper applyInto: remote From: need_to_apply_to_remote];
+  NSDictionary *newRemote = [DSWrapper mergeInto: remote applyDiff: need_to_apply_to_remote];
   
   [DSWrapper setShadow: newRemote];
   
@@ -360,11 +360,11 @@
   
   // 
   NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
-  NSDictionary *newClient = [DSWrapper applyInto: client From: need_to_apply_to_client];
-  newClient = [DSWrapper applyInto: newClient From: diff_client_shadow];
+  NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+  newClient = [DSWrapper mergeInto: newClient applyDiff: diff_client_shadow];
   
   NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient andLoses: remote];
-  NSDictionary *newRemote = [DSWrapper applyInto: remote From: need_to_apply_to_remote];
+  NSDictionary *newRemote = [DSWrapper mergeInto: remote applyDiff: need_to_apply_to_remote];
   
   [DSWrapper setShadow: newRemote];
   

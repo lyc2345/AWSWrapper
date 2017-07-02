@@ -85,10 +85,12 @@
 		[self.loginBtn setTitle: @"Logout" forState: UIControlStateNormal];
 		self.identityLabel.text = [LoginManager shared].awsIdentityId;
 		self.usernameLabel.text = [LoginManager shared].user;
+    NSLog(@"Now is log in");
 	} else {
 		[self.loginBtn setTitle: @"Login" forState: UIControlStateNormal];
 		self.identityLabel.text = @"";
 		self.usernameLabel.text = @"";
+    NSLog(@"Now is log in");
 	}
 	
 	_checkLoginLabel.text = [NSString stringWithFormat:@"status offline: %@, remote: %@", ([LoginManager shared].isLogin) ? @"YES" : @"NO" , ([LoginManager shared].isAWSLogin) ? @"YES" : @"NO"];
@@ -169,6 +171,7 @@
   [_dsync syncWithUserId: userId
               tableName: @"Bookmark"
              dictionary: local
+                 shadow: [DSWrapper shadowIsBookmark: YES]
           shouldReplace:^BOOL(id oldValue, id newValue) {
             
             
@@ -177,6 +180,7 @@
           } completion:^(NSDictionary *diff, NSError *error) {
             
             NSLog(@"diff: %@", diff);
+            [self reloadBookmarks];
           }];
 }
 
@@ -190,20 +194,12 @@
 		[self.offlineDB addOffline: recentlyVisit type: RecordTypeRecentlyVisit ofIdentity: [LoginManager shared].awsIdentityId];
 	}
   NSString *userId = [LoginManager shared].awsIdentityId;
-  NSDictionary *bk = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
-  [_dsync syncWithUserId: userId
-               tableName: @"Bookmark"
-              dictionary: bk
-           shouldReplace:^BOOL(id oldValue, id newValue) {
-             return YES;
-           } completion:^(NSDictionary *diff, NSError *error) {
-             [self reloadBookmarks];
-           }];
   NSDictionary *rv = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeRecentlyVisit];
   
   [_dsync syncWithUserId: userId
                tableName: @"Bookmark"
               dictionary: rv
+                  shadow: [DSWrapper shadowIsBookmark: NO]
            shouldReplace:^BOOL(id oldValue, id newValue) {
              return YES;
            } completion:^(NSDictionary *diff, NSError *error) {
@@ -218,6 +214,7 @@
   [_dsync syncWithUserId: userId
                tableName: @"Bookmark"
               dictionary: bk
+                  shadow: [DSWrapper shadowIsBookmark: YES]
            shouldReplace:^BOOL(id oldValue, id newValue) {
              return YES;
            } completion:^(NSDictionary *diff, NSError *error) {
@@ -232,6 +229,7 @@
   [_dsync syncWithUserId: userId
                tableName: @"Bookmark"
               dictionary: rv
+                  shadow: [DSWrapper shadowIsBookmark: NO]
            shouldReplace:^BOOL(id oldValue, id newValue) {
              return YES;
            } completion:^(NSDictionary *diff, NSError *error) {
@@ -385,9 +383,9 @@
       [self.remoteBookmark[@"_remoteHash"] substringWithRange: NSMakeRange(((NSString *)self.remoteBookmark[@"_remoteHash"]).length - 10, 10)]];
     
   } else if (section == 2) {
-    return [NSString stringWithFormat:@"Local R count %lu- %@", (unsigned long)[(NSArray *)self.localRecentVisitItems[@"_dicts"] count], [self.localRecentVisitItems[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.localRecentVisitItems[@"_commitId"]).length - 10, 10)]];
+    return [NSString stringWithFormat:@"LR count %lu- %@", (unsigned long)[(NSArray *)self.localRecentVisitItems[@"_dicts"] count], [self.localRecentVisitItems[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.localRecentVisitItems[@"_commitId"]).length - 10, 10)]];
   } else if (section == 3) {
-    return [NSString stringWithFormat:@"Remote R count %lu- %@", (unsigned long)[(NSArray *)self.remoteRecentVisitItems[@"_dicts"] count], [self.remoteRecentVisitItems[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.remoteRecentVisitItems[@"_commitId"]).length - 10, 10)]];
+    return [NSString stringWithFormat:@"RR count %lu- %@", (unsigned long)[(NSArray *)self.remoteRecentVisitItems[@"_dicts"] count], [self.remoteRecentVisitItems[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.remoteRecentVisitItems[@"_commitId"]).length - 10, 10)]];
   }
   return @"";
 }

@@ -53,6 +53,22 @@
          shouldReplace:(BOOL (^)(id oldValue, id newValue))shouldReplace
             completion:(void (^)(NSDictionary* diff, NSError* error))completion {
   
+  [self syncWithUserId: userId
+             tableName: tableName
+            dictionary: dict
+                shadow: shadow
+              commitId: [Random string]
+         shouldReplace: shouldReplace completion: completion];
+}
+
+- (void)syncWithUserId:(NSString *)userId
+             tableName:(NSString *)tableName
+            dictionary:(NSDictionary *)dict
+                shadow:(NSDictionary *)shadow
+              commitId:(NSString *)commitId
+         shouldReplace:(BOOL (^)(id oldValue, id newValue))shouldReplace
+            completion:(void (^)(NSDictionary* diff, NSError* error))completion {
+  
   RecordType type = [tableName isEqualToString: @"Bookmark"] ? RecordTypeBookmark : RecordTypeRecentlyVisit ;
   BOOL isBookmark = [tableName isEqualToString: @"Bookmark"] ? YES : NO;
   
@@ -62,7 +78,11 @@
   
   NSLog(@"start: 1");
   // push local AWS model and the diff we get before.
-  [bookmarkManager pushWithObject: dict type: type diff: diff_client_shadow userId: userId completion:^(NSDictionary *responseItem, NSError *error, NSString *commitId) {
+  [bookmarkManager pushWithObject: dict
+                             type: type
+                             diff: diff_client_shadow
+                           userId: userId
+                       completion:^(NSDictionary *responseItem, NSError *error, NSString *commitId) {
     
     NSLog(@"done 1");
     if (!error && commitId) {
@@ -99,7 +119,7 @@
           NSLog(@"start 3");
           if (!cloud) {
             NSLog(@"remote is empty, push...");
-            [bookmarkManager forcePushWithType: type record: dict userId: userId completion:^(NSDictionary *item, NSError *error, NSString *commitId) {
+            [bookmarkManager forcePushWithType: type record: dict userId: userId completion:^(NSError *error, NSString *commitId, NSString *rmoteHash) {
               
               NSLog(@"done 3");
               if (!error) {
@@ -132,7 +152,7 @@
               [new setObject: [Random string] forKey: @"_remoteHash"];
               
               NSLog(@"RemoteHash is nil, force push whole local record");
-              [bookmarkManager forcePushWithType: type record: cloud userId: userId completion:^(NSDictionary *item, NSError *error, NSString *commitId) {
+              [bookmarkManager forcePushWithType: type record: cloud userId: userId completion:^(NSError *error, NSString *commitId, NSString *rmoteHash) {
                 
                 if (!error) {
                   NSLog(@"5: Done by force push");

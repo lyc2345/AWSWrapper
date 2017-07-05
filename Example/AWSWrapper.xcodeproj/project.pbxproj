@@ -30,6 +30,7 @@
 		F6597FC31EFD1FCE004A6438 /* BookmarkManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6597FC21EFD1FCE004A6438 /* BookmarkManagerTests.m */; };
 		F67DA4C81F07873F005751A3 /* DynamoSyncLocalComparisonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F67DA4C71F07873F005751A3 /* DynamoSyncLocalComparisonTests.m */; };
 		F67DA4CB1F079485005751A3 /* DynamoSyncTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F67DA4CA1F079485005751A3 /* DynamoSyncTestVC.m */; };
+		F68B865B1F0A327600F5D6C8 /* DynamoSyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F68B865A1F0A327600F5D6C8 /* DynamoSyncTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		F67DA4C71F07873F005751A3 /* DynamoSyncLocalComparisonTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamoSyncLocalComparisonTests.m; sourceTree = "<group>"; };
 		F67DA4C91F079485005751A3 /* DynamoSyncTestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamoSyncTestVC.h; sourceTree = "<group>"; };
 		F67DA4CA1F079485005751A3 /* DynamoSyncTestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamoSyncTestVC.m; sourceTree = "<group>"; };
+		F68B865A1F0A327600F5D6C8 /* DynamoSyncTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamoSyncTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +186,7 @@
 				F64BAC831EE29F6700051399 /* DSWrapperTests.m */,
 				F6597FC21EFD1FCE004A6438 /* BookmarkManagerTests.m */,
 				F67DA4C71F07873F005751A3 /* DynamoSyncLocalComparisonTests.m */,
+				F68B865A1F0A327600F5D6C8 /* DynamoSyncTests.m */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 			);
 			path = Tests;
@@ -435,6 +438,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F68B865B1F0A327600F5D6C8 /* DynamoSyncTests.m in Sources */,
 				F67DA4C81F07873F005751A3 /* DynamoSyncLocalComparisonTests.m in Sources */,
 				F6597FC31EFD1FCE004A6438 /* BookmarkManagerTests.m in Sources */,
 				F64BAC841EE29F6700051399 /* DSWrapperTests.m in Sources */,

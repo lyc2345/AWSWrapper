@@ -39,6 +39,14 @@
          shouldReplace:(BOOL (^)(id oldValue, id newValue))shouldReplace
             completion:(void (^)(NSDictionary* diff, NSError* error))completion;
 
+- (void)syncWithUserId:(NSString *)userId
+             tableName:(NSString *)tableName
+            dictionary:(NSDictionary *)dict
+                shadow:(NSDictionary *)shadow
+              commitId:(NSString *)commitId
+         shouldReplace:(BOOL (^)(id oldValue, id newValue))shouldReplace
+            completion:(void (^)(NSDictionary* diff, NSError* error))completion;
+
 /**
  * @param diff the diff object between two dictionaries. it contains keys ("add", "delete", "replace")
  * @param dict the dictionary that will be patched by diff

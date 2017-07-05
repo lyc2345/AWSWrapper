@@ -86,6 +86,7 @@
   
   _shadow = data[@"_dicts"];
   _commitId = data[@"_commitId"];
+  _remoteHash = data[@"_remoteHash"];
 }
 
 -(void)dynamoPullFailureWithType:(RecordType)type error:(NSError *)error {
@@ -112,8 +113,7 @@
   _dsync.delegate = self;
   
   
-  _initailRemoteData = @{@"_commitId": [Random string],
-                         @"_remoteHash": @"123",
+  _initailRemoteData = @{
                          @"_dicts": @{
                              @"A": @{@"author": @"A", @"url": @"A"},
                              @"B": @{@"author": @"B", @"url": @"B"}
@@ -125,7 +125,8 @@
   [_bookmarkManager forcePushWithType: RecordTypeBookmark record: _initailRemoteData userId: _userId completion:^(NSDictionary *item, NSError *error, NSString *commitId) {
     
     _shadow = item[@"_dicts"];
-    _commitId = commitId;
+    _commitId = item[@"_commitId"];
+    _remoteHash = item[@"_remoteHash"];
     completion();
   }];
 }
@@ -137,8 +138,6 @@
     
     assert([item[@"_dicts"] isEqualToDictionary: _initailRemoteData[@"_dicts"]] == YES);
     NSLog(@"testFirstInitialData Success");
-    _shadow = item[@"_dicts"];
-    _commitId = item[@"_commitId"];
     completion();
   }];
 }
@@ -184,6 +183,8 @@
       assert([item[@"_dicts"] isEqualToDictionary: _shadow] == YES);
       assert([item[@"_dicts"] isEqualToDictionary: comparison] == YES);
       NSLog(@"testS1P1 Success");
+      _shadow = item[@"_dicts"];
+      _commitId = item[@"_commitId"];
       completion();
     }];
   }];
@@ -234,6 +235,8 @@
       assert([item[@"_dicts"] isEqualToDictionary: _shadow] == YES);
       assert([item[@"_dicts"] isEqualToDictionary: comparison] == YES);
       NSLog(@"testS1P1 Success");
+      _shadow = item[@"_dicts"];
+      _commitId = item[@"_commitId"];
       completion();
     }];
   }];
@@ -277,7 +280,8 @@
                                    @"B": @{@"author": @"B", @"url": @"B"},
                                    @"C": @{@"author": @"C", @"url": @"C"},
                                    @"E": @{@"author": @"E", @"url": @"E"},
-                                   @"F": @{@"author": @"F", @"url": @"F"}
+                                   @"F": @{@"author": @"F", @"url": @"F"},
+                                   @"G": @{@"author": @"G", @"url": @"G"}
                                    };
       assert([item[@"_dicts"] isEqualToDictionary: _shadow] == YES);
       assert([item[@"_dicts"] isEqualToDictionary: comparison] == YES);

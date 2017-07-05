@@ -16,9 +16,16 @@
 
 @interface BookmarkManager (AWS)
 
--(void)pushWithObject:(NSDictionary *)record type:(RecordType)type diff:(NSDictionary *)diff userId:(NSString *)userId completion:(void(^)(NSDictionary *responseItem, NSError *error, NSString *commitId))completion;
+-(void)pushWithObject:(NSDictionary *)record
+                 type:(RecordType)type
+                 diff:(NSDictionary *)diff
+               userId:(NSString *)userId
+           completion:(void(^)(NSDictionary *responseItem, NSError *error, NSString *commitId))completion;
 
--(void)forcePushWithType:(RecordType)type record:(NSDictionary *)record userId:(NSString *)userId completion:(void(^)(NSDictionary *item, NSError *error, NSString *commitId))completion;
+-(void)forcePushWithType:(RecordType)type
+                  record:(NSDictionary *)record
+                  userId:(NSString *)userId
+              completion:(void(^)(NSError *error, NSString *commitId, NSString *remoteHash))completion;
 
 
 #pragma mark (Open API)

@@ -177,7 +177,10 @@
 }
 
 
--(void)forcePushWithType:(RecordType)type record:(NSDictionary *)record userId:(NSString *)userId completion:(void(^)(NSDictionary *item, NSError *error, NSString *commitId))completion {
+-(void)forcePushWithType:(RecordType)type
+                  record:(NSDictionary *)record
+                  userId:(NSString *)userId
+              completion:(void(^)(NSError *error, NSString *commitId, NSString *remoteHash))completion {
 	
   NSString *commitId = [Random string];
   NSString *remoteHash = [Random string];
@@ -230,13 +233,13 @@
     
     if (task.error) {
       NSLog(@"force push error: %@", task.error);
-      completion(nil, task.error, nil);
+      completion(task.error, nil, nil);
       return nil;
     } else {
       AWSDynamoDBUpdateItemOutput *result = task.result;
       NSDictionary *resultValue = result.dictionaryValue;
       NSDictionary *pureResult = [BookmarkManager convert: resultValue[@"attributes"]];
-      completion(pureResult, task.error, commitId);
+      completion(task.error, commitId, remoteHash);
     }
     return nil;
   }];
@@ -286,7 +289,7 @@
 					NSLog(@"start 3");
 					if (!cloud) {
 						NSLog(@"remote is empty, push...");
-            [self forcePushWithType: type record: local userId: userId completion:^(NSDictionary *item, NSError *error, NSString *commitId) {
+            [self forcePushWithType: type record: local userId: userId completion:^(NSError *error, NSString *commitId, NSString *remoteHash) {
               
               NSLog(@"done 3");
 							if (!error) {
@@ -319,7 +322,7 @@
               [new setObject: [Random string] forKey: @"_remoteHash"];
               
               NSLog(@"RemoteHash is nil, force push whole local record");
-              [self forcePushWithType: type record: cloud userId: userId completion:^(NSDictionary *item, NSError *error, NSString *commitId) {
+              [self forcePushWithType: type record: cloud userId: userId completion:^(NSError *error, NSString *commitId, NSString *remoteHash) {
                 
                 if (!error) {
                   NSLog(@"5: Done by force push");
@@ -414,6 +417,7 @@
 	
 	NSArray *addList = diff[@"_add"];
 	NSArray *delList = diff[@"_delete"];
+  NSArray *replaceList = diff[@"_replace"];
 	
 	// attributeValues
 	NSMutableDictionary *attributeValues = [NSMutableDictionary dictionary];
@@ -421,22 +425,68 @@
 	NSMutableDictionary *attributeNames = [NSMutableDictionary dictionary];
 	
 	NSMutableString *addString = [NSMutableString string];
-	[addList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+  
+  // Copy a delMutableList from delList
+  __block NSMutableArray *waitTobeDelList = [NSMutableArray array];
+  if (replaceList && replaceList.count > 0) {
     
-    if([obj[@"comicName"] isEqualToString: @""]) {
-      return;
-    }
-		
-		NSString *additionAttributeValueKey = [NSString stringWithFormat: @":%@", obj[@"comicName"]];
-		NSString *additionAttributeNameKey = [NSString stringWithFormat: @"#%@", obj[@"comicName"]];
-		
-		[attributeValues setObject: [BookmarkManager AWSFormatFromDict: obj] forKey: additionAttributeValueKey];
-		[attributeNames setObject: obj[@"comicName"] forKey: additionAttributeNameKey];
-		
-		NSString *key = [NSString stringWithFormat: @", #dicts.%@ = %@", additionAttributeNameKey, additionAttributeValueKey];
-		[addString appendString: key];
-	}];
-	
+    [replaceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+      
+      if([obj[@"comicName"] isEqualToString: @""]) {
+        return;
+      }
+      
+      NSString *additionAttributeValueKey = [NSString stringWithFormat: @":%@", obj[@"comicName"]];
+      NSString *additionAttributeNameKey = [NSString stringWithFormat: @"#%@", obj[@"comicName"]];
+      
+      [attributeValues setObject: [BookmarkManager AWSFormatFromDict: obj] forKey: additionAttributeValueKey];
+      [attributeNames setObject: obj[@"comicName"] forKey: additionAttributeNameKey];
+      
+      NSString *key = [NSString stringWithFormat: @", #dicts.%@ = %@", additionAttributeNameKey, additionAttributeValueKey];
+      [addString appendString: key];
+      
+      [delList enumerateObjectsUsingBlock:^(id  _Nonnull delObj, NSUInteger delIdx, BOOL * _Nonnull stop) {
+        
+        *stop = NO;
+        if ([delObj[@"comicName"] isEqualToString: obj[@"comicName"]]) {
+          *stop = YES;
+        }
+        if (stop) {
+          [waitTobeDelList addObject: delObj];
+        }
+      }];
+    }];
+  } else {
+    
+    [addList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+      
+      if([obj[@"comicName"] isEqualToString: @""]) {
+        return;
+      }
+      
+      NSString *additionAttributeValueKey = [NSString stringWithFormat: @":%@", obj[@"comicName"]];
+      NSString *additionAttributeNameKey = [NSString stringWithFormat: @"#%@", obj[@"comicName"]];
+      
+      [attributeValues setObject: [BookmarkManager AWSFormatFromDict: obj] forKey: additionAttributeValueKey];
+      [attributeNames setObject: obj[@"comicName"] forKey: additionAttributeNameKey];
+      
+      NSString *key = [NSString stringWithFormat: @", #dicts.%@ = %@", additionAttributeNameKey, additionAttributeValueKey];
+      [addString appendString: key];
+      
+      [delList enumerateObjectsUsingBlock:^(id  _Nonnull delObj, NSUInteger delIdx, BOOL * _Nonnull stop) {
+        
+        if ([delObj[@"comicName"] isEqualToString: obj[@"comicName"]]) {
+          [waitTobeDelList addObject: delObj];
+        }
+      }];
+    }];
+  }
+  NSMutableArray *delMutableList;
+  if (delList && delList.count > 0) {
+    delMutableList = [delList mutableCopy];
+    [delMutableList removeObjectsInArray: waitTobeDelList];
+    delList = [delMutableList copy];
+  }
 	NSMutableString *delString = [NSMutableString string];
 	[delList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
 		
@@ -467,7 +517,8 @@
 		[attributeNames setObject: @"dicts" forKey: @"#dicts"];
 		[updateExpressionString appendString: addString];
 		
-	} else if (!delString || ![delString isEqualToString: @""]) {
+	}
+  if (!delString || ![delString isEqualToString: @""]) {
 
 		[updateExpressionString appendString: [NSString stringWithFormat: @" REMOVE %@", delString]];
 	}

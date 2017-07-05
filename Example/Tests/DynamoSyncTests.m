@@ -341,7 +341,7 @@
     
     return YES;
   } completion:^(NSDictionary *diff, NSError *error) {
-    
+    [self.expection fulfill];
   }];
 
   [self waitForExpectationsWithTimeout: 15.0 handler:^(NSError * _Nullable error) {

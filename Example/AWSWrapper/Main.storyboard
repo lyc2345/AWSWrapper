@@ -86,10 +86,22 @@
                                                 <rect key="frame" x="0.0" y="135" width="374" height="30"/>
                                                 <subviews>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PJH-Ni-bhq">
-                                                        <rect key="frame" x="0.0" y="0.0" width="289" height="30"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="96.333333333333329" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="iSK-jc-AGX"/>
                                                         </constraints>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vrP-xI-eLT">
+                                                        <rect key="frame" x="96.333333333333343" y="0.0" width="96.333333333333343" height="30"/>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mWH-at-ndJ">
+                                                        <rect key="frame" x="192.66666666666663" y="0.0" width="96.333333333333371" height="30"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
@@ -102,6 +114,10 @@
                                                         </connections>
                                                     </button>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="vrP-xI-eLT" firstAttribute="width" secondItem="mWH-at-ndJ" secondAttribute="width" id="4Hw-j9-dKc"/>
+                                                    <constraint firstItem="PJH-Ni-bhq" firstAttribute="width" secondItem="vrP-xI-eLT" secondAttribute="width" id="DhE-FR-Rfn"/>
+                                                </constraints>
                                             </stackView>
                                         </subviews>
                                     </stackView>
@@ -210,9 +226,11 @@
                     <connections>
                         <outlet property="_tableView" destination="Rqn-BS-RQP" id="Ekp-Zq-mml"/>
                         <outlet property="_userTable" destination="CPx-vt-Oca" id="dYY-57-Wn9"/>
+                        <outlet property="authorTF" destination="PJH-Ni-bhq" id="SW2-cG-q1x"/>
                         <outlet property="checkLoginLabel" destination="Fft-ND-Q1H" id="LBz-qe-8qY"/>
                         <outlet property="loginBtn" destination="FpX-kK-3l7" id="u2E-fq-3lL"/>
                         <outlet property="nameTF" destination="PJH-Ni-bhq" id="rXz-eM-QOE"/>
+                        <outlet property="urlTF" destination="mWH-at-ndJ" id="nE0-4Q-5sn"/>
                         <segue destination="Y9y-JC-hxH" kind="show" id="Yym-Hi-cHl"/>
                     </connections>
                 </viewController>

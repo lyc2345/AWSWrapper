@@ -23,6 +23,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 @property (weak, nonatomic) IBOutlet UITextField *nameTF;
+@property (weak, nonatomic) IBOutlet UITextField *authorTF;
+@property (weak, nonatomic) IBOutlet UITextField *urlTF;
+
 @property (weak, nonatomic) IBOutlet UILabel *checkLoginLabel;
 
 @property (strong, nonatomic) OfflineDB *offlineDB;
@@ -148,40 +151,20 @@
 - (IBAction)save:(id)sender {
 	
 	// Save local
- NSDictionary *bookmark = @{@"comicName": self.nameTF.text, @"author": [NSString stringWithFormat: @"author %@", self.nameTF.text], @"url": [NSString stringWithFormat: @"http://www.wikipedia/%@", self.nameTF.text]};
+ NSDictionary *bookmark = @{@"comicName": self.nameTF.text, @"author": [NSString stringWithFormat: @"author %@", self.authorTF.text], @"url": [NSString stringWithFormat: @"http://www.wikipedia/%@", self.urlTF.text]};
   //NSDictionary *bookmark = @{@"comicName": self.nameTF.text, @"author": self.nameTF.text, @"url": self.nameTF.text};
 	
 	if ([LoginManager shared].isLogin) {
 		
 		[self.offlineDB addOffline: bookmark type: RecordTypeBookmark ofIdentity: [LoginManager shared].awsIdentityId];
-	}
-
-  /*
-  [[BookmarkManager new] mergePushType: RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
     
-    if (error) {
-      NSLog(@"error: %@", error);
-      return;
-    }
-    [self reloadBookmarks];
-  }];*/
-  
-  NSString *userId = [LoginManager shared].awsIdentityId;
-  NSDictionary *local = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
-  [_dsync syncWithUserId: userId
-              tableName: @"Bookmark"
-             dictionary: local
-                 shadow: [DSWrapper shadowIsBookmark: YES]
-          shouldReplace:^BOOL(id oldValue, id newValue) {
-            
-            
-            return YES;
-            
-          } completion:^(NSDictionary *diff, NSError *error) {
-            
-            NSLog(@"diff: %@", diff);
-            [self reloadBookmarks];
-          }];
+    NSDictionary *localBookmarkRecord = [self.offlineDB getOfflineRecordOfIdentity: [LoginManager shared].offlineIdentity type: RecordTypeBookmark];
+    
+    self.localBookmark = localBookmarkRecord;
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [_tableView reloadData];
+    });
+	}
 }
 
 - (IBAction)saveRecentlyVisit:(id)sender {
@@ -193,18 +176,6 @@
 		
 		[self.offlineDB addOffline: recentlyVisit type: RecordTypeRecentlyVisit ofIdentity: [LoginManager shared].awsIdentityId];
 	}
-  NSString *userId = [LoginManager shared].awsIdentityId;
-  NSDictionary *rv = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeRecentlyVisit];
-  
-  [_dsync syncWithUserId: userId
-               tableName: @"Bookmark"
-              dictionary: rv
-                  shadow: [DSWrapper shadowIsBookmark: NO]
-           shouldReplace:^BOOL(id oldValue, id newValue) {
-             return YES;
-           } completion:^(NSDictionary *diff, NSError *error) {
-             [self reloadRecentlyVisit];
-           }];
 }
 
 - (IBAction)syncRemote:(id)sender {

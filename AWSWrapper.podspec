@@ -41,7 +41,7 @@ TODO: Add long description of the pod here.
   s.ios.dependency 'AWSDynamoDB', '~> 2.5.2'
   s.ios.dependency 'AWSCore', '~> 2.5.2'
   s.ios.dependency 'AWSS3', '~> 2.5.2'
-  s.ios.dependency 'DS'
+  s.ios.dependency 'DS', '~> 0.1.4'
   s.ios.dependency 'AFNetworking', '~> 3.0'
   s.ios.dependency 'SAMKeychain'
 

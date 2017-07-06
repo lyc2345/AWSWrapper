@@ -27,6 +27,7 @@
 		F64BAC7D1EE269BA00051399 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F64BAC7B1EE269BA00051399 /* Main.storyboard */; };
 		F64BAC821EE26BA700051399 /* DynamoDBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC811EE26BA700051399 /* DynamoDBVC.m */; };
 		F64BAC841EE29F6700051399 /* DSWrapperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC831EE29F6700051399 /* DSWrapperTests.m */; };
+		F6597FC31EFD1FCE004A6438 /* BookmarkManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6597FC21EFD1FCE004A6438 /* BookmarkManagerTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		F64BAC801EE26BA700051399 /* DynamoDBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamoDBVC.h; sourceTree = "<group>"; };
 		F64BAC811EE26BA700051399 /* DynamoDBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamoDBVC.m; sourceTree = "<group>"; };
 		F64BAC831EE29F6700051399 /* DSWrapperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSWrapperTests.m; sourceTree = "<group>"; };
+		F6597FC21EFD1FCE004A6438 /* BookmarkManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkManagerTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +175,7 @@
 			children = (
 				6003F5BB195388D20070C39A /* Tests.m */,
 				F64BAC831EE29F6700051399 /* DSWrapperTests.m */,
+				F6597FC21EFD1FCE004A6438 /* BookmarkManagerTests.m */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 			);
 			path = Tests;
@@ -423,6 +426,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6597FC31EFD1FCE004A6438 /* BookmarkManagerTests.m in Sources */,
 				F64BAC841EE29F6700051399 /* DSWrapperTests.m in Sources */,
 				6003F5BC195388D20070C39A /* Tests.m in Sources */,
 			);

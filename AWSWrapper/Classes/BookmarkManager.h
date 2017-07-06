@@ -15,9 +15,68 @@ typedef NS_ENUM(NSInteger, RecordType) {
 	RecordTypeRecentlyVisit = 1
 };
 
-@interface BookmarkManager : NSObject
+
+
+
+
+
+
+
+@interface OfflineDB: NSObject
+
+#pragma mark Offline Format
+
++(NSDictionary *)recordFormatOFIdentity:(NSString *)identity
+                               commitId:(NSString *)commitId
+                                andList:(NSArray *)list
+                             remoteHash:(NSString *)remoteHash;
+
+#pragma mark Common (Private)
+
+// obtain the whole bookmark records of different users.
+-(NSMutableArray *)obtainOfflineMutableRecordsOfType:(RecordType)type;
+// get the record of the current login user.
+// ["_identity": xxxxx, "_commitId": XXXXXX , "_list": [String: Dictionary]]
+-(NSDictionary *)obtainOfflineExistRecordFromRecords:(NSArray *)records ofIdentity:(NSString *)identity;
+
+// replace the new bookmark list into the exist record in multiple records.
+-(NSArray *)modifyOfflineRecords:(NSArray *)records withRecord:(NSDictionary *)record ofIdentity:(NSString *)identity;
+
+#pragma mark - Bookmark (Private)
+
+-(NSDictionary *)setOfflineNewRecord:(NSDictionary *)record type:(RecordType)type identity:(NSString *)identity;
+
+-(BOOL)pushSuccessThenSaveLocalRecord:(NSDictionary *)newRecord type:(RecordType)type newCommitId:(NSString *)commitId;
+
+#pragma mark - Bookmark (Open)
+
+-(void)addOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity;
+
+-(NSDictionary *)deleteOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity;
+
+-(NSDictionary *)getOfflineRecordOfIdentity:(NSString *)identity type:(RecordType)type;
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@interface BookmarkManager : NSObject
+@end
+
+
 
 @interface BookmarkManager (Offline)
 
@@ -28,6 +87,11 @@ typedef NS_ENUM(NSInteger, RecordType) {
 @end
 
 @interface BookmarkManager (AWS)
+
+-(void)pushWithObject:(NSDictionary *)record type:(RecordType)type diff:(NSDictionary *)diff userId:(NSString *)userId completion:(void(^)(NSDictionary *responseItem, NSError *error, NSString *commitId))completion;
+
+-(void)forcePushWithType:(RecordType)type record:(NSDictionary *)record userId:(NSString *)userId completion:(void(^)(NSDictionary *item, NSError *error, NSString *commitId))completion;
+
 
 #pragma mark (Open API)
 

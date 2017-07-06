@@ -21,7 +21,23 @@
 
 
 +(NSDictionary *)diffShadowAndClient:(NSDictionary *)client isBookmark:(BOOL)isBookmark;
+
+
++(NSDictionary *)diffShadowAndClient:(NSDictionary *)client
+                          primaryKey:(NSString *)key
+                          isBookmark:(BOOL)isBookmark
+                       shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace;
+
+
 +(NSDictionary *)diffWins:(NSDictionary *)wins andLoses:(NSDictionary *)loses;
+
+
++(NSDictionary *)diffWins:(NSDictionary *)wins
+                 andLoses:(NSDictionary *)loses
+               primaryKey:(NSString *)key
+            shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace;
+
+
 +(NSDictionary *)applyInto:(NSDictionary *)into From:(NSDictionary *)diff;
 
 

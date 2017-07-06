@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameTF;
 @property (weak, nonatomic) IBOutlet UILabel *checkLoginLabel;
 
+@property (strong, nonatomic) OfflineDB *offlineDB;
+
 @property NSString *currentUser;
 @property NSArray *userList;
 
@@ -58,6 +60,8 @@
   
   self.userList = [NSArray array];
   self.currentUser = @"";
+  
+  self.offlineDB = [[OfflineDB alloc] init];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -131,17 +135,40 @@
   
   [self reloadBookmarks];
   [self reloadRecentlyVisit];
+  
+  DynamoSync *dsync = [DynamoSync new];
+  
+  NSString *userId = @"";
+  NSDictionary *local = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
+  
+  NSDictionary *client = @{
+                           @"B": @{@"author": @"B", @"url": @"B1"},
+                           @"D": @{@"author": @"D", @"url": @"D"}
+                           };
+  
+  [dsync syncWithUserId: userId
+              tableName: @"Bookmark"
+             dictionary: client //local[@"_dict"]
+          shouldReplace:^BOOL(id oldValue, id newValue) {
+    
+            return YES;
+    
+  } completion:^(NSDictionary *diff, NSError *error) {
+    
+    NSLog(@"diff: %@", diff);
+  }];
 }
 
 
 - (IBAction)save:(id)sender {
 	
 	// Save local
- NSDictionary *bookmark = @{@"comicName": self.nameTF.text, @"author": self.nameTF.text, @"url": self.nameTF.text};
+ NSDictionary *bookmark = @{@"comicName": self.nameTF.text, @"author": [NSString stringWithFormat: @"author %@", self.nameTF.text], @"url": [NSString stringWithFormat: @"http://www.wikipedia/%@", self.nameTF.text]};
+  //NSDictionary *bookmark = @{@"comicName": self.nameTF.text, @"author": self.nameTF.text, @"url": self.nameTF.text};
 	
 	if ([LoginManager shared].isLogin) {
 		
-		[[BookmarkManager new] addOffline: bookmark type: RecordTypeBookmark ofIdentity: [LoginManager shared].awsIdentityId];
+		[self.offlineDB addOffline: bookmark type: RecordTypeBookmark ofIdentity: [LoginManager shared].awsIdentityId];
 	}
 
   [[BookmarkManager new] mergePushType: RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
@@ -161,7 +188,7 @@
 	
 	if ([LoginManager shared].isLogin) {
 		
-		[[BookmarkManager new] addOffline: recentlyVisit type: RecordTypeRecentlyVisit ofIdentity: [LoginManager shared].awsIdentityId];
+		[self.offlineDB addOffline: recentlyVisit type: RecordTypeRecentlyVisit ofIdentity: [LoginManager shared].awsIdentityId];
 		
 	}
   [[BookmarkManager new] mergePushType: RecordTypeRecentlyVisit userId:[LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
@@ -200,7 +227,7 @@
   BookmarkManager *bookmarkManager = [BookmarkManager new];
   LoginManager *loginManager = [LoginManager shared];
   NSString *userId = loginManager.awsIdentityId != nil ? loginManager.awsIdentityId : loginManager.offlineIdentity;
-  NSDictionary *localBookmarkRecord = [bookmarkManager getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
+  NSDictionary *localBookmarkRecord = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
   
   self.localBookmark = localBookmarkRecord;
   dispatch_async(dispatch_get_main_queue(), ^{
@@ -224,7 +251,7 @@
   BookmarkManager *bookmarkManager = [BookmarkManager new];
   LoginManager *loginManager = [LoginManager shared];
   NSString *userId = loginManager.awsIdentityId != nil ? loginManager.awsIdentityId : loginManager.offlineIdentity;
-  NSDictionary *localRecentlyVisit = [bookmarkManager getOfflineRecordOfIdentity: userId type: RecordTypeRecentlyVisit];
+  NSDictionary *localRecentlyVisit = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeRecentlyVisit];
   
   self.localRecentVisitItems = localRecentlyVisit;
   
@@ -346,7 +373,7 @@
     if (indexPath.section == 0) {
       
       [tableView beginUpdates];
-      self.localBookmark = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localBookmark[@"_dicts"]][indexPath.row] type: RecordTypeBookmark ofIdentity: self.localBookmark[@"_userId"]];
+      self.localBookmark = [self.offlineDB deleteOffline: [DSWrapper arrayFromDict: self.localBookmark[@"_dicts"]][indexPath.row] type: RecordTypeBookmark ofIdentity: self.localBookmark[@"_userId"]];
       [tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationLeft];
       [tableView reloadSectionIndexTitles];
       [tableView endUpdates];
@@ -354,7 +381,7 @@
     } else if (indexPath.section == 2) {
       
       [tableView beginUpdates];
-      self.localRecentVisitItems = [bookmarkManager deleteOffline: [DSWrapper arrayFromDict: self.localRecentVisitItems[@"_dicts"]][indexPath.row] type: RecordTypeRecentlyVisit ofIdentity: self.localRecentVisitItems[@"_userId"]];
+      self.localRecentVisitItems = [self.offlineDB deleteOffline: [DSWrapper arrayFromDict: self.localRecentVisitItems[@"_dicts"]][indexPath.row] type: RecordTypeRecentlyVisit ofIdentity: self.localRecentVisitItems[@"_userId"]];
       [tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationLeft];
       [tableView reloadSectionIndexTitles];
       [tableView endUpdates];

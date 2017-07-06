@@ -24,11 +24,11 @@
 
 @end
 
-@interface DynamoSyncLocalComparisonTests : XCTestCase
+@interface DSLocalTests : XCTestCase
 
 @end
 
-@implementation DynamoSyncLocalComparisonTests
+@implementation DSLocalTests
 
 - (void)setUp {
     [super setUp];

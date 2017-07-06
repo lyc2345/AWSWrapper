@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 @import AWSWrapper;
 
-@interface DynamoSyncTests : XCTestCase <DynamoSyncDelegate>
+@interface DSTests : XCTestCase <DynamoSyncDelegate>
 
 @property BookmarkManager *bookmarkManager;
 @property LoginManager *loginManager;
@@ -27,7 +27,7 @@
 
 @end
 
-@implementation DynamoSyncTests
+@implementation DSTests
 
 - (void)setUp {
     [super setUp];

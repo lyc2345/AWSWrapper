@@ -53,8 +53,6 @@
 	
 	self.nameTF.delegate = self;
 	
-	[SyncManager shared];
-	
 	[self refreshLoginStatusThroughNotification];
   
   _tableView.delegate = self;

@@ -11,6 +11,7 @@
 #import <SAMKeychain/SAMKeychain.h>
 @import AWSMobileHubHelper.AWSIdentityManager;
 @import AWSMobileHubHelper.AWSCognitoUserPoolsSignInProvider;
+@import AWSMobileHubHelper.AWSContentManager;
 
 
 NSString * const __CURRENT_USER = @"__CURRENT_USER";

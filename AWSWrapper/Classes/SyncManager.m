@@ -41,6 +41,11 @@
 	return self;
 }
 
+-(void)dealloc {
+  
+  [[NSNotificationCenter defaultCenter] removeObserver: self];
+}
+
 -(void)networkChanged:(NSNotification *)notify {
 	
 	NSLog(@"SyncManager detect network changed, status: %@", notify.userInfo);

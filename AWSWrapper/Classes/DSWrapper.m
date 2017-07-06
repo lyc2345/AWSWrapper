@@ -76,11 +76,6 @@ NSString *const _recently_shadow = @"_client_shadow_RecentlyVisit";
 	return mergedClient;
  }*/
 
-+(NSDictionary *)applyInto:(NSDictionary *)into From:(NSDictionary *)diff {
-
-	return [DSWrapper mergeInto: into applyDiff: diff];
-}
-
 +(NSArray *)arrayFromDict:(NSDictionary *)dict {
 
 	NSMutableArray *array = [NSMutableArray array];

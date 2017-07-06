@@ -28,6 +28,9 @@
 		F64BAC821EE26BA700051399 /* DynamoDBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC811EE26BA700051399 /* DynamoDBVC.m */; };
 		F64BAC841EE29F6700051399 /* DSWrapperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC831EE29F6700051399 /* DSWrapperTests.m */; };
 		F6597FC31EFD1FCE004A6438 /* BookmarkManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6597FC21EFD1FCE004A6438 /* BookmarkManagerTests.m */; };
+		F67DA4C81F07873F005751A3 /* DynamoSyncLocalComparisonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F67DA4C71F07873F005751A3 /* DynamoSyncLocalComparisonTests.m */; };
+		F67DA4CB1F079485005751A3 /* DynamoSyncTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F67DA4CA1F079485005751A3 /* DynamoSyncTestVC.m */; };
+		F68B865B1F0A327600F5D6C8 /* DynamoSyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F68B865A1F0A327600F5D6C8 /* DynamoSyncTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +80,10 @@
 		F64BAC811EE26BA700051399 /* DynamoDBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamoDBVC.m; sourceTree = "<group>"; };
 		F64BAC831EE29F6700051399 /* DSWrapperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSWrapperTests.m; sourceTree = "<group>"; };
 		F6597FC21EFD1FCE004A6438 /* BookmarkManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkManagerTests.m; sourceTree = "<group>"; };
+		F67DA4C71F07873F005751A3 /* DynamoSyncLocalComparisonTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamoSyncLocalComparisonTests.m; sourceTree = "<group>"; };
+		F67DA4C91F079485005751A3 /* DynamoSyncTestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamoSyncTestVC.h; sourceTree = "<group>"; };
+		F67DA4CA1F079485005751A3 /* DynamoSyncTestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamoSyncTestVC.m; sourceTree = "<group>"; };
+		F68B865A1F0A327600F5D6C8 /* DynamoSyncTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamoSyncTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +158,8 @@
 				F611F0951EEEB376000DFDFD /* DetailVC.h */,
 				F611F0961EEEB376000DFDFD /* DetailVC.m */,
 				F64BAC7B1EE269BA00051399 /* Main.storyboard */,
+				F67DA4C91F079485005751A3 /* DynamoSyncTestVC.h */,
+				F67DA4CA1F079485005751A3 /* DynamoSyncTestVC.m */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
@@ -176,6 +185,8 @@
 				6003F5BB195388D20070C39A /* Tests.m */,
 				F64BAC831EE29F6700051399 /* DSWrapperTests.m */,
 				F6597FC21EFD1FCE004A6438 /* BookmarkManagerTests.m */,
+				F67DA4C71F07873F005751A3 /* DynamoSyncLocalComparisonTests.m */,
+				F68B865A1F0A327600F5D6C8 /* DynamoSyncTests.m */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 			);
 			path = Tests;
@@ -418,6 +429,7 @@
 				F611F0971EEEB376000DFDFD /* DetailVC.m in Sources */,
 				6003F59E195388D20070C39A /* AppDelegate.m in Sources */,
 				F64BAC821EE26BA700051399 /* DynamoDBVC.m in Sources */,
+				F67DA4CB1F079485005751A3 /* DynamoSyncTestVC.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -426,6 +438,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F68B865B1F0A327600F5D6C8 /* DynamoSyncTests.m in Sources */,
+				F67DA4C81F07873F005751A3 /* DynamoSyncLocalComparisonTests.m in Sources */,
 				F6597FC31EFD1FCE004A6438 /* BookmarkManagerTests.m in Sources */,
 				F64BAC841EE29F6700051399 /* DSWrapperTests.m in Sources */,
 				6003F5BC195388D20070C39A /* Tests.m in Sources */,

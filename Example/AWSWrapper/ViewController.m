@@ -11,16 +11,21 @@
 @import AWSWrapper;
 #import "DetailVC.h"
 
-@interface ViewController () <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface ViewController () <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, DynamoSyncDelegate> {
   
   __weak IBOutlet UITableView *_tableView;
   __weak IBOutlet UITableView *_userTable;
+  
+  DynamoSync *_dsync;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *identityLabel;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 @property (weak, nonatomic) IBOutlet UITextField *nameTF;
+@property (weak, nonatomic) IBOutlet UITextField *authorTF;
+@property (weak, nonatomic) IBOutlet UITextField *urlTF;
+
 @property (weak, nonatomic) IBOutlet UILabel *checkLoginLabel;
 
 @property (strong, nonatomic) OfflineDB *offlineDB;
@@ -62,6 +67,9 @@
   self.currentUser = @"";
   
   self.offlineDB = [[OfflineDB alloc] init];
+  
+  _dsync = [[DynamoSync alloc] init];
+  _dsync.delegate = self;
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -80,10 +88,12 @@
 		[self.loginBtn setTitle: @"Logout" forState: UIControlStateNormal];
 		self.identityLabel.text = [LoginManager shared].awsIdentityId;
 		self.usernameLabel.text = [LoginManager shared].user;
+    NSLog(@"Now is log in");
 	} else {
 		[self.loginBtn setTitle: @"Login" forState: UIControlStateNormal];
 		self.identityLabel.text = @"";
 		self.usernameLabel.text = @"";
+    NSLog(@"Now is log in");
 	}
 	
 	_checkLoginLabel.text = [NSString stringWithFormat:@"status offline: %@, remote: %@", ([LoginManager shared].isLogin) ? @"YES" : @"NO" , ([LoginManager shared].isAWSLogin) ? @"YES" : @"NO"];
@@ -135,50 +145,26 @@
   
   [self reloadBookmarks];
   [self reloadRecentlyVisit];
-  
-  DynamoSync *dsync = [DynamoSync new];
-  
-  NSString *userId = @"";
-  NSDictionary *local = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
-  
-  NSDictionary *client = @{
-                           @"B": @{@"author": @"B", @"url": @"B1"},
-                           @"D": @{@"author": @"D", @"url": @"D"}
-                           };
-  
-  [dsync syncWithUserId: userId
-              tableName: @"Bookmark"
-             dictionary: client //local[@"_dict"]
-          shouldReplace:^BOOL(id oldValue, id newValue) {
-    
-            return YES;
-    
-  } completion:^(NSDictionary *diff, NSError *error) {
-    
-    NSLog(@"diff: %@", diff);
-  }];
 }
 
 
 - (IBAction)save:(id)sender {
 	
 	// Save local
- NSDictionary *bookmark = @{@"comicName": self.nameTF.text, @"author": [NSString stringWithFormat: @"author %@", self.nameTF.text], @"url": [NSString stringWithFormat: @"http://www.wikipedia/%@", self.nameTF.text]};
+ NSDictionary *bookmark = @{@"comicName": self.nameTF.text, @"author": [NSString stringWithFormat: @"author %@", self.authorTF.text], @"url": [NSString stringWithFormat: @"http://www.wikipedia/%@", self.urlTF.text]};
   //NSDictionary *bookmark = @{@"comicName": self.nameTF.text, @"author": self.nameTF.text, @"url": self.nameTF.text};
 	
 	if ([LoginManager shared].isLogin) {
 		
 		[self.offlineDB addOffline: bookmark type: RecordTypeBookmark ofIdentity: [LoginManager shared].awsIdentityId];
-	}
-
-  [[BookmarkManager new] mergePushType: RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
     
-    if (error) {
-      NSLog(@"error: %@", error);
-      return;
-    }
-    [self reloadBookmarks];
-  }];
+    NSDictionary *localBookmarkRecord = [self.offlineDB getOfflineRecordOfIdentity: [LoginManager shared].offlineIdentity type: RecordTypeBookmark];
+    
+    self.localBookmark = localBookmarkRecord;
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [_tableView reloadData];
+    });
+	}
 }
 
 - (IBAction)saveRecentlyVisit:(id)sender {
@@ -189,37 +175,37 @@
 	if ([LoginManager shared].isLogin) {
 		
 		[self.offlineDB addOffline: recentlyVisit type: RecordTypeRecentlyVisit ofIdentity: [LoginManager shared].awsIdentityId];
-		
 	}
-  [[BookmarkManager new] mergePushType: RecordTypeRecentlyVisit userId:[LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
-    
-    if (error) {
-      NSLog(@"error: %@", error);
-      return;
-    }
-    [self reloadRecentlyVisit];
-  }];
 }
 
 - (IBAction)syncRemote:(id)sender {
 	
-	//[[SyncManager shared] startLoginFlow];
-  [[BookmarkManager new] mergePushType: RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
-    
-    dispatch_sync(dispatch_get_main_queue(), ^{
-      [self reloadBookmarks];
-    });
-  }];
+  NSString *userId = [LoginManager shared].awsIdentityId;
+  NSDictionary *bk = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
+  [_dsync syncWithUserId: userId
+               tableName: @"Bookmark"
+              dictionary: bk
+                  shadow: [DSWrapper shadowIsBookmark: YES]
+           shouldReplace:^BOOL(id oldValue, id newValue) {
+             return YES;
+           } completion:^(NSDictionary *diff, NSError *error) {
+             [self reloadBookmarks];
+           }];
 }
 
 - (IBAction)syncRecently:(id)sender {
-  [[BookmarkManager new] mergePushType: RecordTypeRecentlyVisit userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
-    
-    dispatch_sync(dispatch_get_main_queue(), ^{
-      [self reloadRecentlyVisit];
-    });
-  }];
-
+  
+  NSString *userId = [LoginManager shared].awsIdentityId;
+  NSDictionary *rv = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeRecentlyVisit];
+  [_dsync syncWithUserId: userId
+               tableName: @"Bookmark"
+              dictionary: rv
+                  shadow: [DSWrapper shadowIsBookmark: NO]
+           shouldReplace:^BOOL(id oldValue, id newValue) {
+             return YES;
+           } completion:^(NSDictionary *diff, NSError *error) {
+             [self reloadRecentlyVisit];
+           }];
 }
 
 -(void)reloadBookmarks {
@@ -271,6 +257,26 @@
     }];
   }
 }
+
+// MARK: DynamoSyncDelegate
+
+-(void)dynamoPushSuccessWithType:(RecordType)type data:(NSDictionary *)data newCommitId:(NSString *)commitId {
+  
+  [self.offlineDB pushSuccessThenSaveLocalRecord: data type: type newCommitId: commitId];
+}
+
+-(void)dynamoPushConflictWithType:(RecordType)type pullingData:(NSDictionary *)data {
+  
+  
+}
+
+-(void)dynamoPullFailureWithType:(RecordType)type error:(NSError *)error {
+  
+  NSLog(@"pull failure: %@", error);
+}
+
+
+
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
 	
@@ -348,9 +354,9 @@
       [self.remoteBookmark[@"_remoteHash"] substringWithRange: NSMakeRange(((NSString *)self.remoteBookmark[@"_remoteHash"]).length - 10, 10)]];
     
   } else if (section == 2) {
-    return [NSString stringWithFormat:@"Local R count %lu- %@", (unsigned long)[(NSArray *)self.localRecentVisitItems[@"_dicts"] count], [self.localRecentVisitItems[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.localRecentVisitItems[@"_commitId"]).length - 10, 10)]];
+    return [NSString stringWithFormat:@"LR count %lu- %@", (unsigned long)[(NSArray *)self.localRecentVisitItems[@"_dicts"] count], [self.localRecentVisitItems[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.localRecentVisitItems[@"_commitId"]).length - 10, 10)]];
   } else if (section == 3) {
-    return [NSString stringWithFormat:@"Remote R count %lu- %@", (unsigned long)[(NSArray *)self.remoteRecentVisitItems[@"_dicts"] count], [self.remoteRecentVisitItems[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.remoteRecentVisitItems[@"_commitId"]).length - 10, 10)]];
+    return [NSString stringWithFormat:@"RR count %lu- %@", (unsigned long)[(NSArray *)self.remoteRecentVisitItems[@"_dicts"] count], [self.remoteRecentVisitItems[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.remoteRecentVisitItems[@"_commitId"]).length - 10, 10)]];
   }
   return @"";
 }

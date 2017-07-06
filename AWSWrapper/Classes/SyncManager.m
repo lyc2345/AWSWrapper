@@ -11,6 +11,7 @@
 #import "BookmarkManager.h"
 #import "Bookmark.h"
 #import "RecentVisit.h"
+#import "OfflineDB.h"
 
 #import "AFNetworking.h"
 
@@ -105,19 +106,19 @@
 -(void)bookmarkConditionallySyncFlowWithUserId:(NSString *)userId {
 	
 	BookmarkManager *bookmarkManager = [BookmarkManager new];
-	NSDictionary *localBookmarkRecord = [bookmarkManager getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
+	NSDictionary *localBookmarkRecord = [[OfflineDB new] getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
 
   NSMutableDictionary *bookmark = [localBookmarkRecord mutableCopy];
   [bookmark setObject: userId forKey: @"_id"];
   [bookmark setObject: userId forKey: @"_userId"];
 	
-  [bookmarkManager mergePushType: RecordTypeBookmark userId: userId completion:^(NSDictionary *responseItem, NSError *error) {
-    
-    if (error) {
-      NSLog(@"SyncManager mergePush error: %@", error);
-      return;
-    }
-  }];
+//  [bookmarkManager mergePushType: RecordTypeBookmark userId: userId completion:^(NSDictionary *responseItem, NSError *error) {
+//    
+//    if (error) {
+//      NSLog(@"SyncManager mergePush error: %@", error);
+//      return;
+//    }
+//  }];
 }
 
 

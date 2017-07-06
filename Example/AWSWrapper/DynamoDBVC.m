@@ -86,19 +86,19 @@ NSString *const cellIdentifier = @"cell";
 	
 	BookmarkManager *bookmarkManager = [BookmarkManager new];
 	
-  [bookmarkManager mergePushType:RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
-		
-		dispatch_sync(dispatch_get_main_queue(), ^{
-			[self reloadBookmarks];
-		});
-	}];
-	
-   [bookmarkManager mergePushType:RecordTypeRecentlyVisit userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
-		
-		dispatch_sync(dispatch_get_main_queue(), ^{
-			[self reloadRecentlyVisit];
-		});
-	}];
+//  [bookmarkManager mergePushType:RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
+//		
+//		dispatch_sync(dispatch_get_main_queue(), ^{
+//			[self reloadBookmarks];
+//		});
+//	}];
+//	
+//   [bookmarkManager mergePushType:RecordTypeRecentlyVisit userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
+//		
+//		dispatch_sync(dispatch_get_main_queue(), ^{
+//			[self reloadRecentlyVisit];
+//		});
+//	}];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

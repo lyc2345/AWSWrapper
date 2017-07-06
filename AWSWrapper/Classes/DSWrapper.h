@@ -38,7 +38,7 @@
             shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace;
 
 
-+(NSDictionary *)applyInto:(NSDictionary *)into From:(NSDictionary *)diff;
++(NSDictionary *)mergeInto:(NSDictionary *)into applyDiff:(NSDictionary *)diff;
 
 
 

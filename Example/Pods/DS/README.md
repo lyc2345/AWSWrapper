@@ -15,9 +15,18 @@ Inspired by Neil Fraser, [Differential Synchronization](https://neil.fraser.name
 +(NSDictionary *)diffShadowAndClient:(NSArray *)client shadow:(NSArray *)shadow;
 
 // Use below
-+(NSDictionary *)diffSetWins:(NSArray *)wins losesSet:(NSArray *)loses;
++(NSDictionary *)diffWins:(NSArray *)wins andLoses:(NSArray *)loses;
 
-[DS diffSetWins: shadow losesSet: client];
+[DS diffWins: shadow andLoses: client];
+```
+
+## Updates
+```objective-c
+// ** Now if there is no any add, delete, replace in the diff, diff will be nil. **
+
+NSDictionary *diff = [DS diffWins: ["A"] loses: ["A"]];
+// diff is nil.
+
 ```
 
 ## Usage

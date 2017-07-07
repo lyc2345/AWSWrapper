@@ -10,6 +10,9 @@
 #import "DSWrapper.h"
 #import "Random.h"
 
+NSString *const _bookmark_shadow = @"_client_shadow_Bookmark";
+NSString *const _recently_shadow = @"_client_shadow_RecentlyVisit";
+
 NSString * const __BOOKMARKS_LIST				= @"__BOOKMARKS_LIST";
 NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 
@@ -144,7 +147,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
   
   BOOL success = [self setUserDefaultWithRecords: modifiedOfflineRecords isBookmark: type == RecordTypeBookmark];
   if (success) {
-    BOOL saveShadowSuccess = [DSWrapper setShadow: newRecord[@"_dicts"] isBookmark: type == RecordTypeBookmark];
+    BOOL saveShadowSuccess = [OfflineDB setShadow: newRecord[@"_dicts"] isBookmark: type == RecordTypeBookmark];
     return saveShadowSuccess;
   } else {
     return NO;
@@ -215,5 +218,18 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
   NSArray *offlineRecords = [self obtainOfflineMutableRecordsOfType: type];
   return [self obtainOfflineExistRecordFromRecords: offlineRecords ofIdentity: identity];
 }
+
+
+// To remote remote and client and client_shadow
++(NSDictionary *)shadowIsBookmark:(BOOL)isBookmark {
+  return [[NSUserDefaults standardUserDefaults] dictionaryForKey: isBookmark ? _bookmark_shadow : _recently_shadow];
+}
+
++(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark {
+  
+  [[NSUserDefaults standardUserDefaults] setObject: dict forKey: isBookmark ? _bookmark_shadow : _recently_shadow];
+  return [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 
 @end

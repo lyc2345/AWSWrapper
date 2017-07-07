@@ -79,19 +79,17 @@
 
 -(void)refreshLoginStatusThroughNotification {
 	
-	NSLog(@"notification log in || out");
-	
 	if ([LoginManager shared].isAWSLogin || [LoginManager shared].isLogin) {
 		
 		[self.loginBtn setTitle: @"Logout" forState: UIControlStateNormal];
 		self.identityLabel.text = [LoginManager shared].awsIdentityId;
 		self.usernameLabel.text = [LoginManager shared].user;
-    NSLog(@"Now is log in");
+    NSLog(@"log status: is login");
 	} else {
 		[self.loginBtn setTitle: @"Login" forState: UIControlStateNormal];
 		self.identityLabel.text = @"";
 		self.usernameLabel.text = @"";
-    NSLog(@"Now is log in");
+    NSLog(@"log status: is logout");
 	}
 	
 	_checkLoginLabel.text = [NSString stringWithFormat:@"status offline: %@, remote: %@", ([LoginManager shared].isLogin) ? @"YES" : @"NO" , ([LoginManager shared].isAWSLogin) ? @"YES" : @"NO"];
@@ -137,7 +135,6 @@
   dispatch_async(dispatch_get_main_queue(), ^{
     [_userTable reloadData];
   });
-  
 	
 	[self refreshLoginStatusThroughNotification];
   
@@ -183,7 +180,7 @@
   [_dsync syncWithUserId: userId
                tableName: @"Bookmark"
               dictionary: bk
-                  shadow: [DSWrapper shadowIsBookmark: YES]
+                  shadow: [OfflineDB shadowIsBookmark: YES]
            shouldReplace:^BOOL(id oldValue, id newValue) {
              return YES;
            } completion:^(NSDictionary *diff, NSError *error) {
@@ -198,7 +195,7 @@
   [_dsync syncWithUserId: userId
                tableName: @"Bookmark"
               dictionary: rv
-                  shadow: [DSWrapper shadowIsBookmark: NO]
+                  shadow: [OfflineDB shadowIsBookmark: NO]
            shouldReplace:^BOOL(id oldValue, id newValue) {
              return YES;
            } completion:^(NSDictionary *diff, NSError *error) {
@@ -263,18 +260,13 @@
   [self.offlineDB pushSuccessThenSaveLocalRecord: data type: type newCommitId: commitId];
 }
 
--(void)dynamoPushConflictWithType:(RecordType)type pullingData:(NSDictionary *)data {
+-(id)emptyShadowIsBookmark:(BOOL)isBookmark {
   
-  
+  [OfflineDB setShadow: @{} isBookmark: isBookmark];
+  return [OfflineDB shadowIsBookmark: isBookmark];
 }
 
--(void)dynamoPullFailureWithType:(RecordType)type error:(NSError *)error {
-  
-  NSLog(@"pull failure: %@", error);
-}
-
-
-
+// MARK: TextFieldDelegate
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
 	

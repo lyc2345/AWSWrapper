@@ -41,6 +41,10 @@ typedef NS_ENUM(NSInteger, RecordType) {
 
 #pragma mark - Bookmark (Open)
 
+
++(NSDictionary *)shadowIsBookmark:(BOOL)isBookmark;
++(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark;
+
 -(void)addOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity;
 
 -(NSDictionary *)deleteOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity;

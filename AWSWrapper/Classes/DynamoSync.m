@@ -53,22 +53,6 @@
          shouldReplace:(BOOL (^)(id oldValue, id newValue))shouldReplace
             completion:(void (^)(NSDictionary* diff, NSError* error))completion {
   
-  [self syncWithUserId: userId
-             tableName: tableName
-            dictionary: dict
-                shadow: shadow
-              commitId: [Random string]
-         shouldReplace: shouldReplace completion: completion];
-}
-
-- (void)syncWithUserId:(NSString *)userId
-             tableName:(NSString *)tableName
-            dictionary:(NSDictionary *)dict
-                shadow:(NSDictionary *)shadow
-              commitId:(NSString *)commitId
-         shouldReplace:(BOOL (^)(id oldValue, id newValue))shouldReplace
-            completion:(void (^)(NSDictionary* diff, NSError* error))completion {
-  
   RecordType type = [tableName isEqualToString: @"Bookmark"] ? RecordTypeBookmark : RecordTypeRecentlyVisit ;
   BOOL isBookmark = [tableName isEqualToString: @"Bookmark"] ? YES : NO;
   
@@ -106,7 +90,6 @@
         if (error && (error && error.code != 4)) {
           
           NSLog(@"BookmarkManager pulling error: %@", error);
-          [_delegate dynamoPullFailureWithType: type error: error];
           // com.BookmarkManager.pullError
           completion(nil, error);
           return;
@@ -166,9 +149,11 @@
             } else if (![cloud[@"_remoteHash"] isEqualToString: dict[@"_remoteHash"]]) {
               
               NSLog(@"RemoteHash is changed, Now empty shadow...");
-              [DSWrapper setShadow: @{} isBookmark: type == RecordTypeBookmark];
+              id emptyShadow = [_delegate emptyShadowIsBookmark: isBookmark];
+              //[DSWrapper setShadow: @{} isBookmark: type == RecordTypeBookmark];
               // diff client shadow again. becasue shadow is empty.
-              diff_client_shadow = [DSWrapper diffShadowAndClient: dict[@"_dicts"] isBookmark: type == RecordTypeBookmark];
+              diff_client_shadow = [DSWrapper diffWins: dict[@"_dicts"] andLoses: emptyShadow];
+              //diff_client_shadow = [DSWrapper diffShadowAndClient: dict[@"_dicts"] isBookmark: type == RecordTypeBookmark];
               NSLog(@"Get a new diff from client and empty shadow");
             }
             NSLog(@"done 4");
@@ -176,10 +161,6 @@
             NSLog(@"starting diffmerge...");
             NSLog(@"start 4-1: diffmerge");
             NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: cloud[@"_dicts"] andLoses: dict[@"_dicts"] primaryKey: @"comicName" shouldReplace: shouldReplace];
-            if (!need_to_apply_to_client) {
-              completion(nil, nil);
-              return;
-            }
             
             NSDictionary *newClientDicts = [DSWrapper mergeInto: dict[@"_dicts"] applyDiff: need_to_apply_to_client];
             

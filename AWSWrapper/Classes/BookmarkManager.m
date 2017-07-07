@@ -337,7 +337,7 @@
             } else if (![cloud[@"_remoteHash"] isEqualToString: local[@"_remoteHash"]]) {
               
               NSLog(@"RemoteHash is changed, Now empty shadow...");
-              [DSWrapper setShadow: @{} isBookmark: type == RecordTypeBookmark];
+              [OfflineDB setShadow: @{} isBookmark: type == RecordTypeBookmark];
               // diff client shadow again. becasue shadow is empty.
               diff_client_shadow = [DSWrapper diffShadowAndClient: local[@"_dicts"] isBookmark: type == RecordTypeBookmark];
               NSLog(@"Get a new diff from client and empty shadow");

@@ -7,10 +7,8 @@
 //
 
 #import "DSWrapper.h"
+#import "OfflineDB.h"
 #import <DS/DS.h>
-
-NSString *const _bookmark_shadow = @"_client_shadow_Bookmark";
-NSString *const _recently_shadow = @"_client_shadow_RecentlyVisit";
 
 @implementation NSArray (Sort)
 
@@ -27,21 +25,7 @@ NSString *const _recently_shadow = @"_client_shadow_RecentlyVisit";
 
 @end
 
-
-
 @implementation DSWrapper
-
-
-// To remote remote and client and client_shadow
-+(NSDictionary *)shadowIsBookmark:(BOOL)isBookmark {
-	return [[NSUserDefaults standardUserDefaults] dictionaryForKey: isBookmark ? _bookmark_shadow : _recently_shadow];
-}
-
-+(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark {
-
-  [[NSUserDefaults standardUserDefaults] setObject: dict forKey: isBookmark ? _bookmark_shadow : _recently_shadow];
-  return [[NSUserDefaults standardUserDefaults] synchronize];
-}
 
 +(NSDictionary *)diffFormatFromConditionArray:(NSArray *)conditions {
 
@@ -105,13 +89,13 @@ NSString *const _recently_shadow = @"_client_shadow_RecentlyVisit";
 +(NSDictionary *)diffShadowAndClient:(NSDictionary *)client isBookmark:(BOOL)isBookmark {
 
 	return [DS diffShadowAndClient: [DSWrapper arrayFromDict: client]
-									 shadow: [DSWrapper arrayFromDict: [DSWrapper shadowIsBookmark: isBookmark]]];
+									 shadow: [DSWrapper arrayFromDict: [OfflineDB shadowIsBookmark: isBookmark]]];
 }
 
 +(NSDictionary *)diffShadowAndClient:(NSDictionary *)client primaryKey:(NSString *)key isBookmark:(BOOL)isBookmark shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace {
   
   return [DS diffWins: [DSWrapper arrayFromDict: client]
-             andLoses: [DSWrapper arrayFromDict: [DSWrapper shadowIsBookmark: isBookmark]]
+             andLoses: [DSWrapper arrayFromDict: [OfflineDB shadowIsBookmark: isBookmark]]
            primaryKey: key
         shouldReplace: shouldReplace];
 }
@@ -170,10 +154,10 @@ NSString *const _recently_shadow = @"_client_shadow_RecentlyVisit";
 
 	[DSWrapper setClient: list];
 	[DSWrapper setSimulateRemote: list];
-	[DSWrapper setShadow:  [DSWrapper dictFromArray: list] isBookmark: YES];
+	[OfflineDB setShadow:  [DSWrapper dictFromArray: list] isBookmark: YES];
 
 	NSLog(@"client: %@", [DSWrapper client]);
-	NSLog(@"shadow: %@", [DSWrapper shadowIsBookmark: YES]);
+	NSLog(@"shadow: %@", [OfflineDB shadowIsBookmark: YES]);
 	NSLog(@"remote: %@", [DSWrapper simulateRemote]);
 	//NSLog(@"shadow equal remote: %@", [[DS shadow] isEqualToDictionary: [DS simulateRemote]]);
 }

@@ -10,12 +10,10 @@
 
 @interface DSError : NSError
 
-+(DSError *)mergePushConflict;
 +(DSError *)mergePushFailed;
 +(DSError *)forcePushFailed;
 +(DSError *)pullFailed;
 +(DSError *)remoteDataNil;
-+(DSError *)serverWasReset;
 +(DSError *)noInternet;
 
 

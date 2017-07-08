@@ -39,6 +39,7 @@
   AWSDynamoDBAttributeValue *userId = attributeDictionary[@"userId"];
   
   if (dictsValue == nil || remoteHash == nil || commitId == nil) {
+    NSLog(@"Some of attribute is nil");
     return nil;
   }
   

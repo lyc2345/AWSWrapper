@@ -115,6 +115,9 @@
             }];
           } else {
             
+            // TODO: This part will never excute because if one of dicts, commitId, remoteHash three attribute is nil, pullType method will return nil
+            // IF this condition needs to implement. Check AWS attributes convert to regular dictionary method. [BookmarkManager convert:]
+            // **************************************************************************************************************
             NSLog(@"done 3");
             NSLog(@"remote version: %@, local version: %@", cloud[@"_remoteHash"], dict[@"_remoteHash"]);
             NSLog(@"remote timestamp: %@, local timestamp: %@", cloud[@"_commitId"], dict[@"_commitId"]);
@@ -150,17 +153,19 @@
               
               NSLog(@"RemoteHash is changed, Now empty shadow...");
               id emptyShadow = [_delegate emptyShadowIsBookmark: isBookmark];
-              //[DSWrapper setShadow: @{} isBookmark: type == RecordTypeBookmark];
               // diff client shadow again. becasue shadow is empty.
               diff_client_shadow = [DSWrapper diffWins: dict[@"_dicts"] andLoses: emptyShadow];
-              //diff_client_shadow = [DSWrapper diffShadowAndClient: dict[@"_dicts"] isBookmark: type == RecordTypeBookmark];
               NSLog(@"Get a new diff from client and empty shadow");
             }
+            // **************************************************************************************************************
             NSLog(@"done 4");
             
             NSLog(@"starting diffmerge...");
             NSLog(@"start 4-1: diffmerge");
-            NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: cloud[@"_dicts"] andLoses: dict[@"_dicts"] primaryKey: @"comicName" shouldReplace: shouldReplace];
+            NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: cloud[@"_dicts"]
+                                                               andLoses: dict[@"_dicts"]
+                                                             primaryKey: @"comicName"
+                                                          shouldReplace: shouldReplace];
             
             NSDictionary *newClientDicts = [DSWrapper mergeInto: dict[@"_dicts"] applyDiff: need_to_apply_to_client];
             
@@ -192,7 +197,7 @@
               [new setObject: newClientDicts forKey: @"_dicts"];
               
               [_delegate dynamoPushSuccessWithType: type data: new newCommitId: commitId];
-              completion(need_to_apply_to_remote, nil);
+              completion(need_to_apply_to_client, nil);
             }];
           }
         }

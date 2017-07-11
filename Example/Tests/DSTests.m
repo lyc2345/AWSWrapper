@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+@import Specta;
 @import AWSWrapper;
 
 @interface DSTests : XCTestCase <DynamoSyncDelegate>
@@ -166,7 +167,7 @@
                            };
   
   _client = clientS1P1;
-  NSDictionary *expectDiff = [DSWrapper diffWins: clientS1P1[@"_dicts"] andLoses: expectShadowS1P1];
+  NSDictionary *expectDiff = [DSWrapper diffWins: clientS1P1[@"_dicts"] loses: expectShadowS1P1];
   XCTAssertTrue([expectShadowS1P1 isEqualToDictionary: _shadow]);
   
   [_dsync syncWithUserId: _userId tableName: _tableName dictionary: _client shadow: _shadow shouldReplace:^BOOL(id oldValue, id newValue) {
@@ -310,9 +311,9 @@
                                @"_remoteHash": _remoteHash,
                                @"_dicts": @{
                                    @"A": @{@"author": @"A", @"url": @"A"},
-                                   @"B": @{@"author": @"B1", @"url": @"B1"},
+                                   @"B": @{@"author": @"B", @"url": @"B1"},
                                    @"E": @{@"author": @"E", @"url": @"E"},
-                                   @"F": @{@"author": @"F1", @"url": @"F1"}
+                                   @"F": @{@"author": @"F", @"url": @"F1"}
                                    }
                                };
   NSDictionary *shadowS1P3 = @{
@@ -332,10 +333,7 @@
    */
   _client = clientS1P3;
   _shadow = shadowS1P3;
-  NSDictionary *expect2Diff = [DSWrapper diffWins: _client[@"_dicts"] andLoses: _shadow primaryKey: @"comiName" shouldReplace:^BOOL(id oldValue, id newValue) {
-    
-    return YES;
-  }];
+  NSDictionary *expect2Diff = [DSWrapper diffWins: _client[@"_dicts"] loses: _shadow];
   
   [_dsync syncWithUserId: _userId tableName: _tableName dictionary: _client shadow: _shadow shouldReplace:^BOOL(id oldValue, id newValue) {
     
@@ -345,6 +343,14 @@
   }];
 
   [self waitForExpectationsWithTimeout: 15.0 handler:^(NSError * _Nullable error) {
+    NSDictionary *comparison = @{
+                                 @"A": @{@"author": @"A", @"url": @"A"},
+                                 @"B": @{@"author": @"B", @"url": @"B1"},
+                                 @"E": @{@"author": @"E", @"url": @"E"},
+                                 @"F": @{@"author": @"F", @"url": @"F1"},
+                                 @"G": @{@"author": @"G", @"url": @"G"}
+                                 };
+    XCTAssertTrue([_shadow isEqualToDictionary: comparison]);
     if (error) {
       XCTFail(@"expectation failed with error: %@", error);
     }
@@ -359,9 +365,9 @@
     
     NSDictionary *comparison = @{
                                  @"A": @{@"author": @"A", @"url": @"A"},
-                                 @"B": @{@"author": @"B1", @"url": @"B1"},
+                                 @"B": @{@"author": @"B", @"url": @"B1"},
                                  @"E": @{@"author": @"E", @"url": @"E"},
-                                 @"F": @{@"author": @"F1", @"url": @"F1"},
+                                 @"F": @{@"author": @"F", @"url": @"F1"},
                                  @"G": @{@"author": @"G", @"url": @"G"}
                                  };
     XCTAssertTrue([item[@"_dicts"] isEqualToDictionary: comparison]);

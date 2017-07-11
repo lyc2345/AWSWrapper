@@ -25,16 +25,14 @@
                        shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace;
 
 
-+(NSDictionary *)diffWins:(NSDictionary *)wins andLoses:(NSDictionary *)loses;
-
-
-+(NSDictionary *)diffWins:(NSDictionary *)wins
-                 andLoses:(NSDictionary *)loses
-               primaryKey:(NSString *)key
-            shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace;
-
++(NSDictionary *)diffWins:(NSDictionary *)wins loses:(NSDictionary *)loses;
 
 +(NSDictionary *)mergeInto:(NSDictionary *)into applyDiff:(NSDictionary *)diff;
+
++(NSDictionary *)mergeInto:(NSDictionary *)into
+                 applyDiff:(NSDictionary *)diff
+                primaryKey:(NSString *)key
+             shouldReplace:(BOOL (^)(id, id))shouldReplace;
 
 
 

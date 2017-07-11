@@ -95,7 +95,7 @@
   NSDictionary *remote = self.scenario1[@"remote"];
   NSDictionary *client = self.scenario1[@"client"];
   
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
+  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
   NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
   
   XCTAssertTrue([remote isEqualToDictionary: newClient]);
@@ -124,7 +124,7 @@
   
   [OfflineDB setShadow: remote isBookmark: YES];
   
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
+  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
   
   NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
   
@@ -154,7 +154,7 @@
   NSDictionary *need_to_apply_to_remote = [DSWrapper diffShadowAndClient: client isBookmark: YES];
   
   // +A, -B, -D, -E
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
+  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
   
   // A, C
   NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
@@ -199,7 +199,7 @@
   NSDictionary *need_to_apply_to_remote = [DSWrapper diffShadowAndClient: client isBookmark: YES];
   
   // +C, +D
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
+  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
   
   // A, B, C, D
   NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
@@ -244,7 +244,7 @@
   NSDictionary *need_to_apply_to_remote = [DSWrapper diffShadowAndClient: client isBookmark: YES];
   
   // +A, -C, -D
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
+  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
   
   // A, B
   NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
@@ -298,7 +298,7 @@
   NSDictionary *need_to_apply_to_remote = [DSWrapper diffShadowAndClient: client isBookmark: YES];
   
   // -A, +B
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
+  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
   
   // B, C, D
   NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
@@ -329,11 +329,11 @@
   
   NSDictionary *diff_client_shadow = [DSWrapper diffShadowAndClient: client isBookmark: YES];
   
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
+  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
   NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
   newClient = [DSWrapper mergeInto: newClient applyDiff: diff_client_shadow];
   
-  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient andLoses: remote];
+  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: remote];
   NSDictionary *newRemote = [DSWrapper mergeInto: remote applyDiff: need_to_apply_to_remote];
   
   [OfflineDB setShadow: newRemote];
@@ -360,11 +360,11 @@
   NSDictionary *diff_client_shadow = [DSWrapper diffShadowAndClient: client isBookmark: YES];
   
   // 
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
+  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
   NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
   newClient = [DSWrapper mergeInto: newClient applyDiff: diff_client_shadow];
   
-  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient andLoses: remote];
+  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: remote];
   NSDictionary *newRemote = [DSWrapper mergeInto: remote applyDiff: need_to_apply_to_remote];
   
   [OfflineDB setShadow: newRemote];

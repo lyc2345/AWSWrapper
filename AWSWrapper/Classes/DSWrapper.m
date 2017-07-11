@@ -92,35 +92,27 @@
 									 shadow: [DSWrapper arrayFromDict: [OfflineDB shadowIsBookmark: isBookmark]]];
 }
 
-+(NSDictionary *)diffShadowAndClient:(NSDictionary *)client primaryKey:(NSString *)key isBookmark:(BOOL)isBookmark shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace {
-  
-  return [DS diffWins: [DSWrapper arrayFromDict: client]
-             andLoses: [DSWrapper arrayFromDict: [OfflineDB shadowIsBookmark: isBookmark]]
-           primaryKey: key
-        shouldReplace: shouldReplace];
-}
-
-+(NSDictionary *)diffWins:(NSDictionary *)wins andLoses:(NSDictionary *)loses {
++(NSDictionary *)diffWins:(NSDictionary *)wins loses:(NSDictionary *)loses {
 
 	return [DS diffWins: [DSWrapper arrayFromDict: wins]
-						 andLoses: [DSWrapper arrayFromDict: loses]];
-}
-
-+(NSDictionary *)diffWins:(NSDictionary *)wins
-                 andLoses:(NSDictionary *)loses
-               primaryKey:(NSString *)key
-            shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace {
-  
-  return [DS diffWins: [DSWrapper arrayFromDict: wins]
-             andLoses: [DSWrapper arrayFromDict: loses]
-           primaryKey: key
-        shouldReplace: shouldReplace];
+						 loses: [DSWrapper arrayFromDict: loses]];
 }
 
 +(NSDictionary *)mergeInto:(NSDictionary *)into applyDiff:(NSDictionary *)diff {
 
 	return [DSWrapper dictFromArray: [DS mergeInto: [DSWrapper arrayFromDict: into]
 																			 applyDiff: diff]];
+}
+
++(NSDictionary *)mergeInto:(NSDictionary *)into
+                 applyDiff:(NSDictionary *)diff
+                primaryKey:(NSString *)key
+             shouldReplace:(BOOL (^)(id, id))shouldReplace {
+  
+  return [DSWrapper dictFromArray: [DS mergeInto: [DSWrapper arrayFromDict: into]
+                                       applyDiff: diff
+                                      primaryKey: key
+                                   shouldReplace: shouldReplace]];
 }
 
 

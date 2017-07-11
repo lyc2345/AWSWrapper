@@ -56,7 +56,7 @@
   RecordType type = [tableName isEqualToString: @"Bookmark"] ? RecordTypeBookmark : RecordTypeRecentlyVisit ;
   BOOL isBookmark = [tableName isEqualToString: @"Bookmark"] ? YES : NO;
   
-  __block NSDictionary *diff_client_shadow = [DSWrapper diffWins: dict[@"_dicts"] andLoses: shadow];
+  __block NSDictionary *diff_client_shadow = [DSWrapper diffWins: dict[@"_dicts"] loses: shadow];
 
   BookmarkManager *bookmarkManager = [[BookmarkManager alloc] init];
   
@@ -154,7 +154,7 @@
               NSLog(@"RemoteHash is changed, Now empty shadow...");
               id emptyShadow = [_delegate emptyShadowIsBookmark: isBookmark];
               // diff client shadow again. becasue shadow is empty.
-              diff_client_shadow = [DSWrapper diffWins: dict[@"_dicts"] andLoses: emptyShadow];
+              diff_client_shadow = [DSWrapper diffWins: dict[@"_dicts"] loses: emptyShadow];
               NSLog(@"Get a new diff from client and empty shadow");
             }
             // **************************************************************************************************************
@@ -162,10 +162,7 @@
             
             NSLog(@"starting diffmerge...");
             NSLog(@"start 4-1: diffmerge");
-            NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: cloud[@"_dicts"]
-                                                               andLoses: dict[@"_dicts"]
-                                                             primaryKey: @"comicName"
-                                                          shouldReplace: shouldReplace];
+            NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: cloud[@"_dicts"] loses: dict[@"_dicts"]];
             
             NSDictionary *newClientDicts = [DSWrapper mergeInto: dict[@"_dicts"] applyDiff: need_to_apply_to_client];
             
@@ -173,8 +170,11 @@
             NSLog(@"start 5");
             
             NSLog(@"conditional push whole local record");
-            newClientDicts = [DSWrapper mergeInto: newClientDicts applyDiff: diff_client_shadow];
-            NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClientDicts andLoses: cloud[@"_dicts"]];
+            newClientDicts = [DSWrapper mergeInto: newClientDicts
+                                        applyDiff: diff_client_shadow
+                                       primaryKey: @"comicName"
+                                    shouldReplace: shouldReplace];
+            NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClientDicts loses: cloud[@"_dicts"]];
             
             if (!need_to_apply_to_remote) {
               

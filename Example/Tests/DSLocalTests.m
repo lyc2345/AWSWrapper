@@ -71,11 +71,11 @@
                            @"B": @{@"author": @"B", @"url": @"B"}
                            };
   
-  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client andLoses: shadow];
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
+  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
+  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
   NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
   newClient = [DSWrapper mergeInto: newClient applyDiff: diff_client_shadow];
-  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient andLoses: remote];
+  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: remote];
   NSDictionary *newRemote = [DSWrapper mergeInto: remote applyDiff: need_to_apply_to_remote];
   [DSWrapper setShadow: newRemote];
   
@@ -107,11 +107,11 @@
                            @"E": @{@"author": @"E", @"url": @"E"}
                            };
   
-  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client andLoses: shadow];
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
+  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
+  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
   NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
   newClient = [DSWrapper mergeInto: newClient applyDiff: diff_client_shadow];
-  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient andLoses: remote];
+  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: remote];
   NSDictionary *newRemote = [DSWrapper mergeInto: remote applyDiff: need_to_apply_to_remote];
   [DSWrapper setShadow: newRemote];
   
@@ -143,11 +143,11 @@
                            @"F": @{@"author": @"F", @"url": @"F"}
                            };
   
-  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client andLoses: shadow];
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
+  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
+  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
   NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
   newClient = [DSWrapper mergeInto: newClient applyDiff: diff_client_shadow];
-  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient andLoses: remote];
+  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: remote];
   NSDictionary *newRemote = [DSWrapper mergeInto: remote applyDiff: need_to_apply_to_remote];
   [DSWrapper setShadow: newRemote];
   
@@ -177,11 +177,11 @@
                            @"G": @{@"author": @"G", @"url": @"G"}
                            };
   
-  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client andLoses: shadow];
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote andLoses: client];
+  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
+  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
   NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
   newClient = [DSWrapper mergeInto: newClient applyDiff: diff_client_shadow];
-  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient andLoses: remote];
+  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: remote];
   NSDictionary *newRemote = [DSWrapper mergeInto: remote applyDiff: need_to_apply_to_remote];
   [DSWrapper setShadow: newRemote];
   

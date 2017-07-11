@@ -182,7 +182,13 @@
               dictionary: bk
                   shadow: [OfflineDB shadowIsBookmark: YES]
            shouldReplace:^BOOL(id oldValue, id newValue) {
+             
+             
+             NSLog(@"old: %@, new: %@", oldValue, newValue);
+             
              return YES;
+             
+             
            } completion:^(NSDictionary *diff, NSError *error) {
              [self reloadBookmarks];
            }];

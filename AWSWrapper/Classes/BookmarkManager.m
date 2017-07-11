@@ -347,7 +347,7 @@
             
 						NSLog(@"starting diffmerge...");
 						NSLog(@"start 4-1: diffmerge");
-						NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: cloud[@"_dicts"] andLoses: local[@"_dicts"]];
+						NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: cloud[@"_dicts"] loses: local[@"_dicts"]];
             NSDictionary *newClientDicts = [DSWrapper mergeInto: local[@"_dicts"] applyDiff:need_to_apply_to_client];
             
             NSLog(@"done 4-1");
@@ -355,7 +355,7 @@
             
             NSLog(@"conditional push whole local record");
             newClientDicts = [DSWrapper mergeInto: newClientDicts applyDiff: diff_client_shadow];
-            NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClientDicts andLoses: cloud[@"_dicts"]];
+            NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClientDicts loses: cloud[@"_dicts"]];
             
             [self pushWithObject: new type: type diff: need_to_apply_to_remote userId: userId completion:^(NSDictionary *responseItem, NSError *error, NSString *commitId) {
               

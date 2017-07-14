@@ -27,7 +27,9 @@
 		F64BAC7D1EE269BA00051399 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F64BAC7B1EE269BA00051399 /* Main.storyboard */; };
 		F64BAC821EE26BA700051399 /* DynamoDBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC811EE26BA700051399 /* DynamoDBVC.m */; };
 		F64BAC841EE29F6700051399 /* DSWrapperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC831EE29F6700051399 /* DSWrapperTests.m */; };
-		F67DA4C81F07873F005751A3 /* DSLocalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F67DA4C71F07873F005751A3 /* DSLocalTests.m */; };
+		F64D0E711F176BCA00184DF7 /* DSTests2.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E6F1F17699D00184DF7 /* DSTests2.m */; };
+		F64D0E781F17725700184DF7 /* DSLocalTests2.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E741F1771D800184DF7 /* DSLocalTests2.m */; };
+		F64D0E791F17725D00184DF7 /* DSLocalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E761F1771FC00184DF7 /* DSLocalTests.m */; };
 		F67DA4CB1F079485005751A3 /* DynamoSyncTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F67DA4CA1F079485005751A3 /* DynamoSyncTestVC.m */; };
 		F68B865B1F0A327600F5D6C8 /* DSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F68B865A1F0A327600F5D6C8 /* DSTests.m */; };
 /* End PBXBuildFile section */
@@ -78,7 +80,9 @@
 		F64BAC801EE26BA700051399 /* DynamoDBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamoDBVC.h; sourceTree = "<group>"; };
 		F64BAC811EE26BA700051399 /* DynamoDBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamoDBVC.m; sourceTree = "<group>"; };
 		F64BAC831EE29F6700051399 /* DSWrapperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSWrapperTests.m; sourceTree = "<group>"; };
-		F67DA4C71F07873F005751A3 /* DSLocalTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSLocalTests.m; sourceTree = "<group>"; };
+		F64D0E6F1F17699D00184DF7 /* DSTests2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSTests2.m; sourceTree = "<group>"; };
+		F64D0E741F1771D800184DF7 /* DSLocalTests2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSLocalTests2.m; sourceTree = "<group>"; };
+		F64D0E761F1771FC00184DF7 /* DSLocalTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSLocalTests.m; sourceTree = "<group>"; };
 		F67DA4C91F079485005751A3 /* DynamoSyncTestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamoSyncTestVC.h; sourceTree = "<group>"; };
 		F67DA4CA1F079485005751A3 /* DynamoSyncTestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamoSyncTestVC.m; sourceTree = "<group>"; };
 		F68B865A1F0A327600F5D6C8 /* DSTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSTests.m; sourceTree = "<group>"; };
@@ -182,8 +186,10 @@
 			children = (
 				6003F5BB195388D20070C39A /* Tests.m */,
 				F64BAC831EE29F6700051399 /* DSWrapperTests.m */,
-				F67DA4C71F07873F005751A3 /* DSLocalTests.m */,
+				F64D0E761F1771FC00184DF7 /* DSLocalTests.m */,
+				F64D0E741F1771D800184DF7 /* DSLocalTests2.m */,
 				F68B865A1F0A327600F5D6C8 /* DSTests.m */,
+				F64D0E6F1F17699D00184DF7 /* DSTests2.m */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 			);
 			path = Tests;
@@ -436,8 +442,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F68B865B1F0A327600F5D6C8 /* DSTests.m in Sources */,
-				F67DA4C81F07873F005751A3 /* DSLocalTests.m in Sources */,
+				F64D0E781F17725700184DF7 /* DSLocalTests2.m in Sources */,
+				F64D0E711F176BCA00184DF7 /* DSTests2.m in Sources */,
 				F64BAC841EE29F6700051399 /* DSWrapperTests.m in Sources */,
+				F64D0E791F17725D00184DF7 /* DSLocalTests.m in Sources */,
 				6003F5BC195388D20070C39A /* Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

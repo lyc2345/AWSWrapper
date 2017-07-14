@@ -29,8 +29,6 @@
 
 @interface DynamoSync ()
 
-@property (strong, nonatomic) OfflineDB *offlineDB;
-
 @end
 
 @implementation DynamoSync
@@ -39,8 +37,6 @@
 {
   self = [super init];
   if (self) {
-    
-    self.offlineDB = [OfflineDB new];
     
   }
   return self;

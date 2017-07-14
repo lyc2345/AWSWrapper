@@ -49,11 +49,11 @@
 
 @end
 
-@interface DSLocalTests : XCTestCase
+@interface DSLocalTests2 : XCTestCase
 
 @end
 
-@implementation DSLocalTests
+@implementation DSLocalTests2
 
 - (void)setUp {
     [super setUp];
@@ -81,9 +81,7 @@
 -(void)testS1P1 {
   // commitId passes, remoteHash passed.
   NSDictionary *client = @{
-                           @"A": @{@"author": @"A", @"url": @"A"},
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
+                           @"B": @{@"author": @"B", @"url": @"B1"},
                            @"D": @{@"author": @"D", @"url": @"D"},
                            @"E": @{@"author": @"E", @"url": @"E"}
                            };
@@ -113,9 +111,7 @@
   [DSWrapper setShadow: newRemote];
   
   NSDictionary *expectResult = @{
-                                 @"A": @{@"author": @"A", @"url": @"A"},
-                                 @"B": @{@"author": @"B", @"url": @"B"},
-                                 @"C": @{@"author": @"C", @"url": @"C"},
+                                 @"B": @{@"author": @"B", @"url": @"B1"},
                                  @"D": @{@"author": @"D", @"url": @"D"},
                                  @"E": @{@"author": @"E", @"url": @"E"}
                                  };
@@ -127,22 +123,17 @@
 -(void)testS1P2 {
   // commitId passes, remoteHash passed.
   NSDictionary *client = @{
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
-                           @"E": @{@"author": @"E", @"url": @"E"},
+                           @"B": @{@"author": @"B", @"url": @"B2"},
+                           @"D": @{@"author": @"D", @"url": @"D1"},
                            @"F": @{@"author": @"F", @"url": @"F"}
                            };
   NSDictionary *shadow = @{
-                           @"A": @{@"author": @"A", @"url": @"A"},
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
+                           @"B": @{@"author": @"B", @"url": @"B1"},
                            @"D": @{@"author": @"D", @"url": @"D"},
                            @"E": @{@"author": @"E", @"url": @"E"}
                            };
   NSDictionary *remote = @{
-                           @"A": @{@"author": @"A", @"url": @"A"},
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
+                           @"B": @{@"author": @"B", @"url": @"B1"},
                            @"D": @{@"author": @"D", @"url": @"D"},
                            @"E": @{@"author": @"E", @"url": @"E"}
                            };
@@ -164,9 +155,8 @@
   [DSWrapper setShadow: newRemote];
   
   NSDictionary *expectResult = @{
-                                 @"B": @{@"author": @"B", @"url": @"B"},
-                                 @"C": @{@"author": @"C", @"url": @"C"},
-                                 @"E": @{@"author": @"E", @"url": @"E"},
+                                 @"B": @{@"author": @"B", @"url": @"B2"},
+                                 @"D": @{@"author": @"D", @"url": @"D1"},
                                  @"F": @{@"author": @"F", @"url": @"F"}
                                  };
   NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
@@ -177,23 +167,18 @@
 -(void)testS2P1 {
   // commitId passes, remoteHash passed.
   NSDictionary *client = @{
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
-                           @"D": @{@"author": @"D", @"url": @"D"},
-                           @"E": @{@"author": @"E", @"url": @"E"},
+                           @"B": @{@"author": @"B", @"url": @"B3"},
+                           @"D": @{@"author": @"D", @"url": @"D3"},
                            @"G": @{@"author": @"G", @"url": @"G"}
                            };
   NSDictionary *shadow = @{
-                           @"A": @{@"author": @"A", @"url": @"A"},
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
+                           @"B": @{@"author": @"B", @"url": @"B1"},
                            @"D": @{@"author": @"D", @"url": @"D"},
                            @"E": @{@"author": @"E", @"url": @"E"}
                            };
   NSDictionary *remote = @{
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
-                           @"E": @{@"author": @"E", @"url": @"E"},
+                           @"B": @{@"author": @"B", @"url": @"B2"},
+                           @"D": @{@"author": @"D", @"url": @"D1"},
                            @"F": @{@"author": @"F", @"url": @"F"}
                            };
   
@@ -214,9 +199,8 @@
   [DSWrapper setShadow: newRemote];
   
   NSDictionary *expectResult = @{
-                                 @"B": @{@"author": @"B", @"url": @"B"},
-                                 @"C": @{@"author": @"C", @"url": @"C"},
-                                 @"E": @{@"author": @"E", @"url": @"E"},
+                                 @"B": @{@"author": @"B", @"url": @"B3"},
+                                 @"D": @{@"author": @"D", @"url": @"D3"},
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"}
                                  };
@@ -228,21 +212,20 @@
 -(void)testS1P3 {
   // commitId passes, remoteHash passed.
   NSDictionary *client = @{
-                           @"A": @{@"author": @"A", @"url": @"A"},
+                           @"A": @{@"author": @"A", @"url": @"A1"},
                            @"B": @{@"author": @"B", @"url": @"B1"},
-                           @"E": @{@"author": @"E", @"url": @"E"},
-                           @"F": @{@"author": @"F", @"url": @"F1"}
+                           @"D": @{@"author": @"D", @"url": @"D3"},
+                           @"F": @{@"author": @"F", @"url": @"F"},
+                           @"H": @{@"author": @"H", @"url": @"H"}
                            };
   NSDictionary *shadow = @{
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
-                           @"E": @{@"author": @"E", @"url": @"E"},
+                           @"B": @{@"author": @"B", @"url": @"B2"},
+                           @"D": @{@"author": @"D", @"url": @"D1"},
                            @"F": @{@"author": @"F", @"url": @"F"}
                            };
   NSDictionary *remote = @{
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
-                           @"E": @{@"author": @"E", @"url": @"E"},
+                           @"B": @{@"author": @"B", @"url": @"B3"},
+                           @"D": @{@"author": @"D", @"url": @"D3"},
                            @"F": @{@"author": @"F", @"url": @"F"},
                            @"G": @{@"author": @"G", @"url": @"G"}
                            };
@@ -264,11 +247,12 @@
   [DSWrapper setShadow: newRemote];
   
   NSDictionary *expectResult = @{
-                                 @"A": @{@"author": @"A", @"url": @"A"},
+                                 @"A": @{@"author": @"A", @"url": @"A1"},
                                  @"B": @{@"author": @"B", @"url": @"B1"},
-                                 @"E": @{@"author": @"E", @"url": @"E"},
-                                 @"F": @{@"author": @"F", @"url": @"F1"},
-                                 @"G": @{@"author": @"G", @"url": @"G"}
+                                 @"D": @{@"author": @"D", @"url": @"D3"},
+                                 @"F": @{@"author": @"F", @"url": @"F"},
+                                 @"G": @{@"author": @"G", @"url": @"G"},
+                                 @"H": @{@"author": @"H", @"url": @"H"}
                                  };
   NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
   XCTAssertTrue([[[DSWrapper arrayFromDict: newRemote] dictSort] isEqualToArray: [[DSWrapper arrayFromDict: expectResult] dictSort]]);

@@ -10,7 +10,7 @@
 @import Specta;
 @import AWSWrapper;
 
-@interface DSTests2 : XCTestCase <DynamoSyncDelegate>
+@interface DSOPSTests : XCTestCase <DynamoSyncDelegate>
 
 @property BookmarkManager *bookmarkManager;
 @property LoginManager *loginManager;
@@ -28,7 +28,7 @@
 
 @end
 
-@implementation DSTests2
+@implementation DSOPSTests
 
 - (void)setUp {
     [super setUp];
@@ -154,9 +154,11 @@
   NSDictionary *clientS1P1 = @{@"_commitId": _commitId,
                            @"_remoteHash": _remoteHash,
                            @"_dicts": @{
-                                   @"B": @{@"author": @"B", @"url": @"B1"},
-                                   @"D": @{@"author": @"D", @"url": @"D"},
-                                   @"E": @{@"author": @"E", @"url": @"E"}
+                               @"A": @{@"author": @"A", @"url": @"A"},
+                               @"B": @{@"author": @"B", @"url": @"B"},
+                               @"C": @{@"author": @"C", @"url": @"C"},
+                               @"D": @{@"author": @"D", @"url": @"D"},
+                               @"E": @{@"author": @"E", @"url": @"E"}
                                }
                            };
   NSDictionary *expectShadowS1P1 = @{
@@ -191,15 +193,18 @@
   NSDictionary *clientS1P2 = @{@"_commitId": _commitId,
                            @"_remoteHash": _remoteHash,
                            @"_dicts": @{
-                                   @"B": @{@"author": @"B", @"url": @"B2"},
-                                   @"D": @{@"author": @"D", @"url": @"D1"},
-                                   @"F": @{@"author": @"F", @"url": @"F"}
+                               @"B": @{@"author": @"B", @"url": @"B"},
+                               @"C": @{@"author": @"C", @"url": @"C"},
+                               @"E": @{@"author": @"E", @"url": @"E"},
+                               @"F": @{@"author": @"F", @"url": @"F"}
                                }
                            };
   NSDictionary *shadowS1P2 = @{
-                               @"B": @{@"author": @"B", @"url": @"B1"},
-                               @"D": @{@"author": @"D", @"url": @"D"},
-                               @"E": @{@"author": @"E", @"url": @"E"}
+                           @"A": @{@"author": @"A", @"url": @"A"},
+                           @"B": @{@"author": @"B", @"url": @"B"},
+                           @"C": @{@"author": @"C", @"url": @"C"},
+                           @"D": @{@"author": @"D", @"url": @"D"},
+                           @"E": @{@"author": @"E", @"url": @"E"}
                            };
   /*
   NSDictionary *remote = @{
@@ -222,8 +227,9 @@
     NSDictionary *newClient = [DSWrapper mergeInto: clientS1P2[@"_dicts"] applyDiff: diff];
     
     NSDictionary *comparison = @{
-                                 @"B": @{@"author": @"B", @"url": @"B2"},
-                                 @"D": @{@"author": @"D", @"url": @"D1"},
+                                 @"B": @{@"author": @"B", @"url": @"B"},
+                                 @"C": @{@"author": @"C", @"url": @"C"},
+                                 @"E": @{@"author": @"E", @"url": @"E"},
                                  @"F": @{@"author": @"F", @"url": @"F"}
                                  };
     
@@ -246,15 +252,19 @@
                               @"_commitId": @"123213123123123",
                               @"_remoteHash": _remoteHash,
                               @"_dicts": @{
-                                  @"B": @{@"author": @"B", @"url": @"B3"},
-                                  @"D": @{@"author": @"D", @"url": @"D3"},
+                                  @"B": @{@"author": @"B", @"url": @"B"},
+                                  @"C": @{@"author": @"C", @"url": @"C"},
+                                  @"D": @{@"author": @"D", @"url": @"D"},
+                                  @"E": @{@"author": @"E", @"url": @"E"},
                                   @"G": @{@"author": @"G", @"url": @"G"}
                                   }
                               };
   NSDictionary *shadowS2P1 = @{
-                               @"B": @{@"author": @"B", @"url": @"B1"},
-                               @"D": @{@"author": @"D", @"url": @"D"},
-                               @"E": @{@"author": @"E", @"url": @"E"}
+                           @"A": @{@"author": @"A", @"url": @"A"},
+                           @"B": @{@"author": @"B", @"url": @"B"},
+                           @"C": @{@"author": @"C", @"url": @"C"},
+                           @"D": @{@"author": @"D", @"url": @"D"},
+                           @"E": @{@"author": @"E", @"url": @"E"}
                            };
   /*
   NSDictionary *remote = @{
@@ -278,8 +288,9 @@
 
   [self waitForExpectationsWithTimeout: 8.0 handler:^(NSError * _Nullable error) {
     NSDictionary *comparison = @{
-                                 @"B": @{@"author": @"B", @"url": @"B3"},
-                                 @"D": @{@"author": @"D", @"url": @"D3"},
+                                 @"B": @{@"author": @"B", @"url": @"B"},
+                                 @"C": @{@"author": @"C", @"url": @"C"},
+                                 @"E": @{@"author": @"E", @"url": @"E"},
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"}
                                  };
@@ -299,17 +310,17 @@
                                @"_commitId": @"12312321321ddd312321",
                                @"_remoteHash": _remoteHash,
                                @"_dicts": @{
-                                   @"A": @{@"author": @"A", @"url": @"A1"},
+                                   @"A": @{@"author": @"A", @"url": @"A"},
                                    @"B": @{@"author": @"B", @"url": @"B1"},
-                                   @"D": @{@"author": @"D", @"url": @"D3"},
-                                   @"F": @{@"author": @"F", @"url": @"F"},
-                                   @"H": @{@"author": @"H", @"url": @"H"}
+                                   @"E": @{@"author": @"E", @"url": @"E"},
+                                   @"F": @{@"author": @"F", @"url": @"F1"}
                                    }
                                };
   NSDictionary *shadowS1P3 = @{
-                               @"B": @{@"author": @"B", @"url": @"B2"},
-                               @"D": @{@"author": @"D", @"url": @"D1"},
-                               @"F": @{@"author": @"F", @"url": @"F"}
+                           @"B": @{@"author": @"B", @"url": @"B"},
+                           @"C": @{@"author": @"C", @"url": @"C"},
+                           @"E": @{@"author": @"E", @"url": @"E"},
+                           @"F": @{@"author": @"F", @"url": @"F"}
                            };
   /*
   NSDictionary *remote = @{
@@ -326,19 +337,18 @@
   
   [_dsync syncWithUserId: _userId tableName: _tableName dictionary: _client shadow: _shadow shouldReplace:^BOOL(id oldValue, id newValue) {
     
-    return YES;
+    return NO;
   } completion:^(NSDictionary *diff, NSError *error) {
     [self.expection fulfill];
   }];
 
   [self waitForExpectationsWithTimeout: 15.0 handler:^(NSError * _Nullable error) {
     NSDictionary *comparison = @{
-                                 @"A": @{@"author": @"A", @"url": @"A1"},
-                                 @"B": @{@"author": @"B", @"url": @"B1"},
-                                 @"D": @{@"author": @"D", @"url": @"D3"},
+                                 @"A": @{@"author": @"A", @"url": @"A"},
+                                 @"B": @{@"author": @"B", @"url": @"B"},
+                                 @"E": @{@"author": @"E", @"url": @"E"},
                                  @"F": @{@"author": @"F", @"url": @"F"},
-                                 @"G": @{@"author": @"G", @"url": @"G"},
-                                 @"H": @{@"author": @"H", @"url": @"H"}
+                                 @"G": @{@"author": @"G", @"url": @"G"}
                                  };
     XCTAssertTrue([_shadow isEqualToDictionary: comparison]);
     if (error) {
@@ -354,12 +364,11 @@
   [_bookmarkManager pullType: RecordTypeBookmark user: _userId completion:^(NSDictionary *item, NSError *error) {
     
     NSDictionary *comparison = @{
-                                 @"A": @{@"author": @"A", @"url": @"A1"},
-                                 @"B": @{@"author": @"B", @"url": @"B1"},
-                                 @"D": @{@"author": @"D", @"url": @"D3"},
+                                 @"A": @{@"author": @"A", @"url": @"A"},
+                                 @"B": @{@"author": @"B", @"url": @"B"},
+                                 @"E": @{@"author": @"E", @"url": @"E"},
                                  @"F": @{@"author": @"F", @"url": @"F"},
-                                 @"G": @{@"author": @"G", @"url": @"G"},
-                                 @"H": @{@"author": @"H", @"url": @"H"}
+                                 @"G": @{@"author": @"G", @"url": @"G"}
                                  };
     XCTAssertTrue([item[@"_dicts"] isEqualToDictionary: comparison]);
     

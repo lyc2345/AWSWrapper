@@ -10,7 +10,7 @@
 @import Specta;
 @import AWSWrapper;
 
-@interface DSTests2 : XCTestCase <DynamoSyncDelegate>
+@interface DSOPSTests2 : XCTestCase <DynamoSyncDelegate>
 
 @property BookmarkManager *bookmarkManager;
 @property LoginManager *loginManager;
@@ -28,7 +28,7 @@
 
 @end
 
-@implementation DSTests2
+@implementation DSOPSTests2
 
 - (void)setUp {
     [super setUp];
@@ -169,7 +169,7 @@
   XCTAssertTrue([expectShadowS1P1 isEqualToDictionary: _shadow]);
   
   [_dsync syncWithUserId: _userId tableName: _tableName dictionary: _client shadow: _shadow shouldReplace:^BOOL(id oldValue, id newValue) {
-    return YES;
+    return NO;
   } completion:^(NSDictionary *diff, NSError *error) {
     
     XCTAssertTrue([diff isEqualToDictionary: expectDiff]);
@@ -197,29 +197,31 @@
                                }
                            };
   NSDictionary *shadowS1P2 = @{
-                               @"B": @{@"author": @"B", @"url": @"B1"},
+                               @"B": @{@"author": @"B", @"url": @"B"},
                                @"D": @{@"author": @"D", @"url": @"D"},
                                @"E": @{@"author": @"E", @"url": @"E"}
                            };
   /*
   NSDictionary *remote = @{
-                           @"A": @{@"author": @"A", @"url": @"A"},
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
-                           @"D": @{@"author": @"D", @"url": @"D"},
-                           @"E": @{@"author": @"E", @"url": @"E"}
+   @"B": @{@"author": @"B", @"url": @"B"},
+   @"D": @{@"author": @"D", @"url": @"D"},
+   @"E": @{@"author": @"E", @"url": @"E"}
                            };
    */
   
   _client = clientS1P2;
-  XCTAssertTrue([shadowS1P2 isEqualToDictionary: _shadow]);
   
   [_dsync syncWithUserId: _userId tableName: _tableName dictionary: _client shadow: _shadow shouldReplace:^BOOL(id oldValue, id newValue) {
-    return YES;
+    return NO;
   } completion:^(NSDictionary *diff, NSError *error) {
     
     
-    NSDictionary *newClient = [DSWrapper mergeInto: clientS1P2[@"_dicts"] applyDiff: diff];
+    NSDictionary *newClient = [DSWrapper mergeInto: clientS1P2[@"_dicts"]
+                                         applyDiff: diff
+                                        primaryKey: @"comicName"
+                                     shouldReplace: ^BOOL(id oldValue, id newValue) {
+                                       return NO;
+                                     }];
     
     NSDictionary *comparison = @{
                                  @"B": @{@"author": @"B", @"url": @"B2"},
@@ -228,6 +230,7 @@
                                  };
     
     XCTAssertTrue([newClient isEqualToDictionary: comparison]);
+    XCTAssertTrue([_shadow isEqualToDictionary: comparison]);
     [self.expection fulfill];
   }];
   
@@ -252,16 +255,15 @@
                                   }
                               };
   NSDictionary *shadowS2P1 = @{
-                               @"B": @{@"author": @"B", @"url": @"B1"},
+                               @"B": @{@"author": @"B", @"url": @"B"},
                                @"D": @{@"author": @"D", @"url": @"D"},
                                @"E": @{@"author": @"E", @"url": @"E"}
                            };
   /*
   NSDictionary *remote = @{
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
-                           @"E": @{@"author": @"E", @"url": @"E"},
-                           @"F": @{@"author": @"F", @"url": @"F"}
+   @"B": @{@"author": @"B", @"url": @"B2"},
+   @"D": @{@"author": @"D", @"url": @"D1"},
+   @"F": @{@"author": @"F", @"url": @"F"}
                            };
    */
   _client = clientS2P1;
@@ -270,7 +272,7 @@
   
   [_dsync syncWithUserId: _userId tableName: _tableName dictionary: _client shadow: _shadow shouldReplace:^BOOL(id oldValue, id newValue) {
     
-    return YES;
+    return NO;
   } completion:^(NSDictionary *diff, NSError *error) {
     
     [self.expection fulfill];
@@ -278,8 +280,8 @@
 
   [self waitForExpectationsWithTimeout: 8.0 handler:^(NSError * _Nullable error) {
     NSDictionary *comparison = @{
-                                 @"B": @{@"author": @"B", @"url": @"B3"},
-                                 @"D": @{@"author": @"D", @"url": @"D3"},
+                                 @"B": @{@"author": @"B", @"url": @"B2"},
+                                 @"D": @{@"author": @"D", @"url": @"D1"},
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"}
                                  };
@@ -307,17 +309,16 @@
                                    }
                                };
   NSDictionary *shadowS1P3 = @{
-                               @"B": @{@"author": @"B", @"url": @"B2"},
-                               @"D": @{@"author": @"D", @"url": @"D1"},
+                               @"B": @{@"author": @"B", @"url": @"B"},
+                               @"D": @{@"author": @"D", @"url": @"D"},
                                @"F": @{@"author": @"F", @"url": @"F"}
                            };
   /*
   NSDictionary *remote = @{
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
-                           @"E": @{@"author": @"E", @"url": @"E"},
-                           @"F": @{@"author": @"F", @"url": @"F"},
-                           @"G": @{@"author": @"G", @"url": @"G"}
+   @"B": @{@"author": @"B", @"url": @"B2"},
+   @"D": @{@"author": @"D", @"url": @"D1"},
+   @"F": @{@"author": @"F", @"url": @"F"},
+   @"G": @{@"author": @"G", @"url": @"G"}
                            };
    */
   _client = clientS1P3;
@@ -326,7 +327,7 @@
   
   [_dsync syncWithUserId: _userId tableName: _tableName dictionary: _client shadow: _shadow shouldReplace:^BOOL(id oldValue, id newValue) {
     
-    return YES;
+    return NO;
   } completion:^(NSDictionary *diff, NSError *error) {
     [self.expection fulfill];
   }];
@@ -334,8 +335,8 @@
   [self waitForExpectationsWithTimeout: 15.0 handler:^(NSError * _Nullable error) {
     NSDictionary *comparison = @{
                                  @"A": @{@"author": @"A", @"url": @"A1"},
-                                 @"B": @{@"author": @"B", @"url": @"B1"},
-                                 @"D": @{@"author": @"D", @"url": @"D3"},
+                                 @"B": @{@"author": @"B", @"url": @"B2"},
+                                 @"D": @{@"author": @"D", @"url": @"D1"},
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"},
                                  @"H": @{@"author": @"H", @"url": @"H"}
@@ -355,8 +356,8 @@
     
     NSDictionary *comparison = @{
                                  @"A": @{@"author": @"A", @"url": @"A1"},
-                                 @"B": @{@"author": @"B", @"url": @"B1"},
-                                 @"D": @{@"author": @"D", @"url": @"D3"},
+                                 @"B": @{@"author": @"B", @"url": @"B2"},
+                                 @"D": @{@"author": @"D", @"url": @"D1"},
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"},
                                  @"H": @{@"author": @"H", @"url": @"H"}

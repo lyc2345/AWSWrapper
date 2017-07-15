@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+@import AWSWrapper;
 #import "TestCase.h"
 
 @interface DSTest1 : XCTestCase
@@ -210,6 +211,23 @@
                              @"E": @{@"author": @"E", @"url": @"E"},
                              @"G": @{@"author": @"G", @"url": @"G"}
                              };
+    NSDictionary *expectRemote = @{
+                                   @"B": @{@"author": @"B", @"url": @"B"},
+                                   @"C": @{@"author": @"C", @"url": @"C"},
+                                   @"E": @{@"author": @"E", @"url": @"E"},
+                                   @"F": @{@"author": @"F", @"url": @"F"}
+                                   };
+    NSDictionary *diff_cilent_shadow = [DSWrapper diffWins: client loses: expectShadow];
+    NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: expectRemote loses: client];
+    NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+    newClient = [DSWrapper mergeInto: newClient
+                           applyDiff: diff_cilent_shadow
+                          primaryKey: @"comicName"
+                       shouldReplace:^BOOL(id oldValue, id newValue) {
+      return YES;
+    }];
+    NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: expectRemote];
+    
     [_testcase examineSpec: @"S2P1"
                   commitId: @"123123gfdg213123gdgd2112312312312"
                 remoteHash: nil
@@ -224,6 +242,8 @@
               return YES;
               
             } exeHandler:^(NSDictionary *diff, NSError *error) {
+              
+              XCTAssertTrue([diff isEqualToDictionary: need_to_apply_to_remote]);
               
               if (error) {
                 XCTFail(@"expectation failed with error: %@", error);

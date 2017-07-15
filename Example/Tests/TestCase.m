@@ -67,7 +67,9 @@
     completion:(void(^)(NSError *error))completion {
   
   self.expection = [self expectationWithDescription: @"Remote Initial"];
-  _client = dict;
+  
+  _client = @{@"_dicts": dict};
+  
   [_bookmarkManager forcePushWithType: RecordTypeBookmark record: _client userId: _userId completion:^(NSError *error, NSString *commitId, NSString *remoteHash) {
     
     if (!error) {
@@ -108,7 +110,7 @@
               dictionary: client
                   shadow: expectShadow == nil ? _shadow : expectShadow
            shouldReplace: shouldReplace
-              completion:^(NSDictionary *diff, NSError *error) {
+              completion: ^(NSDictionary *diff, NSError *error) {
                 
                 exeHandler(diff, error);
                 [self.expection fulfill];
@@ -126,14 +128,14 @@
   
   self.expection = [self expectationWithDescription: @"finalLoadCheck"];
   
-  [_bookmarkManager pullType: RecordTypeBookmark user: _userId completion:^(NSDictionary *item, NSError *error) {
+  [_bookmarkManager pullType: RecordTypeBookmark user: _userId completion: ^(NSDictionary *item, NSError *error) {
     
     exeHandler([item[@"_dicts"] isEqualToDictionary: expectRemote]);
     
     [self.expection fulfill];
   }];
   
-  [self waitForExpectationsWithTimeout: 5.0 handler:^(NSError * _Nullable error) {
+  [self waitForExpectationsWithTimeout: 5.0 handler: ^(NSError * _Nullable error) {
     
     completion(error);
   }];

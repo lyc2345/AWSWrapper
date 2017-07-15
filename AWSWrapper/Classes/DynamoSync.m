@@ -193,7 +193,7 @@
               [new setObject: newClientDicts forKey: @"_dicts"];
               
               [_delegate dynamoPushSuccessWithType: type data: new newCommitId: commitId];
-              completion(need_to_apply_to_client, nil);
+              completion(need_to_apply_to_remote, nil);
             }];
           }
         }

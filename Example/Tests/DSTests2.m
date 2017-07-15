@@ -73,9 +73,7 @@ describe(@"Tests2", ^{
                                        @"B": @{@"author": @"B", @"url": @"B"}
                                        };
         NSDictionary *client = @{
-                                 @"A": @{@"author": @"A", @"url": @"A"},
-                                 @"B": @{@"author": @"B", @"url": @"B"},
-                                 @"C": @{@"author": @"C", @"url": @"C"},
+                                 @"B": @{@"author": @"B", @"url": @"B1"},
                                  @"D": @{@"author": @"D", @"url": @"D"},
                                  @"E": @{@"author": @"E", @"url": @"E"}
                                  };
@@ -99,9 +97,7 @@ describe(@"Tests2", ^{
                } completion:^(NSDictionary *newShadow, NSError *error) {
                  
                  NSDictionary *expectRemote = @{
-                                                @"A": @{@"author": @"A", @"url": @"A"},
-                                                @"B": @{@"author": @"B", @"url": @"B"},
-                                                @"C": @{@"author": @"C", @"url": @"C"},
+                                                @"B": @{@"author": @"B", @"url": @"B1"},
                                                 @"D": @{@"author": @"D", @"url": @"D"},
                                                 @"E": @{@"author": @"E", @"url": @"E"}
                                                 };
@@ -114,16 +110,13 @@ describe(@"Tests2", ^{
       // Start Scenario 1, part 2.
       [dispatchQueue performGroupedDelay: 2 block:^{
         NSDictionary *expectShadow = @{
-                                       @"A": @{@"author": @"A", @"url": @"A"},
-                                       @"B": @{@"author": @"B", @"url": @"B"},
-                                       @"C": @{@"author": @"C", @"url": @"C"},
+                                       @"B": @{@"author": @"B", @"url": @"B1"},
                                        @"D": @{@"author": @"D", @"url": @"D"},
                                        @"E": @{@"author": @"E", @"url": @"E"}
                                        };
         NSDictionary *client = @{
-                                 @"B": @{@"author": @"B", @"url": @"B"},
-                                 @"C": @{@"author": @"C", @"url": @"C"},
-                                 @"E": @{@"author": @"E", @"url": @"E"},
+                                 @"B": @{@"author": @"B", @"url": @"B2"},
+                                 @"D": @{@"author": @"D", @"url": @"D1"},
                                  @"F": @{@"author": @"F", @"url": @"F"}
                                  };
         [testcase examineSpec: @"S1P2"
@@ -146,9 +139,8 @@ describe(@"Tests2", ^{
                } completion:^(NSDictionary *newShadow, NSError *error) {
                  
                  NSDictionary *expectRemote = @{
-                                                @"B": @{@"author": @"B", @"url": @"B"},
-                                                @"C": @{@"author": @"C", @"url": @"C"},
-                                                @"E": @{@"author": @"E", @"url": @"E"},
+                                                @"B": @{@"author": @"B", @"url": @"B2"},
+                                                @"D": @{@"author": @"D", @"url": @"D1"},
                                                 @"F": @{@"author": @"F", @"url": @"F"}
                                                 };
                  expect(error).to.beNil;
@@ -159,23 +151,18 @@ describe(@"Tests2", ^{
       // Start Scenario 2, part 1.
       [dispatchQueue performGroupedDelay: 2 block:^{
         NSDictionary *expectShadow = @{
-                                       @"A": @{@"author": @"A", @"url": @"A"},
-                                       @"B": @{@"author": @"B", @"url": @"B"},
-                                       @"C": @{@"author": @"C", @"url": @"C"},
+                                       @"B": @{@"author": @"B", @"url": @"B1"},
                                        @"D": @{@"author": @"D", @"url": @"D"},
                                        @"E": @{@"author": @"E", @"url": @"E"}
                                        };
         NSDictionary *client = @{
-                                 @"B": @{@"author": @"B", @"url": @"B"},
-                                 @"C": @{@"author": @"C", @"url": @"C"},
-                                 @"D": @{@"author": @"D", @"url": @"D"},
-                                 @"E": @{@"author": @"E", @"url": @"E"},
+                                 @"B": @{@"author": @"B", @"url": @"B3"},
+                                 @"D": @{@"author": @"D", @"url": @"D3"},
                                  @"G": @{@"author": @"G", @"url": @"G"}
                                  };
         NSDictionary *actualRemote = @{
-                                       @"B": @{@"author": @"B", @"url": @"B"},
-                                       @"C": @{@"author": @"C", @"url": @"C"},
-                                       @"E": @{@"author": @"E", @"url": @"E"},
+                                       @"B": @{@"author": @"B", @"url": @"B2"},
+                                       @"D": @{@"author": @"D", @"url": @"D1"},
                                        @"F": @{@"author": @"F", @"url": @"F"}
                                        };
         NSDictionary *diff_cilent_shadow = [DSWrapper diffWins: client loses: expectShadow];
@@ -210,9 +197,8 @@ describe(@"Tests2", ^{
                } completion:^(NSDictionary *newShadow, NSError *error) {
                  
                  NSDictionary *expectRemote = @{
-                                                @"B": @{@"author": @"B", @"url": @"B"},
-                                                @"C": @{@"author": @"C", @"url": @"C"},
-                                                @"E": @{@"author": @"E", @"url": @"E"},
+                                                @"B": @{@"author": @"B", @"url": @"B3"},
+                                                @"D": @{@"author": @"D", @"url": @"D3"},
                                                 @"F": @{@"author": @"F", @"url": @"F"},
                                                 @"G": @{@"author": @"G", @"url": @"G"}
                                                 };
@@ -224,21 +210,20 @@ describe(@"Tests2", ^{
       // Start Scenario 1, part 3.
       [dispatchQueue performGroupedDelay: 2 block:^{
         NSDictionary *expectShadow = @{
-                                       @"B": @{@"author": @"B", @"url": @"B"},
-                                       @"C": @{@"author": @"C", @"url": @"C"},
-                                       @"E": @{@"author": @"E", @"url": @"E"},
+                                       @"B": @{@"author": @"B", @"url": @"B2"},
+                                       @"D": @{@"author": @"D", @"url": @"D1"},
                                        @"F": @{@"author": @"F", @"url": @"F"}
                                        };
         NSDictionary *client = @{
-                                 @"A": @{@"author": @"A", @"url": @"A"},
+                                 @"A": @{@"author": @"A", @"url": @"A1"},
                                  @"B": @{@"author": @"B", @"url": @"B1"},
-                                 @"E": @{@"author": @"E", @"url": @"E"},
-                                 @"F": @{@"author": @"F", @"url": @"F1"}
+                                 @"D": @{@"author": @"D", @"url": @"D3"},
+                                 @"F": @{@"author": @"F", @"url": @"F"},
+                                 @"H": @{@"author": @"H", @"url": @"H"}
                                  };
         NSDictionary *actualRemote = @{
-                                       @"B": @{@"author": @"B", @"url": @"B"},
-                                       @"C": @{@"author": @"C", @"url": @"C"},
-                                       @"E": @{@"author": @"E", @"url": @"E"},
+                                       @"B": @{@"author": @"B", @"url": @"B3"},
+                                       @"D": @{@"author": @"D", @"url": @"D3"},
                                        @"F": @{@"author": @"F", @"url": @"F"},
                                        @"G": @{@"author": @"G", @"url": @"G"}
                                        };
@@ -274,11 +259,12 @@ describe(@"Tests2", ^{
                } completion:^(NSDictionary *newShadow, NSError *error) {
                  
                  NSDictionary *expectRemote = @{
-                                                @"A": @{@"author": @"A", @"url": @"A"},
+                                                @"A": @{@"author": @"A", @"url": @"A1"},
                                                 @"B": @{@"author": @"B", @"url": @"B1"},
-                                                @"E": @{@"author": @"E", @"url": @"E"},
-                                                @"F": @{@"author": @"F", @"url": @"F1"},
-                                                @"G": @{@"author": @"G", @"url": @"G"}
+                                                @"D": @{@"author": @"D", @"url": @"D3"},
+                                                @"F": @{@"author": @"F", @"url": @"F"},
+                                                @"G": @{@"author": @"G", @"url": @"G"},
+                                                @"H": @{@"author": @"H", @"url": @"H"}
                                                 };
                  expect(error).to.beNil;
                  expect(newShadow).to.equal(expectRemote);

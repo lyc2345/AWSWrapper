@@ -15,7 +15,7 @@
 static TestCase *testcase;
 static DispatchQueue *dispatchQueue;
 
-SpecBegin(DSLocalTest1)
+SpecBegin(DSOPSLocalTests1)
 
 describe(@"Test S1P1", ^{
   
@@ -45,7 +45,7 @@ describe(@"Test S1P1", ^{
                            applyDiff: diff_client_shadow
                           primaryKey: @"comicName"
                        shouldReplace: ^BOOL(id oldValue, id newValue) {
-                         return YES;
+                         return NO;
                        }];
     done();
   });
@@ -223,7 +223,7 @@ describe(@"Test S1P3", ^{
                            applyDiff: diff_client_shadow
                           primaryKey: @"comicName"
                        shouldReplace: ^BOOL(id oldValue, id newValue) {
-                         return YES;
+                         return NO;
                        }];
     done();
   });
@@ -234,9 +234,9 @@ describe(@"Test S1P3", ^{
   
   NSDictionary *expectResult = @{
                                  @"A": @{@"author": @"A", @"url": @"A"},
-                                 @"B": @{@"author": @"B", @"url": @"B1"},
+                                 @"B": @{@"author": @"B", @"url": @"B"},
                                  @"E": @{@"author": @"E", @"url": @"E"},
-                                 @"F": @{@"author": @"F", @"url": @"F1"},
+                                 @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"}
                                  };
   NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);

@@ -11,14 +11,14 @@
 #import "DispatchQueue.h"
 @import AWSWrapper;
 
-@interface DSTest1 : XCTestCase
+@interface DSTests1 : XCTestCase
 
 @property (nonatomic) TestCase *testcase;
 @property (nonatomic) DispatchQueue *dispatchQueue;
 
 @end
 
-@implementation DSTest1
+@implementation DSTests1
 
 - (void)setUp {
   [super setUp];

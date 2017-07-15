@@ -1,376 +1,317 @@
 //
-//  DynamoSyncTests.m
+//  DSTest1.m
 //  AWSWrapper
 //
-//  Created by Stan Liu on 03/07/2017.
+//  Created by Stan Liu on 14/07/2017.
 //  Copyright © 2017 lyc2345. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
-@import Specta;
+#import "TestCase.h"
+#import "DispatchQueue.h"
 @import AWSWrapper;
 
-@interface DSTests2 : XCTestCase <DynamoSyncDelegate>
+static TestCase *testcase;
+static DispatchQueue *dispatchQueue;
 
-@property BookmarkManager *bookmarkManager;
-@property LoginManager *loginManager;
-@property DynamoSync *dsync;
-@property NSString *userId;
-@property NSString *tableName;
-@property NSDictionary *shadow;
-@property NSDictionary *initailRemoteData;
-@property NSDictionary *client;
-@property NSString *remoteHash;
-@property NSString *commitId;
-@property XCTestExpectation *expection;
-@property (nonatomic) dispatch_group_t requestGroup;
-@property (nonatomic) dispatch_group_t dispatchGroup;
+SpecBegin(DSTests2)
 
-@end
-
-@implementation DSTests2
-
-- (void)setUp {
-    [super setUp];
-
-  _tableName = @"Bookmark";
+describe(@"Tests2", ^{
   
-  _loginManager = [LoginManager shared];
-  _userId = _loginManager.awsIdentityId;
-  _bookmarkManager = [[BookmarkManager alloc] init];
-  _dsync = [[DynamoSync alloc] init];
-  _dsync.delegate = self;
-
-  self.dispatchGroup = dispatch_group_create();
-  self.requestGroup = dispatch_group_create();
-}
-
--(void)tearDown {
-  [self waitForGroup];
-  [super tearDown];
-}
-
--(void)dynamoPushSuccessWithType:(RecordType)type data:(NSDictionary *)data newCommitId:(NSString *)commitId {
-  
-  _shadow = data[@"_dicts"];
-  _commitId = commitId;
-}
-
--(void)dynamoPullFailureWithType:(RecordType)type error:(NSError *)error {
-  
-}
-
--(void)performBlock:(void(^)())block {
-  
-  block();
-}
-
-- (void)performGroupedBlock:(dispatch_block_t)block {
-  
-  dispatch_group_enter(self.dispatchGroup);
-  [self performBlock:^{
-    block();
-  }];
-}
-
--(void)testAll {
-  
-  [NSThread sleepForTimeInterval: 3.0];
-  [self performGroupedBlock:^{
-    [self dynamoSync];
-    [NSThread sleepForTimeInterval: 1.0];
-  }];
-  
-  [self performGroupedBlock:^{
-    [NSThread sleepForTimeInterval: 1.0];
-    [self s1p1];
-  }];
-  
-  [self performGroupedBlock:^{
-    [NSThread sleepForTimeInterval: 1.0];
-    [self s1p2];
-  }];
-  
-  [self performGroupedBlock:^{
-    [NSThread sleepForTimeInterval: 1.0];
-    [self s2p1];
-  }];
-  
-  [self performGroupedBlock:^{
-    [NSThread sleepForTimeInterval: 1.0];
-    [self s1p3];
-  }];
-  
-  [self performGroupedBlock:^{
-    [NSThread sleepForTimeInterval: 1.0];
-    [self finalLoadCheck];
-  }];
-}
-
-- (void)waitForGroup {
-  
-  __block BOOL didComplete = NO;
-  dispatch_group_notify(self.requestGroup, dispatch_get_main_queue(), ^{
-    didComplete = YES;
+  beforeAll(^{
+    
+    waitUntil(^(DoneCallback done) {
+      testcase = [TestCase new];
+      dispatchQueue = [DispatchQueue new];
+      done();
+    });
   });
-  while (! didComplete) {
-    NSTimeInterval const interval = 0.002;
-    if (! [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:interval]]) {
-      [NSThread sleepForTimeInterval:interval];
-    }
-  }
-}
-
--(void)dynamoSync {
   
-  self.expection = [self expectationWithDescription: @"Remote Initial"];
-  NSDictionary *initData = @{@"_dicts": @{
+  it(@"Test start", ^{
+    
+    __block NSDictionary *dataInitialShadow;
+    
+    waitUntil(^(DoneCallback done) {
+      
+      // First Initial Remote data.
+      [dispatchQueue performGroupedDelay: 2 block:^{
+        [testcase initial: @{
                              @"A": @{@"author": @"A", @"url": @"A"},
                              @"B": @{@"author": @"B", @"url": @"B"}
                              }
-                         };
-  _client = initData;
-  [_bookmarkManager forcePushWithType: RecordTypeBookmark record: _client userId: _userId completion:^(NSError *error, NSString *commitId, NSString *remoteHash) {
-    
-    XCTAssertNil(error);
-    XCTAssertNotNil(commitId);
-    XCTAssertNotNil(remoteHash);
-    _shadow = initData[@"_dicts"];
-    _commitId = commitId;
-    _remoteHash = remoteHash;
-    [self.expection fulfill];
-  }];
-  
-  [self waitForExpectationsWithTimeout: 5.0 handler:^(NSError * _Nullable error) {
-    if (error) {
-      XCTFail(@"expectation failed with error: %@", error);
-    }
-  }];
-}
-
--(void)s1p1 {
-
-  self.expection = [self expectationWithDescription: @"S1P1"];
-  NSDictionary *clientS1P1 = @{@"_commitId": _commitId,
-                           @"_remoteHash": _remoteHash,
-                           @"_dicts": @{
-                                   @"B": @{@"author": @"B", @"url": @"B1"},
-                                   @"D": @{@"author": @"D", @"url": @"D"},
-                                   @"E": @{@"author": @"E", @"url": @"E"}
-                               }
-                           };
-  NSDictionary *expectShadowS1P1 = @{
-                           @"A": @{@"author": @"A", @"url": @"A"},
-                           @"B": @{@"author": @"B", @"url": @"B"}
-                           };
-  
-  _client = clientS1P1;
-  NSDictionary *expectDiff = [DSWrapper diffWins: clientS1P1[@"_dicts"] loses: expectShadowS1P1];
-  XCTAssertTrue([expectShadowS1P1 isEqualToDictionary: _shadow]);
-  
-  [_dsync syncWithUserId: _userId tableName: _tableName dictionary: _client shadow: _shadow shouldReplace:^BOOL(id oldValue, id newValue) {
-    return YES;
-  } completion:^(NSDictionary *diff, NSError *error) {
-    
-    XCTAssertTrue([diff isEqualToDictionary: expectDiff]);
-    [self.expection fulfill];
-  }];
-
-  [self waitForExpectationsWithTimeout: 8.0 handler:^(NSError * _Nullable error) {
-    XCTAssertTrue([_shadow isEqualToDictionary: clientS1P1[@"_dicts"]]);
-    if (error) {
-      XCTFail(@"expectation failed with error: %@", error);
-    }
-  }];
-}
-
--(void)s1p2 {
-
-  self.expection = [self expectationWithDescription: @"S1P2"];
-  // commitId passes, remoteHash passed.
-  NSDictionary *clientS1P2 = @{@"_commitId": _commitId,
-                           @"_remoteHash": _remoteHash,
-                           @"_dicts": @{
-                                   @"B": @{@"author": @"B", @"url": @"B2"},
-                                   @"D": @{@"author": @"D", @"url": @"D1"},
-                                   @"F": @{@"author": @"F", @"url": @"F"}
-                               }
-                           };
-  NSDictionary *shadowS1P2 = @{
-                               @"B": @{@"author": @"B", @"url": @"B1"},
-                               @"D": @{@"author": @"D", @"url": @"D"},
-                               @"E": @{@"author": @"E", @"url": @"E"}
-                           };
-  /*
-  NSDictionary *remote = @{
-                           @"A": @{@"author": @"A", @"url": @"A"},
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
-                           @"D": @{@"author": @"D", @"url": @"D"},
-                           @"E": @{@"author": @"E", @"url": @"E"}
-                           };
-   */
-  
-  _client = clientS1P2;
-  XCTAssertTrue([shadowS1P2 isEqualToDictionary: _shadow]);
-  
-  [_dsync syncWithUserId: _userId tableName: _tableName dictionary: _client shadow: _shadow shouldReplace:^BOOL(id oldValue, id newValue) {
-    return YES;
-  } completion:^(NSDictionary *diff, NSError *error) {
-    
-    
-    NSDictionary *newClient = [DSWrapper mergeInto: clientS1P2[@"_dicts"] applyDiff: diff];
-    
-    NSDictionary *comparison = @{
-                                 @"B": @{@"author": @"B", @"url": @"B2"},
-                                 @"D": @{@"author": @"D", @"url": @"D1"},
+               exeHandler:^(NSString *commitId, NSString *remoteHash, NSDictionary *shadow, NSError *error) {
+                 
+                 expect(error).to.beNil;
+                 expect(commitId).notTo.beNil;
+                 expect(remoteHash).notTo.beNil;
+                 
+               } completion:^(NSDictionary *newShadow, NSError *error) {
+                 
+                 expect(error).to.beNil;
+                 newShadow = dataInitialShadow;
+               }];
+      }];
+      
+      // Second to verify thie Initial Data compares with shadow.
+      [dispatchQueue performGroupedDelay: 2 block:^{
+        [testcase pullToCheck: dataInitialShadow
+                   exeHandler:^(BOOL isSame) {
+                     
+                     // If here failed, says initial push to remote is failed.
+                     expect(isSame).to.beTruthy;
+                     
+                   } completion:^(NSError *error) {
+                     
+                     expect(error).to.beNil;
+                   }];
+      }];
+      
+      // Start Scenario 1, part 1.
+      [dispatchQueue performGroupedDelay: 2 block:^{
+        NSDictionary *expectShadow = @{
+                                       @"A": @{@"author": @"A", @"url": @"A"},
+                                       @"B": @{@"author": @"B", @"url": @"B"}
+                                       };
+        NSDictionary *client = @{
+                                 @"A": @{@"author": @"A", @"url": @"A"},
+                                 @"B": @{@"author": @"B", @"url": @"B"},
+                                 @"C": @{@"author": @"C", @"url": @"C"},
+                                 @"D": @{@"author": @"D", @"url": @"D"},
+                                 @"E": @{@"author": @"E", @"url": @"E"}
+                                 };
+        [testcase examineSpec: @"S1P1"
+                     commitId: nil
+                   remoteHash: nil
+                   clientDict: client
+                 expectShadow: nil
+               examineHandler:^(NSDictionary *shadow) {
+                 
+                 expect(shadow).to.equal(expectShadow);
+                 
+               } shouldReplace:^BOOL(id oldValue, id newValue) {
+                 
+                 return YES;
+                 
+               } exeHandler:^(NSDictionary *diff, NSError *error) {
+                 
+                 expect(error).to.beNil;
+                 
+               } completion:^(NSDictionary *newShadow, NSError *error) {
+                 
+                 NSDictionary *expectRemote = @{
+                                                @"A": @{@"author": @"A", @"url": @"A"},
+                                                @"B": @{@"author": @"B", @"url": @"B"},
+                                                @"C": @{@"author": @"C", @"url": @"C"},
+                                                @"D": @{@"author": @"D", @"url": @"D"},
+                                                @"E": @{@"author": @"E", @"url": @"E"}
+                                                };
+                 
+                 expect(error).to.beNil;
+                 expect(newShadow).to.equal(expectRemote);
+               }];
+      }];
+      
+      // Start Scenario 1, part 2.
+      [dispatchQueue performGroupedDelay: 2 block:^{
+        NSDictionary *expectShadow = @{
+                                       @"A": @{@"author": @"A", @"url": @"A"},
+                                       @"B": @{@"author": @"B", @"url": @"B"},
+                                       @"C": @{@"author": @"C", @"url": @"C"},
+                                       @"D": @{@"author": @"D", @"url": @"D"},
+                                       @"E": @{@"author": @"E", @"url": @"E"}
+                                       };
+        NSDictionary *client = @{
+                                 @"B": @{@"author": @"B", @"url": @"B"},
+                                 @"C": @{@"author": @"C", @"url": @"C"},
+                                 @"E": @{@"author": @"E", @"url": @"E"},
                                  @"F": @{@"author": @"F", @"url": @"F"}
                                  };
-    
-    XCTAssertTrue([newClient isEqualToDictionary: comparison]);
-    [self.expection fulfill];
-  }];
-  
-  [self waitForExpectationsWithTimeout: 8.0 handler:^(NSError * _Nullable error) {
-    XCTAssertTrue([_shadow isEqualToDictionary: clientS1P2[@"_dicts"]]);
-    if (error) {
-      XCTFail(@"expectation failed with error: %@", error);
-    }
-  }];
-}
-
--(void)s2p1 {
-  
-  self.expection = [self expectationWithDescription: @"S2P1"];
-  NSDictionary *clientS2P1 =@{
-                              @"_commitId": @"123213123123123",
-                              @"_remoteHash": _remoteHash,
-                              @"_dicts": @{
-                                  @"B": @{@"author": @"B", @"url": @"B3"},
-                                  @"D": @{@"author": @"D", @"url": @"D3"},
-                                  @"G": @{@"author": @"G", @"url": @"G"}
-                                  }
-                              };
-  NSDictionary *shadowS2P1 = @{
-                               @"B": @{@"author": @"B", @"url": @"B1"},
-                               @"D": @{@"author": @"D", @"url": @"D"},
-                               @"E": @{@"author": @"E", @"url": @"E"}
-                           };
-  /*
-  NSDictionary *remote = @{
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
-                           @"E": @{@"author": @"E", @"url": @"E"},
-                           @"F": @{@"author": @"F", @"url": @"F"}
-                           };
-   */
-  _client = clientS2P1;
-  _shadow = shadowS2P1;
-  XCTAssertTrue([shadowS2P1 isEqualToDictionary: _shadow]);
-  
-  [_dsync syncWithUserId: _userId tableName: _tableName dictionary: _client shadow: _shadow shouldReplace:^BOOL(id oldValue, id newValue) {
-    
-    return YES;
-  } completion:^(NSDictionary *diff, NSError *error) {
-    
-    [self.expection fulfill];
-  }];
-
-  [self waitForExpectationsWithTimeout: 8.0 handler:^(NSError * _Nullable error) {
-    NSDictionary *comparison = @{
-                                 @"B": @{@"author": @"B", @"url": @"B3"},
-                                 @"D": @{@"author": @"D", @"url": @"D3"},
-                                 @"F": @{@"author": @"F", @"url": @"F"},
+        [testcase examineSpec: @"S1P2"
+                     commitId: nil
+                   remoteHash: nil
+                   clientDict: client
+                 expectShadow: nil
+               examineHandler:^(NSDictionary *shadow) {
+                 
+                 expect(shadow).to.equal(expectShadow);
+                 
+               } shouldReplace:^BOOL(id oldValue, id newValue) {
+                 
+                 return YES;
+                 
+               } exeHandler:^(NSDictionary *diff, NSError *error) {
+                 
+                 expect(error).to.beNil;
+                 
+               } completion:^(NSDictionary *newShadow, NSError *error) {
+                 
+                 NSDictionary *expectRemote = @{
+                                                @"B": @{@"author": @"B", @"url": @"B"},
+                                                @"C": @{@"author": @"C", @"url": @"C"},
+                                                @"E": @{@"author": @"E", @"url": @"E"},
+                                                @"F": @{@"author": @"F", @"url": @"F"}
+                                                };
+                 expect(error).to.beNil;
+                 expect(newShadow).to.equal(expectRemote);
+               }];
+      }];
+      
+      // Start Scenario 2, part 1.
+      [dispatchQueue performGroupedDelay: 2 block:^{
+        NSDictionary *expectShadow = @{
+                                       @"A": @{@"author": @"A", @"url": @"A"},
+                                       @"B": @{@"author": @"B", @"url": @"B"},
+                                       @"C": @{@"author": @"C", @"url": @"C"},
+                                       @"D": @{@"author": @"D", @"url": @"D"},
+                                       @"E": @{@"author": @"E", @"url": @"E"}
+                                       };
+        NSDictionary *client = @{
+                                 @"B": @{@"author": @"B", @"url": @"B"},
+                                 @"C": @{@"author": @"C", @"url": @"C"},
+                                 @"D": @{@"author": @"D", @"url": @"D"},
+                                 @"E": @{@"author": @"E", @"url": @"E"},
                                  @"G": @{@"author": @"G", @"url": @"G"}
                                  };
-    
-    XCTAssertTrue([_shadow isEqualToDictionary: comparison]);
-    if (error) {
-      XCTFail(@"expectation failed with error: %@", error);
-    }
-  }];
-}
-
--(void)s1p3 {
-  
-  self.expection = [self expectationWithDescription: @"S1P3"];
-  // commitId passes, remoteHash passed.
-  NSDictionary *clientS1P3 = @{
-                               @"_commitId": @"12312321321ddd312321",
-                               @"_remoteHash": _remoteHash,
-                               @"_dicts": @{
-                                   @"A": @{@"author": @"A", @"url": @"A1"},
-                                   @"B": @{@"author": @"B", @"url": @"B1"},
-                                   @"D": @{@"author": @"D", @"url": @"D3"},
-                                   @"F": @{@"author": @"F", @"url": @"F"},
-                                   @"H": @{@"author": @"H", @"url": @"H"}
-                                   }
-                               };
-  NSDictionary *shadowS1P3 = @{
-                               @"B": @{@"author": @"B", @"url": @"B2"},
-                               @"D": @{@"author": @"D", @"url": @"D1"},
-                               @"F": @{@"author": @"F", @"url": @"F"}
-                           };
-  /*
-  NSDictionary *remote = @{
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
-                           @"E": @{@"author": @"E", @"url": @"E"},
-                           @"F": @{@"author": @"F", @"url": @"F"},
-                           @"G": @{@"author": @"G", @"url": @"G"}
-                           };
-   */
-  _client = clientS1P3;
-  _shadow = shadowS1P3;
-  NSDictionary *expect2Diff = [DSWrapper diffWins: _client[@"_dicts"] loses: _shadow];
-  
-  [_dsync syncWithUserId: _userId tableName: _tableName dictionary: _client shadow: _shadow shouldReplace:^BOOL(id oldValue, id newValue) {
-    
-    return YES;
-  } completion:^(NSDictionary *diff, NSError *error) {
-    [self.expection fulfill];
-  }];
-
-  [self waitForExpectationsWithTimeout: 15.0 handler:^(NSError * _Nullable error) {
-    NSDictionary *comparison = @{
-                                 @"A": @{@"author": @"A", @"url": @"A1"},
+        NSDictionary *actualRemote = @{
+                                       @"B": @{@"author": @"B", @"url": @"B"},
+                                       @"C": @{@"author": @"C", @"url": @"C"},
+                                       @"E": @{@"author": @"E", @"url": @"E"},
+                                       @"F": @{@"author": @"F", @"url": @"F"}
+                                       };
+        NSDictionary *diff_cilent_shadow = [DSWrapper diffWins: client loses: expectShadow];
+        NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: actualRemote loses: client];
+        NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+        newClient = [DSWrapper mergeInto: newClient
+                               applyDiff: diff_cilent_shadow
+                              primaryKey: @"comicName"
+                           shouldReplace:^BOOL(id oldValue, id newValue) {
+                             return YES;
+                           }];
+        NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: actualRemote];
+        
+        [testcase examineSpec: @"S2P1"
+                     commitId: @"123123gfdg213123gdgd2112312312312"
+                   remoteHash: nil
+                   clientDict: client
+                 expectShadow: expectShadow
+               examineHandler:^(NSDictionary *shadow) {
+                 
+                 expect(shadow).notTo.equal(expectShadow);
+                 
+               } shouldReplace:^BOOL(id oldValue, id newValue) {
+                 
+                 return YES;
+                 
+               } exeHandler:^(NSDictionary *diff, NSError *error) {
+                 
+                 expect(error).to.beNil;
+                 expect(diff).to.equal(need_to_apply_to_remote);
+                 
+               } completion:^(NSDictionary *newShadow, NSError *error) {
+                 
+                 NSDictionary *expectRemote = @{
+                                                @"B": @{@"author": @"B", @"url": @"B"},
+                                                @"C": @{@"author": @"C", @"url": @"C"},
+                                                @"E": @{@"author": @"E", @"url": @"E"},
+                                                @"F": @{@"author": @"F", @"url": @"F"},
+                                                @"G": @{@"author": @"G", @"url": @"G"}
+                                                };
+                 expect(error).to.beNil;
+                 expect(newShadow).to.equal(expectRemote);
+               }];
+      }];
+      
+      // Start Scenario 1, part 3.
+      [dispatchQueue performGroupedDelay: 2 block:^{
+        NSDictionary *expectShadow = @{
+                                       @"B": @{@"author": @"B", @"url": @"B"},
+                                       @"C": @{@"author": @"C", @"url": @"C"},
+                                       @"E": @{@"author": @"E", @"url": @"E"},
+                                       @"F": @{@"author": @"F", @"url": @"F"}
+                                       };
+        NSDictionary *client = @{
+                                 @"A": @{@"author": @"A", @"url": @"A"},
                                  @"B": @{@"author": @"B", @"url": @"B1"},
-                                 @"D": @{@"author": @"D", @"url": @"D3"},
-                                 @"F": @{@"author": @"F", @"url": @"F"},
-                                 @"G": @{@"author": @"G", @"url": @"G"},
-                                 @"H": @{@"author": @"H", @"url": @"H"}
+                                 @"E": @{@"author": @"E", @"url": @"E"},
+                                 @"F": @{@"author": @"F", @"url": @"F1"}
                                  };
-    XCTAssertTrue([_shadow isEqualToDictionary: comparison]);
-    if (error) {
-      XCTFail(@"expectation failed with error: %@", error);
-    }
-  }];
-}
-
--(void)finalLoadCheck {
-  
-  self.expection = [self expectationWithDescription: @"finalLoadCheck"];
-  
-  [_bookmarkManager pullType: RecordTypeBookmark user: _userId completion:^(NSDictionary *item, NSError *error) {
-    
-    NSDictionary *comparison = @{
-                                 @"A": @{@"author": @"A", @"url": @"A1"},
+        NSDictionary *actualRemote = @{
+                                       @"B": @{@"author": @"B", @"url": @"B"},
+                                       @"C": @{@"author": @"C", @"url": @"C"},
+                                       @"E": @{@"author": @"E", @"url": @"E"},
+                                       @"F": @{@"author": @"F", @"url": @"F"},
+                                       @"G": @{@"author": @"G", @"url": @"G"}
+                                       };
+        NSDictionary *diff_cilent_shadow = [DSWrapper diffWins: client loses: expectShadow];
+        NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: actualRemote loses: client];
+        NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+        newClient = [DSWrapper mergeInto: newClient
+                               applyDiff: diff_cilent_shadow
+                              primaryKey: @"comicName"
+                           shouldReplace:^BOOL(id oldValue, id newValue) {
+                             return YES;
+                           }];
+        NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: actualRemote];
+        
+        [testcase examineSpec: @"S1P3"
+                     commitId: @"1231435323213123gdfgdf2112312312312"
+                   remoteHash: nil
+                   clientDict: client
+                 expectShadow: expectShadow
+               examineHandler:^(NSDictionary *shadow) {
+                 
+                 expect(shadow).notTo.equal(expectShadow);
+                 
+               } shouldReplace:^BOOL(id oldValue, id newValue) {
+                 
+                 return YES;
+                 
+               } exeHandler:^(NSDictionary *diff, NSError *error) {
+                 
+                 expect(error).to.beNil;
+                 expect(diff).to.equal(need_to_apply_to_remote);
+                 
+               } completion:^(NSDictionary *newShadow, NSError *error) {
+                 
+                 NSDictionary *expectRemote = @{
+                                                @"A": @{@"author": @"A", @"url": @"A"},
+                                                @"B": @{@"author": @"B", @"url": @"B1"},
+                                                @"E": @{@"author": @"E", @"url": @"E"},
+                                                @"F": @{@"author": @"F", @"url": @"F1"},
+                                                @"G": @{@"author": @"G", @"url": @"G"}
+                                                };
+                 expect(error).to.beNil;
+                 expect(newShadow).to.equal(expectRemote);
+               }];
+      }];
+      
+      // Final check if remote data is the same with expectData.
+      [dispatchQueue performGroupedDelay: 2 block:^{
+        [testcase pullToCheck: @{
+                                 @"A": @{@"author": @"A", @"url": @"A"},
                                  @"B": @{@"author": @"B", @"url": @"B1"},
-                                 @"D": @{@"author": @"D", @"url": @"D3"},
-                                 @"F": @{@"author": @"F", @"url": @"F"},
-                                 @"G": @{@"author": @"G", @"url": @"G"},
-                                 @"H": @{@"author": @"H", @"url": @"H"}
-                                 };
-    XCTAssertTrue([item[@"_dicts"] isEqualToDictionary: comparison]);
+                                 @"E": @{@"author": @"E", @"url": @"E"},
+                                 @"F": @{@"author": @"F", @"url": @"F1"},
+                                 @"G": @{@"author": @"G", @"url": @"G"}
+                                 }
+                   exeHandler:^(BOOL isSame) {
+                     expect(isSame).to.beTruthy;
+                   } completion:^(NSError *error) {
+                     expect(error).to.beNil;
+                     expect(error).notTo.beNil;
+                     done();
+                   }];
+      }];
+    });
+  });
+  
+  afterAll(^{
     
-    [self.expection fulfill];
-  }];
+    [dispatchQueue waitForGroup];
+    dispatchQueue = nil;
+    testcase = nil;
+  });
+  
+});
 
-  [self waitForExpectationsWithTimeout: 5.0 handler:^(NSError * _Nullable error) {
-    if (error) {
-      XCTFail(@"expectation failed with error: %@", error);
-    }
-  }];
-}
-
-@end
+SpecEnd

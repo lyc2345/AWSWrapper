@@ -7,14 +7,14 @@
 //
 
 #import <XCTest/XCTest.h>
-@import AWSWrapper;
 #import "TestCase.h"
+#import "DispatchQueue.h"
+@import AWSWrapper;
 
 @interface DSTest1 : XCTestCase
 
 @property (nonatomic) TestCase *testcase;
-@property (nonatomic) dispatch_group_t requestGroup;
-@property (nonatomic) dispatch_group_t dispatchGroup;
+@property (nonatomic) DispatchQueue *dispatchQueue;
 
 @end
 
@@ -24,58 +24,22 @@
   [super setUp];
   
   _testcase = [TestCase new];
-  _dispatchGroup = dispatch_group_create();
-  _requestGroup = dispatch_group_create();
+  _dispatchQueue = [DispatchQueue new];
 }
 
 - (void)tearDown {
   
-  _dispatchGroup =  nil;
-  _requestGroup = nil;
-  
-  [self waitForGroup];
+  [_dispatchQueue waitForGroup];
+  _dispatchQueue = nil;
   [super tearDown];
-}
-
--(void)performBlock:(void(^)())block {
-  
-  block();
-}
-
-- (void)performGroupedBlock:(dispatch_block_t)block {
-  
-  dispatch_group_enter(self.dispatchGroup);
-  [self performBlock:^{
-    block();
-  }];
-}
-
-- (void)waitForGroup {
-  
-  __block BOOL didComplete = NO;
-  
-  if (!_requestGroup) {
-    _requestGroup = dispatch_group_create();
-  }
-  if (!_dispatchGroup) {
-    _dispatchGroup = dispatch_group_create();
-  }
-  
-  dispatch_group_notify(self.requestGroup, dispatch_get_main_queue(), ^{
-    didComplete = YES;
-  });
-  while (! didComplete) {
-    NSTimeInterval const interval = 0.002;
-    if (! [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:interval]]) {
-      [NSThread sleepForTimeInterval:interval];
-    }
-  }
 }
 
 - (void)testAll {
   
-  [NSThread sleepForTimeInterval: 3.0];
-  [self performGroupedBlock:^{
+  __block NSDictionary *dataInitialShadow;
+  
+  // First Initial Remote data.
+  [_dispatchQueue performGroupedDelay: 2 block:^{
     [_testcase initial: @{
                           @"A": @{@"author": @"A", @"url": @"A"},
                           @"B": @{@"author": @"B", @"url": @"B"}
@@ -86,18 +50,28 @@
               XCTAssertNotNil(commitId);
               XCTAssertNotNil(remoteHash);
               
-            } completion:^(NSError *error) {
+            } completion:^(NSDictionary *newShadow, NSError *error) {
               
-              if (error) {
-                XCTFail(@"expectation failed with error: %@", error);
-              }
-              
+              if (error) { XCTFail(@"expectation failed with error: %@", error); }
+              dataInitialShadow = newShadow;
             }];
-    [NSThread sleepForTimeInterval: 1.0];
   }];
   
-  [self performGroupedBlock:^{
-    [NSThread sleepForTimeInterval: 1.0];
+  // Second to verify thie Initial Data compares with shadow.
+  [_dispatchQueue performGroupedDelay: 2 block:^{
+    [_testcase pullToCheck: dataInitialShadow
+                exeHandler:^(BOOL isSame) {
+                  
+                  // If here failed, says initial push to remote is failed.
+                  XCTAssertTrue(isSame);
+                } completion:^(NSError *error) {
+                  
+                  if (error) { XCTFail(@"expectation failed with error: %@", error); }
+                }];
+  }];
+  
+  // Start Scenario 1, part 1.
+  [_dispatchQueue performGroupedDelay: 2 block:^{
     NSDictionary *expectShadow = @{
                                    @"A": @{@"author": @"A", @"url": @"A"},
                                    @"B": @{@"author": @"B", @"url": @"B"}
@@ -124,9 +98,7 @@
               
             } exeHandler:^(NSDictionary *diff, NSError *error) {
               
-              if (error) {
-                XCTFail(@"expectation failed with error: %@", error);
-              }
+              if (error) { XCTFail(@"expectation failed with error: %@", error); }
               
             } completion:^(NSDictionary *newShadow, NSError *error) {
               
@@ -139,14 +111,12 @@
                                              };
               XCTAssertTrue([newShadow isEqualToDictionary: expectRemote]);
               
-              if (error) {
-                XCTFail(@"expectation failed with error: %@", error);
-              }
+              if (error) { XCTFail(@"expectation failed with error: %@", error); }
             }];
   }];
   
-  [self performGroupedBlock:^{
-    [NSThread sleepForTimeInterval: 1.0];
+  // Start Scenario 1, part 2.
+  [_dispatchQueue performGroupedDelay: 2 block:^{
     NSDictionary *expectShadow = @{
                                    @"A": @{@"author": @"A", @"url": @"A"},
                                    @"B": @{@"author": @"B", @"url": @"B"},
@@ -175,9 +145,7 @@
               
             } exeHandler:^(NSDictionary *diff, NSError *error) {
               
-              if (error) {
-                XCTFail(@"expectation failed with error: %@", error);
-              }
+              if (error) { XCTFail(@"expectation failed with error: %@", error); }
               
             } completion:^(NSDictionary *newShadow, NSError *error) {
               
@@ -189,14 +157,12 @@
                                              };
               XCTAssertTrue([newShadow isEqualToDictionary: expectRemote]);
               
-              if (error) {
-                XCTFail(@"expectation failed with error: %@", error);
-              }
+              if (error) { XCTFail(@"expectation failed with error: %@", error); }
             }];
   }];
   
-  [self performGroupedBlock:^{
-    [NSThread sleepForTimeInterval: 1.0];
+  // Start Scenario 2, part 1.
+  [_dispatchQueue performGroupedDelay: 2 block:^{
     NSDictionary *expectShadow = @{
                                    @"A": @{@"author": @"A", @"url": @"A"},
                                    @"B": @{@"author": @"B", @"url": @"B"},
@@ -211,22 +177,22 @@
                              @"E": @{@"author": @"E", @"url": @"E"},
                              @"G": @{@"author": @"G", @"url": @"G"}
                              };
-    NSDictionary *expectRemote = @{
+    NSDictionary *actualRemote = @{
                                    @"B": @{@"author": @"B", @"url": @"B"},
                                    @"C": @{@"author": @"C", @"url": @"C"},
                                    @"E": @{@"author": @"E", @"url": @"E"},
                                    @"F": @{@"author": @"F", @"url": @"F"}
                                    };
     NSDictionary *diff_cilent_shadow = [DSWrapper diffWins: client loses: expectShadow];
-    NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: expectRemote loses: client];
+    NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: actualRemote loses: client];
     NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
     newClient = [DSWrapper mergeInto: newClient
                            applyDiff: diff_cilent_shadow
                           primaryKey: @"comicName"
                        shouldReplace:^BOOL(id oldValue, id newValue) {
-      return YES;
-    }];
-    NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: expectRemote];
+                         return YES;
+                       }];
+    NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: actualRemote];
     
     [_testcase examineSpec: @"S2P1"
                   commitId: @"123123gfdg213123gdgd2112312312312"
@@ -243,11 +209,8 @@
               
             } exeHandler:^(NSDictionary *diff, NSError *error) {
               
+              if (error) { XCTFail(@"expectation failed with error: %@", error); }
               XCTAssertTrue([diff isEqualToDictionary: need_to_apply_to_remote]);
-              
-              if (error) {
-                XCTFail(@"expectation failed with error: %@", error);
-              }
               
             } completion:^(NSDictionary *newShadow, NSError *error) {
               
@@ -260,14 +223,12 @@
                                              };
               XCTAssertTrue([newShadow isEqualToDictionary: expectRemote]);
               
-              if (error) {
-                XCTFail(@"expectation failed with error: %@", error);
-              }
+              if (error) { XCTFail(@"expectation failed with error: %@", error); }
             }];
   }];
   
-  [self performGroupedBlock:^{
-    [NSThread sleepForTimeInterval: 1.0];
+  // Start Scenario 1, part 3.
+  [_dispatchQueue performGroupedDelay: 2 block:^{
     NSDictionary *expectShadow = @{
                                    @"B": @{@"author": @"B", @"url": @"B"},
                                    @"C": @{@"author": @"C", @"url": @"C"},
@@ -280,6 +241,24 @@
                              @"E": @{@"author": @"E", @"url": @"E"},
                              @"F": @{@"author": @"F", @"url": @"F1"}
                              };
+    NSDictionary *actualRemote = @{
+                                   @"B": @{@"author": @"B", @"url": @"B"},
+                                   @"C": @{@"author": @"C", @"url": @"C"},
+                                   @"E": @{@"author": @"E", @"url": @"E"},
+                                   @"F": @{@"author": @"F", @"url": @"F"},
+                                   @"G": @{@"author": @"G", @"url": @"G"}
+                                   };
+    NSDictionary *diff_cilent_shadow = [DSWrapper diffWins: client loses: expectShadow];
+    NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: actualRemote loses: client];
+    NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+    newClient = [DSWrapper mergeInto: newClient
+                           applyDiff: diff_cilent_shadow
+                          primaryKey: @"comicName"
+                       shouldReplace:^BOOL(id oldValue, id newValue) {
+                         return YES;
+                       }];
+    NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: actualRemote];
+    
     [_testcase examineSpec: @"S1P3"
                   commitId: @"1231435323213123gdfgdf2112312312312"
                 remoteHash: nil
@@ -295,9 +274,8 @@
               
             } exeHandler:^(NSDictionary *diff, NSError *error) {
               
-              if (error) {
-                XCTFail(@"expectation failed with error: %@", error);
-              }
+              if (error) { XCTFail(@"expectation failed with error: %@", error); }
+              XCTAssertTrue([diff isEqualToDictionary: need_to_apply_to_remote]);
               
             } completion:^(NSDictionary *newShadow, NSError *error) {
               
@@ -310,30 +288,26 @@
                                              };
               XCTAssertTrue([newShadow isEqualToDictionary: expectRemote]);
               
-              if (error) {
-                XCTFail(@"expectation failed with error: %@", error);
-              }
+              if (error) { XCTFail(@"expectation failed with error: %@", error); }
             }];
   }];
   
-  [self performGroupedBlock:^{
-    [NSThread sleepForTimeInterval: 1.0];
-    [_testcase finalCheck: @{
-                             @"A": @{@"author": @"A", @"url": @"A"},
-                             @"B": @{@"author": @"B", @"url": @"B1"},
-                             @"E": @{@"author": @"E", @"url": @"E"},
-                             @"F": @{@"author": @"F", @"url": @"F1"},
-                             @"G": @{@"author": @"G", @"url": @"G"}
-                             }
-               exeHandler:^(BOOL isSame) {
-                 
-                 XCTAssertTrue(isSame);
-               } completion:^(NSError *error) {
-                 
-                 if (error) {
-                   XCTFail(@"expectation failed with error: %@", error);
-                 }
-               }];
+  // Final check if remote data is the same with expectData.
+  [_dispatchQueue performGroupedDelay: 2 block:^{
+    [_testcase pullToCheck: @{
+                              @"A": @{@"author": @"A", @"url": @"A"},
+                              @"B": @{@"author": @"B", @"url": @"B1"},
+                              @"E": @{@"author": @"E", @"url": @"E"},
+                              @"F": @{@"author": @"F", @"url": @"F1"},
+                              @"G": @{@"author": @"G", @"url": @"G"}
+                              }
+                exeHandler:^(BOOL isSame) {
+                  
+                  XCTAssertTrue(isSame);
+                } completion:^(NSError *error) {
+                  
+                  if (error) { XCTFail(@"expectation failed with error: %@", error); }
+                }];
   }];
 }
 

@@ -13,7 +13,7 @@
 
 -(void)initial:(NSDictionary *)dict
     exeHandler:(void(^)(NSString *commitId, NSString *remoteHash, NSDictionary *shadow, NSError *error))exeHandler
-    completion:(void(^)(NSError *error))completion;
+    completion:(void(^)(NSDictionary *newShadow, NSError *error))completion;
 
 -(void)examineSpec:(NSString *)spec
           commitId:(NSString *)commitId
@@ -26,7 +26,7 @@
         completion:(void(^)(NSDictionary *newShadow, NSError *error))completion;
 
 
--(void)finalCheck:(NSDictionary *)expectRemote
+-(void)pullToCheck:(NSDictionary *)expectRemote
        exeHandler:(void(^)(BOOL isSame))exeHandler
        completion:(void(^)(NSError *error))completion;
 

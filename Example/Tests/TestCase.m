@@ -64,7 +64,7 @@
 
 -(void)initial:(NSDictionary *)dict
     exeHandler:(void(^)(NSString *commitId, NSString *remoteHash, NSDictionary *shadow, NSError *error))exeHandler
-    completion:(void(^)(NSError *error))completion {
+    completion:(void(^)(NSDictionary *newShadow, NSError *error))completion {
   
   self.expection = [self expectationWithDescription: @"Remote Initial"];
   
@@ -83,7 +83,7 @@
   
   [self waitForExpectationsWithTimeout: 5.0 handler:^(NSError * _Nullable error) {
     
-    completion(error);
+    completion(_shadow, error);
   }];
 }
 
@@ -122,9 +122,9 @@
   }];
 }
 
--(void)finalCheck:(NSDictionary *)expectRemote
-       exeHandler:(void(^)(BOOL isSame))exeHandler
-       completion:(void(^)(NSError *error))completion {
+-(void)pullToCheck:(NSDictionary *)expectRemote
+        exeHandler:(void(^)(BOOL isSame))exeHandler
+        completion:(void(^)(NSError *error))completion {
   
   self.expection = [self expectationWithDescription: @"finalLoadCheck"];
   

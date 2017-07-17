@@ -92,6 +92,14 @@
 									 shadow: [DSWrapper arrayFromDict: [OfflineDB shadowIsBookmark: isBookmark]]];
 }
 
++(NSDictionary *)diffWins:(NSDictionary *)wins loses:(NSDictionary *)loses primaryKey:(NSString *)key {
+  
+  return [DS diffWins: [DSWrapper arrayFromDict: wins]
+                loses: [DSWrapper arrayFromDict: loses]
+           primaryKey: key];
+}
+
+
 +(NSDictionary *)diffWins:(NSDictionary *)wins loses:(NSDictionary *)loses {
 
 	return [DS diffWins: [DSWrapper arrayFromDict: wins]

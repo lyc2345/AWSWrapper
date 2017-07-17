@@ -26,6 +26,7 @@
 
 
 +(NSDictionary *)diffWins:(NSDictionary *)wins loses:(NSDictionary *)loses;
++(NSDictionary *)diffWins:(NSDictionary *)wins loses:(NSDictionary *)loses primaryKey:(NSString *)key;
 
 +(NSDictionary *)mergeInto:(NSDictionary *)into applyDiff:(NSDictionary *)diff;
 

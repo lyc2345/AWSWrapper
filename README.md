@@ -27,9 +27,13 @@ pod "AWSWrapper", :git => 'https://github.com/lyc2345/AWSWrapper.git'
 
 1. Sign up for AWSMobileHub Service
 2. create Bookmark and RecentVisit "Amazon DynamoDb Tables" 
+![Amazon DynamoDb Tables](https://github.com/lyc2345/AWSWrapper/blob/master/screenshot/Screen%20Shot%202017-07-23%20at%2017.21.30.png)
 3. create "Amazon Cognito Idnentity Pools", User sign-in only use Email and Password. 
-4. set up .plist according to Integrate > iOS Obj-C > Getting Started > OPTION 2
-   OR You can see the plist in DEMO project.
+![Cognito Idnentity Pools](https://github.com/lyc2345/AWSWrapper/blob/master/screenshot/Screen%20Shot%202017-07-23%20at%2017.21.49.png)
+4. set up .plist according to 
+   1. Integrate > iOS Obj-C > Getting Started > OPTION 2
+   2. OR You can see the plist in DEMO project.
+![Integrate](https://github.com/lyc2345/AWSWrapper/blob/master/screenshot/Screen%20Shot%202017-07-23%20at%2017.19.52.png)
 
 ### Documetation
 **Login**

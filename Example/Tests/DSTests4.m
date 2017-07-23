@@ -238,7 +238,8 @@ describe(@"Tests4", ^{
                  
                  NSDictionary *expectRemote = @{
                                                 @"A": @{@"author": @"A", @"url": @"A"},
-                                                @"B": @{@"author": @"B", @"url": @"B1"},
+                                                @"B": @{@"author": @"B", @"url": @"B2"},
+                                                @"C": @{@"author": @"C", @"url": @"C1"},
                                                 @"D": @{@"author": @"D", @"url": @"D"},
                                                 @"F": @{@"author": @"F", @"url": @"F"},
                                                 @"G": @{@"author": @"G", @"url": @"G"}
@@ -247,6 +248,7 @@ describe(@"Tests4", ^{
                  expect(newShadow).to.equal(expectRemote);
                }];
       }];
+      
       
       // Device B, B4, R4
       [dispatchQueue performGroupedDelay: 2 block:^{
@@ -264,7 +266,8 @@ describe(@"Tests4", ^{
                                  };
         NSDictionary *actualRemote = @{
                                        @"A": @{@"author": @"A", @"url": @"A"},
-                                       @"B": @{@"author": @"B", @"url": @"B1"},
+                                       @"B": @{@"author": @"B", @"url": @"B2"},
+                                       @"C": @{@"author": @"C", @"url": @"C1"},
                                        @"D": @{@"author": @"D", @"url": @"D"},
                                        @"F": @{@"author": @"F", @"url": @"F"},
                                        @"G": @{@"author": @"G", @"url": @"G"}
@@ -281,13 +284,13 @@ describe(@"Tests4", ^{
         NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: actualRemote];
         
         [testcase examineSpec: @"Device B, B4, R4"
-                     commitId: nil
+                     commitId: @"23-r032f2f0-2f"
                    remoteHash: nil
                    clientDict: client
-                 expectShadow: nil
+                 expectShadow: expectShadow
                examineHandler:^(NSDictionary *shadow) {
                  
-                 expect(shadow).to.equal(expectShadow);
+                 expect(shadow).notTo.equal(expectShadow);
                  
                } shouldReplace:^BOOL(id oldValue, id newValue) {
                  
@@ -296,13 +299,14 @@ describe(@"Tests4", ^{
                } exeHandler:^(NSDictionary *diff, NSError *error) {
                  
                  expect(error).to.beNil;
-                 expect(diff).to.equal(need_to_apply_to_remote);
+                 expect(diff).to.equal(nil);
                  
                } completion:^(NSDictionary *newShadow, NSError *error) {
                  
                  NSDictionary *expectRemote = @{
                                                 @"A": @{@"author": @"A", @"url": @"A"},
-                                                @"B": @{@"author": @"B", @"url": @"B1"},
+                                                @"B": @{@"author": @"B", @"url": @"B2"},
+                                                @"C": @{@"author": @"C", @"url": @"C1"},
                                                 @"D": @{@"author": @"D", @"url": @"D"},
                                                 @"F": @{@"author": @"F", @"url": @"F"},
                                                 @"G": @{@"author": @"G", @"url": @"G"}
@@ -316,21 +320,24 @@ describe(@"Tests4", ^{
       [dispatchQueue performGroupedDelay: 2 block:^{
         NSDictionary *expectShadow = @{
                                        @"A": @{@"author": @"A", @"url": @"A"},
-                                       @"B": @{@"author": @"B", @"url": @"B1"},
+                                       @"B": @{@"author": @"B", @"url": @"B2"},
+                                       @"C": @{@"author": @"C", @"url": @"C1"},
                                        @"D": @{@"author": @"D", @"url": @"D"},
                                        @"F": @{@"author": @"F", @"url": @"F"},
                                        @"G": @{@"author": @"G", @"url": @"G"}
                                        };
         NSDictionary *client = @{
                                  @"A": @{@"author": @"A", @"url": @"A"},
-                                 @"B": @{@"author": @"B", @"url": @"B1"},
+                                 @"B": @{@"author": @"B", @"url": @"B2"},
+                                 @"C": @{@"author": @"C", @"url": @"C1"},
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"},
                                  @"H": @{@"author": @"H", @"url": @"H"}
                                  };
         NSDictionary *actualRemote = @{
                                        @"A": @{@"author": @"A", @"url": @"A"},
-                                       @"B": @{@"author": @"B", @"url": @"B1"},
+                                       @"B": @{@"author": @"B", @"url": @"B2"},
+                                       @"C": @{@"author": @"C", @"url": @"C1"},
                                        @"D": @{@"author": @"D", @"url": @"D"},
                                        @"F": @{@"author": @"F", @"url": @"F"},
                                        @"G": @{@"author": @"G", @"url": @"G"}
@@ -368,7 +375,8 @@ describe(@"Tests4", ^{
                  
                  NSDictionary *expectRemote = @{
                                                 @"A": @{@"author": @"A", @"url": @"A"},
-                                                @"B": @{@"author": @"B", @"url": @"B1"},
+                                                @"B": @{@"author": @"B", @"url": @"B2"},
+                                                @"C": @{@"author": @"C", @"url": @"C1"},
                                                 @"F": @{@"author": @"F", @"url": @"F"},
                                                 @"G": @{@"author": @"G", @"url": @"G"},
                                                 @"H": @{@"author": @"H", @"url": @"H"}
@@ -382,14 +390,16 @@ describe(@"Tests4", ^{
       [dispatchQueue performGroupedDelay: 2 block:^{
         NSDictionary *expectShadow = @{
                                        @"A": @{@"author": @"A", @"url": @"A"},
-                                       @"B": @{@"author": @"B", @"url": @"B1"},
+                                       @"B": @{@"author": @"B", @"url": @"B2"},
+                                       @"C": @{@"author": @"C", @"url": @"C1"},
                                        @"D": @{@"author": @"D", @"url": @"D"},
                                        @"F": @{@"author": @"F", @"url": @"F"},
                                        @"G": @{@"author": @"G", @"url": @"G"}
                                        };
         NSDictionary *client = @{
                                  @"A": @{@"author": @"A", @"url": @"A"},
-                                 @"B": @{@"author": @"B", @"url": @"B1"},
+                                 @"B": @{@"author": @"B", @"url": @"B3"},
+                                 @"C": @{@"author": @"C", @"url": @"C1"},
                                  @"D": @{@"author": @"D", @"url": @"D"},
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"},
@@ -397,7 +407,8 @@ describe(@"Tests4", ^{
                                  };
         NSDictionary *actualRemote = @{
                                        @"A": @{@"author": @"A", @"url": @"A"},
-                                       @"B": @{@"author": @"B", @"url": @"B1"},
+                                       @"B": @{@"author": @"B", @"url": @"B2"},
+                                       @"C": @{@"author": @"C", @"url": @"C1"},
                                        @"F": @{@"author": @"F", @"url": @"F"},
                                        @"G": @{@"author": @"G", @"url": @"G"},
                                        @"H": @{@"author": @"H", @"url": @"H"}
@@ -414,10 +425,10 @@ describe(@"Tests4", ^{
         NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: actualRemote];
         
         [testcase examineSpec: @"Device B, B5, R6"
-                     commitId: nil
+                     commitId: @"3f30232v23=2v09v223f"
                    remoteHash: nil
                    clientDict: client
-                 expectShadow: nil
+                 expectShadow: expectShadow
                examineHandler:^(NSDictionary *shadow) {
                  
                  expect(shadow).notTo.equal(expectShadow);
@@ -434,8 +445,9 @@ describe(@"Tests4", ^{
                } completion:^(NSDictionary *newShadow, NSError *error) {
                  
                  NSDictionary *expectRemote = @{
-                                                @"A": @{@"author": @"A", @"url": @"A1"},
+                                                @"A": @{@"author": @"A", @"url": @"A"},
                                                 @"B": @{@"author": @"B", @"url": @"B3"},
+                                                @"C": @{@"author": @"C", @"url": @"C1"},
                                                 @"F": @{@"author": @"F", @"url": @"F"},
                                                 @"G": @{@"author": @"G", @"url": @"G"},
                                                 @"H": @{@"author": @"H", @"url": @"H"},
@@ -449,13 +461,20 @@ describe(@"Tests4", ^{
       // Final check if remote data is the same with expectData.
       [dispatchQueue performGroupedDelay: 2 block:^{
         [testcase pullToCheck: @{
+//                                 @"A": @{@"author": @"A", @"url": @"A"},
+//                                 @"B": @{@"author": @"B", @"url": @"B1"},
+//                                 @"C": @{@"author": @"C", @"url": @"C1"},
+//                                 @"D": @{@"author": @"D", @"url": @"D"},
+//                                 @"E": @{@"author": @"E", @"url": @"E"},
+//                                 @"F": @{@"author": @"F", @"url": @"F"},
+//                                 @"G": @{@"author": @"G", @"url": @"G1"}
                                  @"A": @{@"author": @"A", @"url": @"A"},
-                                 @"B": @{@"author": @"B", @"url": @"B1"},
+                                 @"B": @{@"author": @"B", @"url": @"B3"},
                                  @"C": @{@"author": @"C", @"url": @"C1"},
-                                 @"D": @{@"author": @"D", @"url": @"D"},
-                                 @"E": @{@"author": @"E", @"url": @"E"},
                                  @"F": @{@"author": @"F", @"url": @"F"},
-                                 @"G": @{@"author": @"G", @"url": @"G1"}
+                                 @"G": @{@"author": @"G", @"url": @"G"},
+                                 @"H": @{@"author": @"H", @"url": @"H"},
+                                 @"K": @{@"author": @"K", @"url": @"K"}
                                  }
                    exeHandler:^(BOOL isSame) {
                      expect(isSame).to.beTruthy;

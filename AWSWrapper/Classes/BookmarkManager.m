@@ -347,9 +347,8 @@
             
 						NSLog(@"starting diffmerge...");
 						NSLog(@"start 4-1: diffmerge");
-						NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: cloud[@"_dicts"] loses: local[@"_dicts"]];
-            NSDictionary *newClientDicts = [DSWrapper mergeInto: local[@"_dicts"] applyDiff:need_to_apply_to_client];
-            
+            // MARK: conflict use remote directly.
+            NSDictionary *newClientDicts = cloud[@"_dicts"];
             NSLog(@"done 4-1");
             NSLog(@"start 5");
             

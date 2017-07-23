@@ -37,8 +37,7 @@ describe(@"Device A, A2, R2", ^{
                            };
   
   NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
-  __block NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+  __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
     newClient = [DSWrapper mergeInto: newClient
@@ -84,8 +83,7 @@ describe(@"DeviceB, B1, R2", ^{
                            };
   
   NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
-  __block NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+  __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
     newClient = [DSWrapper mergeInto: newClient
@@ -138,8 +136,7 @@ describe(@"Device B, B2, R3", ^{
                            };
   
   NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
-  __block NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+  __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
     newClient = [DSWrapper mergeInto: newClient
@@ -172,7 +169,7 @@ describe(@"Device B, B2, R3", ^{
   });
 });
 
-describe(@"Device A, A2, R3", ^{
+describe(@"Device A, A2, R4", ^{
   
   // commitId passes, remoteHash passed.
   NSDictionary *client = @{
@@ -190,12 +187,11 @@ describe(@"Device A, A2, R3", ^{
                            @"A": @{@"author": @"A", @"url": @"A"},
                            @"B": @{@"author": @"B", @"url": @"B2"},
                            @"C": @{@"author": @"C", @"url": @"C1"},
-                           @"D": @{@"author": @"D", @"url": @"D"},
+                           @"D": @{@"author": @"D", @"url": @"D"}
                            };
   
   NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow primaryKey: @"comicName"];
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client primaryKey: @"comicName"];
-  __block NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+  __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
     newClient = [DSWrapper mergeInto: newClient
@@ -214,6 +210,7 @@ describe(@"Device A, A2, R3", ^{
   NSDictionary *expectResult = @{
                                  @"A": @{@"author": @"A", @"url": @"A"},
                                  @"B": @{@"author": @"B", @"url": @"B2"},
+                                 @"C": @{@"author": @"C", @"url": @"C1"},
                                  @"D": @{@"author": @"D", @"url": @"D"},
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"}
@@ -234,29 +231,31 @@ describe(@"Device A, A4, R5", ^{
   // commitId passes, remoteHash passed.
   NSDictionary *client = @{
                            @"A": @{@"author": @"A", @"url": @"A"},
-                           @"B": @{@"author": @"B", @"url": @"B1"},
+                           @"B": @{@"author": @"B", @"url": @"B2"},
+                           @"C": @{@"author": @"C", @"url": @"C1"},
                            @"F": @{@"author": @"F", @"url": @"F"},
                            @"G": @{@"author": @"G", @"url": @"G"},
                            @"H": @{@"author": @"H", @"url": @"H"}
                            };
   NSDictionary *shadow = @{
                            @"A": @{@"author": @"A", @"url": @"A"},
-                           @"B": @{@"author": @"B", @"url": @"B1"},
+                           @"B": @{@"author": @"B", @"url": @"B2"},
+                           @"C": @{@"author": @"C", @"url": @"C1"},
                            @"D": @{@"author": @"D", @"url": @"D"},
                            @"F": @{@"author": @"F", @"url": @"F"},
                            @"G": @{@"author": @"G", @"url": @"G"}
                            };
   NSDictionary *remote = @{
                            @"A": @{@"author": @"A", @"url": @"A"},
-                           @"B": @{@"author": @"B", @"url": @"B1"},
+                           @"B": @{@"author": @"B", @"url": @"B2"},
+                           @"C": @{@"author": @"C", @"url": @"C1"},
                            @"D": @{@"author": @"D", @"url": @"D"},
                            @"F": @{@"author": @"F", @"url": @"F"},
                            @"G": @{@"author": @"G", @"url": @"G"}
                            };
   
   NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
-  __block NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+  __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
     newClient = [DSWrapper mergeInto: newClient
@@ -274,7 +273,8 @@ describe(@"Device A, A4, R5", ^{
   
   NSDictionary *expectResult = @{
                                  @"A": @{@"author": @"A", @"url": @"A"},
-                                 @"B": @{@"author": @"B", @"url": @"B1"},
+                                 @"B": @{@"author": @"B", @"url": @"B2"},
+                                 @"C": @{@"author": @"C", @"url": @"C1"},
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"},
                                  @"H": @{@"author": @"H", @"url": @"H"}
@@ -290,7 +290,7 @@ describe(@"Device A, A4, R5", ^{
   });
 });
 
-describe(@"Device B, B4, R5", ^{
+describe(@"Device B, B4, R4", ^{
   
   // commitId passes, remoteHash passed.
   NSDictionary *client = @{
@@ -307,15 +307,15 @@ describe(@"Device B, B4, R5", ^{
                            };
   NSDictionary *remote = @{
                            @"A": @{@"author": @"A", @"url": @"A"},
-                           @"B": @{@"author": @"B", @"url": @"B1"},
+                           @"B": @{@"author": @"B", @"url": @"B2"},
+                           @"C": @{@"author": @"C", @"url": @"C1"},
                            @"D": @{@"author": @"D", @"url": @"D"},
                            @"F": @{@"author": @"F", @"url": @"F"},
                            @"G": @{@"author": @"G", @"url": @"G"}
                            };
   
   NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
-  __block NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+  __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
     newClient = [DSWrapper mergeInto: newClient
@@ -333,7 +333,8 @@ describe(@"Device B, B4, R5", ^{
   
   NSDictionary *expectResult = @{
                                  @"A": @{@"author": @"A", @"url": @"A"},
-                                 @"B": @{@"author": @"B", @"url": @"B1"},
+                                 @"B": @{@"author": @"B", @"url": @"B2"},
+                                 @"C": @{@"author": @"C", @"url": @"C1"},
                                  @"D": @{@"author": @"D", @"url": @"D"},
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"}
@@ -349,12 +350,13 @@ describe(@"Device B, B4, R5", ^{
   });
 });
 
-describe(@"Device B, B4, R5", ^{
+describe(@"Device B, B4, R6", ^{
   
   // commitId passes, remoteHash passed.
   NSDictionary *client = @{
                            @"A": @{@"author": @"A", @"url": @"A"},
                            @"B": @{@"author": @"B", @"url": @"B3"},
+                           @"C": @{@"author": @"C", @"url": @"C1"},
                            @"D": @{@"author": @"D", @"url": @"D"},
                            @"F": @{@"author": @"F", @"url": @"F"},
                            @"G": @{@"author": @"G", @"url": @"G"},
@@ -362,22 +364,23 @@ describe(@"Device B, B4, R5", ^{
                            };
   NSDictionary *shadow = @{
                            @"A": @{@"author": @"A", @"url": @"A"},
-                           @"B": @{@"author": @"B", @"url": @"B1"},
+                           @"B": @{@"author": @"B", @"url": @"B2"},
+                           @"C": @{@"author": @"C", @"url": @"C1"},
                            @"D": @{@"author": @"D", @"url": @"D"},
                            @"F": @{@"author": @"F", @"url": @"F"},
                            @"G": @{@"author": @"G", @"url": @"G"}
                            };
   NSDictionary *remote = @{
                            @"A": @{@"author": @"A", @"url": @"A"},
-                           @"B": @{@"author": @"B", @"url": @"B1"},
+                           @"B": @{@"author": @"B", @"url": @"B2"},
+                           @"C": @{@"author": @"C", @"url": @"C1"},
                            @"F": @{@"author": @"F", @"url": @"F"},
                            @"G": @{@"author": @"G", @"url": @"G"},
                            @"H": @{@"author": @"H", @"url": @"H"}
                            };
   
   NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
-  __block NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+  __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
     newClient = [DSWrapper mergeInto: newClient
@@ -396,6 +399,7 @@ describe(@"Device B, B4, R5", ^{
   NSDictionary *expectResult = @{
                                  @"A": @{@"author": @"A", @"url": @"A"},
                                  @"B": @{@"author": @"B", @"url": @"B3"},
+                                 @"C": @{@"author": @"C", @"url": @"C1"},
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"},
                                  @"H": @{@"author": @"H", @"url": @"H"},

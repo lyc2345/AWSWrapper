@@ -37,8 +37,7 @@ describe(@"Test S1P1", ^{
                            };
   
   NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
-  __block NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+  __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
     newClient = [DSWrapper mergeInto: newClient
@@ -97,8 +96,7 @@ describe(@"Test S1P2", ^{
                            };
   
   NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
-  __block NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+  __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
     newClient = [DSWrapper mergeInto: newClient
@@ -156,8 +154,7 @@ describe(@"Test S2P1", ^{
                            };
   
   NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
-  __block NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+  __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
     newClient = [DSWrapper mergeInto: newClient
@@ -215,8 +212,7 @@ describe(@"Test S1P3", ^{
                            };
   
   NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
-  __block NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+  __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
     newClient = [DSWrapper mergeInto: newClient

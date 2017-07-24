@@ -15,6 +15,13 @@
 
 @interface AWSMobileClient : NSObject
 
+@property NSString *AWSCognitoUserPoolId;
+@property NSString *AWSCognitoUserPoolClientId;
+@property NSString *AWSCognitoUserPoolClientSecret;
+@property NSInteger AWSCognitoUserPoolRegion;
+@property NSString *CognitoPoolID;
+
+
 /**
  * Retrieves a shared instance of this class.
  *

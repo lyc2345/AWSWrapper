@@ -11,7 +11,6 @@
 #endif
 
 #import "Alert.h"
-#import "AWSConfiguration.h"
 #import "AWSMobileClient.h"
 #import "Bookmark.h"
 #import "BookmarkManager.h"

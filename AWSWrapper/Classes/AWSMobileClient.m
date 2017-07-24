@@ -11,7 +11,6 @@
 //
 //
 #import "AWSMobileClient.h"
-#import "AWSConfiguration.h"
 @import AWSMobileHubHelper;
 
 @interface AWSMobileClient ()
@@ -94,10 +93,10 @@
 
 - (void)setupUserPool {
     // register your user pool configuration
-    [AWSCognitoUserPoolsSignInProvider setupUserPoolWithId:AWSCognitoUserPoolId
-                        cognitoIdentityUserPoolAppClientId:AWSCognitoUserPoolClientId
-                    cognitoIdentityUserPoolAppClientSecret:AWSCognitoUserPoolClientSecret
-                                                    region:AWSCognitoUserPoolRegion
+    [AWSCognitoUserPoolsSignInProvider setupUserPoolWithId: _AWSCognitoUserPoolId
+                        cognitoIdentityUserPoolAppClientId: _AWSCognitoUserPoolClientId
+                    cognitoIdentityUserPoolAppClientSecret: _AWSCognitoUserPoolClientSecret
+                                                    region: _AWSCognitoUserPoolRegion
      ];
     
     [[AWSSignInProviderFactory sharedInstance] registerAWSSignInProvider:[AWSCognitoUserPoolsSignInProvider sharedInstance]
@@ -108,9 +107,7 @@
 
 -(void)setupCredentialProvider {
 	
-	NSString *CognitoPoolID = @"us-east-1:7d5a9cc2-ed5d-4ed1-ac26-14852b3324cb";
-	
-	AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType: AWSRegionUSEast1 identityPoolId: CognitoPoolID];
+	AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType: AWSRegionUSEast1 identityPoolId: self.CognitoPoolID];
 	
 	AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion: AWSRegionUSEast1 credentialsProvider: credentialsProvider];
 	

@@ -35,6 +35,18 @@ pod "AWSWrapper", :git => 'https://github.com/lyc2345/AWSWrapper.git'
    2. OR You can see the plist in DEMO project.
 ![Integrate](https://github.com/lyc2345/AWSWrapper/blob/master/screenshot/Screen%20Shot%202017-07-23%20at%2017.19.52.png)
 
+```objective-c
+
+// Example
+AWSMobileClient *mobileClient = [AWSMobileClient sharedInstance];
+mobileClient.AWSCognitoUserPoolId = @"";
+mobileClient.AWSCognitoUserPoolClientId = @"";
+mobileClient.AWSCognitoUserPoolClientSecret = @"";
+mobileClient.AWSCognitoUserPoolRegion = AWSRegionUSEast1;
+mobileClient.CognitoPoolID = @"";
+
+```
+
 ### Documetation
 **Login**
 

@@ -22,24 +22,40 @@ Inspired by Neil Fraser, [Differential Synchronization](https://neil.fraser.name
 
 ## Updates
 ```objective-c
-// ** Now if there is no any add, delete, replace in the diff, diff will be nil. **
 
+This method doesn't find out duplicate objs.
++(NSDictionary *)diffWins:(NSArray *)wins
+                    loses:(NSArray *)loses;
+                    
+// ** Now if there is no any add, delete, replace in the diff, diff will be nil. **
 NSDictionary *diff = [DS diffWins: ["A"] loses: ["A"]];
 // diff is nil.
 
+// primaryKey is for finding duplicate objs.
++(NSDictionary *)diffWins:(NSArray *)wins
+                    loses:(NSArray *)loses
+               primaryKey:(NSString *)key;
+               
+
+// This method will find out duplicate objs and pass out to you.
+// You can choose which value you want to keep. return YES if you want to keep newValue.
++(NSArray *)mergeInto:(NSArray *)array
+            applyDiff:(NSDictionary *)diff
+           primaryKey:(NSString *)key
+        shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace;
 ```
 
 ## Usage
 Differential Synchronizatioin step by step
 1. diff client and shadow
-2. apply remote into client
+2. create a newClient and make it equal to remote
 3. apply client_shadow (step.1) into newClient (step.2)
-4. diff remote and whole new client(step.3)
-5. push diff(step.4) , whole new client == new remote
-6. if push success, save whole new client in shadow.
+4. diff remote and newClient (step.3)
+5. push diff (step.4) to remote, so that new remote == new client
+6. if push success, save new client in shadow
 
 ## Example
-This example you can refer to Tests.m line: 119, test 3.1
+This example you can refer to Tests.m line: 148, test 3.1
 ```objective-c
 NSArray *remote = @[@"A", @"B", @"C"];
 NSArray *client = @[@"A", @"B", @"C", @"D"]; // client add "D"
@@ -48,11 +64,8 @@ NSArray *shadow = @[@"A", @"B", @"C"]; // last synchronized result == remote
 // obtain a diff from client and shadow.
 NSDictionary *diff_client_shadow = [DS diffShadowAndClient: client shadow: shadow];
 
-// obtain a diff from remote and client.
-NSDictionary *need_to_apply_to_client = [DS diffWins: remote andLoses: client];
-
-// apply remote_cilent_diff into client.
-NSArray *newClient = [DS mergeInto: client applyDiff: need_to_apply_to_client];
+// create a newClient and make it equal to remote
+NSArray *newClient = remote;
 
 // obtain a new client that applied diff_remote_client and diff_client_shadow.
 newClient = [DS mergeInto: newClient applyDiff: diff_client_shadow];
@@ -72,24 +85,28 @@ shadow = newRemote
 
 ##### New Method for duplicate objects
 ```
-/**
-Get a diff between win and lose. Both win and lose are depend what data are you defining and you can handle the duplicate data which you want to replace or not.
 
-@param wins wins is the data that you think is most important
-@param loses loses is the data that you think is less important compares to wins
-@param duplicate block send a "wait to be added" data and a "wait to be deleted" data to find a duplicate for return. But here you need to implement by youself. But beware, if you don't return duplicate objects, that means if DS find duplicate objects, DS still does the force replacement for you. Even shouldReplace is NO.
-@param shouldReplace shouldReplace block sent a duplicate data and return a Boolean that you can choose that whether you want to replace it or not.
-@return a diff which is a dictionary that contains format: @{"add", "delete", "replace"}
-*/
-+(NSDictionary *)diffWins:(NSArray *)wins
-                 andLoses:(NSArray *)loses
-                duplicate:(id(^)(id add, id delete))duplicate
-            shouldReplace:(BOOL(^)(id deplicate))shouldReplace;
+/**
+ Get a array that from diff and find duplicate.
+ 
+ @param array into the array that will be patched by diff.
+ @param diff diff the diff object between two dictionaries. it contains keys ("add", "delete", "replace")
+ @param key primaryKey
+ @param shouldReplace shouldReplace block sent a oldValue and newValue data and return a Boolean that you can choose that whether you want to replace it or not.
+
+  @return return array that old data merge new diff.
+ */
++(NSArray *)mergeInto:(NSArray *)array
+            applyDiff:(NSDictionary *)diff
+           primaryKey:(NSString *)key
+        shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace;
 ```
 
 
-This example you can refer to DuplicateTests.m line: 254, test @"example in README.md"
+This example you can refer to DuplicateTests.m line: 41, test Spec: "commitId passed, remoteHash passed, example in README.md"
 ```objective-c
+ describe(@"commitId passed, remoteHash passed, example in README.md", ^{
+  
   NSArray *remote = @[
                       @{@"name": @"A", @"url": @"A"},
                       @{@"name": @"B", @"url": @"B"},
@@ -109,41 +126,49 @@ This example you can refer to DuplicateTests.m line: 254, test @"example in READ
                       @{@"name": @"B", @"url": @"B"},
                       @{@"name": @"C", @"url": @"C"}
                       ];
-  // add    : [@{@"name": @"D", @"url": @"D"}]
+  // diff
+  // add    : [@{@"name": @"D", @"url": @"D"}]
   // delete : [@{@"name": @"B", @"url": @"B"}, @{@"name": @"A", @"url": @"A"}]
   // replace: [@{@"name": @A", @"url": @"A1"}]
-  NSDictionary *diff_client_shadow = [DS diffWins: client andLoses: shadow primaryKey: @"name" shouldReplace:^BOOL(id oldValue, id newValue) {
-
+  NSDictionary *diff_client_shadow = [DS diffWins: client loses: shadow primaryKey: @"name"];
+  /*
+   // shadow @[@{@"name": @"A", @"url": @"A"},
+               @{@"name": @"B", @"url": @"B"},
+               @{@"name": @"C", @"url": @"C"}]
+   
+   // diff
+   // add    : [@{@"name": @"D", @"url": @"D"}],
+   // delete : [@{@"name": @"B", @"url": @"B"}, @{@"name": @"A", @"url": @"A"}]
+   // replace: [@{@"name": @A", @"url": @"A1"}]
+   */
+  
+  NSArray *newClient = remote;
+  
+  newClient = [DS mergeInto: newClient
+                  applyDiff: diff_client_shadow
+                 primaryKey: @"name"
+              shouldReplace:^BOOL(id oldValue, id newValue) {
+                
     return YES;
   }];
-  /*
-    // shadow @[@{@"name": @"A", @"url": @"A"},
-              @{@"name": @"B", @"url": @"B"},
-              @{@"name": @"C", @"url": @"C"}]
+  
+  // diff newClient and remote
+  NSDictionary *need_to_apply_to_remote = [DS diffWins: newClient loses: remote primaryKey: @"name"];
+  
+  // push diff_newClient_Remote to remote
+  NSArray *newRemote = [DS mergeInto: remote applyDiff: need_to_apply_to_remote];
+  
+  it(@"client == remote", ^{
+    
+    expect([newClient dictSort]).to.equal([newRemote dictSort]);
+    expect([newClient dictSort]).to.equal(@[
+                                            @{@"name": @"A", @"url": @"A1"},
+                                            @{@"name": @"C", @"url": @"C"},
+                                            @{@"name": @"D", @"url": @"D"}
+                                            ]);
+  });
+});
 
-    // diff   
-    // add    : [@{@"name": @"D", @"url": @"D"}],
-    // delete : [@{@"name": @"B", @"url": @"B"}, @{@"name": @"A", @"url": @"A"}]
-    // replace: [@{@"name": @A", @"url": @"A1"}]
-  */
-
-  // obtain a diff from remote and client.
-  // diff   
-  // add    : [@{@"name": @B", @"url": @"B"}],
-  // delete : []
-  // replace: [@{@"name": @A", @"url": @"A"}]
-  NSDictionary *need_to_apply_to_client = [DS diffWins: remote andLoses: client];
-
-  // apply remote_cilent_diff into client.
-  NSArray *newClient = [DS mergeInto: client applyDiff: need_to_apply_to_client];
-		      
-  newClient = [DS mergeInto: newClient applyDiff: diff_client_shadow];
-	
-  newClient = @[
-                      @{@"name": @"A", @"url": @"A1"},
-                      @{@"name": @"C", @"url": @"C"},
-                      @{@"name": @"D", @"url": @"D"}
-                      ];
 ```
 
 ## Installation

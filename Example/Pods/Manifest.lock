@@ -14,25 +14,25 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - AWSCognito (2.5.8):
-    - AWSCore (= 2.5.8)
-  - AWSCognitoIdentityProvider (2.5.8):
-    - AWSCore (= 2.5.8)
-  - AWSCore (2.5.8)
-  - AWSDynamoDB (2.5.8):
-    - AWSCore (= 2.5.8)
-  - AWSS3 (2.5.8):
-    - AWSCore (= 2.5.8)
-  - AWSWrapper (0.1.3):
+  - AWSCognito (2.5.9):
+    - AWSCore (= 2.5.9)
+  - AWSCognitoIdentityProvider (2.5.9):
+    - AWSCore (= 2.5.9)
+  - AWSCore (2.5.9)
+  - AWSDynamoDB (2.5.9):
+    - AWSCore (= 2.5.9)
+  - AWSS3 (2.5.9):
+    - AWSCore (= 2.5.9)
+  - AWSWrapper (0.1.5):
     - AFNetworking (~> 3.0)
     - AWSCognito (~> 2.5.2)
     - AWSCognitoIdentityProvider (~> 2.5.2)
     - AWSCore (~> 2.5.2)
     - AWSDynamoDB (~> 2.5.2)
     - AWSS3 (~> 2.5.2)
-    - DS (~> 0.1.6)
+    - DS (~> 0.1.10)
     - SAMKeychain
-  - DS (0.1.9)
+  - DS (0.1.10)
   - Expecta (1.0.6)
   - SAMKeychain (1.5.2)
   - Specta (1.0.6)
@@ -48,13 +48,13 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  AWSCognito: 8eb74039f4dc5f2d929999c4f531eeb4bd83e6cb
-  AWSCognitoIdentityProvider: 6c0c276a16b622914563350c64d723bcecaa9e75
-  AWSCore: cf101c44d2cc5da32abc27d5529cddc63c010415
-  AWSDynamoDB: 53ead656801e1a40b415fc0bebd85f1dc0dc0ead
-  AWSS3: addf558f9cf2368e7fb520440867fea5596db0fb
-  AWSWrapper: 6d9bf0162a5cf2039261c9052c0b43a85dd55bda
-  DS: 879c883406029a8d2c002adf0c72bdbe88b69b30
+  AWSCognito: 5dfe4120e7f77b2e77396b4532e4aacacc4ae08d
+  AWSCognitoIdentityProvider: 4655e97cfbb4347591db74b33e8c89309ca25131
+  AWSCore: c71840dd51f271dc0af8de8fd6f352767ebde8b4
+  AWSDynamoDB: 5817c47852d1548645d9eb23f809d57d763975f9
+  AWSS3: c36b91edb50ccd676be4a92836bb72f0c2ac312b
+  AWSWrapper: 7cf0aa63f6130efa66fad197ccd2d8e063a95045
+  DS: ea63b678be55a93adde6ffc9d02821083833164f
   Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
   SAMKeychain: 1865333198217411f35327e8da61b43de79b635b
   Specta: f506f3a8361de16bc0dcf3b17b75e269072ba465

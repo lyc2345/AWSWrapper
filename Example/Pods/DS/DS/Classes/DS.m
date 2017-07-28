@@ -56,7 +56,6 @@
   }
   // e.g. diff = Add: [+D], Delete: [-A]
   NSDictionary *diffSet = [DS diffSetsFormatFromWin: winsMutableSet loses: losesMutableSet];
-  NSLog(@"diffSet: %@", diffSet);
   return diffSet;
 }
 
@@ -141,63 +140,6 @@
   // newValue is the data that keeps before and now going to edit.
   return [DS diffFormatFromAdd: newAdd delete: waitToDelete replace: newValue];
 }
-
-/*
- +(NSDictionary *)diffWins:(NSArray *)wins
- andLoses:(NSArray *)loses
- primaryKey:(NSString *)key
- shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace {
- 
- NSDictionary *sets = [DS diffSetWins: wins losesSet: loses];
- if (!sets) {
- return nil;
- }
- 
- NSMutableSet *winsMutableSet = sets[@"_winSet"];
- NSMutableSet *losesMutableSet = sets[@"_loseSet"];
- 
- NSArray *waitToAdd = [winsMutableSet allObjects];
- NSArray *waitToDelete = [losesMutableSet allObjects];
- 
- NSMutableArray *oldValue = [NSMutableArray array];
- NSMutableArray *newValue = [NSMutableArray array];
- 
- [waitToAdd enumerateObjectsUsingBlock:^(id  _Nonnull addObj, NSUInteger idx, BOOL * _Nonnull stop) {
- 
- [waitToDelete enumerateObjectsUsingBlock:^(id  _Nonnull delObj, NSUInteger idx, BOOL * _Nonnull stop) {
- 
- // if 2 dictioanries have same primary key
- if ([addObj[key] isEqualToString: delObj[key]]) {
- 
- // means the object in waitToAdd array will be the new value, opposite old value in waitToDelete.
- [newValue addObject: addObj];
- [oldValue addObject: delObj];
- }
- }];
- }];
- 
- // send these old and new value, let user to define which one are going to be keep.
- BOOL replace = shouldReplace(oldValue, newValue);
- 
- // newAdd just keep the data that never keep before.
- NSMutableSet *originAddSet = [NSMutableSet setWithArray: waitToAdd];
- [originAddSet minusSet: [NSSet setWithArray: newValue]];
- NSArray *newAdd = [originAddSet allObjects];
- 
- if (!replace) {
- 
- NSMutableSet *originDelSet = [NSMutableSet setWithArray: waitToDelete];
- [originDelSet minusSet: [NSSet setWithArray: oldValue]];
- // if don't replace. leave old data and delete the changed data.
- // p.s. just keep the data that want to remove BUT NOT EDIT
- NSArray *newDel = [originDelSet allObjects];
- 
- return [DS diffFormatFromAdd: newAdd delete: newDel replace: @[]];
- }
- // newValue is the data that keeps before and now going to edit.
- return [DS diffFormatFromAdd: newAdd delete: waitToDelete replace: newValue];
- }
- */
 
 +(NSDictionary *)compareWinsDiff:(NSDictionary *)winsDiff
                        losesDiff:(NSDictionary *)losesDiff
@@ -391,3 +333,62 @@
 }
 
 @end
+
+
+/*
+ +(NSDictionary *)diffWins:(NSArray *)wins
+ andLoses:(NSArray *)loses
+ primaryKey:(NSString *)key
+ shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace {
+ 
+ NSDictionary *sets = [DS diffSetWins: wins losesSet: loses];
+ if (!sets) {
+ return nil;
+ }
+ 
+ NSMutableSet *winsMutableSet = sets[@"_winSet"];
+ NSMutableSet *losesMutableSet = sets[@"_loseSet"];
+ 
+ NSArray *waitToAdd = [winsMutableSet allObjects];
+ NSArray *waitToDelete = [losesMutableSet allObjects];
+ 
+ NSMutableArray *oldValue = [NSMutableArray array];
+ NSMutableArray *newValue = [NSMutableArray array];
+ 
+ [waitToAdd enumerateObjectsUsingBlock:^(id  _Nonnull addObj, NSUInteger idx, BOOL * _Nonnull stop) {
+ 
+ [waitToDelete enumerateObjectsUsingBlock:^(id  _Nonnull delObj, NSUInteger idx, BOOL * _Nonnull stop) {
+ 
+ // if 2 dictioanries have same primary key
+ if ([addObj[key] isEqualToString: delObj[key]]) {
+ 
+ // means the object in waitToAdd array will be the new value, opposite old value in waitToDelete.
+ [newValue addObject: addObj];
+ [oldValue addObject: delObj];
+ }
+ }];
+ }];
+ 
+ // send these old and new value, let user to define which one are going to be keep.
+ BOOL replace = shouldReplace(oldValue, newValue);
+ 
+ // newAdd just keep the data that never keep before.
+ NSMutableSet *originAddSet = [NSMutableSet setWithArray: waitToAdd];
+ [originAddSet minusSet: [NSSet setWithArray: newValue]];
+ NSArray *newAdd = [originAddSet allObjects];
+ 
+ if (!replace) {
+ 
+ NSMutableSet *originDelSet = [NSMutableSet setWithArray: waitToDelete];
+ [originDelSet minusSet: [NSSet setWithArray: oldValue]];
+ // if don't replace. leave old data and delete the changed data.
+ // p.s. just keep the data that want to remove BUT NOT EDIT
+ NSArray *newDel = [originDelSet allObjects];
+ 
+ return [DS diffFormatFromAdd: newAdd delete: newDel replace: @[]];
+ }
+ // newValue is the data that keeps before and now going to edit.
+ return [DS diffFormatFromAdd: newAdd delete: waitToDelete replace: newValue];
+ }
+ */
+

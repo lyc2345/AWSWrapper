@@ -55,7 +55,6 @@ describe(@"DeviceB, B1, R2", ^{
                                  @"C": @{@"author": @"C", @"url": @"C"},
                                  @"D": @{@"author": @"D", @"url": @"D"}
                                  };
-  NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
   
   it(@"result", ^{
     
@@ -117,7 +116,6 @@ describe(@"Device B, B2, R3", ^{
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"}
                                  };
-  NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
   
   it(@"result", ^{
     
@@ -175,8 +173,6 @@ describe(@"Device A, A2, R3", ^{
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"}
                                  };
-  NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
-  
   it(@"result", ^{
     
     expect([[DSWrapper arrayFromDict: newRemote] dictSort]).to.equal([[DSWrapper arrayFromDict: expectResult] dictSort]);
@@ -243,8 +239,6 @@ describe(@"Device A, A3, R4", ^{
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G1"}
                                  };
-  NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
-  
   it(@"result", ^{
     
     expect([[DSWrapper arrayFromDict: newRemote] dictSort]).to.equal([[DSWrapper arrayFromDict: expectResult] dictSort]);
@@ -310,9 +304,7 @@ describe(@"Device B, B4, R5", ^{
                                  @"E": @{@"author": @"E", @"url": @"E"},
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G1"}
-                                 };
-  NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
-  
+                                 };  
   it(@"result", ^{
     
     expect([[DSWrapper arrayFromDict: newRemote] dictSort]).to.equal([[DSWrapper arrayFromDict: expectResult] dictSort]);

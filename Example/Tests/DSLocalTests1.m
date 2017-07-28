@@ -60,7 +60,6 @@ describe(@"Test S1P1", ^{
                                  @"D": @{@"author": @"D", @"url": @"D"},
                                  @"E": @{@"author": @"E", @"url": @"E"}
                                  };
-  NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
   
   it(@"result", ^{
     
@@ -118,7 +117,6 @@ describe(@"Test S1P2", ^{
                                  @"E": @{@"author": @"E", @"url": @"E"},
                                  @"F": @{@"author": @"F", @"url": @"F"}
                                  };
-  NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
   
   it(@"result", ^{
     
@@ -177,7 +175,6 @@ describe(@"Test S2P1", ^{
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"}
                                  };
-  NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
   
   it(@"result", ^{
     
@@ -235,7 +232,6 @@ describe(@"Test S1P3", ^{
                                  @"F": @{@"author": @"F", @"url": @"F1"},
                                  @"G": @{@"author": @"G", @"url": @"G"}
                                  };
-  NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
   
   it(@"result", ^{
     

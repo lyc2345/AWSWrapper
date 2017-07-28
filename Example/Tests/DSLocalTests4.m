@@ -58,8 +58,6 @@ describe(@"Device A, A2, R2", ^{
                                  @"B": @{@"author": @"B", @"url": @"B1"},
                                  @"C": @{@"author": @"C", @"url": @"C"}
                                  };
-  NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
-  
   it(@"result", ^{
     
     expect([[DSWrapper arrayFromDict: newRemote] dictSort]).to.equal([[DSWrapper arrayFromDict: expectResult] dictSort]);
@@ -104,8 +102,6 @@ describe(@"DeviceB, B1, R2", ^{
                                  @"B": @{@"author": @"B", @"url": @"B1"},
                                  @"C": @{@"author": @"C", @"url": @"C"}
                                  };
-  NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
-  
   it(@"result", ^{
     
     expect([[DSWrapper arrayFromDict: newRemote] dictSort]).to.equal([[DSWrapper arrayFromDict: expectResult] dictSort]);
@@ -158,8 +154,6 @@ describe(@"Device B, B2, R3", ^{
                                  @"C": @{@"author": @"C", @"url": @"C1"},
                                  @"D": @{@"author": @"D", @"url": @"D"}
                                  };
-  NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
-  
   it(@"result", ^{
     
     expect([[DSWrapper arrayFromDict: newRemote] dictSort]).to.equal([[DSWrapper arrayFromDict: expectResult] dictSort]);
@@ -215,8 +209,6 @@ describe(@"Device A, A2, R4", ^{
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"}
                                  };
-  NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
-  
   it(@"result", ^{
     
     expect([[DSWrapper arrayFromDict: newRemote] dictSort]).to.equal([[DSWrapper arrayFromDict: expectResult] dictSort]);
@@ -279,8 +271,6 @@ describe(@"Device A, A4, R5", ^{
                                  @"G": @{@"author": @"G", @"url": @"G"},
                                  @"H": @{@"author": @"H", @"url": @"H"}
                                  };
-  NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
-  
   it(@"result", ^{
     
     expect([[DSWrapper arrayFromDict: newRemote] dictSort]).to.equal([[DSWrapper arrayFromDict: expectResult] dictSort]);
@@ -339,8 +329,6 @@ describe(@"Device B, B4, R4", ^{
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"}
                                  };
-  NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
-  
   it(@"result", ^{
     
     expect([[DSWrapper arrayFromDict: newRemote] dictSort]).to.equal([[DSWrapper arrayFromDict: expectResult] dictSort]);
@@ -405,8 +393,6 @@ describe(@"Device B, B4, R6", ^{
                                  @"H": @{@"author": @"H", @"url": @"H"},
                                  @"K": @{@"author": @"K", @"url": @"K"}
                                  };
-  NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
-  
   it(@"result", ^{
     
     expect([[DSWrapper arrayFromDict: newRemote] dictSort]).to.equal([[DSWrapper arrayFromDict: expectResult] dictSort]);

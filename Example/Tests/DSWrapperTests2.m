@@ -60,8 +60,6 @@ describe(@"Device A, A2, R3", ^{
                                  @"F": @{@"author": @"F", @"url": @"F"},
                                  @"G": @{@"author": @"G", @"url": @"G"}
                                  };
-  NSLog(@"fuck: %@", [[DSWrapper arrayFromDict: newRemote] dictSort]);
-  
   it(@"result", ^{
     
     expect([[DSWrapper arrayFromDict: newRemote] dictSort]).to.equal([[DSWrapper arrayFromDict: expectResult] dictSort]);

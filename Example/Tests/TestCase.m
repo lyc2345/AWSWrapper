@@ -14,7 +14,7 @@
 
 @interface TestCase () <DynamoSyncDelegate>
 
-@property BookmarkManager *bookmarkManager;
+@property DynamoService *dynamoService;
 @property LoginManager *loginManager;
 @property DynamoSync *dsync;
 @property NSString *userId;
@@ -39,7 +39,7 @@
     
     _loginManager = [LoginManager shared];
     _userId = _loginManager.awsIdentityId;
-    _bookmarkManager = [[BookmarkManager alloc] init];
+    _dynamoService = [[DynamoService alloc] init];
     _dsync = [[DynamoSync alloc] init];
     _dsync.delegate = self;
     
@@ -70,7 +70,7 @@
   
   _client = @{@"_dicts": dict};
   
-  [_bookmarkManager forcePushWithType: RecordTypeBookmark record: _client userId: _userId completion:^(NSError *error, NSString *commitId, NSString *remoteHash) {
+  [_dynamoService forcePushWithType: RecordTypeBookmark record: _client userId: _userId completion:^(NSError *error, NSString *commitId, NSString *remoteHash) {
     
     if (!error) {
       _shadow = dict;
@@ -128,7 +128,7 @@
   
   self.expection = [self expectationWithDescription: @"finalLoadCheck"];
   
-  [_bookmarkManager pullType: RecordTypeBookmark user: _userId completion: ^(NSDictionary *item, NSError *error) {
+  [_dynamoService pullType: RecordTypeBookmark user: _userId completion: ^(NSDictionary *item, NSError *error) {
     
     exeHandler([item[@"_dicts"] isEqualToDictionary: expectRemote]);
     

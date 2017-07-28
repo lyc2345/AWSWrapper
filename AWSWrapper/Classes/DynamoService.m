@@ -1,26 +1,26 @@
 
 //
-//  BookmarkManager.m
+//  DynamoService.m
 //
 //  Created by Stan Liu on 16/03/2017.
 //  Copyright © 2017 Stan Liu. All rights reserved.
 //
 
-#import "BookmarkManager.h"
+#import "DynamoService.h"
 #import "Bookmark.h"
 #import "RecentVisit.h"
 #import "DSWrapper.h"
 #import "Random.h"
 
-@interface BookmarkManager ()
+@interface DynamoService ()
 
 @property (strong, nonatomic) OfflineDB *offlieDB;
 
 @end
 
-#pragma mark BookmarkManager (Bookmark&RecentlyVisit Format)
+#pragma mark DynamoService (Bookmark&RecentlyVisit Format)
 
-@implementation BookmarkManager
+@implementation DynamoService
 
 - (instancetype)init
 {
@@ -91,7 +91,7 @@
 
 #pragma mark (AWS)
 
-@implementation BookmarkManager (AWS)
+@implementation DynamoService (AWS)
 
 -(void)pullType:(RecordType)type user:(NSString *)userId completion:(void(^)(NSDictionary *item, DSError *error))completionHandler {
   
@@ -119,7 +119,7 @@
     if (response.items != nil && response.items.count > 0) {
       
       NSDictionary *attributeDictionary = response.items.firstObject;
-      NSDictionary *record = [BookmarkManager convert: attributeDictionary];
+      NSDictionary *record = [DynamoService convert: attributeDictionary];
       completionHandler(record, nil);
       
     } else {
@@ -215,7 +215,7 @@
     
     NSString *additionAttributeValueKey = [NSString stringWithFormat: @"%@", obj[@"comicName"]];
     
-    [attributeValues setObject: [BookmarkManager AWSFormatFromDict: obj] forKey: additionAttributeValueKey];
+    [attributeValues setObject: [DynamoService AWSFormatFromDict: obj] forKey: additionAttributeValueKey];
   }];
   
   AWSDynamoDBAttributeValue *dictsValue = [AWSDynamoDBAttributeValue new];
@@ -239,7 +239,7 @@
     } else {
       AWSDynamoDBUpdateItemOutput *result = task.result;
       NSDictionary *resultValue = result.dictionaryValue;
-      NSDictionary *pureResult = [BookmarkManager convert: resultValue[@"attributes"]];
+      NSDictionary *pureResult = [DynamoService convert: resultValue[@"attributes"]];
       completion(task.error, commitId, remoteHash);
     }
     return nil;
@@ -277,8 +277,8 @@
 				NSLog(@"done 2");
 				if (error && (error && error.code != 4)) {
           
-          NSLog(@"BookmarkManager pulling error: %@", error);
-            // com.BookmarkManager.pullError
+          NSLog(@"DynamoService pulling error: %@", error);
+            // com.DynamoService.pullError
             mergeCompletion(nil, error);
 					return;
 					
@@ -439,7 +439,7 @@
       NSString *additionAttributeValueKey = [NSString stringWithFormat: @":%@", obj[@"comicName"]];
       NSString *additionAttributeNameKey = [NSString stringWithFormat: @"#%@", obj[@"comicName"]];
       
-      [attributeValues setObject: [BookmarkManager AWSFormatFromDict: obj] forKey: additionAttributeValueKey];
+      [attributeValues setObject: [DynamoService AWSFormatFromDict: obj] forKey: additionAttributeValueKey];
       [attributeNames setObject: obj[@"comicName"] forKey: additionAttributeNameKey];
       
       NSString *key = [NSString stringWithFormat: @", #dicts.%@ = %@", additionAttributeNameKey, additionAttributeValueKey];
@@ -467,7 +467,7 @@
       NSString *additionAttributeValueKey = [NSString stringWithFormat: @":%@", obj[@"comicName"]];
       NSString *additionAttributeNameKey = [NSString stringWithFormat: @"#%@", obj[@"comicName"]];
       
-      [attributeValues setObject: [BookmarkManager AWSFormatFromDict: obj] forKey: additionAttributeValueKey];
+      [attributeValues setObject: [DynamoService AWSFormatFromDict: obj] forKey: additionAttributeValueKey];
       [attributeNames setObject: obj[@"comicName"] forKey: additionAttributeNameKey];
       
       NSString *key = [NSString stringWithFormat: @", #dicts.%@ = %@", additionAttributeNameKey, additionAttributeValueKey];
@@ -554,7 +554,7 @@
     } else {
       AWSDynamoDBUpdateItemOutput *result = task.result;
       NSDictionary *resultValue = result.dictionaryValue;
-      NSDictionary *pureResult = [BookmarkManager convert: resultValue[@"attributes"]];
+      NSDictionary *pureResult = [DynamoService convert: resultValue[@"attributes"]];
       completion(pureResult, task.error, commitId);
     }
     return nil;

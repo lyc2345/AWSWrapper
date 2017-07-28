@@ -9,7 +9,7 @@
 #import "DynamoSyncTestVC.h"
 @import AWSWrapper;
 
-@interface BookmarkManager (Testing)
+@interface DynamoService (Testing)
 
 -(void)forcePushWithType:(RecordType)type record:(NSDictionary *)record userId:(NSString *)userId completion:(void(^)(NSDictionary *item, NSError *error, NSString *commitId))completion;
 
@@ -17,7 +17,7 @@
 
 @interface DynamoSyncTestVC () <DynamoSyncDelegate>
 
-@property BookmarkManager *bookmarkManager;
+@property DynamoService *dynamoService;
 @property LoginManager *loginManager;
 @property DynamoSync *dsync;
 @property NSString *userId;
@@ -108,7 +108,7 @@
   
   _userId = _loginManager.awsIdentityId;
   
-  _bookmarkManager = [[BookmarkManager alloc] init];
+  _dynamoService = [[DynamoService alloc] init];
   _dsync = [[DynamoSync alloc] init];
   _dsync.delegate = self;
   
@@ -122,7 +122,7 @@
   
   _client = _initailRemoteData;
   
-  [_bookmarkManager forcePushWithType: RecordTypeBookmark record: _initailRemoteData userId: _userId completion:^(NSDictionary *item, NSError *error, NSString *commitId) {
+  [_dynamoService forcePushWithType: RecordTypeBookmark record: _initailRemoteData userId: _userId completion:^(NSDictionary *item, NSError *error, NSString *commitId) {
     
     _shadow = item[@"_dicts"];
     _commitId = item[@"_commitId"];
@@ -134,7 +134,7 @@
 
 -(void)testFirstInitialData:(void(^)())completion {
   
-  [_bookmarkManager pullType: RecordTypeBookmark user: _userId completion:^(NSDictionary *item, NSError *error) {
+  [_dynamoService pullType: RecordTypeBookmark user: _userId completion:^(NSDictionary *item, NSError *error) {
     
     assert([item[@"_dicts"] isEqualToDictionary: _initailRemoteData[@"_dicts"]] == YES);
     NSLog(@"testFirstInitialData Success");
@@ -171,7 +171,7 @@
     return YES;
   } completion:^(NSDictionary *diff, NSError *error) {
     
-    [_bookmarkManager pullType: RecordTypeBookmark user: _userId completion:^(NSDictionary *item, NSError *error) {
+    [_dynamoService pullType: RecordTypeBookmark user: _userId completion:^(NSDictionary *item, NSError *error) {
       
       NSDictionary *comparison = @{
                                     @"A": @{@"author": @"A", @"url": @"A"},
@@ -224,7 +224,7 @@
     return YES;
   } completion:^(NSDictionary *diff, NSError *error) {
     
-    [_bookmarkManager pullType: RecordTypeBookmark user: _userId completion:^(NSDictionary *item, NSError *error) {
+    [_dynamoService pullType: RecordTypeBookmark user: _userId completion:^(NSDictionary *item, NSError *error) {
       
       NSDictionary *comparison = @{
                                    @"B": @{@"author": @"B", @"url": @"B"},
@@ -274,7 +274,7 @@
     return YES;
   } completion:^(NSDictionary *diff, NSError *error) {
     
-    [_bookmarkManager pullType: RecordTypeBookmark user: _userId completion:^(NSDictionary *item, NSError *error) {
+    [_dynamoService pullType: RecordTypeBookmark user: _userId completion:^(NSDictionary *item, NSError *error) {
       
       NSDictionary *comparison = @{
                                    @"B": @{@"author": @"B", @"url": @"B"},
@@ -322,7 +322,7 @@
     return YES;
   } completion:^(NSDictionary *diff, NSError *error) {
     
-    [_bookmarkManager pullType: RecordTypeBookmark user: _userId completion:^(NSDictionary *item, NSError *error) {
+    [_dynamoService pullType: RecordTypeBookmark user: _userId completion:^(NSDictionary *item, NSError *error) {
       
       NSDictionary *comparison = @{
                                    @"B": @{@"author": @"B", @"url": @"B"},

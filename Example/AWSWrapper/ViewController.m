@@ -211,7 +211,7 @@
 
 -(void)reloadBookmarks {
   
-  BookmarkManager *bookmarkManager = [BookmarkManager new];
+  DynamoService *dynamoService = [DynamoService new];
   LoginManager *loginManager = [LoginManager shared];
   NSString *userId = loginManager.awsIdentityId != nil ? loginManager.awsIdentityId : loginManager.offlineIdentity;
   NSDictionary *localBookmarkRecord = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
@@ -222,7 +222,7 @@
   });
   
   if ([LoginManager shared].awsIdentityId) {
-    [bookmarkManager pullType: RecordTypeBookmark user: loginManager.awsIdentityId completion:^(NSDictionary *item, NSError *error) {
+    [dynamoService pullType: RecordTypeBookmark user: loginManager.awsIdentityId completion:^(NSDictionary *item, NSError *error) {
       
       dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -235,7 +235,7 @@
 
 -(void)reloadRecentlyVisit {
   
-  BookmarkManager *bookmarkManager = [BookmarkManager new];
+  DynamoService *dynamoService = [DynamoService new];
   LoginManager *loginManager = [LoginManager shared];
   NSString *userId = loginManager.awsIdentityId != nil ? loginManager.awsIdentityId : loginManager.offlineIdentity;
   NSDictionary *localRecentlyVisit = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeRecentlyVisit];
@@ -248,7 +248,7 @@
   
   if ([LoginManager shared].awsIdentityId) {
     
-    [bookmarkManager pullType: RecordTypeRecentlyVisit user: loginManager.awsIdentityId completion:^(NSDictionary *item, NSError *error) {
+    [dynamoService pullType: RecordTypeRecentlyVisit user: loginManager.awsIdentityId completion:^(NSDictionary *item, NSError *error) {
       
       dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -370,7 +370,7 @@
   
   UITableViewRowAction *delete = [UITableViewRowAction rowActionWithStyle: UITableViewRowActionStyleDefault title: @"Delete" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
     
-    BookmarkManager *bookmarkManager = [BookmarkManager new];
+    DynamoService *dynamoService = [DynamoService new];
     
     if (indexPath.section == 0) {
       

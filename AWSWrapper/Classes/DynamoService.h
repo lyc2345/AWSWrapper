@@ -1,5 +1,5 @@
 //
-//  BookmarkManager.h
+//  DynamoService.h
 //  LoginManager
 //
 //  Created by Stan Liu on 16/03/2017.
@@ -11,10 +11,10 @@
 #import "DSError.h"
 #import "OfflineDB.h"
 
-@interface BookmarkManager : NSObject
+@interface DynamoService : NSObject
 @end
 
-@interface BookmarkManager (AWS)
+@interface DynamoService (AWS)
 
 -(void)pushWithObject:(NSDictionary *)record
                  type:(RecordType)type

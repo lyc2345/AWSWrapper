@@ -229,7 +229,7 @@
 		7FE8614B23B3A36F5CF2EFB84EC489D2 /* AWSClientContext.m in Sources */ = {isa = PBXBuildFile; fileRef = C625712E9EBC8D8DAA492E4B447DB952 /* AWSClientContext.m */; };
 		7FFD95A81EACC1CC93F80268E6409A79 /* AWSDynamoDBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 474E6C83C85EE62498091D962CDE5665 /* AWSDynamoDBModel.m */; };
 		80954D5FBA50CA415AFF0CD04085070C /* AWSCognitoDataset.m in Sources */ = {isa = PBXBuildFile; fileRef = E815B2071B888C00441E098133126580 /* AWSCognitoDataset.m */; };
-		80BFB6CFCE7F1B03C460E73A5A596800 /* BookmarkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AEC91EF9D37AD153890587CCF915961 /* BookmarkManager.m */; };
+		80BFB6CFCE7F1B03C460E73A5A596800 /* DynamoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AEC91EF9D37AD153890587CCF915961 /* DynamoService.m */; };
 		818CCC9DFF3980F66BC8A03DDDC6A85D /* AWSCognitoIdentityResources.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B810EBB0BD72627AD0E7D49CE90485 /* AWSCognitoIdentityResources.m */; };
 		81DE7B1784E30B24D47A691C8B7F2916 /* Pods-AWSWrapper_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 24FE4DCA841BAA1D5568C4109D9CA1DB /* Pods-AWSWrapper_Tests-dummy.m */; };
 		8220368E5F7EA70947BAD2B6F216C61B /* EXPMatchers+beFalsy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CE931817D3726C53DFF1F8EBE54F013 /* EXPMatchers+beFalsy.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -359,7 +359,7 @@
 		BFC7D32CFE8200730837306AFF61E5AD /* EXPExpect.m in Sources */ = {isa = PBXBuildFile; fileRef = C41C65602160971E3F0574FFF3DD3E35 /* EXPExpect.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C06961F863D12552E9FC148FFDBD7027 /* NSDictionary+AWSMTLManipulationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 777F53144ADBAD5A71FC175928478D97 /* NSDictionary+AWSMTLManipulationAdditions.m */; };
 		C14CD98EE4DDC0B7689F058D5B79CC47 /* EXPMatchers+beGreaterThanOrEqualTo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAB7570E721FDBB768DFD55BD0341CD /* EXPMatchers+beGreaterThanOrEqualTo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C1B4D12A92B92C2BD2CED6EF79CDBA32 /* BookmarkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD02B79716FFEA955B4BAE88DB5F8AC /* BookmarkManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C1B4D12A92B92C2BD2CED6EF79CDBA32 /* DynamoService.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD02B79716FFEA955B4BAE88DB5F8AC /* DynamoService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C1EF93E008E93E1343354D5D0B096B57 /* AWSMantle.h in Headers */ = {isa = PBXBuildFile; fileRef = D9B7566CB60AB750B185F97BE0E423F4 /* AWSMantle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C20783FC275BE99A7B77763EE292FA43 /* AWSCognitoIdentityProvider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 000FAD54254A5AE724D861A505E05FFB /* AWSCognitoIdentityProvider.framework */; };
 		C2469D43FBAE9A3FD8E629C1177B9BB0 /* Specta.h in Headers */ = {isa = PBXBuildFile; fileRef = 00CA4BD1A27B9B50FEBC8475CFE947C7 /* Specta.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -907,7 +907,7 @@
 		5E91D762F0A34482AC4B3FE8105AB3F6 /* AWSCore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AWSCore.xcconfig; sourceTree = "<group>"; };
 		5F100114FF16224F44542C021AD0277F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5F646FA27A581C203568A65211F35095 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFNetworkActivityIndicatorManager.m; path = "UIKit+AFNetworking/AFNetworkActivityIndicatorManager.m"; sourceTree = "<group>"; };
-		5FD02B79716FFEA955B4BAE88DB5F8AC /* BookmarkManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = BookmarkManager.h; sourceTree = "<group>"; };
+		5FD02B79716FFEA955B4BAE88DB5F8AC /* DynamoService.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DynamoService.h; sourceTree = "<group>"; };
 		608C1AA2897749C5876FAC9C88EB9693 /* EXPBlockDefinedMatcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = EXPBlockDefinedMatcher.m; path = Expecta/EXPBlockDefinedMatcher.m; sourceTree = "<group>"; };
 		60AB4828249CADE943ED86690363B53A /* EXPDoubleTuple.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = EXPDoubleTuple.m; path = Expecta/EXPDoubleTuple.m; sourceTree = "<group>"; };
 		60AD3C86A80A359AF4727833CA2C0E6A /* EXPMatchers+haveCountOf.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "EXPMatchers+haveCountOf.m"; path = "Expecta/Matchers/EXPMatchers+haveCountOf.m"; sourceTree = "<group>"; };
@@ -999,7 +999,7 @@
 		8A157D765F2628C0C2E14E4AAE015F83 /* Random.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = Random.m; sourceTree = "<group>"; };
 		8A4CE4E9BF3E68DB97045028D679AC8C /* SPTGlobalBeforeAfterEach.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SPTGlobalBeforeAfterEach.h; path = Specta/Specta/SPTGlobalBeforeAfterEach.h; sourceTree = "<group>"; };
 		8A74FFE7345D7FEE276759EE9B2DE49B /* AWSTask.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSTask.h; path = AWSCore/Bolts/AWSTask.h; sourceTree = "<group>"; };
-		8AEC91EF9D37AD153890587CCF915961 /* BookmarkManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = BookmarkManager.m; sourceTree = "<group>"; };
+		8AEC91EF9D37AD153890587CCF915961 /* DynamoService.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DynamoService.m; sourceTree = "<group>"; };
 		8B3F3743375B4607320858789BBB7CCF /* AWSFMDB.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSFMDB.h; path = AWSCore/FMDB/AWSFMDB.h; sourceTree = "<group>"; };
 		8B738E5D72A7B7F3A428DA190B12D006 /* AWSEXTScope.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSEXTScope.m; path = AWSCore/Mantle/extobjc/AWSEXTScope.m; sourceTree = "<group>"; };
 		8CE0994314BBE9AD90FDB69B83326F7E /* AWSS3TransferManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSS3TransferManager.m; path = AWSS3/AWSS3TransferManager.m; sourceTree = "<group>"; };
@@ -2272,8 +2272,8 @@
 			children = (
 				C648DD6BDA052CD5A1AD508427731117 /* AWSMobileClient.h */,
 				BE013425E52E2AAE244ECE213EFCFB3C /* AWSMobileClient.m */,
-				5FD02B79716FFEA955B4BAE88DB5F8AC /* BookmarkManager.h */,
-				8AEC91EF9D37AD153890587CCF915961 /* BookmarkManager.m */,
+				5FD02B79716FFEA955B4BAE88DB5F8AC /* DynamoService.h */,
+				8AEC91EF9D37AD153890587CCF915961 /* DynamoService.m */,
 				E863A5F005AE1C067A9605346C9EDC5F /* DynamoSync.h */,
 				27BA40C3274AC7889CDFD5A52FA8DBF6 /* DynamoSync.m */,
 				989F3CB7682EC4200D262E06F84F019D /* LoginManager.h */,
@@ -2514,7 +2514,7 @@
 				D4B849F79580756D43DA152C19D23343 /* AWSMobileClient.h in Headers */,
 				8CFA0921E521F5100A40238A0807F4DA /* AWSWrapper-umbrella.h in Headers */,
 				B8B3D87E32743AC6498C42E74F0173BD /* Bookmark.h in Headers */,
-				C1B4D12A92B92C2BD2CED6EF79CDBA32 /* BookmarkManager.h in Headers */,
+				C1B4D12A92B92C2BD2CED6EF79CDBA32 /* DynamoService.h in Headers */,
 				2701CD567C30FCCBD1EFDAE6130C4692 /* DSError.h in Headers */,
 				2D54FAD07406EE73E1E73830950326A8 /* DSWrapper.h in Headers */,
 				C774EFBFF1BE9E9F8172BA173CF8134F /* DynamoSync.h in Headers */,
@@ -3178,7 +3178,7 @@
 				2DA80D8B110D8DD3BF8B220F0032744C /* AWSMobileClient.m in Sources */,
 				26BF85D2027B3EE09B32136276623130 /* AWSWrapper-dummy.m in Sources */,
 				C4674D5DAF246E133568D5F6EF32E697 /* Bookmark.m in Sources */,
-				80BFB6CFCE7F1B03C460E73A5A596800 /* BookmarkManager.m in Sources */,
+				80BFB6CFCE7F1B03C460E73A5A596800 /* DynamoService.m in Sources */,
 				93FD72E8F6D574BA6A34FD472F38C124 /* DSError.m in Sources */,
 				1AA3A6CAAC545690529E1762AC2DA405 /* DSWrapper.m in Sources */,
 				7ED70C489B2682C7414F667A2F9001F7 /* DynamoSync.m in Sources */,

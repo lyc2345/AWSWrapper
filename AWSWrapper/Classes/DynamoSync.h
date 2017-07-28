@@ -8,7 +8,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import "BookmarkManager.h"
+#import "DynamoService.h"
 
 @protocol DynamoSyncDelegate <NSObject>
 
@@ -40,6 +40,7 @@
 
 @interface DynamoSync : NSObject
 
+@property BOOL debugMode;
 @property (weak, nonatomic) id<DynamoSyncDelegate> delegate;
 
 /**

@@ -13,7 +13,7 @@
 #import "Alert.h"
 #import "AWSMobileClient.h"
 #import "Bookmark.h"
-#import "BookmarkManager.h"
+#import "DynamoService.h"
 #import "DSError.h"
 #import "DSWrapper.h"
 #import "DynamoSync.h"

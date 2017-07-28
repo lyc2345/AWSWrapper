@@ -11,23 +11,23 @@
 @implementation DSError
 
 +(DSError *)mergePushFailed {
-  return [[DSError alloc] initWithDomain: @"com.BookmarkManager.mergrPushError" code: 1 userInfo: nil];
+  return [[DSError alloc] initWithDomain: @"com.DynamoService.mergrPushError" code: 1 userInfo: nil];
 }
 
 +(DSError *)forcePushFailed {
-  return [[DSError alloc] initWithDomain: @"com.BookmarkManager.forcePushConflict" code: 2 userInfo: nil];
+  return [[DSError alloc] initWithDomain: @"com.DynamoService.forcePushConflict" code: 2 userInfo: nil];
 }
 
 +(DSError *)pullFailed {
-  return [[DSError alloc] initWithDomain: @"com.BookmarkManager.pullError" code: 3 userInfo: nil];
+  return [[DSError alloc] initWithDomain: @"com.DynamoService.pullError" code: 3 userInfo: nil];
 }
 
 +(DSError *)remoteDataNil {
-  return [[DSError alloc] initWithDomain: @"com.BookmarkManager.remoteDataNil" code: 4 userInfo: nil];
+  return [[DSError alloc] initWithDomain: @"com.DynamoService.remoteDataNil" code: 4 userInfo: nil];
 }
 
 +(DSError *)noInternet {
-  return [[DSError alloc] initWithDomain: @"com.BookmarkManager.noInternet" code: 5 userInfo: nil];
+  return [[DSError alloc] initWithDomain: @"com.DynamoService.noInternet" code: 5 userInfo: nil];
 }
 
 @end

@@ -39,7 +39,7 @@ NSString *const cellIdentifier = @"cell";
 
 -(void)reloadBookmarks {
 	
-	BookmarkManager *bookmarkManager = [BookmarkManager new];
+	DynamoService *dynamoService = [DynamoService new];
 	LoginManager *loginManager = [LoginManager shared];
 	NSString *userId = loginManager.awsIdentityId != nil ? loginManager.awsIdentityId : loginManager.offlineIdentity;
 	NSDictionary *localBookmarkRecord = [[OfflineDB new] getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
@@ -48,7 +48,7 @@ NSString *const cellIdentifier = @"cell";
 	[_tableView reloadData];
 	
 	if ([LoginManager shared].awsIdentityId) {
-		[bookmarkManager pullType: RecordTypeBookmark user: loginManager.awsIdentityId completion:^(NSDictionary *item, NSError *error) {
+		[dynamoService pullType: RecordTypeBookmark user: loginManager.awsIdentityId completion:^(NSDictionary *item, NSError *error) {
 			
 			dispatch_async(dispatch_get_main_queue(), ^{
 				
@@ -61,7 +61,7 @@ NSString *const cellIdentifier = @"cell";
 
 -(void)reloadRecentlyVisit {
 	
-	BookmarkManager *bookmarkManager = [BookmarkManager new];
+	DynamoService *dynamoService = [DynamoService new];
 	LoginManager *loginManager = [LoginManager shared];
 	NSString *userId = loginManager.awsIdentityId != nil ? loginManager.awsIdentityId : loginManager.offlineIdentity;
 	NSDictionary *localRecentlyVisit = [[OfflineDB new] getOfflineRecordOfIdentity: userId type: RecordTypeRecentlyVisit];
@@ -71,7 +71,7 @@ NSString *const cellIdentifier = @"cell";
 	
 	if ([LoginManager shared].awsIdentityId) {
 		
-    [bookmarkManager pullType: RecordTypeRecentlyVisit user: loginManager.awsIdentityId completion:^(NSDictionary *item, NSError *error) {
+    [dynamoService pullType: RecordTypeRecentlyVisit user: loginManager.awsIdentityId completion:^(NSDictionary *item, NSError *error) {
 			
 			dispatch_async(dispatch_get_main_queue(), ^{
 				
@@ -84,16 +84,16 @@ NSString *const cellIdentifier = @"cell";
 
 -(void)upload:(id)sender {
 	
-	BookmarkManager *bookmarkManager = [BookmarkManager new];
+	DynamoService *dynamoService = [DynamoService new];
 	
-//  [bookmarkManager mergePushType:RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
+//  [dynamoService mergePushType:RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
 //		
 //		dispatch_sync(dispatch_get_main_queue(), ^{
 //			[self reloadBookmarks];
 //		});
 //	}];
 //	
-//   [bookmarkManager mergePushType:RecordTypeRecentlyVisit userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
+//   [dynamoService mergePushType:RecordTypeRecentlyVisit userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
 //		
 //		dispatch_sync(dispatch_get_main_queue(), ^{
 //			[self reloadRecentlyVisit];
@@ -143,7 +143,7 @@ NSString *const cellIdentifier = @"cell";
 	
 	UITableViewRowAction *delete = [UITableViewRowAction rowActionWithStyle: UITableViewRowActionStyleDefault title: @"Delete" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
 		
-		BookmarkManager *bookmarkManager = [BookmarkManager new];
+		DynamoService *dynamoService = [DynamoService new];
 		
 		if (indexPath.section == 0) {
 			
@@ -170,9 +170,9 @@ NSString *const cellIdentifier = @"cell";
 		
 		action.backgroundColor = [UIColor blueColor];
 		
-		BookmarkManager *bookmarkManager = [BookmarkManager new];
+		DynamoService *dynamoService = [DynamoService new];
 		if (indexPath.section == 0) {
-			[bookmarkManager addOfflineBookmark: nil ofIdentity: self.localBookmark[@"_userId"]];
+			[dynamoService addOfflineBookmark: nil ofIdentity: self.localBookmark[@"_userId"]];
 			
 		} else if (indexPath.section == 2) {
 			

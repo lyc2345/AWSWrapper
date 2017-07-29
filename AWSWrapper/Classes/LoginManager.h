@@ -47,7 +47,7 @@
 @interface LoginManager (Offline)
 
 -(void)loginOfflineWithUser:(NSString *)user password:(NSString *)password completion:(void(^)(NSError *error))completion;
--(void)logoutOfflineCompletion:(void(^)(NSError *error))completion;
+-(void)logoutOfflineCompletion:(void(^)())completion;
 
 @end
 
@@ -79,7 +79,7 @@
  @param password password
  @param email email
  @param telephone telephone
- @param confirmAction The Action if user want to do next step of Sign up
+ @param waitToConfirmAction The Action if user want to do next step of Sign up
  @param successHandler The Action if Sign up successfully.
  @param failHandler The Action if Sign up failure.
  */
@@ -87,7 +87,7 @@
              password:(NSString *)password
                 email:(NSString *)email
                   tel:(NSString *)telephone
-        waitToConfirm:(void(^)(NSString *destination))confirmAction
+        waitToConfirm:(void(^)(NSString *destination))waitToConfirmAction
               success:(void(^)())successHandler
                  fail:(void(^)(NSError *error))failHandler;
 

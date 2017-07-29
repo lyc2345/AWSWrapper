@@ -123,7 +123,7 @@
 	[[LoginManager shared] confirmSignUpWithUser: self.userName.text confirmCode: self.confirmationCode.text success:^{
 		
 		[[Alert new] showAlertWithTitle: @"Registration Complete"
-														message: @"Registration was successful."
+														message: @"Register successfully."
 										 confirmHandler:^{
 										 
 											 [weakSelf.navigationController popToRootViewControllerAnimated:YES];

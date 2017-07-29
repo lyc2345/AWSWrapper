@@ -7,13 +7,13 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "TestCase.h"
+#import "DynamoTestBase.h"
 #import "DispatchQueue.h"
 @import AWSWrapper;
 
 @interface DSTests1Original : XCTestCase
 
-@property (nonatomic) TestCase *testcase;
+@property (nonatomic) DynamoTestBase *testcase;
 @property (nonatomic) DispatchQueue *dispatchQueue;
 
 @end
@@ -23,7 +23,7 @@
 - (void)setUp {
   [super setUp];
   
-  _testcase = [TestCase new];
+  _testcase = [DynamoTestBase new];
   _dispatchQueue = [DispatchQueue new];
 }
 

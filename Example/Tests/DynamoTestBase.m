@@ -9,10 +9,10 @@
 // https://github.com/Specta/Specta
 
 
-#import "TestCase.h"
+#import "DynamoTestBase.h"
 @import AWSWrapper;
 
-@interface TestCase () <DynamoSyncDelegate>
+@interface DynamoTestBase () <DynamoSyncDelegate>
 
 @property DynamoService *dynamoService;
 @property LoginManager *loginManager;
@@ -28,7 +28,7 @@
 
 @end
 
-@implementation TestCase
+@implementation DynamoTestBase
 
 - (instancetype)init
 {

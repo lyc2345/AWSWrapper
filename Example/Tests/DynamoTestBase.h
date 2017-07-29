@@ -9,7 +9,7 @@
 #import <Specta/Specta.h>
 @import XCTest;
 
-@interface TestCase: XCTestCase
+@interface DynamoTestBase: XCTestCase
 
 -(void)initial:(NSDictionary *)dict
     exeHandler:(void(^)(NSString *commitId, NSString *remoteHash, NSDictionary *shadow, NSError *error))exeHandler

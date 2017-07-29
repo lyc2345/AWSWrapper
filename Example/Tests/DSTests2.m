@@ -7,11 +7,11 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "TestCase.h"
+#import "DynamoTestBase.h"
 #import "DispatchQueue.h"
 @import AWSWrapper;
 
-static TestCase *testcase;
+static DynamoTestBase *testcase;
 static DispatchQueue *dispatchQueue;
 
 SpecBegin(DSTests2)
@@ -21,7 +21,7 @@ describe(@"Tests2", ^{
   beforeAll(^{
     
     waitUntil(^(DoneCallback done) {
-      testcase = [TestCase new];
+      testcase = [DynamoTestBase new];
       dispatchQueue = [DispatchQueue new];
       done();
     });

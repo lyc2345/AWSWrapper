@@ -19,7 +19,7 @@
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
-		6003F5BC195388D20070C39A /* TestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* TestCase.m */; };
+		6003F5BC195388D20070C39A /* DynamoTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* DynamoTestBase.m */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		D448698D968525408A367F6F /* Pods_AWSWrapper_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8513427F95F3CFD033FB19C9 /* Pods_AWSWrapper_Example.framework */; };
 		F611F0971EEEB376000DFDFD /* DetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F611F0961EEEB376000DFDFD /* DetailVC.m */; };
@@ -77,7 +77,7 @@
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		6003F5B7195388D20070C39A /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		6003F5BB195388D20070C39A /* TestCase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestCase.m; sourceTree = "<group>"; };
+		6003F5BB195388D20070C39A /* DynamoTestBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DynamoTestBase.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84D339A1B6B02B94CDEC9BBB /* Pods-AWSWrapper_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSWrapper_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AWSWrapper_Example/Pods-AWSWrapper_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 		F64BAC801EE26BA700051399 /* DynamoDBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamoDBVC.h; sourceTree = "<group>"; };
 		F64BAC811EE26BA700051399 /* DynamoDBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamoDBVC.m; sourceTree = "<group>"; };
 		F64BAC831EE29F6700051399 /* DSWrapperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSWrapperTests.m; sourceTree = "<group>"; };
-		F64D0E8D1F18B37600184DF7 /* TestCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestCase.h; sourceTree = "<group>"; };
+		F64D0E8D1F18B37600184DF7 /* DynamoTestBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamoTestBase.h; sourceTree = "<group>"; };
 		F64D0E8E1F18BC4400184DF7 /* DSTests1Original.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSTests1Original.m; sourceTree = "<group>"; };
 		F64D0E901F19E7B500184DF7 /* DispatchQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchQueue.h; sourceTree = "<group>"; };
 		F64D0E911F19E7B500184DF7 /* DispatchQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueue.m; sourceTree = "<group>"; };
@@ -243,8 +243,8 @@
 		F64D0E941F19E94500184DF7 /* TestBase */ = {
 			isa = PBXGroup;
 			children = (
-				F64D0E8D1F18B37600184DF7 /* TestCase.h */,
-				6003F5BB195388D20070C39A /* TestCase.m */,
+				F64D0E8D1F18B37600184DF7 /* DynamoTestBase.h */,
+				6003F5BB195388D20070C39A /* DynamoTestBase.m */,
 				F64D0E901F19E7B500184DF7 /* DispatchQueue.h */,
 				F64D0E911F19E7B500184DF7 /* DispatchQueue.m */,
 				F64D0E9A1F1A05FC00184DF7 /* NSArray+Sort.h */,
@@ -527,7 +527,7 @@
 				F63CFCAB1F1C5CD3004DDE64 /* DSTests3.m in Sources */,
 				F64BAC841EE29F6700051399 /* DSWrapperTests.m in Sources */,
 				F64D0E931F19E7BF00184DF7 /* DispatchQueue.m in Sources */,
-				6003F5BC195388D20070C39A /* TestCase.m in Sources */,
+				6003F5BC195388D20070C39A /* DynamoTestBase.m in Sources */,
 				F63CFCB11F1C833F004DDE64 /* DSWrapperTests2.m in Sources */,
 				F64D0EA41F1A0B9000184DF7 /* DSOPSTests2.m in Sources */,
 				F64D0EA21F1A0A9E00184DF7 /* DSLocalTests2.m in Sources */,

@@ -7,12 +7,12 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "TestCase.h"
+#import "DynamoTestBase.h"
 #import "DispatchQueue.h"
 #import "NSArray+Sort.h"
 @import AWSWrapper;
 
-static TestCase *testcase;
+static DynamoTestBase *testcase;
 static DispatchQueue *dispatchQueue;
 
 SpecBegin(DSLocalTests4)

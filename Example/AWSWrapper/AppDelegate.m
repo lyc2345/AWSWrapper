@@ -17,7 +17,6 @@
   
   [[AFNetworkReachabilityManager sharedManager] startMonitoring];
   [AWSLogger defaultLogger].logLevel = AWSLogLevelVerbose;
-  NSLog(@"is online: %@", [AFNetworkReachabilityManager sharedManager].isReachable == YES ? @"YES" : @"NO");
   
   AWSMobileClient *mobileClient = [AWSMobileClient sharedInstance];
   mobileClient.AWSCognitoUserPoolId = @"us-east-1_2WqVQYNVu";

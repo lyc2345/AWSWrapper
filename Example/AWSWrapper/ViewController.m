@@ -84,12 +84,10 @@
 		[self.loginBtn setTitle: @"Logout" forState: UIControlStateNormal];
 		self.identityLabel.text = [LoginManager shared].awsIdentityId;
 		self.usernameLabel.text = [LoginManager shared].user;
-    NSLog(@"log status: is login");
 	} else {
 		[self.loginBtn setTitle: @"Login" forState: UIControlStateNormal];
 		self.identityLabel.text = @"";
 		self.usernameLabel.text = @"";
-    NSLog(@"log status: is logout");
 	}
 	
 	_checkLoginLabel.text = [NSString stringWithFormat:@"status offline: %@, remote: %@", ([LoginManager shared].isLogin) ? @"YES" : @"NO" , ([LoginManager shared].isAWSLogin) ? @"YES" : @"NO"];

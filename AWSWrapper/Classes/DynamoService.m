@@ -114,8 +114,6 @@
       completionHandler(nil, [DSError pullFailed]);
       return;
     }
-    NSLog(@"AWS DynamoDB load successfull");
-    
     if (response.items != nil && response.items.count > 0) {
       
       NSDictionary *attributeDictionary = response.items.firstObject;
@@ -147,7 +145,6 @@
 				completionHandler(nil, error);
 				return;
 			}
-			NSLog(@"AWS DynamoDB load successfull");
 			completionHandler(response.items, nil);
 		}];
 }

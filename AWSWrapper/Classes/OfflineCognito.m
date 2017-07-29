@@ -6,15 +6,10 @@
 //
 //
 
-#import "OfflineCognito.h"
-#import <SAMKeychain/SAMKeychain.h>
-
-NSString * const __CURRENT_USER = @"__CURRENT_USER";
 NSString * const __OFFLILNE_USER_SERVICE = @"__OFFLILNE_USER_SERVICE";
 
-@interface OfflineCognito ()
-
-@end
+#import "OfflineCognito.h"
+@import SAMKeychain;
 
 @implementation OfflineCognito
 
@@ -38,6 +33,13 @@ NSString * const __OFFLILNE_USER_SERVICE = @"__OFFLILNE_USER_SERVICE";
   });
   return cognito;
 }
+
+-(NSString *)password {
+  
+  NSError *error = nil;
+  return [SAMKeychain passwordForService: __OFFLILNE_USER_SERVICE account: [[NSUserDefaults standardUserDefaults] stringForKey: @"__CURRENT_USER"] error: &error];
+}
+
 
 -(void)storeUsername:(NSString *)username password:(NSString *)password {
   
@@ -64,40 +66,12 @@ NSString * const __OFFLILNE_USER_SERVICE = @"__OFFLILNE_USER_SERVICE";
   return NO;
 }
 
--(void)modifyUsername:(NSString *)username password:(NSString *)password identity:(NSString *)identity {
-  
+-(void)modifyUsername:(NSString *)username
+             password:(NSString *)password {
   [self storeUsername: username password: password];
 }
 
-//-(NSString *)loadPasswordOfUser:(NSString *)user error:(NSError *)error {
-
-//  NSError *loadAllAccountError = nil;
-//  NSArray <NSDictionary <NSString *, id> *> *accounts = [self allAccount: &loadAllAccountError];
-//  
-//  if (loadAllAccountError) {
-//    NSLog(@"load account error: %@", loadAllAccountError);
-//    return nil;
-//  }
-//  __block bool isExist = false;
-//  
-//  [accounts enumerateObjectsUsingBlock:^(NSDictionary<NSString *,id> * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//    
-//    if ([obj[kSAMKeychainAccountKey] isEqualToString: user]) {
-//      isExist = true;
-//      return;
-//    }
-//  }];
-//  
-//  if (isExist) {
-//    return [SAMKeychain passwordForService: __USER_LIST account: user];
-//  }
-//  error = [NSError errorWithDomain: @"com.stan.loginmanager" code: 1 userInfo: @{@"description": @"User doesn't exist"}];
-//  return nil;
-//}
-
 -(NSArray *)allAccount:(NSError * __autoreleasing *)error {
-  
-  //NSArray <NSDictionary <NSString *, id> *> *accounts = [SAMKeychain accountsForService: __USER_LIST error: &error];
   return [SAMKeychain accountsForService: __OFFLILNE_USER_SERVICE error: error];
 }
 

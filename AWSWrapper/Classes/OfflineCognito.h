@@ -6,9 +6,12 @@
 //
 //
 
-#import <Foundation/Foundation.h>
 
 @interface OfflineCognito : NSObject
+
++(OfflineCognito *)shared;
+
+-(NSString *)password;
 
 -(void)storeUsername:(NSString *)username
             password:(NSString *)password;
@@ -17,8 +20,7 @@
              password:(NSString *)password;
 
 -(void)modifyUsername:(NSString *)username
-             password:(NSString *)password
-             identity:(NSString *)identity;
+             password:(NSString *)password;
 
 
 -(NSArray *)allAccount:(NSError * __autoreleasing *)error;

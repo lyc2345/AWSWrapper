@@ -7,17 +7,15 @@
 //
 
 #import "LoginManager.h"
-#import "Encrypt.h"
+#import "OfflineCognito.h"
 @import AWSMobileHubHelper.AWSIdentityManager;
 @import AWSMobileHubHelper.AWSCognitoUserPoolsSignInProvider;
 @import AWSMobileHubHelper.AWSContentManager;
 
-#import <SAMKeychain/SAMKeychain.h>
-
+NSString * const __CURRENT_USER = @"__CURRENT_USER";
 
 @interface LoginManager () <AWSCognitoUserPoolsSignInHandler>
 
-@property (readonly) NSString *hashPassword;
 @property (nonatomic, strong) NSString *tmpPassword;
 @property (nonatomic, strong) NSString *tmpIdentity;
 
@@ -29,8 +27,6 @@
 @end
 
 @implementation LoginManager
-
-@synthesize hashPassword = _hashPassword;
 
 - (instancetype)init
 {
@@ -76,7 +72,7 @@
 
 -(BOOL)isLogin {
 	
-	NSString *u = [[NSUserDefaults standardUserDefaults] stringForKey: @"__CURRENT_USER"];
+	NSString *u = [[NSUserDefaults standardUserDefaults] stringForKey: __CURRENT_USER];
 	
 	if (!u) {
 		return NO;
@@ -86,7 +82,7 @@
 
 -(NSString *)user {
 	
-	NSString *u = [[NSUserDefaults standardUserDefaults] stringForKey: @"__CURRENT_USER"];
+	NSString *u = [[NSUserDefaults standardUserDefaults] stringForKey: __CURRENT_USER];
 	return u != nil ? u : nil ;
 }
 
@@ -94,152 +90,151 @@
 	
 	return self.tmpIdentity != nil ? self.tmpIdentity : @"";
 }
-
--(void)lockerStoreUsername:(NSString *)username password:(NSString *)password {
-	
-	NSError *error = nil;
-	SAMKeychainQuery *query = [[SAMKeychainQuery alloc] init];
-	query.service = @"__USER_LIST";
-	[query setAccount: username];
-	[query setPassword: password];
-	[query save: &error];
-	
-	if (error) {
-		NSLog(@"lock store user info error: %@", error);
-	}
-}
-
--(NSString *)lockerLoadPasswordOfUser:(NSString *)user {
-	
-	NSError *error = nil;
-	NSArray <NSDictionary <NSString *, id> *> *accounts = [SAMKeychain accountsForService: @"__USER_LIST" error: &error];
-	__block bool isExist = false;
-	
-	[accounts enumerateObjectsUsingBlock:^(NSDictionary<NSString *,id> * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-		if ([obj[kSAMKeychainAccountKey] isEqualToString: user]) {
-			isExist = true;
-			return;
-		}
-	}];
-	
-	if (isExist) {
-		return [SAMKeychain passwordForService: @"__USER_LIST" account: user];
-	}
-	return nil;
-}
+//
+//-(void)lockerStoreUsername:(NSString *)username password:(NSString *)password {
+//	
+//	NSError *error = nil;
+//	SAMKeychainQuery *query = [[SAMKeychainQuery alloc] init];
+//	query.service = @"__USER_LIST";
+//	[query setAccount: username];
+//	[query setPassword: password];
+//	[query save: &error];
+//	
+//	if (error) {
+//		NSLog(@"lock store user info error: %@", error);
+//	}
+//}
+//
+//-(NSString *)lockerLoadPasswordOfUser:(NSString *)user {
+//	
+//	NSError *error = nil;
+//	NSArray <NSDictionary <NSString *, id> *> *accounts = [SAMKeychain accountsForService: @"__USER_LIST" error: &error];
+//	__block bool isExist = false;
+//	
+//	[accounts enumerateObjectsUsingBlock:^(NSDictionary<NSString *,id> * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//		if ([obj[kSAMKeychainAccountKey] isEqualToString: user]) {
+//			isExist = true;
+//			return;
+//		}
+//	}];
+//	
+//	if (isExist) {
+//		return [SAMKeychain passwordForService: @"__USER_LIST" account: user];
+//	}
+//	return nil;
+//}
 
 -(NSString *)password {
-	
-	return self.user != nil ? [self lockerLoadPasswordOfUser: self.user] : nil;
+  return self.user != nil ? [[OfflineCognito shared] password] : nil;
 }
 
-+(NSDictionary *)userFormatOfUser:(NSString *)user password:(NSString *)password identity:(NSString *)identity {
-	
-	NSString *hashPassword = [Encrypt SHA512From: password];
-	
-	return @{@"_user": user, @"_password": hashPassword, @"_userId": identity != nil ? identity : @""};
-}
+//+(NSDictionary *)userFormatOfUser:(NSString *)user password:(NSString *)password identity:(NSString *)identity {
+//	
+//	NSString *hashPassword = [Encrypt SHA512From: password];
+//	
+//	return @{@"_user": user, @"_password": hashPassword, @"_userId": identity != nil ? identity : @""};
+//}
 
--(NSMutableArray *)obtainOfflineUserMutableList {
-	
-	NSArray *offlineUserList = [[NSUserDefaults standardUserDefaults] arrayForKey: @"__USER_LIST"];
-	if (!offlineUserList) {
-		offlineUserList = [NSArray array];
-	}
-	NSMutableArray *offlineUserMutableList = [offlineUserList mutableCopy];
-	return offlineUserMutableList;
-}
+//-(NSMutableArray *)obtainOfflineUserMutableList {
+//	
+//	NSArray *offlineUserList = [[NSUserDefaults standardUserDefaults] arrayForKey: @"__USER_LIST"];
+//	if (!offlineUserList) {
+//		offlineUserList = [NSArray array];
+//	}
+//	NSMutableArray *offlineUserMutableList = [offlineUserList mutableCopy];
+//	return offlineUserMutableList;
+//}
 
 // Only local save user when Log in AWS successfully.
--(void)saveUser:(NSString *)user password:(NSString *)password identity:(NSString *)identity {
-	
-	[self lockerStoreUsername: user password: password];
-	
-	NSMutableArray *offlineUserMutableList = [self obtainOfflineUserMutableList];
-	__block bool isUserExist = false;
-	
-	[offlineUserMutableList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-		
-		NSString *localUsername = obj[@"_user"];
-		NSString *localIdentity = obj[@"_userId"];
-		
-		if (![localUsername isEqualToString: user] &&
-				![localIdentity isEqualToString: identity]) {
-			
-			isUserExist = false;
-		} else {
-			isUserExist = true;
-			*stop = YES;
-			return;
-		}
-	}];
-	
-	if (!isUserExist) {
-		NSLog(@"user: %@ not exist, save a new user and password!", user);
-		NSDictionary *userInfo = [LoginManager userFormatOfUser: user password: password identity: identity];
-		[offlineUserMutableList addObject: userInfo];
-		[[NSUserDefaults standardUserDefaults] setObject: offlineUserMutableList forKey: @"__USER_LIST"];
-		[[NSUserDefaults standardUserDefaults] synchronize];
-		return;
-	}
-	NSLog(@"user %@ is existed, no need to save again", user);
-	// check modify
-	
-	bool isQualified = [self compareOfflineUserListWithUser: user password: password];
-	NSLog(@"is qualified: %@", isQualified ? @"YES" : @"NO");
-	if (!isQualified) {
-		[self modifyUser: user password: password identity: identity];
-  }
-}
+//-(void)saveUser:(NSString *)user password:(NSString *)password identity:(NSString *)identity {
+//	
+//	[self lockerStoreUsername: user password: password];
+//	
+//	NSMutableArray *offlineUserMutableList = [self obtainOfflineUserMutableList];
+//	__block bool isUserExist = false;
+//	
+//	[offlineUserMutableList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//		
+//		NSString *localUsername = obj[@"_user"];
+//		NSString *localIdentity = obj[@"_userId"];
+//		
+//		if (![localUsername isEqualToString: user] &&
+//				![localIdentity isEqualToString: identity]) {
+//			
+//			isUserExist = false;
+//		} else {
+//			isUserExist = true;
+//			*stop = YES;
+//			return;
+//		}
+//	}];
+//	
+//	if (!isUserExist) {
+//		NSLog(@"user: %@ not exist, save a new user and password!", user);
+//		NSDictionary *userInfo = [LoginManager userFormatOfUser: user password: password identity: identity];
+//		[offlineUserMutableList addObject: userInfo];
+//		[[NSUserDefaults standardUserDefaults] setObject: offlineUserMutableList forKey: @"__USER_LIST"];
+//		[[NSUserDefaults standardUserDefaults] synchronize];
+//		return;
+//	}
+//	NSLog(@"user %@ is existed, no need to save again", user);
+//	// check modify
+//	
+//	bool isQualified = [self compareOfflineUserListWithUser: user password: password];
+//	NSLog(@"is qualified: %@", isQualified ? @"YES" : @"NO");
+//	if (!isQualified) {
+//		[self modifyUser: user password: password identity: identity];
+//  }
+//}
 
 //TODO: maybe use when AWS identity changed or forget password.
--(void)modifyUser:(NSString *)user password:(NSString *)password identity:(NSString *)identity {
-	
-	[self lockerStoreUsername: user password: password];
-	
-	NSMutableArray *offlineUserMutableList = [self obtainOfflineUserMutableList];
-	
-	[offlineUserMutableList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-		
-		if ([obj[@"_user"] isEqualToString: user]) {
-			
-			*stop = YES;
-		}
-		
-		if (*stop) {
-			NSLog(@"modify offline user: %@, with password: %@", user, [Encrypt SHA512From: password]);
-			NSDictionary *userInfo = [LoginManager userFormatOfUser: user password: password identity: identity];
-			[offlineUserMutableList replaceObjectAtIndex: idx withObject: userInfo];
-		}
-	}];
-	[[NSUserDefaults standardUserDefaults] setObject: offlineUserMutableList forKey: @"__USER_LIST"];
-	[[NSUserDefaults standardUserDefaults] synchronize];
-}
-
--(BOOL)compareOfflineUserListWithUser:(NSString *)user password:(NSString *)password {
-	
-	NSArray *offlineUserList = [[self obtainOfflineUserMutableList] copy];
-	__block bool isQualified = false;
-	
-	NSString *hashPassword = [Encrypt SHA512From: password];
-	
-	[offlineUserList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-		NSLog(@"user: %@", obj);
-		NSLog(@"user: %@, password: %@", user, hashPassword);
-		
-		
-		if ([obj[@"_user"] isEqualToString: user] &&
-				[obj[@"_password"] isEqualToString: hashPassword]) {
-			
-			isQualified = true;
-			self.tmpIdentity = obj[@"_userId"];
-			*stop = YES;
-			return;
-		}
-		isQualified = false;
-	}];
-	return isQualified;
-}
+//-(void)modifyUser:(NSString *)user password:(NSString *)password identity:(NSString *)identity {
+//	
+//	[self lockerStoreUsername: user password: password];
+//	
+//	NSMutableArray *offlineUserMutableList = [self obtainOfflineUserMutableList];
+//	
+//	[offlineUserMutableList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//		
+//		if ([obj[@"_user"] isEqualToString: user]) {
+//			
+//			*stop = YES;
+//		}
+//		
+//		if (*stop) {
+//			NSLog(@"modify offline user: %@, with password: %@", user, [Encrypt SHA512From: password]);
+//			NSDictionary *userInfo = [LoginManager userFormatOfUser: user password: password identity: identity];
+//			[offlineUserMutableList replaceObjectAtIndex: idx withObject: userInfo];
+//		}
+//	}];
+//	[[NSUserDefaults standardUserDefaults] setObject: offlineUserMutableList forKey: @"__USER_LIST"];
+//	[[NSUserDefaults standardUserDefaults] synchronize];
+//}
+//
+//-(BOOL)compareOfflineUserListWithUser:(NSString *)user password:(NSString *)password {
+//	
+//	NSArray *offlineUserList = [[self obtainOfflineUserMutableList] copy];
+//	__block bool isQualified = false;
+//	
+//	NSString *hashPassword = [Encrypt SHA512From: password];
+//	
+//	[offlineUserList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//		NSLog(@"user: %@", obj);
+//		NSLog(@"user: %@, password: %@", user, hashPassword);
+//		
+//		
+//		if ([obj[@"_user"] isEqualToString: user] &&
+//				[obj[@"_password"] isEqualToString: hashPassword]) {
+//			
+//			isQualified = true;
+//			self.tmpIdentity = obj[@"_userId"];
+//			*stop = YES;
+//			return;
+//		}
+//		isQualified = false;
+//	}];
+//	return isQualified;
+//}
 
 
 #pragma mark - AWSCognitoUserPoolsSignInHandler
@@ -275,18 +270,18 @@
 
 -(void)loginOfflineWithUser:(NSString *)user password:(NSString *)password completion:(void(^)(NSError *error))completion {
 	
-	bool isQualified = [self compareOfflineUserListWithUser: user password: password];
+  bool isQualified = [[OfflineCognito shared] verifyUsername: user password: password];
 	
 	NSError *error;
 	
 	if (isQualified) {
 		
-		[[NSUserDefaults standardUserDefaults] setObject: user forKey: @"__CURRENT_USER"];
-		NSLog(@"offline login success with user: %@", [[NSUserDefaults standardUserDefaults] stringForKey: @"__CURRENT_USER"]);
+		[[NSUserDefaults standardUserDefaults] setObject: user forKey: __CURRENT_USER];
+		NSLog(@"offline login success with user: %@", [[NSUserDefaults standardUserDefaults] stringForKey: __CURRENT_USER]);
 	} else {
 		
 		// To remind user there are not qualified for offline login (because they are not had been register AWS yet)
-		[[NSUserDefaults standardUserDefaults] setObject: @"" forKey: @"__CURRENT_USER"];
+		[[NSUserDefaults standardUserDefaults] setObject: @"" forKey: __CURRENT_USER];
 		NSLog(@"offline login failure with user: %@", user);
 		error = [NSError errorWithDomain: @"com.stan.loginmanager" code: 1 userInfo: @{@"description": @"offline login failure"}];
 		
@@ -294,12 +289,11 @@
 	completion(error);
 }
 
--(void)logoutOfflineCompletion:(void(^)(NSError *error))completion; {
+-(void)logoutOfflineCompletion:(void(^)())completion {
 	
-	[[NSUserDefaults standardUserDefaults] setObject: @"" forKey: @"__CURRENT_USER"];
+	[[NSUserDefaults standardUserDefaults] setObject: @"" forKey: __CURRENT_USER];
 	NSLog(@"offline logout successfully");
-	NSError *error = [NSError errorWithDomain: @"com.stan.loginmanager" code: 1 userInfo: @{@"description": @"offline logout failure"}];
-	completion(error);
+  completion();
 }
 
 @end
@@ -365,11 +359,9 @@
 				
 				confirmAction(task.result.codeDeliveryDetails.destination);
 				self.tmpPassword = password;
-				_hashPassword = [Encrypt SHA512From: password];
 			} else {
-
-				_hashPassword = [Encrypt SHA512From: password];
-				[self saveUser: username password: password identity: [AWSIdentityManager defaultIdentityManager].identityId];
+        // TODO: Need to check multifactor on and off.
+        [[OfflineCognito shared] storeUsername: username password: password];
 				successHandler();
 			}});
 		return nil;
@@ -389,7 +381,7 @@
 				}
 			} else {
 				//return to initial screen
-				[self saveUser: username password: self.tmpPassword identity: [AWSIdentityManager defaultIdentityManager].identityId];
+        [[OfflineCognito shared] storeUsername: username password: self.tmpPassword];
 				successHandler();
 			}
 		});
@@ -461,8 +453,10 @@
 			NSString *username = weakSelf.userPoolSignInFlowStartUserName();
 			NSString *password = weakSelf.userPoolSignInFlowStartPassword();
 			
-			[[NSUserDefaults standardUserDefaults] setObject: username forKey: @"__CURRENT_USER"];
-			[weakSelf saveUser: username password: password identity: weakSelf.awsIdentityId];
+			[[NSUserDefaults standardUserDefaults] setObject: username forKey: __CURRENT_USER];
+			
+      // TODO: Need to modify user and password if user name exist but offline login failure.
+      [[OfflineCognito shared] storeUsername: username password: password];
 			[weakSelf loginOfflineWithUser: username password: password completion:^(NSError *error) {
 				if (!error) {
 					weakSelf.AWSLoginStatusChangedHandler();
@@ -492,7 +486,7 @@
 					NSLog(@"user log out successfully.");
 					[[AWSIdentityManager defaultIdentityManager].credentialsProvider clearKeychain];
 					[[AWSIdentityManager defaultIdentityManager].credentialsProvider clearCredentials];
-					[weakSelf logoutOfflineCompletion:^(NSError *error) {
+					[weakSelf logoutOfflineCompletion:^ {
 						weakSelf.AWSLoginStatusChangedHandler();
 					}];
 

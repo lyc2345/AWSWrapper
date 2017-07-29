@@ -6,7 +6,6 @@
 //  Copyright © 2017 lyc2345. All rights reserved.
 //
 
-#import <Specta/Specta.h>
 @import XCTest;
 
 @interface DynamoTestBase: XCTestCase

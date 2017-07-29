@@ -399,7 +399,7 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 	}];
 }
 
--(void)onResendOfUser:(NSString *)username Success:(void(^)(NSString *destination))successHandler fail:(void(^)(NSError *error))failHandler {
+-(void)onResendOfUser:(NSString *)username success:(void(^)(NSString *destination))successHandler fail:(void(^)(NSError *error))failHandler {
 	
 	//resend the confirmation code
 	self.identityUser = [self.userPool getUser: username];

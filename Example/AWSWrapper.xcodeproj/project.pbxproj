@@ -44,6 +44,10 @@
 		F64D0EA81F1A12E600184DF7 /* DSOPSLocalTests2.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0EA71F1A12E600184DF7 /* DSOPSLocalTests2.m */; };
 		F64D0EAA1F1A155200184DF7 /* DSTests1.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0EA91F1A155200184DF7 /* DSTests1.m */; };
 		F67DA4CB1F079485005751A3 /* DynamoSyncTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F67DA4CA1F079485005751A3 /* DynamoSyncTestVC.m */; };
+		F6B39F1F1F2C3E6300064766 /* LoginTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */; };
+		F6B39F211F2C435100064766 /* RemoteLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F201F2C435100064766 /* RemoteLoginTests.m */; };
+		F6B39F231F2C436900064766 /* LocalLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F221F2C436900064766 /* LocalLoginTests.m */; };
+		F6B39F251F2C437600064766 /* MixLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F241F2C437600064766 /* MixLoginTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +117,11 @@
 		F64D0EA91F1A155200184DF7 /* DSTests1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSTests1.m; sourceTree = "<group>"; };
 		F67DA4C91F079485005751A3 /* DynamoSyncTestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamoSyncTestVC.h; sourceTree = "<group>"; };
 		F67DA4CA1F079485005751A3 /* DynamoSyncTestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamoSyncTestVC.m; sourceTree = "<group>"; };
+		F6B39F1C1F2C3E6300064766 /* LoginTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTestBase.h; sourceTree = "<group>"; };
+		F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTestBase.m; sourceTree = "<group>"; };
+		F6B39F201F2C435100064766 /* RemoteLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteLoginTests.m; sourceTree = "<group>"; };
+		F6B39F221F2C436900064766 /* LocalLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalLoginTests.m; sourceTree = "<group>"; };
+		F6B39F241F2C437600064766 /* MixLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MixLoginTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +287,9 @@
 		F6E790DC1F2B426400A67CE8 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				F6B39F201F2C435100064766 /* RemoteLoginTests.m */,
+				F6B39F221F2C436900064766 /* LocalLoginTests.m */,
+				F6B39F241F2C437600064766 /* MixLoginTests.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -285,6 +297,8 @@
 		F6E790DD1F2B440900A67CE8 /* LoginBase */ = {
 			isa = PBXGroup;
 			children = (
+				F6B39F1C1F2C3E6300064766 /* LoginTestBase.h */,
+				F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */,
 			);
 			name = LoginBase;
 			sourceTree = "<group>";
@@ -516,7 +530,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F64D0E8F1F18BC4400184DF7 /* DSTests1Original.m in Sources */,
+				F6B39F211F2C435100064766 /* RemoteLoginTests.m in Sources */,
+				F6B39F251F2C437600064766 /* MixLoginTests.m in Sources */,
 				F64D0EA01F1A095D00184DF7 /* DSOPSTests1.m in Sources */,
+				F6B39F1F1F2C3E6300064766 /* LoginTestBase.m in Sources */,
 				F64D0EAA1F1A155200184DF7 /* DSTests1.m in Sources */,
 				F63CFCAD1F1C6058004DDE64 /* DSTests4.m in Sources */,
 				F64D0EA81F1A12E600184DF7 /* DSOPSLocalTests2.m in Sources */,
@@ -531,6 +548,7 @@
 				F63CFCB11F1C833F004DDE64 /* DSWrapperTests2.m in Sources */,
 				F64D0EA41F1A0B9000184DF7 /* DSOPSTests2.m in Sources */,
 				F64D0EA21F1A0A9E00184DF7 /* DSLocalTests2.m in Sources */,
+				F6B39F231F2C436900064766 /* LocalLoginTests.m in Sources */,
 				F64D0E971F19F01B00184DF7 /* DSTests2.m in Sources */,
 				F64D0EA61F1A11EF00184DF7 /* DSOPSLocalTests1.m in Sources */,
 			);

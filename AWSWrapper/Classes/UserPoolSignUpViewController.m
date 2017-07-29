@@ -140,7 +140,7 @@
 
 - (IBAction)onResend:(id)sender {
 
-	[[LoginManager shared] onResendOfUser: self.userName.text Success:^(NSString *destination) {
+	[[LoginManager shared] onResendOfUser: self.userName.text success:^(NSString *destination) {
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[[Alert new] showAlertWithTitle: @"Code Resent"

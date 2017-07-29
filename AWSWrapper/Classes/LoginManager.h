@@ -98,7 +98,7 @@
                         fail:(void(^)(NSError *error))failHandler;
 
 -(void)onResendOfUser:(NSString *)username
-              Success:(void(^)(NSString *destination))successHandler
+              success:(void(^)(NSString *destination))successHandler
                  fail:(void(^)(NSError *error))failHandler;
 
 -(void)confirmForgotNewPassword:(NSString *)newPassword

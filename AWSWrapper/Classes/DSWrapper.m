@@ -38,27 +38,6 @@
 	}];
 	return @{@"_add": c};
 }
-/*
- +(NSDictionary *)differentialMergeBetweenClient:(NSDictionary *)client andRemote:(NSDictionary *)remote {
-
-	NSDictionary *client_diff = [DS diffShadowAndClient: client];
-	NSDictionary *remote_diff = [DS diffWins: remote andLoses: client];
-	NSDictionary *mergedClient = [DS mergeInto: client applyDiff: client_diff];
-	NSDictionary *mergedRemote = [DS mergeInto: mergedClient applyDiff: remote_diff];
-
-	//[self push: mergedRemote];
-	return mergedRemote;
- }
-
- +(NSDictionary *)differentialMergeWithClient:(NSDictionary *)client {
-
-	NSDictionary *client_diff = [DS diffShadowAndClient: client];
-
-	NSDictionary *mergedClient = [DS mergeInto: client applyDiff: client_diff];
-
-	//[self push: mergedClient];
-	return mergedClient;
- }*/
 
 +(NSArray *)arrayFromDict:(NSDictionary *)dict {
 

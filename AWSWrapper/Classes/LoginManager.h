@@ -23,6 +23,7 @@
 #pragma mark - AWS SignUp Delegate handler
 
 // MARK: AWSCognitoIdentityInteractiveAuthenticationDelegate delegate
+// This need to implement if you choose enable multiFactorAuthentication both in login and signin.
 @property (copy, nonatomic) id<AWSCognitoIdentityMultiFactorAuthentication>(^startMultiFactorAuthenticationHandler)();
 
 // MARK: AWSCognitoIdentityPasswordAuthentication Delegate

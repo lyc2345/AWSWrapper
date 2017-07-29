@@ -386,9 +386,8 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 
 #pragma mark - AWSCognitoIdentityMultiFactorAuthentication Delegate
 
--(void)getMultiFactorAuthenticationCode:(AWSCognitoIdentityMultifactorAuthenticationInput *)authenticationInput
-                mfaCodeCompletionSource:(AWSTaskCompletionSource<NSString *> *)mfaCodeCompletionSource {
-	self.getMultiFactorAuthenticationCode( authenticationInput, mfaCodeCompletionSource);
+-(void)getMultiFactorAuthenticationCode:(AWSCognitoIdentityMultifactorAuthenticationInput *)authenticationInput mfaCodeCompletionSource:(AWSTaskCompletionSource<NSString *> *)mfaCodeCompletionSource {
+	self.getMultiFactorAuthenticationCode(authenticationInput, mfaCodeCompletionSource);
 }
 
 -(void)didCompleteMultifactorAuthenticationStepWithError:(NSError *)error {

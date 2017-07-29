@@ -8,11 +8,18 @@
 
 #import "LoginTestBase.h"
 #import "DispatchQueue.h"
+#import "OfflineCognito.h"
 @import Specta;
 @import AWSWrapper;
 
 static LoginTestBase *testcase;
+static OfflineCognito *cognito;
 static DispatchQueue *dispatchQueue;
+
+static NSString *sampleUsername = @"sss";
+static NSString *samplePassword = @"88888888";
+
+static NSString *editedPaassword = @"gggggggg";
 
 SpecBegin(LocalLoginTests)
 
@@ -24,30 +31,55 @@ describe(@"Tests1", ^{
       
       testcase = [LoginTestBase new];
       dispatchQueue = [DispatchQueue new];
-      [testcase logoutOfflineCompletion: ^(NSError *error) {
+      cognito = [OfflineCognito shared];
         
-        expect(error).to.beNil;
-        done;
-      }];
+      [cognito storeUsername: sampleUsername
+                      password: samplePassword];
+      done();
     });
+  });
+  
+  it(@"Test start", ^{
     
-    it(@"Test start", ^{
+    waitUntil(^(DoneCallback done) {
       
-      waitUntil(^(DoneCallback done) {
+      [dispatchQueue performGroupedDelay: 2 block: ^{
         
-        [testcase loginOfflineWithUser: @"sss" password: @"88888888" completion: ^(NSError *error) {
+        [testcase loginOfflineWithUser: sampleUsername
+                              password: samplePassword
+                            completion: ^(NSError *error) {
+                              
+                              expect(error).to.beNil;
+                              
+                            }];
+      }];
+      
+      [dispatchQueue performGroupedDelay: 2 block: ^{
+        
+        [testcase logoutOfflineCompletion: ^{
           
-          expect(error).to.beNil;
-          done();
         }];
+      }];
+      
+      [dispatchQueue performGroupedDelay: 2 block: ^{
         
-//        [testcase login: ^(id result, NSError *error) {
-//          
-//          expect(result).notTo.beNil;
-//          expect(error).to.beNil;
-//          done()
-//        }];
-      });
+        [cognito modifyUsername: sampleUsername
+                       password: editedPaassword];
+      }];
+      
+      
+      [dispatchQueue performGroupedDelay: 2 block: ^{
+        
+        [testcase loginOfflineWithUser: sampleUsername
+                              password: editedPaassword
+                            completion: ^(NSError *error) {
+                              
+                              expect(error).to.beNil;
+                              done();
+                            }];
+        
+      }];
+      
     });
     
   });

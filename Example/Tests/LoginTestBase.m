@@ -16,6 +16,8 @@
 @property NSString *username;
 @property NSString *password;
 
+@property XCTestExpectation *expection;
+
 @end
 
 @implementation LoginTestBase
@@ -103,12 +105,34 @@
 
 -(void)loginOfflineWithUser:(NSString *)user password:(NSString *)password completion:(void(^)(NSError *error))completion {
   
-  [self.loginManager loginOfflineWithUser: user password: password completion: completion];
+  self.expection = [self expectationWithDescription: @"Login offline"];
+  
+  __block NSError *_error = nil;
+  [self.loginManager loginOfflineWithUser: user password: password completion: ^(NSError *error) {
+    
+    _error = error;
+    [self.expection fulfill];
+  }];
+  
+  [self waitForExpectationsWithTimeout: 2.0 handler:^(NSError * _Nullable error) {
+    completion(_error);
+  }];
+  
+  
 }
 
--(void)logoutOfflineCompletion:(void(^)(NSError *error))completion {
+-(void)logoutOfflineCompletion:(void(^)(void))completion {
   
-  [self.loginManager logoutOfflineCompletion: completion];
+  self.expection = [self expectationWithDescription: @"Logout offline"];
+  
+  [self.loginManager logoutOfflineCompletion: ^{
+    
+    [self.expection fulfill];
+  }];
+  
+  [self waitForExpectationsWithTimeout: 2.0 handler:^(NSError * _Nullable error) {
+    completion();
+  }];
 }
 
 // MARK: AWS
@@ -125,60 +149,159 @@
              password:(NSString *)password
                 email:(NSString *)email
                   tel:(NSString *)telephone
-        waitToConfirm:(void(^)(NSString *destination))confirmAction
+        waitToConfirm:(void(^)(NSString *destination))waitToConfirm
               success:(void(^)())successHandler
                  fail:(void(^)(NSError *error))failHandler {
+  
+  self.expection = [self expectationWithDescription: @"Logout offline"];
+  
+  __block NSString *_destination = nil;
+  __block BOOL _success = NO;
+  __block NSError *_error = nil;
   
   [self.loginManager signUpWithUser: username
                            password: password
                               email: email
                                 tel: telephone
-                      waitToConfirm: confirmAction
-                            success: successHandler
-                               fail: failHandler];
-}
-
-
--(void)confirmSignUpWithUser:(NSString *)username
-                 confirmCode:(NSString *)confirmCode
-                     success:(void(^)())successHandler
-                        fail:(void(^)(NSError *error))failHandler {
+                      waitToConfirm: ^(NSString *destination) {
+                        _destination = destination;
+                        [self.expection fulfill];
+                      } success: ^ {
+                        _success = YES;
+                        [self.expection fulfill];
+                      } fail: ^(NSError *error) {
+                        _error = error;
+                        [self.expection fulfill];
+                      }];
   
-  [self.loginManager confirmSignUpWithUser: username
-                               confirmCode: confirmCode
-                                   success: successHandler
-                                      fail: failHandler];
+  [self waitForExpectationsWithTimeout: 2.0 handler:^(NSError * _Nullable error) {
+    
+    if (_success == YES) {
+      successHandler();
+      return;
+    }
+    if (_error) {
+      failHandler(_error);
+      return;
+    }
+    if (_destination) {
+      waitToConfirm(_destination);
+      return;
+    }
+  }];
 }
+
+
+// Don't know how to test for confirm by confirm code.
+//-(void)confirmSignUpWithUser:(NSString *)username
+//                 confirmCode:(NSString *)confirmCode
+//                     success:(void(^)())successHandler
+//                        fail:(void(^)(NSError *error))failHandler {
+//  
+//  self.expection = [self expectationWithDescription: @"Logout offline"];
+//  
+//  [self.loginManager confirmSignUpWithUser: username
+//                               confirmCode: confirmCode
+//                                   success: successHandler
+//                                      fail: failHandler];
+//  
+//  [self waitForExpectationsWithTimeout: 2.0 handler:^(NSError * _Nullable error) {
+//    completion();
+//  }];
+//}
 
 -(void)onResendOfUser:(NSString *)username
               success:(void(^)(NSString *destination))successHandler
                  fail:(void(^)(NSError *error))failHandler {
   
-  [self.loginManager onResendOfUser: username success: successHandler fail: failHandler];
+  self.expection = [self expectationWithDescription: @"Logout offline"];
+  
+  __block NSError *_error = nil;
+  __block NSString *_destination = nil;
+  __block BOOL _success = NO;
+  [self.loginManager onResendOfUser: username success: ^(NSString *destination) {
+    _destination = destination;
+    _success = YES;
+    [self.expection fulfill];
+  } fail: ^(NSError *error) {
+    _error = error;
+    [self.expection fulfill];
+  }];
+  
+  [self waitForExpectationsWithTimeout: 2.0 handler:^(NSError * _Nullable error) {
+    _success == YES ? successHandler(_destination) : failHandler(_error);
+  }];
 }
 
--(void)confirmForgotNewPassword:(NSString *)newPassword
-                    confirmCode:(NSString *)confirmCode
-                        success:(void(^)())successHandler
-                           fail:(void(^)(NSError *error))failHandler {
-  
-  [self.loginManager confirmForgotNewPassword: newPassword confirmCode: confirmCode success: successHandler fail: failHandler];
-}
+// Don't know how to test confime code again.
+//-(void)confirmForgotNewPassword:(NSString *)newPassword
+//                    confirmCode:(NSString *)confirmCode
+//                        success:(void(^)())successHandler
+//                           fail:(void(^)(NSError *error))failHandler {
+//  
+//  self.expection = [self expectationWithDescription: @"Logout offline"];
+//  
+//  [self.loginManager confirmForgotNewPassword: newPassword
+//                                  confirmCode: confirmCode
+//                                      success: successHandler
+//                                         fail: failHandler];
+//
+//  [self.expection fulfill];
+//  [self waitForExpectationsWithTimeout: 2.0 handler:^(NSError * _Nullable error) {
+//    completion();
+//  }];
+//  
+//  [self.loginManager confirmForgotNewPassword: newPassword confirmCode: confirmCode success: successHandler fail: failHandler];
+//}
 
 -(void)forgotPasswordOfUser:(NSString *)username
                  completion:(void(^)(NSError *error))completion {
   
-  [self.loginManager forgotPasswordOfUser: username completion: completion];
+  self.expection = [self expectationWithDescription: @"Logout offline"];
+  
+  __block NSError *_error = nil;
+  [self.loginManager forgotPasswordOfUser: username completion: ^(NSError *error) {
+    _error = error;
+    [self.expection fulfill];
+  }];
+  
+  [self waitForExpectationsWithTimeout: 2.0 handler:^(NSError * _Nullable error) {
+    completion(_error);
+  }];
 }
 
 -(void)login:(void(^)(id result, NSError * error))completion {
   
-  [self.loginManager login: completion];
+  self.expection = [self expectationWithDescription: @"Logout offline"];
+  
+  __block id _result = nil;
+  __block id _error = nil;
+  [self.loginManager login: ^(id result, NSError *error) {
+    _result = result;
+    _error = error;
+    [self.expection fulfill];
+  }];
+  
+  [self waitForExpectationsWithTimeout: 2.0 handler:^(NSError * _Nullable error) {
+    completion(_result, _error);
+  }];
 }
 
 -(void)logout:(void(^)(id result, NSError *error))completion {
   
-  [self.loginManager logout: completion];
+  self.expection = [self expectationWithDescription: @"Logout offline"];
+  
+  __block id _result = nil;
+  __block id _error = nil;
+  [self.loginManager logout: ^(id result, NSError *error) {
+    _result = result;
+    _error = error;
+    [self.expection fulfill];
+  }];
+  
+  [self waitForExpectationsWithTimeout: 2.0 handler:^(NSError * _Nullable error) {
+    completion(_result, _error);
+  }];
 }
 
 

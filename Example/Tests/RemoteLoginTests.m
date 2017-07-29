@@ -14,6 +14,9 @@
 static LoginTestBase *testcase;
 static DispatchQueue *dispatchQueue;
 
+static NSString *sampleUsername = @"sss";
+static NSString *samplePassword = @"88888888";
+
 SpecBegin(RemoteTest1)
 
 describe(@"Tests1", ^{
@@ -29,6 +32,28 @@ describe(@"Tests1", ^{
     
     it(@"Test start", ^{
       
+      waitUntil(^(DoneCallback done) {
+        
+        [dispatchQueue performGroupedDelay: 2 block: ^{
+          
+          [testcase login: ^(id result, NSError *error) {
+            
+            expect(result).notTo.beNil;
+            expect(error).to.beNil;
+          }];
+        }];
+        
+        [dispatchQueue performGroupedDelay: 2 block: ^{
+          
+          [testcase logout: ^(id result, NSError *error) {
+            
+            expect(result).notTo.beNil;
+            expect(error).to.beNil;
+            done();
+          }];
+        }];
+        
+      });
       
     });
     

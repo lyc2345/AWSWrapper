@@ -18,21 +18,19 @@
 
 -(void)loginOfflineWithUser:(NSString *)user password:(NSString *)password completion:(void(^)(NSError *error))completion;
 
--(void)logoutOfflineCompletion:(void(^)(NSError *error))completion;
+-(void)logoutOfflineCompletion:(void(^)(void))completion;
 
 
 // AWS
 
 -(BOOL)isAWSLogin;
 -(NSString *)awsIdentityId;
--(NSString *)awsDidSignInNotificationName;
--(NSString *)awsDidSignOutNotificationName;
 
 -(void)signUpWithUser:(NSString *)username
              password:(NSString *)password
                 email:(NSString *)email
                   tel:(NSString *)telephone
-        waitToConfirm:(void(^)(NSString *destination))confirmAction
+        waitToConfirm:(void(^)(NSString *destination))waitToConfirm
               success:(void(^)())successHandler
                  fail:(void(^)(NSError *error))failHandler;
 

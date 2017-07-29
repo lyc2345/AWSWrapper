@@ -16,7 +16,7 @@ static LoginTestBase *testcase;
 static OfflineCognito *cognito;
 static DispatchQueue *dispatchQueue;
 
-static NSString *sampleUsername = @"sss";
+static NSString *sampleUsername = @"jjj";
 static NSString *samplePassword = @"88888888";
 
 static NSString *editedPaassword = @"gggggggg";
@@ -35,15 +35,22 @@ describe(@"Tests1", ^{
         
       [cognito storeUsername: sampleUsername
                       password: samplePassword];
+      
+      [cognito storeUsername: @"jonsnow"
+                    password: @"kingofgameofthrone"];
+      
+      [cognito storeUsername: @"hannibal"
+                    password: @"hannibalthecannibal"];
+      
       done();
     });
   });
   
-  it(@"Test start", ^{
+  it(@"login, logout, modify, login modified, verify - jjj", ^{
     
     waitUntil(^(DoneCallback done) {
       
-      [dispatchQueue performGroupedDelay: 2 block: ^{
+      [dispatchQueue performGroupedDelay: 1 block: ^{
         
         [testcase loginOfflineWithUser: sampleUsername
                               password: samplePassword
@@ -54,34 +61,142 @@ describe(@"Tests1", ^{
                             }];
       }];
       
-      [dispatchQueue performGroupedDelay: 2 block: ^{
+      [dispatchQueue performGroupedDelay: 1 block: ^{
         
         [testcase logoutOfflineCompletion: ^{
           
         }];
       }];
       
-      [dispatchQueue performGroupedDelay: 2 block: ^{
+      [dispatchQueue performGroupedDelay: 1 block: ^{
         
         [cognito modifyUsername: sampleUsername
                        password: editedPaassword];
       }];
       
       
-      [dispatchQueue performGroupedDelay: 2 block: ^{
+      [dispatchQueue performGroupedDelay: 1 block: ^{
         
         [testcase loginOfflineWithUser: sampleUsername
                               password: editedPaassword
                             completion: ^(NSError *error) {
                               
                               expect(error).to.beNil;
-                              done();
+                              
                             }];
+      }];
+
+      [dispatchQueue performGroupedDelay: 1 block: ^{
         
+        BOOL isQualified = [cognito verifyUsername: sampleUsername
+                                          password: editedPaassword];
+        
+        XCTAssertTrue(isQualified);
+        done();
+      }];
+    });
+  });
+  
+  it(@"login, logout, modify, login modified, verify - jon snow", ^{
+    
+    waitUntil(^(DoneCallback done) {
+      
+      [dispatchQueue performGroupedDelay: 1 block: ^{
+        
+        [testcase loginOfflineWithUser: @"jonsnow"
+                              password: @"kingofgameofthrone"
+                            completion: ^(NSError *error) {
+                              
+                              expect(error).to.beNil;
+                              
+                            }];
       }];
       
+      [dispatchQueue performGroupedDelay: 1 block: ^{
+        
+        [testcase logoutOfflineCompletion: ^{
+          
+        }];
+      }];
+      
+      [dispatchQueue performGroupedDelay: 1 block: ^{
+        
+        [cognito modifyUsername: @"jonsnow"
+                       password: @"iamjonsnow"];
+      }];
+      
+      
+      [dispatchQueue performGroupedDelay: 1 block: ^{
+        
+        [testcase loginOfflineWithUser: @"jonsnow"
+                              password: @"iamjonsnow"
+                            completion: ^(NSError *error) {
+                              
+                              expect(error).to.beNil;
+                              
+                            }];
+      }];
+      
+      [dispatchQueue performGroupedDelay: 1 block: ^{
+        
+        BOOL isQualified = [cognito verifyUsername: @"jonsnow"
+                                          password: @"iamjonsnow"];
+        
+        XCTAssertTrue(isQualified);
+        done();
+      }];
     });
+  });
+  
+  it(@"login, logout, modify, login modified, verify - hannibal", ^{
     
+    waitUntil(^(DoneCallback done) {
+      
+      [dispatchQueue performGroupedDelay: 1 block: ^{
+        
+        [testcase loginOfflineWithUser: @"hannibal"
+                              password: @"hannibalthecannibal"
+                            completion: ^(NSError *error) {
+                              
+                              expect(error).to.beNil;
+                              
+                            }];
+      }];
+      
+      [dispatchQueue performGroupedDelay: 1 block: ^{
+        
+        [testcase logoutOfflineCompletion: ^{
+          
+        }];
+      }];
+      
+      [dispatchQueue performGroupedDelay: 1 block: ^{
+        
+        [cognito modifyUsername: @"hannibal"
+                       password: @"hannibaliscannibal"];
+      }];
+      
+      
+      [dispatchQueue performGroupedDelay: 1 block: ^{
+        
+        [testcase loginOfflineWithUser: @"hannibal"
+                              password: @"hannibaliscannibal"
+                            completion: ^(NSError *error) {
+                              
+                              expect(error).to.beNil;
+                              
+                            }];
+      }];
+      
+      [dispatchQueue performGroupedDelay: 1 block: ^{
+        
+        BOOL isQualified = [cognito verifyUsername: @"hannibal"
+                                          password: @"hannibaliscannibal"];
+        
+        XCTAssertTrue(isQualified);
+        done();
+      }];
+    });
   });
   
   

@@ -13,9 +13,6 @@
 
 @property LoginManager *loginManager;
 
-@property NSString *username;
-@property NSString *password;
-
 @property XCTestExpectation *expection;
 
 @end
@@ -28,8 +25,16 @@
   if (self) {
   
     self.loginManager = [LoginManager shared];
-    self.username = @"sss";
-    self.password = @"88888888";
+    
+    /*
+    self.loginManager.authenticationUsernameHandler = self.authenticationUsernameHandler;
+    self.loginManager.didCompletePasswordAuthenticationStepWithErrorHandler = self.didCompletePasswordAuthenticationStepWithErrorHandler;
+    self.loginManager.userPoolSignInFlowStartUserName = self.userPoolSignInFlowStartUserName;
+    self.loginManager.userPoolSignInFlowStartPassword = self.userPoolSignInFlowStartPassword;
+    self.loginManager.startMultiFactorAuthenticationHandler = self.startMultiFactorAuthenticationHandler;
+    self.loginManager.getMultiFactorAuthenticationCode = self.getMultiFactorAuthenticationCode;
+    self.loginManager.multifactorAuthenticationStepWithError = self.multifactorAuthenticationStepWithError;
+     */
     
     __weak typeof(self) weakSelf = self;
     
@@ -84,6 +89,7 @@
         }
       });
     };
+    
     
   }
   return self;

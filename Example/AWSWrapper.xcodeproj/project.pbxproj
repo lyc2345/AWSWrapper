@@ -32,7 +32,6 @@
 		F6B39F1F1F2C3E6300064766 /* LoginTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */; };
 		F6B39F211F2C435100064766 /* RemoteLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F201F2C435100064766 /* RemoteLoginTests.m */; };
 		F6B39F231F2C436900064766 /* LocalLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F221F2C436900064766 /* LocalLoginTests.m */; };
-		F6B39F251F2C437600064766 /* MixLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F241F2C437600064766 /* MixLoginTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,7 +107,6 @@
 		F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTestBase.m; sourceTree = "<group>"; };
 		F6B39F201F2C435100064766 /* RemoteLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteLoginTests.m; sourceTree = "<group>"; };
 		F6B39F221F2C436900064766 /* LocalLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalLoginTests.m; sourceTree = "<group>"; };
-		F6B39F241F2C437600064766 /* MixLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MixLoginTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,7 +274,6 @@
 			children = (
 				F6B39F201F2C435100064766 /* RemoteLoginTests.m */,
 				F6B39F221F2C436900064766 /* LocalLoginTests.m */,
-				F6B39F241F2C437600064766 /* MixLoginTests.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -519,7 +516,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6B39F211F2C435100064766 /* RemoteLoginTests.m in Sources */,
-				F6B39F251F2C437600064766 /* MixLoginTests.m in Sources */,
 				F6B39F1F1F2C3E6300064766 /* LoginTestBase.m in Sources */,
 				F64D0E9E1F1A067900184DF7 /* NSArray+Sort.m in Sources */,
 				F64D0E931F19E7BF00184DF7 /* DispatchQueue.m in Sources */,

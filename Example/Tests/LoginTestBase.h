@@ -10,6 +10,32 @@
 
 @interface LoginTestBase : XCTestCase
 
+/*
+// MARK: AWS Cognito Delegate Handler
+
+// MARK: AWSCognitoIdentityInteractiveAuthenticationDelegate delegate
+@property (copy, nonatomic) id<AWSCognitoIdentityMultiFactorAuthentication>(^startMultiFactorAuthenticationHandler)();
+
+// MARK: AWSCognitoIdentityPasswordAuthentication Delegate
+@property (copy, nonatomic) void(^authenticationUsernameHandler)(NSString *lastKnownUsername);
+@property (copy, nonatomic) void(^didCompletePasswordAuthenticationStepWithErrorHandler)(NSError *error);
+
+// MARK: AWSCognitoIdentityMultiFactorAuthentication Delegate
+@property (nonatomic, copy)	void(^getMultiFactorAuthenticationCode)(AWSCognitoIdentityMultifactorAuthenticationInput *authenticationInput, AWSTaskCompletionSource<NSString *>* mfaCodeCompletionSource);
+@property (nonatomic, copy) void(^multifactorAuthenticationStepWithError)(NSError *error);
+
+// To receive user info from Textfield.
+@property (copy, nonatomic) NSString *(^userPoolSignInFlowStartUserName)();
+@property (copy, nonatomic) NSString *(^userPoolSignInFlowStartPassword)();
+
+// For AWS login status change block. Implement this in where you want to show user is login or not.
+//@property (copy, nonatomic) void(^AWSLoginStatusChangedHandler)();
+ */
+
+@property NSString *username;
+@property NSString *password;
+
+
 // MARK: Offline
 
 -(NSString *)user;

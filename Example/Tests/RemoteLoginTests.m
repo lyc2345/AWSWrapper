@@ -12,6 +12,7 @@
 @import AWSWrapper;
 
 static LoginTestBase *testcase;
+static OfflineCognito *cognito;
 static DispatchQueue *dispatchQueue;
 
 static NSString *sampleUsername = @"sss";
@@ -27,39 +28,81 @@ describe(@"Tests1", ^{
       
       testcase = [LoginTestBase new];
       dispatchQueue = [DispatchQueue new];
+      cognito = [OfflineCognito shared];
       done();
     });
-    
-    it(@"Test start", ^{
-      
-      waitUntil(^(DoneCallback done) {
-        
-        [dispatchQueue performGroupedDelay: 2 block: ^{
-          
-          [testcase login: ^(id result, NSError *error) {
-            
-            expect(result).notTo.beNil;
-            expect(error).to.beNil;
-          }];
-        }];
-        
-        [dispatchQueue performGroupedDelay: 2 block: ^{
-          
-          [testcase logout: ^(id result, NSError *error) {
-            
-            expect(result).notTo.beNil;
-            expect(error).to.beNil;
-            done();
-          }];
-        }];
-        
-      });
-      
-    });
-    
   });
   
+  it(@"Remote login", ^{
+    
+    waitUntil(^(DoneCallback done) {
+      
+      testcase.username = @"uuu";
+      testcase.password = samplePassword;
+      
+      [dispatchQueue performGroupedDelay: 4 block: ^{
+        
+        [testcase login: ^(id result, NSError *error) {
+          
+          expect(result).notTo.beNil;
+          expect(error).to.beNil;
+        }];
+      }];
+      
+      [dispatchQueue performGroupedDelay: 2 block: ^{
+        
+        [testcase logout: ^(id result, NSError *error) {
+          
+          expect(result).notTo.beNil;
+          expect(error).to.beNil;
+        }];
+      }];
+      
+      [dispatchQueue performGroupedDelay: 2 block: ^{
+        
+        BOOL isQualified = [cognito verifyUsername: sampleUsername
+                                          password: samplePassword];
+        
+        XCTAssertTrue(isQualified);
+      }];
+      
+      [dispatchQueue performGroupedDelay: 4 block: ^{
+        
+        testcase.username = sampleUsername;
+        testcase.password = samplePassword;
+        
+        [testcase login: ^(id result, NSError *error) {
+          
+          expect(result).notTo.beNil;
+          expect(error).to.beNil;
+        }];
+      }];
+      
+      [dispatchQueue performGroupedDelay: 2 block: ^{
+        
+        [testcase logout: ^(id result, NSError *error) {
+          
+          expect(result).notTo.beNil;
+          expect(error).to.beNil;
+        }];
+      }];
+      
+      [dispatchQueue performGroupedDelay: 2 block: ^{
+        
+        BOOL isQualified = [cognito verifyUsername: sampleUsername
+                                          password: samplePassword];
+        
+        XCTAssertTrue(isQualified);
+      }];
+      
+      [dispatchQueue performGroupedDelay: 2 block: ^{
+        
+        done();
+      }];
+    });
+  });
   
+
 });
 
 SpecEnd

@@ -8,14 +8,15 @@
 
 #import "LoginManager.h"
 #import "Encrypt.h"
-#import <SAMKeychain/SAMKeychain.h>
 @import AWSMobileHubHelper.AWSIdentityManager;
 @import AWSMobileHubHelper.AWSCognitoUserPoolsSignInProvider;
 @import AWSMobileHubHelper.AWSContentManager;
 
+#import <SAMKeychain/SAMKeychain.h>
 
 NSString * const __CURRENT_USER = @"__CURRENT_USER";
 NSString * const __USER_LIST		= @"__USER_LIST";
+
 
 @interface LoginManager () <AWSCognitoUserPoolsSignInHandler>
 

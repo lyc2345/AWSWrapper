@@ -14,9 +14,6 @@
 
 #import <SAMKeychain/SAMKeychain.h>
 
-NSString * const __CURRENT_USER = @"__CURRENT_USER";
-NSString * const __USER_LIST		= @"__USER_LIST";
-
 
 @interface LoginManager () <AWSCognitoUserPoolsSignInHandler>
 
@@ -79,7 +76,7 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 
 -(BOOL)isLogin {
 	
-	NSString *u = [[NSUserDefaults standardUserDefaults] stringForKey: __CURRENT_USER];
+	NSString *u = [[NSUserDefaults standardUserDefaults] stringForKey: @"__CURRENT_USER"];
 	
 	if (!u) {
 		return NO;
@@ -89,7 +86,7 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 
 -(NSString *)user {
 	
-	NSString *u = [[NSUserDefaults standardUserDefaults] stringForKey: __CURRENT_USER];
+	NSString *u = [[NSUserDefaults standardUserDefaults] stringForKey: @"__CURRENT_USER"];
 	return u != nil ? u : nil ;
 }
 
@@ -102,7 +99,7 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 	
 	NSError *error = nil;
 	SAMKeychainQuery *query = [[SAMKeychainQuery alloc] init];
-	query.service = __USER_LIST;
+	query.service = @"__USER_LIST";
 	[query setAccount: username];
 	[query setPassword: password];
 	[query save: &error];
@@ -115,7 +112,7 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 -(NSString *)lockerLoadPasswordOfUser:(NSString *)user {
 	
 	NSError *error = nil;
-	NSArray <NSDictionary <NSString *, id> *> *accounts = [SAMKeychain accountsForService: __USER_LIST error: &error];
+	NSArray <NSDictionary <NSString *, id> *> *accounts = [SAMKeychain accountsForService: @"__USER_LIST" error: &error];
 	__block bool isExist = false;
 	
 	[accounts enumerateObjectsUsingBlock:^(NSDictionary<NSString *,id> * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -126,7 +123,7 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 	}];
 	
 	if (isExist) {
-		return [SAMKeychain passwordForService: __USER_LIST account: user];
+		return [SAMKeychain passwordForService: @"__USER_LIST" account: user];
 	}
 	return nil;
 }
@@ -145,7 +142,7 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 
 -(NSMutableArray *)obtainOfflineUserMutableList {
 	
-	NSArray *offlineUserList = [[NSUserDefaults standardUserDefaults] arrayForKey: __USER_LIST];
+	NSArray *offlineUserList = [[NSUserDefaults standardUserDefaults] arrayForKey: @"__USER_LIST"];
 	if (!offlineUserList) {
 		offlineUserList = [NSArray array];
 	}
@@ -181,7 +178,7 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 		NSLog(@"user: %@ not exist, save a new user and password!", user);
 		NSDictionary *userInfo = [LoginManager userFormatOfUser: user password: password identity: identity];
 		[offlineUserMutableList addObject: userInfo];
-		[[NSUserDefaults standardUserDefaults] setObject: offlineUserMutableList forKey: __USER_LIST];
+		[[NSUserDefaults standardUserDefaults] setObject: offlineUserMutableList forKey: @"__USER_LIST"];
 		[[NSUserDefaults standardUserDefaults] synchronize];
 		return;
 	}
@@ -215,7 +212,7 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 			[offlineUserMutableList replaceObjectAtIndex: idx withObject: userInfo];
 		}
 	}];
-	[[NSUserDefaults standardUserDefaults] setObject: offlineUserMutableList forKey: __USER_LIST];
+	[[NSUserDefaults standardUserDefaults] setObject: offlineUserMutableList forKey: @"__USER_LIST"];
 	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -284,12 +281,12 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 	
 	if (isQualified) {
 		
-		[[NSUserDefaults standardUserDefaults] setObject: user forKey: __CURRENT_USER];
-		NSLog(@"offline login success with user: %@", [[NSUserDefaults standardUserDefaults] stringForKey: __CURRENT_USER]);
+		[[NSUserDefaults standardUserDefaults] setObject: user forKey: @"__CURRENT_USER"];
+		NSLog(@"offline login success with user: %@", [[NSUserDefaults standardUserDefaults] stringForKey: @"__CURRENT_USER"]);
 	} else {
 		
 		// To remind user there are not qualified for offline login (because they are not had been register AWS yet)
-		[[NSUserDefaults standardUserDefaults] setObject: @"" forKey: __CURRENT_USER];
+		[[NSUserDefaults standardUserDefaults] setObject: @"" forKey: @"__CURRENT_USER"];
 		NSLog(@"offline login failure with user: %@", user);
 		error = [NSError errorWithDomain: @"com.stan.loginmanager" code: 1 userInfo: @{@"description": @"offline login failure"}];
 		
@@ -299,7 +296,7 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 
 -(void)logoutOfflineCompletion:(void(^)(NSError *error))completion; {
 	
-	[[NSUserDefaults standardUserDefaults] setObject: @"" forKey: __CURRENT_USER];
+	[[NSUserDefaults standardUserDefaults] setObject: @"" forKey: @"__CURRENT_USER"];
 	NSLog(@"offline logout successfully");
 	NSError *error = [NSError errorWithDomain: @"com.stan.loginmanager" code: 1 userInfo: @{@"description": @"offline logout failure"}];
 	completion(error);
@@ -464,7 +461,7 @@ NSString * const __USER_LIST		= @"__USER_LIST";
 			NSString *username = weakSelf.userPoolSignInFlowStartUserName();
 			NSString *password = weakSelf.userPoolSignInFlowStartPassword();
 			
-			[[NSUserDefaults standardUserDefaults] setObject: username forKey: __CURRENT_USER];
+			[[NSUserDefaults standardUserDefaults] setObject: username forKey: @"__CURRENT_USER"];
 			[weakSelf saveUser: username password: password identity: weakSelf.awsIdentityId];
 			[weakSelf loginOfflineWithUser: username password: password completion:^(NSError *error) {
 				if (!error) {

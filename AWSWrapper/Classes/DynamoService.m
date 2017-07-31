@@ -8,7 +8,7 @@
 
 #import "DynamoService.h"
 #import "Bookmark.h"
-#import "RecentVisit.h"
+#import "History.h"
 #import "DSWrapper.h"
 #import "Random.h"
 
@@ -18,7 +18,7 @@
 
 @end
 
-#pragma mark DynamoService (Bookmark&RecentlyVisit Format)
+#pragma mark DynamoService (Bookmark&History Format)
 
 @implementation DynamoService
 
@@ -101,7 +101,7 @@
   AWSDynamoDBAttributeValue *identityValue = [AWSDynamoDBAttributeValue new];
   identityValue.S = userId;
   
-  queryInput.tableName =  type == RecordTypeBookmark ? [Bookmark dynamoDBTableName] : [RecentVisit dynamoDBTableName];
+  queryInput.tableName =  type == RecordTypeBookmark ? [Bookmark dynamoDBTableName] : [History dynamoDBTableName];
   queryInput.projectionExpression = @"userId, dicts, commitId, remoteHash";
   queryInput.keyConditionExpression = [NSString stringWithFormat: @"userId = :val"];
   queryInput.expressionAttributeValues = @{@":val": identityValue};
@@ -162,7 +162,7 @@
       return;
     }
     NSLog(@"AWS DynamoDB save successful");
-    RecordType type = [bkSuitable isKindOfClass: [Bookmark class]] ? RecordTypeBookmark : RecordTypeRecentlyVisit;
+    RecordType type = [bkSuitable isKindOfClass: [Bookmark class]] ? RecordTypeBookmark : RecordTypeHistory;
     NSMutableDictionary *record = [NSMutableDictionary dictionary];
     [record setObject: bkSuitable._commitId forKey: @"_commitId"];
     [record setObject: bkSuitable._remoteHash forKey: @"_remoteHash"];
@@ -194,7 +194,7 @@
     
     putItemInput.tableName = [Bookmark dynamoDBTableName];
   } else {
-    putItemInput.tableName = [RecentVisit dynamoDBTableName];
+    putItemInput.tableName = [History dynamoDBTableName];
   }
   
   // commit id
@@ -397,7 +397,7 @@
 		
 		updateInput.tableName = [Bookmark dynamoDBTableName];
 	} else {
-		updateInput.tableName = [RecentVisit dynamoDBTableName];
+		updateInput.tableName = [History dynamoDBTableName];
 	}
 	
 	updateInput.key = @{ @"userId": identityValue, @"id": identityValue };

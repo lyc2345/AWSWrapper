@@ -10,7 +10,7 @@
 
 typedef NS_ENUM(NSInteger, RecordType) {
   RecordTypeBookmark = 0,
-  RecordTypeRecentlyVisit = 1
+  RecordTypeHistory = 1
 };
 
 @interface OfflineDB: NSObject

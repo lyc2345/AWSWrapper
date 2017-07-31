@@ -11,7 +11,7 @@
 #import "Random.h"
 
 NSString *const _bookmark_shadow = @"_client_shadow_Bookmark";
-NSString *const _recently_shadow = @"_client_shadow_RecentlyVisit";
+NSString *const _recently_shadow = @"_client_shadow_History";
 
 NSString * const __BOOKMARKS_LIST				= @"__BOOKMARKS_LIST";
 NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";

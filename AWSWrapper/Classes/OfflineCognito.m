@@ -41,7 +41,8 @@ NSString * const __OFFLILNE_USER_SERVICE = @"__OFFLILNE_USER_SERVICE";
 }
 
 
--(void)storeUsername:(NSString *)username password:(NSString *)password {
+-(void)storeUsername:(NSString *)username
+            password:(NSString *)password {
   
   NSError *error = nil;
   SAMKeychainQuery *query = [[SAMKeychainQuery alloc] init];
@@ -55,7 +56,8 @@ NSString * const __OFFLILNE_USER_SERVICE = @"__OFFLILNE_USER_SERVICE";
   }
 }
 
--(BOOL)verifyUsername:(NSString *)username password:(NSString *)password {
+-(BOOL)verifyUsername:(NSString *)username
+             password:(NSString *)password {
   
   NSError *error = nil;
   NSString *pw = [SAMKeychain passwordForService: __OFFLILNE_USER_SERVICE account: username error: &error];

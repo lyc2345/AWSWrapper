@@ -18,10 +18,8 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 
 @property (nonatomic, strong) NSString *tmpPassword;
 @property (nonatomic, strong) NSString *tmpIdentity;
-
 @property (strong, nonatomic) AWSCognitoIdentityUserPool *userPool;
 @property (strong, nonatomic) AWSCognitoIdentityUser * identityUser;
-
 @property (nonatomic, strong) AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails*>* passwordAuthenticationCompletion;
 
 @end
@@ -31,29 +29,25 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 - (instancetype)init
 {
 	self = [super init];
-	if (self) {
-		
-		self.userPool = [AWSCognitoIdentityUserPool CognitoIdentityUserPoolForKey: AWSCognitoUserPoolsSignInProviderKey];
-		
-		 __weak LoginManager *waekSelf = self;
-		[[NSNotificationCenter defaultCenter] addObserverForName: AWSIdentityManagerDidSignInNotification
-																											object: [AWSIdentityManager defaultIdentityManager]
-																											 queue: [NSOperationQueue mainQueue]
-																									usingBlock: ^(NSNotification * _Nonnull note) {
-																										
-																										waekSelf.AWSLoginStatusChangedHandler != nil ?waekSelf.AWSLoginStatusChangedHandler() : nil;
-																										
+  if (self) {
+    
+    self.userPool = [AWSCognitoIdentityUserPool CognitoIdentityUserPoolForKey: AWSCognitoUserPoolsSignInProviderKey];
+    __weak LoginManager *waekSelf = self;
+    [[NSNotificationCenter defaultCenter] addObserverForName: AWSIdentityManagerDidSignInNotification
+                                                      object: [AWSIdentityManager defaultIdentityManager]
+                                                       queue: [NSOperationQueue mainQueue]
+                                                  usingBlock: ^(NSNotification * _Nonnull note) {
+                                                    
+                                                    waekSelf.AWSLoginStatusChangedHandler != nil ?waekSelf.AWSLoginStatusChangedHandler() : nil;
+                                                  }];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName: AWSIdentityManagerDidSignOutNotification
+                                                      object: [AWSIdentityManager defaultIdentityManager]
+                                                       queue: [NSOperationQueue mainQueue]
+                                                  usingBlock: ^(NSNotification * _Nonnull note) {
+                                                    
+                                                    waekSelf.AWSLoginStatusChangedHandler != nil ?waekSelf.AWSLoginStatusChangedHandler() : nil;
 																									}];
-		
-		[[NSNotificationCenter defaultCenter] addObserverForName: AWSIdentityManagerDidSignOutNotification
-																											object: [AWSIdentityManager defaultIdentityManager]
-																											 queue: [NSOperationQueue mainQueue]
-																									usingBlock: ^(NSNotification * _Nonnull note) {
-																										
-																										waekSelf.AWSLoginStatusChangedHandler != nil ?waekSelf.AWSLoginStatusChangedHandler() : nil;
-																										
-																									}];
-
 	}
 	return self;
 }
@@ -61,7 +55,6 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 +(LoginManager *)shared {
 	
 	static LoginManager *manager = nil;
-	
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		
@@ -81,7 +74,6 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 }
 
 -(NSString *)user {
-	
 	NSString *u = [[NSUserDefaults standardUserDefaults] stringForKey: __CURRENT_USER];
 	return u != nil ? u : nil ;
 }
@@ -91,7 +83,6 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 }
 
 -(NSString *)offlineIdentity {
-	
 	return self.tmpIdentity != nil ? self.tmpIdentity : nil;
 }
 
@@ -104,7 +95,6 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
   NSString *password;
   
   if (!self.userPoolSignInFlowStartUserName && !self.userPoolSignInFlowStartPassword) {
-    
     NSLog(@"handleUserPoolSignInFlowStart is error in function: %s, line: %d", __FUNCTION__, __LINE__);
     NSLog(@"userPoolSignInFlowStartUserName || userPoolSignInFlowStartPassword is null");
     username = self.user;
@@ -114,7 +104,6 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
     username = self.userPoolSignInFlowStartUserName();
     password = self.userPoolSignInFlowStartPassword();
   }
-  
   self.passwordAuthenticationCompletion.result = [[AWSCognitoIdentityPasswordAuthenticationDetails alloc] initWithUsername: username password: password];
 }
 
@@ -132,11 +121,9 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 	NSError *error;
 	
 	if (isQualified) {
-		
 		[[NSUserDefaults standardUserDefaults] setObject: user forKey: __CURRENT_USER];
 		NSLog(@"offline login success with user: %@", [[NSUserDefaults standardUserDefaults] stringForKey: __CURRENT_USER]);
 	} else {
-		
 		// To remind user there are not qualified for offline login (because they are not had been register AWS yet)
 		[[NSUserDefaults standardUserDefaults] setObject: nil forKey: __CURRENT_USER];
 		NSLog(@"offline login failure with user: %@", user);
@@ -150,7 +137,9 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 	
 	[[NSUserDefaults standardUserDefaults] setObject: nil forKey: __CURRENT_USER];
 	NSLog(@"offline logout successfully");
-  completion();
+  dispatch_async(dispatch_get_main_queue(), ^{
+    completion();
+  });
 }
 
 @end
@@ -160,22 +149,18 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 @implementation LoginManager (AWS)
 
 -(NSString *)awsDidSignInNotificationName {
-	
 	return AWSIdentityManagerDidSignInNotification;
 }
 
 -(NSString *)awsDidSignOutNotificationName {
-	
 	return AWSIdentityManagerDidSignOutNotification;
 }
 
 -(BOOL)isAWSLogin {
-	
 	return [[AWSIdentityManager defaultIdentityManager] isLoggedIn];
 }
 
 -(NSString *)awsIdentityId {
-	
 	return [AWSIdentityManager defaultIdentityManager].identityId;
 }
 
@@ -304,10 +289,10 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 -(void)login:(void(^)(id _Nullable result, NSError * _Nullable error))completion {
 	
 	__weak typeof(self) weakSelf = self;
-	
 	[[AWSCognitoUserPoolsSignInProvider sharedInstance] setInteractiveAuthDelegate: self];
-	
-	[[AWSIdentityManager defaultIdentityManager] loginWithSignInProvider: [AWSCognitoUserPoolsSignInProvider sharedInstance] completionHandler:^(id  _Nullable result, NSError * _Nullable error) {
+  AWSCognitoUserPoolsSignInProvider *signInProvider = [AWSCognitoUserPoolsSignInProvider sharedInstance];
+  signInProvider.userName = self.userPoolSignInFlowStartUserName();
+	[[AWSIdentityManager defaultIdentityManager] loginWithSignInProvider: signInProvider completionHandler:^(id  _Nullable result, NSError * _Nullable error) {
 		
 		if (!error) {
 			NSLog(@"user login successfully with result: %@", result);
@@ -322,7 +307,6 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 				}
 			}];
 		}
-		
 		completion(result, error);
 	}];
 }
@@ -331,8 +315,9 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 -(void)logout:(void(^)(id result, NSError *error))completion {
   
   __weak typeof(self) weakSelf = self;
-		
-		[[AWSIdentityManager defaultIdentityManager] logoutWithCompletionHandler:^(id result, NSError *error) {
+  if ([[AWSIdentityManager defaultIdentityManager] isLoggedIn] == YES) {
+    [[AWSCognitoUserPoolsSignInProvider sharedInstance] reloadSession];
+    [[AWSIdentityManager defaultIdentityManager] logoutWithCompletionHandler:^(id result, NSError *error) {
       
       if (!error) {
         [[AWSIdentityManager defaultIdentityManager].credentialsProvider clearKeychain];
@@ -347,6 +332,7 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
       //NSLog(@"%@: %@ Logout Successful", LOG_TAG, [signInProvider getDisplayName]);
       completion(result, error);
     }];
+  }
 }
 
 #pragma mark - AWSCognitoIdentityInteractiveAuthentication Delegate
@@ -357,13 +343,13 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 }
 
 -(id<AWSCognitoIdentityMultiFactorAuthentication>) startMultiFactorAuthentication {
-	
 	return self.startMultiFactorAuthenticationHandler();
 }
 
 #pragma mark - AWSCognitoIdentityPasswordAuthentication Delegate
 
--(void) getPasswordAuthenticationDetails: (AWSCognitoIdentityPasswordAuthenticationInput *) authenticationInput  passwordAuthenticationCompletionSource: (AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails *> *) passwordAuthenticationCompletionSource {
+-(void) getPasswordAuthenticationDetails: (AWSCognitoIdentityPasswordAuthenticationInput *) authenticationInput
+  passwordAuthenticationCompletionSource: (AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails *> *) passwordAuthenticationCompletionSource {
 	
 	self.passwordAuthenticationCompletion = passwordAuthenticationCompletionSource;
 	dispatch_async(dispatch_get_main_queue(), ^{
@@ -372,6 +358,7 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 }
 
 -(void) didCompletePasswordAuthenticationStepWithError:(NSError*) error {
+  
 	if(error){
 		dispatch_async(dispatch_get_main_queue(), ^{
 			self.didCompletePasswordAuthenticationStepWithErrorHandler(error);
@@ -381,13 +368,12 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 
 #pragma mark - AWSCognitoIdentityMultiFactorAuthentication Delegate
 
--(void)getMultiFactorAuthenticationCode:(AWSCognitoIdentityMultifactorAuthenticationInput *)authenticationInput mfaCodeCompletionSource:(AWSTaskCompletionSource<NSString *> *)mfaCodeCompletionSource {
-	
+-(void)getMultiFactorAuthenticationCode:(AWSCognitoIdentityMultifactorAuthenticationInput *)authenticationInput
+                mfaCodeCompletionSource:(AWSTaskCompletionSource<NSString *> *)mfaCodeCompletionSource {
 	self.getMultiFactorAuthenticationCode( authenticationInput, mfaCodeCompletionSource);
 }
 
 -(void)didCompleteMultifactorAuthenticationStepWithError:(NSError *)error {
-	
 	self.multifactorAuthenticationStepWithError(error);
 }
 

@@ -329,37 +329,22 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 
 
 -(void)logout:(void(^)(id result, NSError *error))completion {
-	
-	__weak typeof(self) weakSelf = self;
-	
-	if ([self isAWSLogin]) {
+  
+  __weak typeof(self) weakSelf = self;
 		
 		[[AWSIdentityManager defaultIdentityManager] logoutWithCompletionHandler:^(id result, NSError *error) {
-			
-			dispatch_async(dispatch_get_main_queue(), ^{
-				
-				NSLog(@"result: %@", result);
-				
-				if (![self isAWSLogin]) {
-					
-					NSLog(@"user log out successfully.");
-					[[AWSIdentityManager defaultIdentityManager].credentialsProvider clearKeychain];
-					[[AWSIdentityManager defaultIdentityManager].credentialsProvider clearCredentials];
-					[weakSelf logoutOfflineCompletion:^ {
-						weakSelf.AWSLoginStatusChangedHandler();
-					}];
-
-				}
-				if (!error) {
-					
-				}
-				completion(result, error);
-			});
-		}];
-		//NSLog(@"%@: %@ Logout Successful", LOG_TAG, [signInProvider getDisplayName]);
-	} else {
-		assert(false);
-	}
+      
+      if (!error) {
+        [[AWSIdentityManager defaultIdentityManager].credentialsProvider clearKeychain];
+        [[AWSIdentityManager defaultIdentityManager].credentialsProvider clearCredentials];
+        [weakSelf logoutOfflineCompletion:^ {
+          NSLog(@"user log out successfully.");
+          weakSelf.AWSLoginStatusChangedHandler();
+        }];
+      }
+      //NSLog(@"%@: %@ Logout Successful", LOG_TAG, [signInProvider getDisplayName]);
+      completion(result, error);
+    }];
 }
 
 #pragma mark - AWSCognitoIdentityInteractiveAuthentication Delegate

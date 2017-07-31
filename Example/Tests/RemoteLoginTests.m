@@ -51,19 +51,19 @@ describe(@"Tests1", ^{
       
       [dispatchQueue performGroupedDelay: 2 block: ^{
         
+        BOOL isQualified = [cognito verifyUsername: sampleUsername
+                                          password: samplePassword];
+        
+        XCTAssertTrue(isQualified);
+      }];
+      
+      [dispatchQueue performGroupedDelay: 2 block: ^{
+        
         [testcase logout: ^(id result, NSError *error) {
           
           expect(result).notTo.beNil;
           expect(error).to.beNil;
         }];
-      }];
-      
-      [dispatchQueue performGroupedDelay: 2 block: ^{
-        
-        BOOL isQualified = [cognito verifyUsername: sampleUsername
-                                          password: samplePassword];
-        
-        XCTAssertTrue(isQualified);
       }];
       
       [dispatchQueue performGroupedDelay: 4 block: ^{
@@ -80,6 +80,15 @@ describe(@"Tests1", ^{
       
       [dispatchQueue performGroupedDelay: 2 block: ^{
         
+        BOOL isQualified = [cognito verifyUsername: sampleUsername
+                                          password: samplePassword];
+        
+        XCTAssertTrue(isQualified);
+        done();
+      }];
+      
+      [dispatchQueue performGroupedDelay: 2 block: ^{
+        
         [testcase logout: ^(id result, NSError *error) {
           
           expect(result).notTo.beNil;
@@ -87,18 +96,6 @@ describe(@"Tests1", ^{
         }];
       }];
       
-      [dispatchQueue performGroupedDelay: 2 block: ^{
-        
-        BOOL isQualified = [cognito verifyUsername: sampleUsername
-                                          password: samplePassword];
-        
-        XCTAssertTrue(isQualified);
-      }];
-      
-      [dispatchQueue performGroupedDelay: 2 block: ^{
-        
-        done();
-      }];
     });
   });
   

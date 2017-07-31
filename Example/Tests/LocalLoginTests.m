@@ -46,7 +46,7 @@ describe(@"Tests1", ^{
     });
   });
   
-  it(@"login, logout, modify, login modified, verify - jjj", ^{
+  it(@"login, logout, modify, login modified, verify", ^{
     
     waitUntil(^(DoneCallback done) {
       
@@ -94,12 +94,7 @@ describe(@"Tests1", ^{
         XCTAssertTrue(isQualified);
         done();
       }];
-    });
-  });
-  
-  it(@"login, logout, modify, login modified, verify - jon snow", ^{
-    
-    waitUntil(^(DoneCallback done) {
+      
       
       [dispatchQueue performGroupedDelay: 1 block: ^{
         
@@ -143,14 +138,8 @@ describe(@"Tests1", ^{
                                           password: @"iamjonsnow"];
         
         XCTAssertTrue(isQualified);
-        done();
       }];
-    });
-  });
-  
-  it(@"login, logout, modify, login modified, verify - hannibal", ^{
-    
-    waitUntil(^(DoneCallback done) {
+      
       
       [dispatchQueue performGroupedDelay: 1 block: ^{
         
@@ -194,11 +183,35 @@ describe(@"Tests1", ^{
                                           password: @"hannibaliscannibal"];
         
         XCTAssertTrue(isQualified);
+      }];
+      
+      [dispatchQueue performGroupedDelay: 1 block: ^{
+        
+        NSError *error = nil;
+        NSArray *accounts = [cognito allAccount: &error];
+        
+        NSLog(@"accounts: %@", accounts);
         done();
       }];
+      
+      
     });
   });
   
+//  it(@"login, logout, modify, login modified, verify - jon snow", ^{
+//    
+//    waitUntil(^(DoneCallback done) {
+//      
+//      
+//    });
+//  });
+//  
+//  it(@"login, logout, modify, login modified, verify - hannibal", ^{
+//    
+//    waitUntil(^(DoneCallback done) {
+//      
+//    });
+//  });
   
 });
 

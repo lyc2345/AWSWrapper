@@ -25,6 +25,7 @@
   if (self) {
   
     self.loginManager = [LoginManager shared];
+
     
     /*
     self.loginManager.authenticationUsernameHandler = self.authenticationUsernameHandler;
@@ -129,7 +130,7 @@
 
 -(void)logoutOfflineCompletion:(void(^)(void))completion {
   
-  self.expection = [self expectationWithDescription: @"Logout offline"];
+  self.expection = [self expectationWithDescription: @"logout Offline"];
   
   [self.loginManager logoutOfflineCompletion: ^{
     
@@ -159,7 +160,7 @@
               success:(void(^)())successHandler
                  fail:(void(^)(NSError *error))failHandler {
   
-  self.expection = [self expectationWithDescription: @"Logout offline"];
+  self.expection = [self expectationWithDescription: @"signUpWithUser"];
   
   __block NSString *_destination = nil;
   __block BOOL _success = NO;
@@ -220,7 +221,7 @@
               success:(void(^)(NSString *destination))successHandler
                  fail:(void(^)(NSError *error))failHandler {
   
-  self.expection = [self expectationWithDescription: @"Logout offline"];
+  self.expection = [self expectationWithDescription: @"onResendOfUser"];
   
   __block NSError *_error = nil;
   __block NSString *_destination = nil;
@@ -263,7 +264,7 @@
 -(void)forgotPasswordOfUser:(NSString *)username
                  completion:(void(^)(NSError *error))completion {
   
-  self.expection = [self expectationWithDescription: @"Logout offline"];
+  self.expection = [self expectationWithDescription: @"forgotPasswordOfUser"];
   
   __block NSError *_error = nil;
   [self.loginManager forgotPasswordOfUser: username completion: ^(NSError *error) {
@@ -278,7 +279,7 @@
 
 -(void)login:(void(^)(id result, NSError * error))completion {
   
-  self.expection = [self expectationWithDescription: @"Logout offline"];
+  self.expection = [self expectationWithDescription: @"Login remote"];
   
   __block id _result = nil;
   __block id _error = nil;
@@ -295,7 +296,7 @@
 
 -(void)logout:(void(^)(id result, NSError *error))completion {
   
-  self.expection = [self expectationWithDescription: @"Logout offline"];
+  self.expection = [self expectationWithDescription: @"Logout remote"];
   
   __block id _result = nil;
   __block id _error = nil;

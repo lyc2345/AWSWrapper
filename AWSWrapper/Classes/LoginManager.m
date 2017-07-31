@@ -133,12 +133,12 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 	completion(error);
 }
 
--(void)logoutOfflineCompletion:(void(^)())completion {
+-(void)logoutOfflineCompletion:(void(^)(void))completion {
 	
 	[[NSUserDefaults standardUserDefaults] setObject: nil forKey: __CURRENT_USER];
 	NSLog(@"offline logout successfully");
   dispatch_async(dispatch_get_main_queue(), ^{
-    completion();
+    if (completion) { completion(); };
   });
 }
 

@@ -47,7 +47,7 @@
 @interface LoginManager (Offline)
 
 -(void)loginOfflineWithUser:(NSString *)user password:(NSString *)password completion:(void(^)(NSError *error))completion;
--(void)logoutOfflineCompletion:(void(^)())completion;
+-(void)logoutOfflineCompletion:(void(^)(void))completion;
 
 @end
 

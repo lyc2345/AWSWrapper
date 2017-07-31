@@ -111,34 +111,12 @@
 
 -(void)loginOfflineWithUser:(NSString *)user password:(NSString *)password completion:(void(^)(NSError *error))completion {
   
-  self.expection = [self expectationWithDescription: @"Login offline"];
-  
-  __block NSError *_error = nil;
-  [self.loginManager loginOfflineWithUser: user password: password completion: ^(NSError *error) {
-    
-    _error = error;
-    [self.expection fulfill];
-  }];
-  
-  [self waitForExpectationsWithTimeout: 2.0 handler:^(NSError * _Nullable error) {
-    completion(_error);
-  }];
-  
-  
+  [self.loginManager loginOfflineWithUser: user password: password completion: completion];
 }
 
 -(void)logoutOfflineCompletion:(void(^)(void))completion {
   
-  self.expection = [self expectationWithDescription: @"logout Offline"];
-  
-  [self.loginManager logoutOfflineCompletion: ^{
-    
-    [self.expection fulfill];
-  }];
-  
-  [self waitForExpectationsWithTimeout: 2.0 handler:^(NSError * _Nullable error) {
-    completion();
-  }];
+  [self.loginManager logoutOfflineCompletion: completion];
 }
 
 // MARK: AWS
@@ -159,42 +137,13 @@
               success:(void(^)())successHandler
                  fail:(void(^)(NSError *error))failHandler {
   
-  self.expection = [self expectationWithDescription: @"signUpWithUser"];
-  
-  __block NSString *_destination = nil;
-  __block BOOL _success = NO;
-  __block NSError *_error = nil;
-  
   [self.loginManager signUpWithUser: username
                            password: password
                               email: email
                                 tel: telephone
-                      waitToConfirm: ^(NSString *destination) {
-                        _destination = destination;
-                        [self.expection fulfill];
-                      } success: ^ {
-                        _success = YES;
-                        [self.expection fulfill];
-                      } fail: ^(NSError *error) {
-                        _error = error;
-                        [self.expection fulfill];
-                      }];
-  
-  [self waitForExpectationsWithTimeout: 2.0 handler:^(NSError * _Nullable error) {
-    
-    if (_success == YES) {
-      successHandler();
-      return;
-    }
-    if (_error) {
-      failHandler(_error);
-      return;
-    }
-    if (_destination) {
-      waitToConfirm(_destination);
-      return;
-    }
-  }];
+                      waitToConfirm: waitToConfirm
+                            success: successHandler
+                               fail: failHandler];
 }
 
 
@@ -219,24 +168,8 @@
 -(void)onResendOfUser:(NSString *)username
               success:(void(^)(NSString *destination))successHandler
                  fail:(void(^)(NSError *error))failHandler {
-  
-  self.expection = [self expectationWithDescription: @"onResendOfUser"];
-  
-  __block NSError *_error = nil;
-  __block NSString *_destination = nil;
-  __block BOOL _success = NO;
-  [self.loginManager onResendOfUser: username success: ^(NSString *destination) {
-    _destination = destination;
-    _success = YES;
-    [self.expection fulfill];
-  } fail: ^(NSError *error) {
-    _error = error;
-    [self.expection fulfill];
-  }];
-  
-  [self waitForExpectationsWithTimeout: 2.0 handler:^(NSError * _Nullable error) {
-    _success == YES ? successHandler(_destination) : failHandler(_error);
-  }];
+
+  [self.loginManager onResendOfUser: username success: successHandler fail: failHandler];
 }
 
 // Don't know how to test confime code again.
@@ -263,51 +196,17 @@
 -(void)forgotPasswordOfUser:(NSString *)username
                  completion:(void(^)(NSError *error))completion {
   
-  self.expection = [self expectationWithDescription: @"forgotPasswordOfUser"];
-  
-  __block NSError *_error = nil;
-  [self.loginManager forgotPasswordOfUser: username completion: ^(NSError *error) {
-    _error = error;
-    [self.expection fulfill];
-  }];
-  
-  [self waitForExpectationsWithTimeout: 2.0 handler:^(NSError * _Nullable error) {
-    completion(_error);
-  }];
+  [self.loginManager forgotPasswordOfUser: username completion: completion];
 }
 
 -(void)login:(void(^)(id result, NSError * error))completion {
-  
-  self.expection = [self expectationWithDescription: @"Login remote"];
-  
-  __block id _result = nil;
-  __block id _error = nil;
-  [self.loginManager login: ^(id result, NSError *error) {
-    _result = result;
-    _error = error;
-    [self.expection fulfill];
-  }];
-  
-  [self waitForExpectationsWithTimeout: 2.0 handler:^(NSError * _Nullable error) {
-    completion(_result, _error);
-  }];
+
+  [self.loginManager login: completion];
 }
 
 -(void)logout:(void(^)(id result, NSError *error))completion {
   
-  self.expection = [self expectationWithDescription: @"Logout remote"];
-  
-  __block id _result = nil;
-  __block id _error = nil;
-  [self.loginManager logout: ^(id result, NSError *error) {
-    _result = result;
-    _error = error;
-    [self.expection fulfill];
-  }];
-  
-  [self waitForExpectationsWithTimeout: 2.0 handler:^(NSError * _Nullable error) {
-    completion(_result, _error);
-  }];
+  [self.loginManager logout: completion];
 }
 
 

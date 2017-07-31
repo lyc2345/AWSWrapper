@@ -21,7 +21,7 @@ static NSString *samplePassword = @"88888888";
 
 static NSString *editedPaassword = @"gggggggg";
 
-SpecBegin(LocalLoginTests)
+SpecBegin(ALocalLoginTests)
 
 describe(@"Tests1", ^{
   

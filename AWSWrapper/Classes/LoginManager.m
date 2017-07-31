@@ -340,7 +340,9 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
         [weakSelf logoutOfflineCompletion:^ {
           NSLog(@"user log out successfully.");
           weakSelf.AWSLoginStatusChangedHandler();
+          completion(result, error);
         }];
+        return;
       }
       //NSLog(@"%@: %@ Logout Successful", LOG_TAG, [signInProvider getDisplayName]);
       completion(result, error);

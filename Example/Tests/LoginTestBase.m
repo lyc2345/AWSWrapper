@@ -40,7 +40,7 @@
     __weak typeof(self) weakSelf = self;
     
     // Use LoginManager should set up all the handler
-    [LoginManager shared].authenticationUsernameHandler = ^(NSString *lastKnownUsername) {
+    self.loginManager.authenticationUsernameHandler = ^(NSString *lastKnownUsername) {
       weakSelf.username = lastKnownUsername;
     };
     
@@ -90,7 +90,6 @@
         }
       });
     };
-    
     
   }
   return self;

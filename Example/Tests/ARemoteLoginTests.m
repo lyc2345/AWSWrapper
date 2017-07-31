@@ -18,7 +18,7 @@ static DispatchQueue *dispatchQueue;
 static NSString *sampleUsername = @"sss";
 static NSString *samplePassword = @"88888888";
 
-SpecBegin(RemoteTest1)
+SpecBegin(ARemoteLoginTests)
 
 describe(@"Tests1", ^{
   
@@ -55,46 +55,47 @@ describe(@"Tests1", ^{
                                           password: samplePassword];
         
         XCTAssertTrue(isQualified);
-      }];
-      
-      [dispatchQueue performGroupedDelay: 2 block: ^{
-        
-        [testcase logout: ^(id result, NSError *error) {
-          
-          expect(result).notTo.beNil;
-          expect(error).to.beNil;
-        }];
-      }];
-      
-      [dispatchQueue performGroupedDelay: 4 block: ^{
-        
-        testcase.username = sampleUsername;
-        testcase.password = samplePassword;
-        
-        [testcase login: ^(id result, NSError *error) {
-          
-          expect(result).notTo.beNil;
-          expect(error).to.beNil;
-        }];
-      }];
-      
-      [dispatchQueue performGroupedDelay: 2 block: ^{
-        
-        BOOL isQualified = [cognito verifyUsername: sampleUsername
-                                          password: samplePassword];
-        
-        XCTAssertTrue(isQualified);
         done();
       }];
       
-      [dispatchQueue performGroupedDelay: 2 block: ^{
-        
-        [testcase logout: ^(id result, NSError *error) {
-          
-          expect(result).notTo.beNil;
-          expect(error).to.beNil;
-        }];
-      }];
+//      [dispatchQueue performGroupedDelay: 2 block: ^{
+//        
+//        [testcase logout: ^(id result, NSError *error) {
+//          
+//          expect(result).notTo.beNil;
+//          expect(error).to.beNil;
+//        }];
+//      }];
+//      
+//      [dispatchQueue performGroupedDelay: 4 block: ^{
+//        
+//        testcase.username = sampleUsername;
+//        testcase.password = samplePassword;
+//        
+//        [testcase login: ^(id result, NSError *error) {
+//          
+//          expect(result).notTo.beNil;
+//          expect(error).to.beNil;
+//        }];
+//      }];
+//      
+//      [dispatchQueue performGroupedDelay: 2 block: ^{
+//        
+//        BOOL isQualified = [cognito verifyUsername: sampleUsername
+//                                          password: samplePassword];
+//        
+//        XCTAssertTrue(isQualified);
+//        done();
+//      }];
+//      
+//      [dispatchQueue performGroupedDelay: 2 block: ^{
+//        
+//        [testcase logout: ^(id result, NSError *error) {
+//          
+//          expect(result).notTo.beNil;
+//          expect(error).to.beNil;
+//        }];
+//      }];
       
     });
   });

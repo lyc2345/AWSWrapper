@@ -45,8 +45,8 @@
 		F64D0E9E1F1A067900184DF7 /* NSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E9D1F1A067900184DF7 /* NSArray+Sort.m */; };
 		F67DA4CB1F079485005751A3 /* DynamoSyncTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F67DA4CA1F079485005751A3 /* DynamoSyncTestVC.m */; };
 		F6B39F1F1F2C3E6300064766 /* LoginTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */; };
-		F6B39F211F2C435100064766 /* RemoteLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F201F2C435100064766 /* RemoteLoginTests.m */; };
-		F6B39F231F2C436900064766 /* LocalLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F221F2C436900064766 /* LocalLoginTests.m */; };
+		F6B39F211F2C435100064766 /* ARemoteLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F201F2C435100064766 /* ARemoteLoginTests.m */; };
+		F6B39F231F2C436900064766 /* ALocalLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F221F2C436900064766 /* ALocalLoginTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,8 +120,8 @@
 		F6A61F6C1F2C759600892C61 /* OfflineCognitoTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineCognitoTestBase.m; sourceTree = "<group>"; };
 		F6B39F1C1F2C3E6300064766 /* LoginTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTestBase.h; sourceTree = "<group>"; };
 		F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTestBase.m; sourceTree = "<group>"; };
-		F6B39F201F2C435100064766 /* RemoteLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteLoginTests.m; sourceTree = "<group>"; };
-		F6B39F221F2C436900064766 /* LocalLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalLoginTests.m; sourceTree = "<group>"; };
+		F6B39F201F2C435100064766 /* ARemoteLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARemoteLoginTests.m; sourceTree = "<group>"; };
+		F6B39F221F2C436900064766 /* ALocalLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALocalLoginTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,8 +287,8 @@
 		F6E790DC1F2B426400A67CE8 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				F6B39F201F2C435100064766 /* RemoteLoginTests.m */,
-				F6B39F221F2C436900064766 /* LocalLoginTests.m */,
+				F6B39F201F2C435100064766 /* ARemoteLoginTests.m */,
+				F6B39F221F2C436900064766 /* ALocalLoginTests.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -539,7 +539,7 @@
 				F649A5A41F2CE2D30063DCCF /* DSWrapperTests.m in Sources */,
 				F649A5A31F2CE2D30063DCCF /* DSOPSLocalTests2.m in Sources */,
 				F649A59E1F2CE2D30063DCCF /* DSLocalTests1.m in Sources */,
-				F6B39F211F2C435100064766 /* RemoteLoginTests.m in Sources */,
+				F6B39F211F2C435100064766 /* ARemoteLoginTests.m in Sources */,
 				F649A5A51F2CE2D30063DCCF /* DSWrapperTests2.m in Sources */,
 				F649A5A11F2CE2D30063DCCF /* DSLocalTests4.m in Sources */,
 				F6B39F1F1F2C3E6300064766 /* LoginTestBase.m in Sources */,
@@ -548,7 +548,7 @@
 				6003F5BC195388D20070C39A /* DynamoTestBase.m in Sources */,
 				F649A59D1F2CE2D30063DCCF /* DSOPSTests2.m in Sources */,
 				F649A59C1F2CE2D30063DCCF /* DSOPSTests1.m in Sources */,
-				F6B39F231F2C436900064766 /* LocalLoginTests.m in Sources */,
+				F6B39F231F2C436900064766 /* ALocalLoginTests.m in Sources */,
 				F649A5991F2CE2D30063DCCF /* DSTests2.m in Sources */,
 				F649A5A21F2CE2D30063DCCF /* DSOPSLocalTests1.m in Sources */,
 			);

@@ -98,6 +98,11 @@
         completion:(void(^)(NSDictionary *newShadow, NSError *error))completion {
   
   self.expection = [self expectationWithDescription: spec];
+  
+  self.loginManager = [LoginManager shared];
+  
+  NSAssert(!(!_commitId && !commitId), @"test need to login");
+  
   NSDictionary *client = @{@"_commitId": commitId == nil ? _commitId : commitId,
                            @"_remoteHash": remoteHash == nil ? _remoteHash : remoteHash,
                            @"_dicts": dict

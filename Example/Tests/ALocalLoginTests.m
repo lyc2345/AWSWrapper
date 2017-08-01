@@ -32,15 +32,18 @@ describe(@"Tests1", ^{
       testcase = [LoginTestBase new];
       dispatchQueue = [DispatchQueue new];
       cognito = [OfflineCognito shared];
-        
+      
       [cognito storeUsername: sampleUsername
-                      password: samplePassword];
+                    password: samplePassword
+                  identityId: @""];
       
       [cognito storeUsername: @"jonsnow"
-                    password: @"kingofgameofthrone"];
+                    password: @"kingofgameofthrone"
+                  identityId: @""];
       
       [cognito storeUsername: @"hannibal"
-                    password: @"hannibalthecannibal"];
+                    password: @"hannibalthecannibal"
+                  identityId: @""];
       
       done();
     });
@@ -71,7 +74,8 @@ describe(@"Tests1", ^{
       [dispatchQueue performGroupedDelay: 1 block: ^{
         
         [cognito modifyUsername: sampleUsername
-                       password: editedPaassword];
+                       password: editedPaassword
+                     identityId: @""];
       }];
       
       
@@ -85,7 +89,7 @@ describe(@"Tests1", ^{
                               
                             }];
       }];
-
+      
       [dispatchQueue performGroupedDelay: 1 block: ^{
         
         BOOL isQualified = [cognito verifyUsername: sampleUsername
@@ -117,7 +121,8 @@ describe(@"Tests1", ^{
       [dispatchQueue performGroupedDelay: 1 block: ^{
         
         [cognito modifyUsername: @"jonsnow"
-                       password: @"iamjonsnow"];
+                       password: @"iamjonsnow"
+                     identityId: @""];
       }];
       
       
@@ -162,7 +167,8 @@ describe(@"Tests1", ^{
       [dispatchQueue performGroupedDelay: 1 block: ^{
         
         [cognito modifyUsername: @"hannibal"
-                       password: @"hannibaliscannibal"];
+                       password: @"hannibaliscannibal"
+                     identityId: @""];
       }];
       
       
@@ -198,20 +204,20 @@ describe(@"Tests1", ^{
     });
   });
   
-//  it(@"login, logout, modify, login modified, verify - jon snow", ^{
-//    
-//    waitUntil(^(DoneCallback done) {
-//      
-//      
-//    });
-//  });
-//  
-//  it(@"login, logout, modify, login modified, verify - hannibal", ^{
-//    
-//    waitUntil(^(DoneCallback done) {
-//      
-//    });
-//  });
+  //  it(@"login, logout, modify, login modified, verify - jon snow", ^{
+  //
+  //    waitUntil(^(DoneCallback done) {
+  //
+  //
+  //    });
+  //  });
+  //
+  //  it(@"login, logout, modify, login modified, verify - hannibal", ^{
+  //
+  //    waitUntil(^(DoneCallback done) {
+  //      
+  //    });
+  //  });
   
 });
 

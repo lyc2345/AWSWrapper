@@ -366,7 +366,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = QQ;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = lyc2345;
 				TargetAttributes = {
 					6003F589195388D20070C39A = {

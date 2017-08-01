@@ -20,7 +20,7 @@
 
 + (NSString *)dynamoDBTableName {
 
-    return @"comicapp-mobilehub-589757354-Bookmark";
+    return @"comicj-mobilehub-1696511402-Bookmark";
 }
 
 + (NSString *)hashKeyAttribute {

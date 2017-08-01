@@ -81,13 +81,13 @@
 			<key>Default</key>
 			<dict>
 				<key>CognitoUserPoolId</key>
-				<string>us-east-1_iDnrGBLBd</string>
+				<string>us-east-1_aL46DVl7H</string>
 				<key>CognitoUserPoolAppClientId</key>
-				<string>37u895hpiimdugm26u4tmkpv55</string>
+				<string>3dv4sqcsa20rulqke1rq5b4jeh</string>
 				<key>Region</key>
 				<string>us-east-1</string>
 				<key>CognitoUserPoolAppClientSecret</key>
-				<string>1jv7dd4gn0omcu1dmk8ntl4t2f7pc7srufuerd843pqggfm8a5q9</string>
+				<string>1id2og4gu5nsdaai62bqfo0qk8ntdlcre78bk8kdahrhpgpgffnp</string>
 			</dict>
 		</dict>
 		<key>DynamoDBObjectMapper</key>
@@ -105,7 +105,7 @@
 				<key>Default</key>
 				<dict>
 					<key>PoolId</key>
-					<string>us-east-1:2ab8ba13-d220-4a5d-abee-7f5f06583694</string>
+					<string>us-east-1:2209451d-de3e-48b0-8285-a5db9563194a</string>
 					<key>Region</key>
 					<string>us-east-1</string>
 				</dict>
@@ -114,7 +114,7 @@
 		<key>MobileHub</key>
 		<dict>
 			<key>ProjectClientId</key>
-			<string>MobileHub 5c8820ae-b54e-4044-8e3b-91fb213db5c6 aws-my-sample-app-ios-objc-v0.22</string>
+			<string>MobileHub 36041119-e5db-4740-bc16-0ca9ac5361b8 aws-my-sample-app-ios-objc-v0.22</string>
 		</dict>
 	</dict>
 </dict>

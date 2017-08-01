@@ -99,10 +99,8 @@
                                                     region: _AWSCognitoUserPoolRegion
      ];
     
-    [[AWSSignInProviderFactory sharedInstance] registerAWSSignInProvider:[AWSCognitoUserPoolsSignInProvider sharedInstance]
-                                                                  forKey:AWSCognitoUserPoolsSignInProviderKey];
-	
-	
+    [[AWSSignInProviderFactory sharedInstance] registerAWSSignInProvider: [AWSCognitoUserPoolsSignInProvider sharedInstance]
+                                                                  forKey: AWSCognitoUserPoolsSignInProviderKey];
 }
 
 -(void)setupCredentialProvider {

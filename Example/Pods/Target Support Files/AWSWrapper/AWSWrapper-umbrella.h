@@ -17,6 +17,7 @@
 #import "DSWrapper.h"
 #import "DynamoService.h"
 #import "DynamoSync.h"
+#import "Encrypt.h"
 #import "History.h"
 #import "LoginManager.h"
 #import "OfflineCognito.h"

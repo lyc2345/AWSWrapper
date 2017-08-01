@@ -137,9 +137,7 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 	
 	[[NSUserDefaults standardUserDefaults] setObject: nil forKey: __CURRENT_USER];
 	NSLog(@"offline logout successfully");
-  dispatch_async(dispatch_get_main_queue(), ^{
-    if (completion) { completion(); };
-  });
+  if (completion) { completion(); }
 }
 
 @end
@@ -208,7 +206,7 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 				waitToConfirmAction(task.result.codeDeliveryDetails.destination);
 				self.tmpPassword = password;
 			} else {
-        [[OfflineCognito shared] storeUsername: username password: password];
+        [[OfflineCognito shared] storeUsername: username password: password identityId: self.awsIdentityId];
 				successHandler();
 			}});
 		return nil;
@@ -228,7 +226,7 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 				}
 			} else {
 				//return to initial screen
-        [[OfflineCognito shared] storeUsername: username password: self.tmpPassword];
+        [[OfflineCognito shared] storeUsername: username password: self.tmpPassword identityId: self.awsIdentityId];
 				successHandler();
 			}
 		});
@@ -299,13 +297,16 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 			
 			NSString *username = weakSelf.userPoolSignInFlowStartUserName();
 			NSString *password = weakSelf.userPoolSignInFlowStartPassword();
-			
-      [[OfflineCognito shared] modifyUsername: username password: password];
-			[weakSelf loginOfflineWithUser: username password: password completion:^(NSError *error) {
-				if (!error) {
-					weakSelf.AWSLoginStatusChangedHandler();
-				}
-			}];
+      
+      if (username && password) {
+        
+        [[OfflineCognito shared] modifyUsername: username password: password identityId: self.awsIdentityId];
+        [weakSelf loginOfflineWithUser: username password: password completion:^(NSError *error) {
+          if (!error) {
+            weakSelf.AWSLoginStatusChangedHandler();
+          }
+        }];
+      }
 		}
 		completion(result, error);
 	}];
@@ -322,15 +323,17 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
       if (!error) {
         [[AWSIdentityManager defaultIdentityManager].credentialsProvider clearKeychain];
         [[AWSIdentityManager defaultIdentityManager].credentialsProvider clearCredentials];
-        [weakSelf logoutOfflineCompletion:^ {
-          NSLog(@"user log out successfully.");
+        [weakSelf logoutOfflineCompletion: ^{
           weakSelf.AWSLoginStatusChangedHandler();
-          completion(result, error);
         }];
-        return;
       }
       //NSLog(@"%@: %@ Logout Successful", LOG_TAG, [signInProvider getDisplayName]);
       completion(result, error);
+    }];
+  } else if (self.isLogin == YES) {
+    
+    [weakSelf logoutOfflineCompletion: ^{
+      weakSelf.AWSLoginStatusChangedHandler();
     }];
   }
 }

@@ -11,10 +11,10 @@
 #import "Random.h"
 
 NSString *const _bookmark_shadow = @"_client_shadow_Bookmark";
-NSString *const _recently_shadow = @"_client_shadow_History";
+NSString *const _history_shadow = @"_client_shadow_History";
 
 NSString * const __BOOKMARKS_LIST				= @"__BOOKMARKS_LIST";
-NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
+NSString * const __HISTORY_LIST	= @"__HISTORY_LIST";
 
 // bookmark = Dictionary
 // bookmarkList = Array(Dicionary)
@@ -48,7 +48,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 -(NSMutableArray *)obtainOfflineMutableRecordsOfType:(RecordType)type {
   
   // get the multiple users record first
-  NSArray *offlineRecords = [[NSUserDefaults standardUserDefaults] arrayForKey: type == RecordTypeBookmark ? __BOOKMARKS_LIST : __RECENTLY_VISIT_LIST];
+  NSArray *offlineRecords = [[NSUserDefaults standardUserDefaults] arrayForKey: type == RecordTypeBookmark ? __BOOKMARKS_LIST : __HISTORY_LIST];
   
   // create it if dosen't exist any
   if (!offlineRecords) {
@@ -60,7 +60,7 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 
 -(BOOL)setUserDefaultWithRecords:(NSArray *)records isBookmark:(BOOL)isBookmark {
   
-  [[NSUserDefaults standardUserDefaults] setObject: records forKey: isBookmark ? __BOOKMARKS_LIST : __RECENTLY_VISIT_LIST];
+  [[NSUserDefaults standardUserDefaults] setObject: records forKey: isBookmark ? __BOOKMARKS_LIST : __HISTORY_LIST];
   return [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -222,12 +222,12 @@ NSString * const __RECENTLY_VISIT_LIST	= @"__RECENTLY_VISIT_LIST";
 
 // To remote remote and client and client_shadow
 +(NSDictionary *)shadowIsBookmark:(BOOL)isBookmark {
-  return [[NSUserDefaults standardUserDefaults] dictionaryForKey: isBookmark ? _bookmark_shadow : _recently_shadow];
+  return [[NSUserDefaults standardUserDefaults] dictionaryForKey: isBookmark ? _bookmark_shadow : _history_shadow];
 }
 
 +(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark {
   
-  [[NSUserDefaults standardUserDefaults] setObject: dict forKey: isBookmark ? _bookmark_shadow : _recently_shadow];
+  [[NSUserDefaults standardUserDefaults] setObject: dict forKey: isBookmark ? _bookmark_shadow : _history_shadow];
   return [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

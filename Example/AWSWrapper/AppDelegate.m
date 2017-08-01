@@ -19,11 +19,11 @@
   [AWSLogger defaultLogger].logLevel = AWSLogLevelVerbose;
   
   AWSMobileClient *mobileClient = [AWSMobileClient sharedInstance];
-  mobileClient.AWSCognitoUserPoolId = @"us-east-1_iDnrGBLBd";
-  mobileClient.AWSCognitoUserPoolClientId = @"37u895hpiimdugm26u4tmkpv55";
-  mobileClient.AWSCognitoUserPoolClientSecret = @"1jv7dd4gn0omcu1dmk8ntl4t2f7pc7srufuerd843pqggfm8a5q9";
+  mobileClient.AWSCognitoUserPoolId = @"us-east-1_aL46DVl7H";
+  mobileClient.AWSCognitoUserPoolClientId = @"3dv4sqcsa20rulqke1rq5b4jeh";
+  mobileClient.AWSCognitoUserPoolClientSecret = @"1id2og4gu5nsdaai62bqfo0qk8ntdlcre78bk8kdahrhpgpgffnp";
   mobileClient.AWSCognitoUserPoolRegion = AWSRegionUSEast1;
-  mobileClient.CognitoPoolID = @"us-east-1:2ab8ba13-d220-4a5d-abee-7f5f06583694";
+  mobileClient.CognitoPoolID = @"us-east-1:2209451d-de3e-48b0-8285-a5db9563194a";
   
   
   return [mobileClient didFinishLaunching: application withOptions: launchOptions];

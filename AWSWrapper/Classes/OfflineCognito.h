@@ -14,13 +14,15 @@
 -(NSString *)password;
 
 -(void)storeUsername:(NSString *)username
-            password:(NSString *)password;
+            password:(NSString *)password
+          identityId:(NSString *)identityId;
 
 -(BOOL)verifyUsername:(NSString *)username
              password:(NSString *)password;
 
 -(void)modifyUsername:(NSString *)username
-             password:(NSString *)password;
+             password:(NSString *)password
+           identityId:(NSString *)identityId;
 
 
 -(NSArray *)allAccount:(NSError * __autoreleasing *)error;

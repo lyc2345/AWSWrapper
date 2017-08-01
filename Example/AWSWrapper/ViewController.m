@@ -104,9 +104,11 @@
 			NSLog(@"logout error: %@", error);
 		}];
 		
-	} else if ([LoginManager shared].isAWSLogin || [LoginManager shared].isLogin) {
+	} else if ([LoginManager shared].isLogin) {
  
-		[[LoginManager shared] logoutOfflineCompletion: nil];
+    [[LoginManager shared] logout:^(id result, NSError *error) {
+      
+    }];
 	
 	} else {
     
@@ -195,7 +197,7 @@
   NSString *userId = [LoginManager shared].awsIdentityId;
   NSDictionary *rv = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeHistory];
   [_dsync syncWithUserId: userId
-               tableName: @"Bookmark"
+               tableName: @"History"
               dictionary: rv
                   shadow: [OfflineDB shadowIsBookmark: NO]
            shouldReplace:^BOOL(id oldValue, id newValue) {

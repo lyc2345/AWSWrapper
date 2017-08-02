@@ -22,6 +22,8 @@ typedef NS_ENUM(NSInteger, RecordType) {
                                 andList:(NSArray *)list
                              remoteHash:(NSString *)remoteHash;
 
++(NSDictionary *)shadowFormat:(NSDictionary *)shadow
+                   ofIdentity:(NSString *)identity;
 
 #pragma mark - Bookmark (Open)
 
@@ -32,13 +34,15 @@ typedef NS_ENUM(NSInteger, RecordType) {
 
 //MARK: Offline DB READ, ADD, DELETE
 
-+(NSDictionary *)shadowIsBookmark:(BOOL)isBookmark;
+//MARK: Shadow
++(NSDictionary *)shadowIsBookmark:(BOOL)isBookmark ofIdentity:(NSString *)identity;
 
-+(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark;
++(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark ofIdentity:(NSString *)identity;
 
--(void)addOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity;
+//MARK: Bookmark
+-(void)addOffline:(NSDictionary *)dict type:(RecordType)type ofIdentity:(NSString *)identity;
 
--(NSDictionary *)deleteOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity;
+-(NSDictionary *)deleteOffline:(NSDictionary *)dict type:(RecordType)type ofIdentity:(NSString *)identity;
 
 -(NSDictionary *)getOfflineRecordOfIdentity:(NSString *)identity type:(RecordType)type;
 

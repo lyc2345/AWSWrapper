@@ -16,13 +16,13 @@
 +(NSArray *)arrayFromDict:(NSDictionary *)dict;
 +(NSDictionary *)dictFromArray:(NSArray *)array;
 
-+(NSDictionary *)diffShadowAndClient:(NSDictionary *)client isBookmark:(BOOL)isBookmark;
-
-
-+(NSDictionary *)diffShadowAndClient:(NSDictionary *)client
-                          primaryKey:(NSString *)key
-                          isBookmark:(BOOL)isBookmark
-                       shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace;
+//+(NSDictionary *)diffShadowAndClient:(NSDictionary *)client isBookmark:(BOOL)isBookmark;
+//
+//
+//+(NSDictionary *)diffShadowAndClient:(NSDictionary *)client
+//                          primaryKey:(NSString *)key
+//                          isBookmark:(BOOL)isBookmark
+//                       shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace;
 
 
 +(NSDictionary *)diffWins:(NSDictionary *)wins loses:(NSDictionary *)loses;

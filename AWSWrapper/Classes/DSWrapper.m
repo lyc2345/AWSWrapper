@@ -86,12 +86,6 @@
 	return dict;
 }
 
-+(NSDictionary *)diffShadowAndClient:(NSDictionary *)client isBookmark:(BOOL)isBookmark {
-
-	return [DS diffShadowAndClient: [DSWrapper arrayFromDict: client]
-									 shadow: [DSWrapper arrayFromDict: [OfflineDB shadowIsBookmark: isBookmark]]];
-}
-
 +(NSDictionary *)diffWins:(NSDictionary *)wins loses:(NSDictionary *)loses primaryKey:(NSString *)key {
   
   return [DS diffWins: [DSWrapper arrayFromDict: wins]
@@ -123,42 +117,4 @@
                                    shouldReplace: shouldReplace]];
 }
 
-
-@end
-
-
-
-@implementation DSWrapper (FakeData)
-
-// fake data
-+(NSDictionary *)client {
-	return [[NSUserDefaults standardUserDefaults] dictionaryForKey: @"_client"];
-}
-
-+(void)setClient:(NSArray *)list {
-	return [[NSUserDefaults standardUserDefaults] setObject: list forKey: @"_client"];
-}
-
-+(NSDictionary *)simulateRemote {
-	return [[NSUserDefaults standardUserDefaults] dictionaryForKey: @"_simulate_remote"];
-}
-
-
-+(void)setSimulateRemote:(NSArray *)list {
-	return [[NSUserDefaults standardUserDefaults] setObject: list forKey: @"_simulate_remote"];
-}
-
-
-// fake push for test
--(void)push:(NSArray *)list {
-
-	[DSWrapper setClient: list];
-	[DSWrapper setSimulateRemote: list];
-	[OfflineDB setShadow:  [DSWrapper dictFromArray: list] isBookmark: YES];
-
-	NSLog(@"client: %@", [DSWrapper client]);
-	NSLog(@"shadow: %@", [OfflineDB shadowIsBookmark: YES]);
-	NSLog(@"remote: %@", [DSWrapper simulateRemote]);
-	//NSLog(@"shadow equal remote: %@", [[DS shadow] isEqualToDictionary: [DS simulateRemote]]);
-}
 @end

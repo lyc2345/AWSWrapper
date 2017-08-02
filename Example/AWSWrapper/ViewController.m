@@ -178,7 +178,7 @@
   [_dsync syncWithUserId: userId
                tableName: @"Bookmark"
               dictionary: bk
-                  shadow: [OfflineDB shadowIsBookmark: YES]
+                  shadow: [OfflineDB shadowIsBookmark: YES ofIdentity: userId]
            shouldReplace:^BOOL(id oldValue, id newValue) {
              
              
@@ -199,7 +199,7 @@
   [_dsync syncWithUserId: userId
                tableName: @"History"
               dictionary: rv
-                  shadow: [OfflineDB shadowIsBookmark: NO]
+                  shadow: [OfflineDB shadowIsBookmark: NO ofIdentity: userId]
            shouldReplace:^BOOL(id oldValue, id newValue) {
              return YES;
            } completion:^(NSDictionary *diff, NSError *error) {
@@ -264,10 +264,10 @@
   [self.offlineDB pushSuccessThenSaveLocalRecord: data type: type newCommitId: commitId];
 }
 
--(id)emptyShadowIsBookmark:(BOOL)isBookmark {
+-(id)emptyShadowIsBookmark:(BOOL)isBookmark ofIdentity:(NSString *)identity {
   
-  [OfflineDB setShadow: @{} isBookmark: isBookmark];
-  return [OfflineDB shadowIsBookmark: isBookmark];
+  [OfflineDB setShadow: @{} isBookmark: isBookmark ofIdentity: identity];
+  return [OfflineDB shadowIsBookmark: isBookmark ofIdentity: identity];
 }
 
 // MARK: TextFieldDelegate

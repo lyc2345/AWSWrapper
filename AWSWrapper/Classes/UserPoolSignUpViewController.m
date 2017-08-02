@@ -123,7 +123,7 @@
 	[[LoginManager shared] confirmSignUpWithUser: self.userName.text confirmCode: self.confirmationCode.text success:^{
 		
 		[[Alert new] showAlertWithTitle: @"Registration Complete"
-														message: @"Registration was successful."
+														message: @"Register successfully."
 										 confirmHandler:^{
 										 
 											 [weakSelf.navigationController popToRootViewControllerAnimated:YES];
@@ -140,7 +140,7 @@
 
 - (IBAction)onResend:(id)sender {
 
-	[[LoginManager shared] onResendOfUser: self.userName.text Success:^(NSString *destination) {
+	[[LoginManager shared] onResendOfUser: self.userName.text success:^(NSString *destination) {
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[[Alert new] showAlertWithTitle: @"Code Resent"

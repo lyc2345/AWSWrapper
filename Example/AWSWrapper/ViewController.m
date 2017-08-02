@@ -106,9 +106,7 @@
 		
 	} else if ([LoginManager shared].isAWSLogin || [LoginManager shared].isLogin) {
  
-		[[LoginManager shared] logoutOfflineCompletion:^(NSError *error) {
-			
-		}];
+		[[LoginManager shared] logoutOfflineCompletion: nil];
 	
 	} else {
     

@@ -6,9 +6,9 @@
 //  Copyright © 2017 lyc2345. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
 #import "DynamoTestBase.h"
 #import "DispatchQueue.h"
+@import Specta;
 @import AWSWrapper;
 
 static DynamoTestBase *testcase;

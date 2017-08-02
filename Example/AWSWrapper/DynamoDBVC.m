@@ -84,7 +84,7 @@ NSString *const cellIdentifier = @"cell";
 
 -(void)upload:(id)sender {
 	
-	DynamoService *dynamoService = [DynamoService new];
+	//DynamoService *dynamoService = [DynamoService new];
 	
 //  [dynamoService mergePushType:RecordTypeBookmark userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
 //		
@@ -142,8 +142,6 @@ NSString *const cellIdentifier = @"cell";
 -(NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	UITableViewRowAction *delete = [UITableViewRowAction rowActionWithStyle: UITableViewRowActionStyleDefault title: @"Delete" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-		
-		DynamoService *dynamoService = [DynamoService new];
 		
 		if (indexPath.section == 0) {
 			

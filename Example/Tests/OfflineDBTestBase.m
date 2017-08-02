@@ -18,9 +18,9 @@
 
 -(BOOL)setHistoryDB:(NSArray *)records;
 
-+(NSDictionary *)bookmarkShadow;
++(NSDictionary *)bookmarkShadowDB;
 
-+(NSDictionary *)historyShadow;
++(NSDictionary *)historyShadowDB;
 
 +(BOOL)setBookmarkShadow:(NSDictionary *)records;
 

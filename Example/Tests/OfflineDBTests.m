@@ -31,6 +31,7 @@
 
 -(void)testOfflineShadowBookmark {
   
+  NSString *userIdentityId = @"user1";
   NSDictionary *record = @{
                            @"A": @{@"author": @"A", @"url": @"A"},
                            @"B": @{@"author": @"B", @"url": @"B"},
@@ -38,18 +39,32 @@
                            @"D": @{@"author": @"D", @"url": @"D"}
                            };
   
-  [OfflineDBTestBase setShadow: record isBookmark: YES];
+  [OfflineDBTestBase setShadow: record isBookmark: YES ofIdentity: userIdentityId];
   
-  NSDictionary *shadow = [OfflineDBTestBase shadowIsBookmark: YES];
+  NSDictionary *shadow = [OfflineDBTestBase shadowIsBookmark: YES ofIdentity: userIdentityId];
 
+  XCTAssertTrue([shadow isEqualToDictionary: record]);
+}
+
+-(void)testOfflineHistory {
+  
+  NSString *userIdentityId = @"user2";
+  NSDictionary *record = @{
+                           @"A": @{@"author": @"A", @"url": @"A"},
+                           @"B": @{@"author": @"B", @"url": @"B"}
+                           };
+  
+  [OfflineDBTestBase setShadow: record isBookmark: NO ofIdentity: userIdentityId];
+  
+  NSDictionary *shadow = [OfflineDBTestBase shadowIsBookmark: NO ofIdentity: userIdentityId];
+  
   XCTAssertTrue([shadow isEqualToDictionary: record]);
 }
 
 -(void)testOfflineBookmarkADD {
   
-
-  NSDictionary *record = @{@"comicName": @"A", @"author": @"A", @"url": @"A"};
   NSString *userIdentityId = @"user1";
+  NSDictionary *record = @{@"comicName": @"A", @"author": @"A", @"url": @"A"};
   
   [_testcase addOffline: record
                    type: RecordTypeBookmark
@@ -80,8 +95,8 @@
 
 -(void)testOfflineHistoryADD {
   
-  NSDictionary *record = @{@"comicName": @"Y", @"author": @"Y", @"url": @"Y"};
   NSString *userIdentityId = @"user1";
+  NSDictionary *record = @{@"comicName": @"Y", @"author": @"Y", @"url": @"Y"};
   
   [_testcase addOffline: record
                    type: RecordTypeHistory
@@ -99,9 +114,8 @@
 
 -(void)testOfflineBookmarkDelete {
   
-  
-  NSDictionary *record = @{@"comicName": @"A", @"author": @"A", @"url": @"A"};
   NSString *userIdentityId = @"user1";
+  NSDictionary *record = @{@"comicName": @"A", @"author": @"A", @"url": @"A"};
   
   [_testcase addOffline: record
                    type: RecordTypeBookmark

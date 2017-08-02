@@ -54,20 +54,20 @@ NSString * const __HISTORY_SHADOW_TEST = @"__HISTORY_SHADOW_TEST";
   return [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+(NSDictionary *)bookmarkShadow {
-  return [[NSUserDefaults standardUserDefaults] dictionaryForKey: __BOOKMARK_SHADOW_TEST];
++(NSArray *)bookmarkShadowDB {
+  return [[NSUserDefaults standardUserDefaults] arrayForKey: __BOOKMARK_SHADOW_TEST];
 }
 
-+(NSDictionary *)historyShadow {
-  return [[NSUserDefaults standardUserDefaults] dictionaryForKey: __HISTORY_SHADOW_TEST];
++(NSArray *)historyShadowDB {
+  return [[NSUserDefaults standardUserDefaults] arrayForKey: __HISTORY_SHADOW_TEST];
 }
 
-+(BOOL)setBookmarkShadow:(NSDictionary *)records {
++(BOOL)setBookmarkShadow:(NSArray *)records {
   [[NSUserDefaults standardUserDefaults] setObject: records forKey: __BOOKMARK_SHADOW_TEST];
   return [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+(BOOL)setHistoryShadow:(NSDictionary *)records {
++(BOOL)setHistoryShadow:(NSArray *)records {
   [[NSUserDefaults standardUserDefaults] setObject: records forKey:  __HISTORY_SHADOW_TEST];
   return [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -94,12 +94,12 @@ NSString * const __HISTORY_SHADOW_TEST = @"__HISTORY_SHADOW_TEST";
   return self;
 }
 
-+(NSDictionary *)shadowIsBookmark:(BOOL)isBookmark {
-  return [OfflineDB shadowIsBookmark: isBookmark];
++(NSDictionary *)shadowIsBookmark:(BOOL)isBookmark ofIdentity:(NSString *)identity {
+  return [OfflineDB shadowIsBookmark: isBookmark ofIdentity: identity];
 }
 
-+(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark {
-  return [OfflineDB setShadow: dict isBookmark: isBookmark];
++(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark ofIdentity:(NSString *)identity {
+  return [OfflineDB setShadow: dict isBookmark: isBookmark ofIdentity: identity];
 }
 
 -(void)addOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity {

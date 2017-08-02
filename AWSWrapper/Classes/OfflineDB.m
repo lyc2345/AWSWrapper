@@ -294,32 +294,45 @@ NSString * const __HISTORY_LIST	  = @"__HISTORY_LIST";
 
 +(BOOL)saveShadow:(NSDictionary *)shadow type:(RecordType)type ofIdentity:(NSString *)identity {
   
-  NSMutableArray *shadowList = type == RecordTypeBookmark ? [[self bookmarkShadowDB] mutableCopy] : [[self historyShadowDB] mutableCopy] ;
+  NSDictionary *shadowObject = [OfflineDB shadowFormat: shadow ofIdentity: identity];
   
+  NSMutableArray *shadowList = type == RecordTypeBookmark
+  ? [[OfflineDB bookmarkShadowDB] mutableCopy]
+  : [[self historyShadowDB] mutableCopy] ;
+  shadowList = shadowList == nil ? [NSMutableArray array] : shadowList ;
+  
+  __block BOOL isExist = NO;
   [shadowList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
     
     if([obj[@"_userId"] isEqualToString: identity]) {
       *stop = YES;
+      isExist = YES;
     }
-    if (stop) {
-      NSDictionary *shadowObject = [OfflineDB shadowFormat: shadow ofIdentity: identity];
+    if (stop && isExist) {
       [shadowList replaceObjectAtIndex: idx withObject: shadowObject];
       return;
     }
   }];
-  return [self setBookmarkShadow: shadowList];
+  if (!isExist) {
+    [shadowList addObject: shadowObject];
+  }
+  if (type == RecordTypeBookmark) {
+    return [OfflineDB setBookmarkShadow: shadowList];
+  } else {
+    return [OfflineDB setHistoryShadow: shadowList];
+  }
 }
 
 +(NSDictionary *)shadowIsBookmark:(BOOL)isBookmark ofIdentity:(NSString *)identity {
-  return [self loadShadowType: isBookmark == YES ? RecordTypeBookmark : RecordTypeHistory
-                   ofIdentity: identity];
+  return [OfflineDB loadShadowType: isBookmark == YES ? RecordTypeBookmark : RecordTypeHistory
+                        ofIdentity: identity];
 }
 
 +(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark ofIdentity:(NSString *)identity {
   
-  return [self saveShadow: dict
-                     type: isBookmark == YES ? RecordTypeBookmark : RecordTypeHistory
-               ofIdentity: identity];
+  return [OfflineDB saveShadow: dict
+                          type: isBookmark == YES ? RecordTypeBookmark : RecordTypeHistory
+                    ofIdentity: identity];
 }
 
 

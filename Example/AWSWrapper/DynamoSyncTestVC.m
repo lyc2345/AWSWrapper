@@ -82,15 +82,18 @@
   });
 }
 
--(void)dynamoPushSuccessWithType:(RecordType)type data:(NSDictionary *)data newCommitId:(NSString *)commitId {
+-(void)dynamoPushSuccessWithType:(RecordType)type
+                            data:(NSDictionary *)data
+                     newCommitId:(NSString *)commitId {
   
   _shadow = data[@"_dicts"];
   _commitId = data[@"_commitId"];
   _remoteHash = data[@"_remoteHash"];
 }
 
--(void)dynamoPullFailureWithType:(RecordType)type error:(NSError *)error {
+-(id)emptyShadowIsBookmark:(BOOL)isBookmark ofIdentity:(NSString *)identity {
   
+  return nil;
 }
 
 
@@ -160,10 +163,10 @@
                            @"A": @{@"author": @"A", @"url": @"A"},
                            @"B": @{@"author": @"B", @"url": @"B"}
                            };
-  NSDictionary *remote = @{
-                           @"A": @{@"author": @"A", @"url": @"A"},
-                           @"B": @{@"author": @"B", @"url": @"B"}
-                           };
+//  NSDictionary *remote = @{
+//                           @"A": @{@"author": @"A", @"url": @"A"},
+//                           @"B": @{@"author": @"B", @"url": @"B"}
+//                           };
   assert([shadow isEqualToDictionary: _shadow] == YES);
   
   [_dsync syncWithUserId: _userId tableName: _tableName dictionary: client shadow: _shadow shouldReplace:^BOOL(id oldValue, id newValue) {
@@ -209,13 +212,13 @@
                            @"D": @{@"author": @"D", @"url": @"D"},
                            @"E": @{@"author": @"E", @"url": @"E"}
                            };
-  NSDictionary *remote = @{
-                           @"A": @{@"author": @"A", @"url": @"A"},
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
-                           @"D": @{@"author": @"D", @"url": @"D"},
-                           @"E": @{@"author": @"E", @"url": @"E"}
-                           };
+//  NSDictionary *remote = @{
+//                           @"A": @{@"author": @"A", @"url": @"A"},
+//                           @"B": @{@"author": @"B", @"url": @"B"},
+//                           @"C": @{@"author": @"C", @"url": @"C"},
+//                           @"D": @{@"author": @"D", @"url": @"D"},
+//                           @"E": @{@"author": @"E", @"url": @"E"}
+//                           };
   
   assert([shadow isEqualToDictionary: _shadow] == YES);
 
@@ -260,12 +263,12 @@
                            @"D": @{@"author": @"D", @"url": @"D"},
                            @"E": @{@"author": @"E", @"url": @"E"}
                            };
-  NSDictionary *remote = @{
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
-                           @"E": @{@"author": @"E", @"url": @"E"},
-                           @"F": @{@"author": @"F", @"url": @"F"}
-                           };
+//  NSDictionary *remote = @{
+//                           @"B": @{@"author": @"B", @"url": @"B"},
+//                           @"C": @{@"author": @"C", @"url": @"C"},
+//                           @"E": @{@"author": @"E", @"url": @"E"},
+//                           @"F": @{@"author": @"F", @"url": @"F"}
+//                           };
   
   assert([shadow isEqualToDictionary: _shadow] == YES);
   
@@ -307,13 +310,13 @@
                            @"E": @{@"author": @"E", @"url": @"E"},
                            @"F": @{@"author": @"F", @"url": @"F"}
                            };
-  NSDictionary *remote = @{
-                           @"B": @{@"author": @"B", @"url": @"B"},
-                           @"C": @{@"author": @"C", @"url": @"C"},
-                           @"E": @{@"author": @"E", @"url": @"E"},
-                           @"F": @{@"author": @"F", @"url": @"F"},
-                           @"G": @{@"author": @"G", @"url": @"G"}
-                           };
+//  NSDictionary *remote = @{
+//                           @"B": @{@"author": @"B", @"url": @"B"},
+//                           @"C": @{@"author": @"C", @"url": @"C"},
+//                           @"E": @{@"author": @"E", @"url": @"E"},
+//                           @"F": @{@"author": @"F", @"url": @"F"},
+//                           @"G": @{@"author": @"G", @"url": @"G"}
+//                           };
   
   assert([shadow isEqualToDictionary: _shadow] == YES);
   

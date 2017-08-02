@@ -247,7 +247,10 @@
 	
   // Diff local and shadow first, should know the modifies.
   NSDictionary *local = [[OfflineDB new] getOfflineRecordOfIdentity: userId type: type];
-	__block NSDictionary *diff_client_shadow = [DSWrapper diffShadowAndClient: local[@"_dicts"] isBookmark: type == RecordTypeBookmark];
+  
+  __block NSDictionary *diff_client_shadow = [DSWrapper diffWins: local[@"_dicts"]
+                                                           loses: [OfflineDB shadowIsBookmark: type == RecordTypeBookmark
+                                                                                   ofIdentity: userId]];
   
   NSLog(@"start: 1");
   // push local AWS model and the diff we get before.
@@ -335,9 +338,11 @@
             } else if (![cloud[@"_remoteHash"] isEqualToString: local[@"_remoteHash"]]) {
               
               NSLog(@"RemoteHash is changed, Now empty shadow...");
-              [OfflineDB setShadow: @{} isBookmark: type == RecordTypeBookmark];
+              [OfflineDB setShadow: @{} isBookmark: type == RecordTypeBookmark ofIdentity: userId];
               // diff client shadow again. becasue shadow is empty.
-              diff_client_shadow = [DSWrapper diffShadowAndClient: local[@"_dicts"] isBookmark: type == RecordTypeBookmark];
+              diff_client_shadow = [DSWrapper diffWins: local[@"_dicts"]
+                                                 loses: [OfflineDB shadowIsBookmark: type == RecordTypeBookmark
+                                                                         ofIdentity: userId]];
               NSLog(@"Get a new diff from client and empty shadow");
             }
             NSLog(@"done 4");

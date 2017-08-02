@@ -32,7 +32,7 @@
  @param isBookmark for identify Bookmark or History
  @return the shadow you actually set empty or nil.
  */
--(id)emptyShadowIsBookmark:(BOOL)isBookmark;
+-(id)emptyShadowIsBookmark:(BOOL)isBookmark ofIdentity:(NSString *)identity;
 
 
 @end

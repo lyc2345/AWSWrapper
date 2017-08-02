@@ -7,12 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+@import AWSWrapper;
 
 @interface OfflineDBTestBase : NSObject
 
-+(NSDictionary *)shadowIsBookmark:(BOOL)isBookmark;
++(NSDictionary *)shadowIsBookmark:(BOOL)isBookmark ofIdentity:(NSString *)identity;
 
-+(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark;
++(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark ofIdentity:(NSString *)identity;
 
 -(void)addOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity;
 

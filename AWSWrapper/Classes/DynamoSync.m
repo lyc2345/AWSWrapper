@@ -150,7 +150,7 @@
             } else if (![cloud[@"_remoteHash"] isEqualToString: dict[@"_remoteHash"]]) {
               
               DLOG(@"RemoteHash is changed, Now empty shadow...");
-              id emptyShadow = [_delegate emptyShadowIsBookmark: isBookmark];
+              id emptyShadow = [_delegate emptyShadowIsBookmark: isBookmark ofIdentity: userId];
               // diff client shadow again. becasue shadow is empty.
               diff_client_shadow = [DSWrapper diffWins: dict[@"_dicts"] loses: emptyShadow];
               DLOG(@"Get a new diff from client and empty shadow");

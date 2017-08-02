@@ -39,6 +39,8 @@
 
 @interface DSUnitTest : XCTestCase
 
+@property NSString *user;
+
 @property NSDictionary *scenario1;
 @property NSDictionary *scenario2;
 @property NSDictionary *scenario3;
@@ -51,6 +53,8 @@
 - (void)setUp {
   [super setUp];
   // Put setup code here. This method is called before the invocation of each test method in the class.
+  
+  _user = @"user1-fsd8f9sd0-f28f-ff23d";
   
   NSDictionary *client = @{
                            @"B": @{@"author": @"B", @"url": @"B"},
@@ -106,8 +110,9 @@
   NSDictionary *remote = self.scenario1[@"remote"];
   NSDictionary *client = self.scenario1[@"client"];
   
-  [OfflineDB setShadow: remote isBookmark: YES];
-  NSDictionary *need_to_apply_to_remote = [DSWrapper diffShadowAndClient: client isBookmark: YES];
+  [OfflineDB setShadow: remote];
+  
+  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: client loses: [OfflineDB shadow]];
   
   NSDictionary *newRemote = [DSWrapper mergeInto: remote applyDiff: need_to_apply_to_remote];
   
@@ -122,19 +127,15 @@
   NSDictionary *remote = self.scenario1[@"remote"];
   NSDictionary *client = self.scenario1[@"client"];
   
-  [OfflineDB setShadow: remote isBookmark: YES];
+  [OfflineDB setShadow: remote];
   
-  NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
-  
-  NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
-  
-  NSDictionary *need_to_apply_to_remote = [DSWrapper diffShadowAndClient: newClient isBookmark: YES];
+  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: client loses: [OfflineDB shadow]];
   
   NSDictionary *newRemote = [DSWrapper mergeInto: remote applyDiff: need_to_apply_to_remote];
   
   [OfflineDB setShadow: newRemote];
   
-  XCTAssertTrue([newRemote isEqualToDictionary: newClient] &&
+  XCTAssertTrue([newRemote isEqualToDictionary: client] &&
                 [newRemote isEqualToDictionary: [OfflineDB shadow]]);
 }
 
@@ -148,10 +149,10 @@
   NSDictionary *client = self.scenario1[@"client"];
   
   // A, C
-  [OfflineDB setShadow: remote isBookmark: YES];
+  [OfflineDB setShadow: remote];
   
   // -A, +B, +D, +E
-  NSDictionary *need_to_apply_to_remote = [DSWrapper diffShadowAndClient: client isBookmark: YES];
+  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: client loses: [OfflineDB shadow]];
   
   // +A, -B, -D, -E
   NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
@@ -174,9 +175,9 @@
                            @"E": @{@"author": @"E", @"url": @"E"}
                            };
   
-  XCTAssertTrue([newRemote isEqualToDictionary: newClient] &&
-                [newRemote isEqualToDictionary: [OfflineDB shadow]] &&
-                [newRemote isEqualToDictionary: expect]);
+  XCTAssertTrue([newRemote isEqualToDictionary: newClient]);
+  XCTAssertTrue([newRemote isEqualToDictionary: [OfflineDB shadow]]);
+  XCTAssertTrue([newRemote isEqualToDictionary: expect]);
 }
 
 -(void)testScenarioSeeRemoteFirstMergeClient3 {
@@ -193,10 +194,10 @@
                            };
   
   // A, B
-  [OfflineDB setShadow: remote isBookmark: YES];
+  [OfflineDB setShadow: remote];
   
   // -A, +D
-  NSDictionary *need_to_apply_to_remote = [DSWrapper diffShadowAndClient: client isBookmark: YES];
+  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: client loses: [OfflineDB shadow]];
   
   // +C, +D
   NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
@@ -217,9 +218,9 @@
                            @"D": @{@"author": @"D", @"url": @"D"}
                            };
   
-  XCTAssertTrue([newRemote isEqualToDictionary: newClient] &&
-                [newRemote isEqualToDictionary: [OfflineDB shadow]] &&
-                [newRemote isEqualToDictionary: expect]);
+  XCTAssertTrue([newRemote isEqualToDictionary: newClient]);
+  XCTAssertTrue([newRemote isEqualToDictionary: [OfflineDB shadow]]);
+  XCTAssertTrue([newRemote isEqualToDictionary: expect]);
 }
 
 -(void)testScenarioSeeRemoteFirstMergeClient4 {
@@ -238,10 +239,10 @@
   NSDictionary *shadow = @{@"B": @{@"author": @"B", @"url": @"B"}};
   
   // B
-  [OfflineDB setShadow: shadow isBookmark: YES];
+  [OfflineDB setShadow: shadow];
   
   // +C, +D
-  NSDictionary *need_to_apply_to_remote = [DSWrapper diffShadowAndClient: client isBookmark: YES];
+  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: client loses: [OfflineDB shadow]];
   
   // +A, -C, -D
   NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
@@ -264,9 +265,9 @@
                            @"D": @{@"author": @"D", @"url": @"D"}
                            };
   
-  XCTAssertTrue([newRemote isEqualToDictionary: newClient] &&
-                [newRemote isEqualToDictionary: [OfflineDB shadow]] &&
-                [newRemote isEqualToDictionary: expect]);
+  XCTAssertTrue([newRemote isEqualToDictionary: newClient]);
+  XCTAssertTrue([newRemote isEqualToDictionary: [OfflineDB shadow]]);
+  XCTAssertTrue([newRemote isEqualToDictionary: expect]);
 }
 
 -(void)testScenarioSeeRemoteFirstMergeClient5 {
@@ -292,10 +293,10 @@
                            };
   
   // A, B, C, D
-  [OfflineDB setShadow: shadow isBookmark: YES];
+  [OfflineDB setShadow: shadow];
   
   // -B
-  NSDictionary *need_to_apply_to_remote = [DSWrapper diffShadowAndClient: client isBookmark: YES];
+  NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: client loses: [OfflineDB shadow]];
   
   // -A, +B
   NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
@@ -316,18 +317,18 @@
                            @"D": @{@"author": @"D", @"url": @"D"}
                            };
   
-  XCTAssertTrue([newRemote isEqualToDictionary: newClient] &&
-                [newRemote isEqualToDictionary: [OfflineDB shadow]] &&
-                [newRemote isEqualToDictionary: expect]);
+  XCTAssertTrue([newRemote isEqualToDictionary: newClient]);
+  XCTAssertTrue([newRemote isEqualToDictionary: [OfflineDB shadow]]);
+  XCTAssertTrue([newRemote isEqualToDictionary: expect]);
 }
 
 -(void)testScenarioRemoteWasReseted {
   
   NSDictionary *remote = @{};
   NSDictionary *client = self.scenario1[@"client"];
-  [OfflineDB setShadow: remote isBookmark: YES];
+  [OfflineDB setShadow: remote];
   
-  NSDictionary *diff_client_shadow = [DSWrapper diffShadowAndClient: client isBookmark: YES];
+  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: [OfflineDB shadow]];
   
   NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];
   NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
@@ -354,10 +355,10 @@
                            @"B": @{@"author": @"B", @"url": @"B"},
                            @"C": @{@"author": @"C", @"url": @"C"}
                            };
-  [OfflineDB setShadow: shadow isBookmark: YES];
+  [OfflineDB setShadow: shadow];
   
   // -C
-  NSDictionary *diff_client_shadow = [DSWrapper diffShadowAndClient: client isBookmark: YES];
+  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: [OfflineDB shadow]];
   
   // 
   NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: remote loses: client];

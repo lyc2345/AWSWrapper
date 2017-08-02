@@ -24,21 +24,22 @@
 		D448698D968525408A367F6F /* Pods_AWSWrapper_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8513427F95F3CFD033FB19C9 /* Pods_AWSWrapper_Example.framework */; };
 		F611F0971EEEB376000DFDFD /* DetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F611F0961EEEB376000DFDFD /* DetailVC.m */; };
 		F612FBB21F3177BE001924DC /* OfflineDBTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F612FBB11F3177BE001924DC /* OfflineDBTestBase.m */; };
-		F649A5971F2CE2D30063DCCF /* DSTests1Original.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E8E1F18BC4400184DF7 /* DSTests1Original.m */; };
-		F649A5981F2CE2D30063DCCF /* DSTests1.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0EA91F1A155200184DF7 /* DSTests1.m */; };
-		F649A5991F2CE2D30063DCCF /* DSTests2.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E961F19F01B00184DF7 /* DSTests2.m */; };
-		F649A59A1F2CE2D30063DCCF /* DSTests3.m in Sources */ = {isa = PBXBuildFile; fileRef = F63CFCAA1F1C5CD3004DDE64 /* DSTests3.m */; };
-		F649A59B1F2CE2D30063DCCF /* DSTests4.m in Sources */ = {isa = PBXBuildFile; fileRef = F63CFCAC1F1C6058004DDE64 /* DSTests4.m */; };
-		F649A59C1F2CE2D30063DCCF /* DSOPSTests1.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E9F1F1A095D00184DF7 /* DSOPSTests1.m */; };
-		F649A59D1F2CE2D30063DCCF /* DSOPSTests2.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0EA31F1A0B9000184DF7 /* DSOPSTests2.m */; };
-		F649A59E1F2CE2D30063DCCF /* DSLocalTests1.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E981F1A03C600184DF7 /* DSLocalTests1.m */; };
-		F649A59F1F2CE2D30063DCCF /* DSLocalTests2.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0EA11F1A0A9E00184DF7 /* DSLocalTests2.m */; };
-		F649A5A01F2CE2D30063DCCF /* DSLocalTests3.m in Sources */ = {isa = PBXBuildFile; fileRef = F63CFCA81F1C5896004DDE64 /* DSLocalTests3.m */; };
-		F649A5A11F2CE2D30063DCCF /* DSLocalTests4.m in Sources */ = {isa = PBXBuildFile; fileRef = F63CFCAE1F1C6D8A004DDE64 /* DSLocalTests4.m */; };
-		F649A5A21F2CE2D30063DCCF /* DSOPSLocalTests1.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0EA51F1A11EF00184DF7 /* DSOPSLocalTests1.m */; };
-		F649A5A31F2CE2D30063DCCF /* DSOPSLocalTests2.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0EA71F1A12E600184DF7 /* DSOPSLocalTests2.m */; };
-		F649A5A41F2CE2D30063DCCF /* DSWrapperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC831EE29F6700051399 /* DSWrapperTests.m */; };
-		F649A5A51F2CE2D30063DCCF /* DSWrapperTests2.m in Sources */ = {isa = PBXBuildFile; fileRef = F63CFCB01F1C833F004DDE64 /* DSWrapperTests2.m */; };
+		F612FBB51F3185CE001924DC /* OfflineDBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F612FBB41F3185CE001924DC /* OfflineDBTests.m */; };
+		F612FBB71F31BDD4001924DC /* DSTests1Original.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E8E1F18BC4400184DF7 /* DSTests1Original.m */; };
+		F612FBB81F31BDD4001924DC /* DSTests1.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0EA91F1A155200184DF7 /* DSTests1.m */; };
+		F612FBB91F31BDD4001924DC /* DSTests2.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E961F19F01B00184DF7 /* DSTests2.m */; };
+		F612FBBA1F31BDD4001924DC /* DSTests3.m in Sources */ = {isa = PBXBuildFile; fileRef = F63CFCAA1F1C5CD3004DDE64 /* DSTests3.m */; };
+		F612FBBB1F31BDD4001924DC /* DSTests4.m in Sources */ = {isa = PBXBuildFile; fileRef = F63CFCAC1F1C6058004DDE64 /* DSTests4.m */; };
+		F612FBBC1F31BDD4001924DC /* DSOPSTests1.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E9F1F1A095D00184DF7 /* DSOPSTests1.m */; };
+		F612FBBD1F31BDD4001924DC /* DSOPSTests2.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0EA31F1A0B9000184DF7 /* DSOPSTests2.m */; };
+		F612FBBE1F31BDD4001924DC /* DSLocalTests1.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E981F1A03C600184DF7 /* DSLocalTests1.m */; };
+		F612FBBF1F31BDD4001924DC /* DSLocalTests2.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0EA11F1A0A9E00184DF7 /* DSLocalTests2.m */; };
+		F612FBC01F31BDD4001924DC /* DSLocalTests3.m in Sources */ = {isa = PBXBuildFile; fileRef = F63CFCA81F1C5896004DDE64 /* DSLocalTests3.m */; };
+		F612FBC11F31BDD4001924DC /* DSLocalTests4.m in Sources */ = {isa = PBXBuildFile; fileRef = F63CFCAE1F1C6D8A004DDE64 /* DSLocalTests4.m */; };
+		F612FBC21F31BDD4001924DC /* DSOPSLocalTests1.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0EA51F1A11EF00184DF7 /* DSOPSLocalTests1.m */; };
+		F612FBC31F31BDD4001924DC /* DSOPSLocalTests2.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0EA71F1A12E600184DF7 /* DSOPSLocalTests2.m */; };
+		F612FBC41F31BDD4001924DC /* DSWrapperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC831EE29F6700051399 /* DSWrapperTests.m */; };
+		F612FBC51F31BDD4001924DC /* DSWrapperTests2.m in Sources */ = {isa = PBXBuildFile; fileRef = F63CFCB01F1C833F004DDE64 /* DSWrapperTests2.m */; };
 		F64BAC7C1EE269BA00051399 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC7A1EE269BA00051399 /* ViewController.m */; };
 		F64BAC7D1EE269BA00051399 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F64BAC7B1EE269BA00051399 /* Main.storyboard */; };
 		F64BAC821EE26BA700051399 /* DynamoDBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC811EE26BA700051399 /* DynamoDBVC.m */; };
@@ -46,8 +47,6 @@
 		F64D0E9E1F1A067900184DF7 /* NSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E9D1F1A067900184DF7 /* NSArray+Sort.m */; };
 		F67DA4CB1F079485005751A3 /* DynamoSyncTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F67DA4CA1F079485005751A3 /* DynamoSyncTestVC.m */; };
 		F6B39F1F1F2C3E6300064766 /* LoginTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */; };
-		F6B39F211F2C435100064766 /* ARemoteLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F201F2C435100064766 /* ARemoteLoginTests.m */; };
-		F6B39F231F2C436900064766 /* ALocalLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F221F2C436900064766 /* ALocalLoginTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +91,7 @@
 		F611F0961EEEB376000DFDFD /* DetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailVC.m; sourceTree = "<group>"; };
 		F612FBB01F3177BE001924DC /* OfflineDBTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineDBTestBase.h; sourceTree = "<group>"; };
 		F612FBB11F3177BE001924DC /* OfflineDBTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineDBTestBase.m; sourceTree = "<group>"; };
+		F612FBB41F3185CE001924DC /* OfflineDBTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineDBTests.m; sourceTree = "<group>"; };
 		F63CFCA81F1C5896004DDE64 /* DSLocalTests3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSLocalTests3.m; sourceTree = "<group>"; };
 		F63CFCAA1F1C5CD3004DDE64 /* DSTests3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSTests3.m; sourceTree = "<group>"; };
 		F63CFCAC1F1C6058004DDE64 /* DSTests4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSTests4.m; sourceTree = "<group>"; };
@@ -123,8 +123,8 @@
 		F6A61F6C1F2C759600892C61 /* OfflineCognitoTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineCognitoTestBase.m; sourceTree = "<group>"; };
 		F6B39F1C1F2C3E6300064766 /* LoginTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTestBase.h; sourceTree = "<group>"; };
 		F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTestBase.m; sourceTree = "<group>"; };
-		F6B39F201F2C435100064766 /* ARemoteLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARemoteLoginTests.m; sourceTree = "<group>"; };
-		F6B39F221F2C436900064766 /* ALocalLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALocalLoginTests.m; sourceTree = "<group>"; };
+		F6B39F201F2C435100064766 /* RemoteLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteLoginTests.m; sourceTree = "<group>"; };
+		F6B39F221F2C436900064766 /* LocalLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalLoginTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,7 +223,8 @@
 		6003F5B5195388D20070C39A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				F612FBB31F3177C4001924DC /* OfflineDB */,
+				F612FBB61F3185D4001924DC /* OfflineDB */,
+				F612FBB31F3177C4001924DC /* OfflineDBBase */,
 				F6E790DD1F2B440900A67CE8 /* LoginBase */,
 				F6E790DC1F2B426400A67CE8 /* Login */,
 				F64D0E941F19E94500184DF7 /* TestBase */,
@@ -253,11 +254,19 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		F612FBB31F3177C4001924DC /* OfflineDB */ = {
+		F612FBB31F3177C4001924DC /* OfflineDBBase */ = {
 			isa = PBXGroup;
 			children = (
 				F612FBB01F3177BE001924DC /* OfflineDBTestBase.h */,
 				F612FBB11F3177BE001924DC /* OfflineDBTestBase.m */,
+			);
+			name = OfflineDBBase;
+			sourceTree = "<group>";
+		};
+		F612FBB61F3185D4001924DC /* OfflineDB */ = {
+			isa = PBXGroup;
+			children = (
+				F612FBB41F3185CE001924DC /* OfflineDBTests.m */,
 			);
 			name = OfflineDB;
 			sourceTree = "<group>";
@@ -300,8 +309,8 @@
 		F6E790DC1F2B426400A67CE8 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				F6B39F201F2C435100064766 /* ARemoteLoginTests.m */,
-				F6B39F221F2C436900064766 /* ALocalLoginTests.m */,
+				F6B39F201F2C435100064766 /* RemoteLoginTests.m */,
+				F6B39F221F2C436900064766 /* LocalLoginTests.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -543,28 +552,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F649A5981F2CE2D30063DCCF /* DSTests1.m in Sources */,
-				F649A59F1F2CE2D30063DCCF /* DSLocalTests2.m in Sources */,
-				F649A5A01F2CE2D30063DCCF /* DSLocalTests3.m in Sources */,
-				F649A59B1F2CE2D30063DCCF /* DSTests4.m in Sources */,
-				F649A5971F2CE2D30063DCCF /* DSTests1Original.m in Sources */,
-				F649A59A1F2CE2D30063DCCF /* DSTests3.m in Sources */,
-				F649A5A41F2CE2D30063DCCF /* DSWrapperTests.m in Sources */,
-				F649A5A31F2CE2D30063DCCF /* DSOPSLocalTests2.m in Sources */,
-				F649A59E1F2CE2D30063DCCF /* DSLocalTests1.m in Sources */,
-				F6B39F211F2C435100064766 /* ARemoteLoginTests.m in Sources */,
-				F649A5A51F2CE2D30063DCCF /* DSWrapperTests2.m in Sources */,
-				F649A5A11F2CE2D30063DCCF /* DSLocalTests4.m in Sources */,
+				F612FBB81F31BDD4001924DC /* DSTests1.m in Sources */,
+				F612FBBF1F31BDD4001924DC /* DSLocalTests2.m in Sources */,
+				F612FBC01F31BDD4001924DC /* DSLocalTests3.m in Sources */,
+				F612FBBB1F31BDD4001924DC /* DSTests4.m in Sources */,
+				F612FBB71F31BDD4001924DC /* DSTests1Original.m in Sources */,
+				F612FBBA1F31BDD4001924DC /* DSTests3.m in Sources */,
+				F612FBC41F31BDD4001924DC /* DSWrapperTests.m in Sources */,
+				F612FBC31F31BDD4001924DC /* DSOPSLocalTests2.m in Sources */,
+				F612FBBE1F31BDD4001924DC /* DSLocalTests1.m in Sources */,
 				F612FBB21F3177BE001924DC /* OfflineDBTestBase.m in Sources */,
+				F612FBC51F31BDD4001924DC /* DSWrapperTests2.m in Sources */,
+				F612FBC11F31BDD4001924DC /* DSLocalTests4.m in Sources */,
 				F6B39F1F1F2C3E6300064766 /* LoginTestBase.m in Sources */,
 				F64D0E9E1F1A067900184DF7 /* NSArray+Sort.m in Sources */,
 				F64D0E931F19E7BF00184DF7 /* DispatchQueue.m in Sources */,
 				6003F5BC195388D20070C39A /* DynamoTestBase.m in Sources */,
-				F649A59D1F2CE2D30063DCCF /* DSOPSTests2.m in Sources */,
-				F649A59C1F2CE2D30063DCCF /* DSOPSTests1.m in Sources */,
-				F6B39F231F2C436900064766 /* ALocalLoginTests.m in Sources */,
-				F649A5991F2CE2D30063DCCF /* DSTests2.m in Sources */,
-				F649A5A21F2CE2D30063DCCF /* DSOPSLocalTests1.m in Sources */,
+				F612FBBD1F31BDD4001924DC /* DSOPSTests2.m in Sources */,
+				F612FBBC1F31BDD4001924DC /* DSOPSTests1.m in Sources */,
+				F612FBB51F3185CE001924DC /* OfflineDBTests.m in Sources */,
+				F612FBB91F31BDD4001924DC /* DSTests2.m in Sources */,
+				F612FBC21F31BDD4001924DC /* DSOPSLocalTests1.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

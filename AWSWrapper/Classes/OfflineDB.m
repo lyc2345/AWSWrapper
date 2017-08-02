@@ -10,25 +10,22 @@
 #import "DSWrapper.h"
 #import "Random.h"
 
-NSString *const _bookmark_shadow = @"_client_shadow_Bookmark";
-NSString *const _history_shadow = @"_client_shadow_History";
-
-NSString * const __BOOKMARKS_LIST				= @"__BOOKMARKS_LIST";
-NSString * const __HISTORY_LIST	= @"__HISTORY_LIST";
-
 // bookmark = Dictionary
 // bookmarkList = Array(Dicionary)
 // bookmarkRecord = Dicionary(list: bookmarkList)
 // bookmarkRecords = Array(bookmarkRecords)
 
-
 @interface OfflineDB ()
-
-
 
 @end
 
 @implementation OfflineDB
+
+NSString * const __BOOKMARK_SHADOW_LIST = @"__BOOKMARK_SHADOW_LIST";
+NSString * const __HISTORY_SHADOW_LIST  = @"__HISTORY_SHADOW_LIST";
+
+NSString * const __BOOKMARKS_LIST	= @"__BOOKMARKS_LIST";
+NSString * const __HISTORY_LIST	  = @"__HISTORY_LIST";
 
 
 +(NSDictionary *)recordFormatOFIdentity:(NSString *)identity
@@ -41,19 +38,69 @@ NSString * const __HISTORY_LIST	= @"__HISTORY_LIST";
              @"_dicts": list != nil ? list : [NSArray array],
              @"_userId": identity,
              @"_remoteHash": remoteHash};
-
-  } else {
-    return nil;
   }
+  return nil;
+}
+
++(NSDictionary *)shadowFormat:(NSDictionary *)shadow
+                   ofIdentity:(NSString *)identity {
+  
+  if (shadow && identity) {
+    return @{
+             @"_shadow": shadow,
+             @"_userId": identity
+             };
+  }
+  return nil;
 }
 
 #pragma mark Common (Private)
+
+// This could be overwrited if you wanna make the test db using differnet key
+//MARK: OfflineDB base
+
+-(NSArray *)bookmarkDB {
+  return [[NSUserDefaults standardUserDefaults] arrayForKey: __BOOKMARKS_LIST];
+}
+
+-(NSArray *)historyDB {
+  return [[NSUserDefaults standardUserDefaults] arrayForKey: __HISTORY_LIST];
+}
+
+-(BOOL)setBookmarkDB:(NSArray *)records {
+  [[NSUserDefaults standardUserDefaults] setObject: records forKey: __BOOKMARKS_LIST];
+  return [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+-(BOOL)setHistoryDB:(NSArray *)records {
+  [[NSUserDefaults standardUserDefaults] setObject: records forKey:  __HISTORY_LIST];
+  return [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(NSArray *)bookmarkShadowDB {
+  return [[NSUserDefaults standardUserDefaults] arrayForKey: __BOOKMARK_SHADOW_LIST];
+}
+
++(NSArray *)historyShadowDB {
+  return [[NSUserDefaults standardUserDefaults] arrayForKey: __HISTORY_SHADOW_LIST];
+}
+
++(BOOL)setBookmarkShadow:(NSArray *)records {
+  [[NSUserDefaults standardUserDefaults] setObject: records forKey: __BOOKMARK_SHADOW_LIST];
+  return [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(BOOL)setHistoryShadow:(NSArray *)records {
+  [[NSUserDefaults standardUserDefaults] setObject: records forKey:  __HISTORY_SHADOW_LIST];
+  return [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 
 // obtain the whole bookmark records of different users.
 -(NSMutableArray *)obtainOfflineMutableRecordsOfType:(RecordType)type {
   
   // get the multiple users record first
-  NSArray *offlineRecords = [[NSUserDefaults standardUserDefaults] arrayForKey: type == RecordTypeBookmark ? __BOOKMARKS_LIST : __HISTORY_LIST];
+  NSArray *offlineRecords = type == RecordTypeBookmark ? self.bookmarkDB : self.historyDB;
   
   // create it if dosen't exist any
   if (!offlineRecords) {
@@ -65,8 +112,11 @@ NSString * const __HISTORY_LIST	= @"__HISTORY_LIST";
 
 -(BOOL)setUserDefaultWithRecords:(NSArray *)records isBookmark:(BOOL)isBookmark {
   
-  [[NSUserDefaults standardUserDefaults] setObject: records forKey: isBookmark ? __BOOKMARKS_LIST : __HISTORY_LIST];
-  return [[NSUserDefaults standardUserDefaults] synchronize];
+  if (isBookmark) {
+    return [self setBookmarkDB: records];
+  } else {
+    return [self setHistoryDB: records];
+  }
 }
 
 // get the record of the current login user.
@@ -152,7 +202,9 @@ NSString * const __HISTORY_LIST	= @"__HISTORY_LIST";
   
   BOOL success = [self setUserDefaultWithRecords: modifiedOfflineRecords isBookmark: type == RecordTypeBookmark];
   if (success) {
-    BOOL saveShadowSuccess = [OfflineDB setShadow: newRecord[@"_dicts"] isBookmark: type == RecordTypeBookmark];
+    BOOL saveShadowSuccess = [OfflineDB setShadow: newRecord[@"_dicts"]
+                                       isBookmark: type == RecordTypeBookmark
+                                       ofIdentity: newRecord[@"_userId"]];
     return saveShadowSuccess;
   } else {
     return NO;
@@ -161,23 +213,22 @@ NSString * const __HISTORY_LIST	= @"__HISTORY_LIST";
 
 #pragma mark - Bookmark (Open)
 
--(void)addOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity {
+-(void)addOffline:(NSDictionary *)dict type:(RecordType)type ofIdentity:(NSString *)identity {
   
-  if ([r[@"author"] isEqualToString: @""] || [r[@"comicName"] isEqualToString: @""] || [r[@"url"] isEqualToString: @""]) {
+  if ([dict[@"author"] isEqualToString: @""] || [dict[@"comicName"] isEqualToString: @""] || [dict[@"url"] isEqualToString: @""]) {
     NSLog(@"author, comicName, url is nil in Dictionary");
     return;
   }
-  
   NSArray *records = [self obtainOfflineMutableRecordsOfType: type];
-  
-  NSMutableDictionary *record = [[self obtainOfflineExistRecordFromRecords: records ofIdentity: identity] mutableCopy];
-  NSMutableArray *list = [[DSWrapper arrayFromDict: record[@"_dicts"]] mutableCopy];
+  NSMutableDictionary *record = [[self obtainOfflineExistRecordFromRecords: records
+                                                                ofIdentity: identity] mutableCopy];
+  NSMutableArray *list = [[DSWrapper arrayFromDict: (NSDictionary *)record[@"_dicts"]] mutableCopy];
   __block bool isExist = false;
   
   [list enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
     
-    if ([obj[@"url"] isEqualToString: r[@"url"]] &&
-        [obj[@"author"] isEqualToString: r[@"author"]]) {
+    if ([obj[@"url"] isEqualToString: dict[@"url"]] &&
+        [obj[@"author"] isEqualToString: dict[@"author"]]) {
       isExist = YES;
       *stop = YES;
       return;
@@ -189,28 +240,27 @@ NSString * const __HISTORY_LIST	= @"__HISTORY_LIST";
     list = [NSMutableArray array];
   }
   if (!isExist) {
-    [list addObject: r];
+    [list addObject: dict];
   }
   
   [record setValue: [DSWrapper dictFromArray: list] forKey: @"_dicts"];
   [self setOfflineNewRecord: record type: type identity: identity];
 }
 
--(NSDictionary *)deleteOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity {
+-(NSDictionary *)deleteOffline:(NSDictionary *)dict type:(RecordType)type ofIdentity:(NSString *)identity {
   
   NSArray *records = [self obtainOfflineMutableRecordsOfType: type];
-  
-  NSMutableDictionary *record = [[self obtainOfflineExistRecordFromRecords: records ofIdentity: identity] mutableCopy];
+  NSMutableDictionary *record = [[self obtainOfflineExistRecordFromRecords: records
+                                                                ofIdentity: identity] mutableCopy];
   NSMutableArray *list = [[DSWrapper arrayFromDict: (NSDictionary *)record[@"_dicts"]] mutableCopy];
   
   if (!list) {
     return record;
   }
-  
   NSMutableArray *editedList = [NSMutableArray array];
   
   for (NSDictionary *bk in list) {
-    if (![bk isEqualToDictionary: r]) {
+    if (![bk isEqualToDictionary: dict]) {
       [editedList addObject: bk];
     }
   }
@@ -225,15 +275,64 @@ NSString * const __HISTORY_LIST	= @"__HISTORY_LIST";
 }
 
 
+//MARK: Shadow
+
 // To remote remote and client and client_shadow
-+(NSDictionary *)shadowIsBookmark:(BOOL)isBookmark {
-  return [[NSUserDefaults standardUserDefaults] dictionaryForKey: isBookmark ? _bookmark_shadow : _history_shadow];
+
++(NSDictionary *)loadShadowType:(RecordType)type ofIdentity:(NSString *)identity {
+  
+  NSArray *shadowList = type == RecordTypeBookmark ? [self bookmarkShadowDB] : [self historyShadowDB] ;
+  __block NSDictionary *__shadow = nil;
+  [shadowList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    
+    if([obj[@"_userId"] isEqualToString: identity]) {
+      __shadow = obj[@"_shadow"];
+    }
+  }];
+  return __shadow;
 }
 
-+(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark {
++(BOOL)saveShadow:(NSDictionary *)shadow type:(RecordType)type ofIdentity:(NSString *)identity {
   
-  [[NSUserDefaults standardUserDefaults] setObject: dict forKey: isBookmark ? _bookmark_shadow : _history_shadow];
-  return [[NSUserDefaults standardUserDefaults] synchronize];
+  NSDictionary *shadowObject = [OfflineDB shadowFormat: shadow ofIdentity: identity];
+  
+  NSMutableArray *shadowList = type == RecordTypeBookmark
+  ? [[OfflineDB bookmarkShadowDB] mutableCopy]
+  : [[self historyShadowDB] mutableCopy] ;
+  shadowList = shadowList == nil ? [NSMutableArray array] : shadowList ;
+  
+  __block BOOL isExist = NO;
+  [shadowList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    
+    if([obj[@"_userId"] isEqualToString: identity]) {
+      *stop = YES;
+      isExist = YES;
+    }
+    if (stop && isExist) {
+      [shadowList replaceObjectAtIndex: idx withObject: shadowObject];
+      return;
+    }
+  }];
+  if (!isExist) {
+    [shadowList addObject: shadowObject];
+  }
+  if (type == RecordTypeBookmark) {
+    return [OfflineDB setBookmarkShadow: shadowList];
+  } else {
+    return [OfflineDB setHistoryShadow: shadowList];
+  }
+}
+
++(NSDictionary *)shadowIsBookmark:(BOOL)isBookmark ofIdentity:(NSString *)identity {
+  return [OfflineDB loadShadowType: isBookmark == YES ? RecordTypeBookmark : RecordTypeHistory
+                        ofIdentity: identity];
+}
+
++(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark ofIdentity:(NSString *)identity {
+  
+  return [OfflineDB saveShadow: dict
+                          type: isBookmark == YES ? RecordTypeBookmark : RecordTypeHistory
+                    ofIdentity: identity];
 }
 
 

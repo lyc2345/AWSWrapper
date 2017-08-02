@@ -25,7 +25,7 @@
 	
 	uint8_t digest[CC_SHA512_DIGEST_LENGTH] = {0};
 	
-	CC_SHA512(keyData.bytes, keyData.length, digest);
+	CC_SHA512(keyData.bytes, (CC_LONG)keyData.length, digest);
 	
 	NSData *out = [NSData dataWithBytes: digest length: CC_SHA512_DIGEST_LENGTH];
 	

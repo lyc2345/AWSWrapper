@@ -22,25 +22,15 @@ typedef NS_ENUM(NSInteger, RecordType) {
                                 andList:(NSArray *)list
                              remoteHash:(NSString *)remoteHash;
 
-#pragma mark Common (Private)
-
-// obtain the whole bookmark records of different users.
--(NSMutableArray *)obtainOfflineMutableRecordsOfType:(RecordType)type;
-// get the record of the current login user.
-// ["_identity": xxxxx, "_commitId": XXXXXX , "_list": [String: Dictionary]]
--(NSDictionary *)obtainOfflineExistRecordFromRecords:(NSArray *)records ofIdentity:(NSString *)identity;
-
-// replace the new bookmark list into the exist record in multiple records.
--(NSArray *)modifyOfflineRecords:(NSArray *)records withRecord:(NSDictionary *)record ofIdentity:(NSString *)identity;
-
-#pragma mark - Bookmark (Private)
-
--(NSDictionary *)setOfflineNewRecord:(NSDictionary *)record type:(RecordType)type identity:(NSString *)identity;
-
--(BOOL)pushSuccessThenSaveLocalRecord:(NSDictionary *)newRecord type:(RecordType)type newCommitId:(NSString *)commitId;
 
 #pragma mark - Bookmark (Open)
 
+//MARK: Trigger after push success
+
+-(BOOL)pushSuccessThenSaveLocalRecord:(NSDictionary *)newRecord type:(RecordType)type newCommitId:(NSString *)commitId;
+
+
+//MARK: Offline DB READ, ADD, DELETE
 
 +(NSDictionary *)shadowIsBookmark:(BOOL)isBookmark;
 

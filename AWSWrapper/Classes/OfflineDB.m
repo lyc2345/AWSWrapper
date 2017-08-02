@@ -15,10 +15,7 @@
 // bookmarkRecord = Dicionary(list: bookmarkList)
 // bookmarkRecords = Array(bookmarkRecords)
 
-
 @interface OfflineDB ()
-
-
 
 @end
 
@@ -48,6 +45,9 @@ NSString * const __HISTORY_LIST	  = @"__HISTORY_LIST";
 }
 
 #pragma mark Common (Private)
+
+// This could be overwrited if you wanna make the test db using differnet key
+//MARK: OfflineDB base
 
 -(NSArray *)bookmarkDB {
   return [[NSUserDefaults standardUserDefaults] arrayForKey: __BOOKMARKS_LIST];
@@ -84,6 +84,7 @@ NSString * const __HISTORY_LIST	  = @"__HISTORY_LIST";
   [[NSUserDefaults standardUserDefaults] setObject: records forKey:  _history_shadow];
   return [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
 
 // obtain the whole bookmark records of different users.
 -(NSMutableArray *)obtainOfflineMutableRecordsOfType:(RecordType)type {
@@ -238,14 +239,13 @@ NSString * const __HISTORY_LIST	  = @"__HISTORY_LIST";
 -(NSDictionary *)deleteOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity {
   
   NSArray *records = [self obtainOfflineMutableRecordsOfType: type];
-  
-  NSMutableDictionary *record = [[self obtainOfflineExistRecordFromRecords: records ofIdentity: identity] mutableCopy];
+  NSMutableDictionary *record = [[self obtainOfflineExistRecordFromRecords: records
+                                                                ofIdentity: identity] mutableCopy];
   NSMutableArray *list = [[DSWrapper arrayFromDict: (NSDictionary *)record[@"_dicts"]] mutableCopy];
   
   if (!list) {
     return record;
   }
-  
   NSMutableArray *editedList = [NSMutableArray array];
   
   for (NSDictionary *bk in list) {
@@ -274,7 +274,6 @@ NSString * const __HISTORY_LIST	  = @"__HISTORY_LIST";
 }
 
 +(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark {
-  
   if (isBookmark) {
     return [self setBookmarkShadow: dict];
   } else {

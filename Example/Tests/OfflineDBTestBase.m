@@ -8,6 +8,73 @@
 
 #import "OfflineDBTestBase.h"
 
+@interface OfflineDB (Test)
+
+-(NSArray *)bookmarkDB;
+
+-(NSArray *)historyDB;
+
+-(BOOL)setBookmarkDB:(NSArray *)records;
+
+-(BOOL)setHistoryDB:(NSArray *)records;
+
++(NSDictionary *)bookmarkShadow;
+
++(NSDictionary *)historyShadow;
+
++(BOOL)setBookmarkShadow:(NSDictionary *)records;
+
++(BOOL)setHistoryShadow:(NSDictionary *)records;
+
+@end
+
+@implementation OfflineDB (Test)
+
+NSString * const __BOOKMARKS_LIST_TEST = @"__BOOKMARKS_LIST_TEST";
+NSString * const __HISTORY_LIST_TEST = @"__HISTORY_LIST_TEST";
+NSString * const __BOOKMARK_SHADOW_TEST = @"__BOOKMARK_SHADOW_TEST";
+NSString * const __HISTORY_SHADOW_TEST = @"__HISTORY_SHADOW_TEST";
+
+
+-(NSArray *)bookmarkDB {
+  return [[NSUserDefaults standardUserDefaults] arrayForKey: __BOOKMARKS_LIST_TEST];
+}
+
+-(NSArray *)historyDB {
+  return [[NSUserDefaults standardUserDefaults] arrayForKey: __HISTORY_LIST_TEST];
+}
+
+-(BOOL)setBookmarkDB:(NSArray *)records {
+  [[NSUserDefaults standardUserDefaults] setObject: records forKey: __BOOKMARKS_LIST_TEST];
+  return [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+-(BOOL)setHistoryDB:(NSArray *)records {
+  [[NSUserDefaults standardUserDefaults] setObject: records forKey:  __HISTORY_LIST_TEST];
+  return [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(NSDictionary *)bookmarkShadow {
+  return [[NSUserDefaults standardUserDefaults] dictionaryForKey: __BOOKMARK_SHADOW_TEST];
+}
+
++(NSDictionary *)historyShadow {
+  return [[NSUserDefaults standardUserDefaults] dictionaryForKey: __HISTORY_SHADOW_TEST];
+}
+
++(BOOL)setBookmarkShadow:(NSDictionary *)records {
+  [[NSUserDefaults standardUserDefaults] setObject: records forKey: __BOOKMARK_SHADOW_TEST];
+  return [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(BOOL)setHistoryShadow:(NSDictionary *)records {
+  [[NSUserDefaults standardUserDefaults] setObject: records forKey:  __HISTORY_SHADOW_TEST];
+  return [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
+@end
+
 @interface OfflineDBTestBase ()
 
 @property OfflineDB *offlineDB;
@@ -27,11 +94,11 @@
   return self;
 }
 
--(NSDictionary *)shadowIsBookmark:(BOOL)isBookmark {
++(NSDictionary *)shadowIsBookmark:(BOOL)isBookmark {
   return [OfflineDB shadowIsBookmark: isBookmark];
 }
 
--(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark {
++(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark {
   return [OfflineDB setShadow: dict isBookmark: isBookmark];
 }
 

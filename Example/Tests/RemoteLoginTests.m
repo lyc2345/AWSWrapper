@@ -18,7 +18,7 @@ static DispatchQueue *dispatchQueue;
 static NSString *sampleUsername = @"sss";
 static NSString *samplePassword = @"88888888";
 
-SpecBegin(ARemoteLoginTests)
+SpecBegin(RemoteLoginTests)
 
 describe(@"Tests1", ^{
   

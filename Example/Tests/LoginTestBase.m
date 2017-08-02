@@ -148,11 +148,11 @@
 
 
 // Don't know how to test for confirm by confirm code.
-//-(void)confirmSignUpWithUser:(NSString *)username
-//                 confirmCode:(NSString *)confirmCode
-//                     success:(void(^)())successHandler
-//                        fail:(void(^)(NSError *error))failHandler {
-//  
+-(void)confirmSignUpWithUser:(NSString *)username
+                 confirmCode:(NSString *)confirmCode
+                     success:(void(^)())successHandler
+                        fail:(void(^)(NSError *error))failHandler {
+//
 //  self.expection = [self expectationWithDescription: @"Logout offline"];
 //  
 //  [self.loginManager confirmSignUpWithUser: username
@@ -163,7 +163,7 @@
 //  [self waitForExpectationsWithTimeout: 2.0 handler:^(NSError * _Nullable error) {
 //    completion();
 //  }];
-//}
+}
 
 -(void)onResendOfUser:(NSString *)username
               success:(void(^)(NSString *destination))successHandler
@@ -173,10 +173,10 @@
 }
 
 // Don't know how to test confime code again.
-//-(void)confirmForgotNewPassword:(NSString *)newPassword
-//                    confirmCode:(NSString *)confirmCode
-//                        success:(void(^)())successHandler
-//                           fail:(void(^)(NSError *error))failHandler {
+-(void)confirmForgotNewPassword:(NSString *)newPassword
+                    confirmCode:(NSString *)confirmCode
+                        success:(void(^)())successHandler
+                           fail:(void(^)(NSError *error))failHandler {
 //  
 //  self.expection = [self expectationWithDescription: @"Logout offline"];
 //  
@@ -191,7 +191,7 @@
 //  }];
 //  
 //  [self.loginManager confirmForgotNewPassword: newPassword confirmCode: confirmCode success: successHandler fail: failHandler];
-//}
+}
 
 -(void)forgotPasswordOfUser:(NSString *)username
                  completion:(void(^)(NSError *error))completion {

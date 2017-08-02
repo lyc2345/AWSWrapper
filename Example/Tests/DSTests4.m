@@ -281,7 +281,7 @@ describe(@"Tests4", ^{
                            shouldReplace:^BOOL(id oldValue, id newValue) {
                              return YES;
                            }];
-        NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: actualRemote];
+        //NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: actualRemote];
         
         [testcase examineSpec: @"Device B, B4, R4"
                      commitId: @"23-r032f2f0-2f"

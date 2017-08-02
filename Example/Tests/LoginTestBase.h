@@ -8,7 +8,7 @@
 
 @import XCTest;
 
-@interface LoginTestBase : XCTestCase
+@interface LoginTestBase : NSObject
 
 /*
 // MARK: AWS Cognito Delegate Handler

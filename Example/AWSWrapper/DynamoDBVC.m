@@ -18,8 +18,8 @@ NSString *const cellIdentifier = @"cell";
 
 @property NSDictionary *localBookmark;
 @property NSDictionary *remoteBookmark;
-@property NSDictionary *localRecentVisitItems;
-@property NSDictionary *remoteRecentVisitItems;
+@property NSDictionary *localHistoryItems;
+@property NSDictionary *remoteHistoryItems;
 
 @end
 
@@ -34,7 +34,7 @@ NSString *const cellIdentifier = @"cell";
 	self.navigationItem.rightBarButtonItem = uploadBtn;
 
 	[self reloadBookmarks];
-	[self reloadRecentlyVisit];
+	[self reloadHistory];
 }
 
 -(void)reloadBookmarks {
@@ -59,23 +59,23 @@ NSString *const cellIdentifier = @"cell";
 	}
 }
 
--(void)reloadRecentlyVisit {
+-(void)reloadHistory {
 	
 	DynamoService *dynamoService = [DynamoService new];
 	LoginManager *loginManager = [LoginManager shared];
 	NSString *userId = loginManager.awsIdentityId != nil ? loginManager.awsIdentityId : loginManager.offlineIdentity;
-	NSDictionary *localRecentlyVisit = [[OfflineDB new] getOfflineRecordOfIdentity: userId type: RecordTypeRecentlyVisit];
+	NSDictionary *localHistory = [[OfflineDB new] getOfflineRecordOfIdentity: userId type: RecordTypeHistory];
 	
-	self.localRecentVisitItems = localRecentlyVisit;
+	self.localHistoryItems = localHistory;
 	[_tableView reloadData];
 	
 	if ([LoginManager shared].awsIdentityId) {
 		
-    [dynamoService pullType: RecordTypeRecentlyVisit user: loginManager.awsIdentityId completion:^(NSDictionary *item, NSError *error) {
+    [dynamoService pullType: RecordTypeHistory user: loginManager.awsIdentityId completion:^(NSDictionary *item, NSError *error) {
 			
 			dispatch_async(dispatch_get_main_queue(), ^{
 				
-        self.remoteRecentVisitItems = item;
+        self.remoteHistoryItems = item;
 				[_tableView reloadSections: [NSIndexSet indexSetWithIndex: 3] withRowAnimation: UITableViewRowAnimationNone];
 			});
 		}];
@@ -93,10 +93,10 @@ NSString *const cellIdentifier = @"cell";
 //		});
 //	}];
 //	
-//   [dynamoService mergePushType:RecordTypeRecentlyVisit userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
+//   [dynamoService mergePushType:RecordTypeHistory userId: [LoginManager shared].awsIdentityId completion:^(NSDictionary *responseItem, NSError *error) {
 //		
 //		dispatch_sync(dispatch_get_main_queue(), ^{
-//			[self reloadRecentlyVisit];
+//			[self reloadHistory];
 //		});
 //	}];
 }
@@ -113,9 +113,9 @@ NSString *const cellIdentifier = @"cell";
 	} else if (section == 1) {
     return [(NSArray *)self.remoteBookmark[@"_dicts"] count];
 	} else if (section == 2) {
-		return [(NSArray *)self.localRecentVisitItems[@"_dicts"] count];
+		return [(NSArray *)self.localHistoryItems[@"_dicts"] count];
 	} else if (section == 3){
-    return [(NSArray *)self.remoteRecentVisitItems[@"_dicts"] count];
+    return [(NSArray *)self.remoteHistoryItems[@"_dicts"] count];
 	}
 	return 0;
 }
@@ -128,9 +128,9 @@ NSString *const cellIdentifier = @"cell";
     return [NSString stringWithFormat:@"LB: %lu- %@", (unsigned long)[(NSArray *)self.remoteBookmark[@"_dicts"] count], [self.remoteBookmark[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.remoteBookmark[@"_commitId"]).length - 10, 10)]];
 
 	} else if (section == 2) {
-		return [NSString stringWithFormat:@"LB: %lu- %@", (unsigned long)[(NSArray *)self.localRecentVisitItems[@"_dicts"] count], [self.localRecentVisitItems[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.localRecentVisitItems[@"_commitId"]).length - 10, 10)]];
+		return [NSString stringWithFormat:@"LB: %lu- %@", (unsigned long)[(NSArray *)self.localHistoryItems[@"_dicts"] count], [self.localHistoryItems[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.localHistoryItems[@"_commitId"]).length - 10, 10)]];
 	} else if (section == 3) {
-    return [NSString stringWithFormat:@"LB: %lu- %@", (unsigned long)[(NSArray *)self.remoteRecentVisitItems[@"_dicts"] count], [self.remoteRecentVisitItems[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.remoteRecentVisitItems[@"_commitId"]).length - 10, 10)]];
+    return [NSString stringWithFormat:@"LB: %lu- %@", (unsigned long)[(NSArray *)self.remoteHistoryItems[@"_dicts"] count], [self.remoteHistoryItems[@"_commitId"] substringWithRange: NSMakeRange(((NSString *)self.remoteHistoryItems[@"_commitId"]).length - 10, 10)]];
 	}
 	return @"";
 }
@@ -156,7 +156,7 @@ NSString *const cellIdentifier = @"cell";
 		} else if (indexPath.section == 2) {
 			
 			[tableView beginUpdates];
-			self.localRecentVisitItems = [[OfflineDB new] deleteOffline: [DSWrapper arrayFromDict: self.localRecentVisitItems[@"_dicts"]][indexPath.row] type: RecordTypeRecentlyVisit ofIdentity: self.localRecentVisitItems[@"_userId"]];
+			self.localHistoryItems = [[OfflineDB new] deleteOffline: [DSWrapper arrayFromDict: self.localHistoryItems[@"_dicts"]][indexPath.row] type: RecordTypeHistory ofIdentity: self.localHistoryItems[@"_userId"]];
 			[tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationLeft];
 			[tableView reloadSectionIndexTitles];
 			[tableView endUpdates];
@@ -206,7 +206,7 @@ NSString *const cellIdentifier = @"cell";
 		
 	} else if (indexPath.section == 2)  {
 		
-		NSArray *bks = [DSWrapper arrayFromDict: self.localRecentVisitItems[@"_dicts"]];
+		NSArray *bks = [DSWrapper arrayFromDict: self.localHistoryItems[@"_dicts"]];
 		NSDictionary *bk = bks[indexPath.row];
 		//NSDictionary *bk = self.localBookmark[@"_dicts"][indexPath.row];
 		
@@ -214,7 +214,7 @@ NSString *const cellIdentifier = @"cell";
 		
 	} else if (indexPath.section == 3)  {
     
-    NSArray *comics = [DSWrapper arrayFromDict: self.remoteRecentVisitItems[@"_dicts"]];
+    NSArray *comics = [DSWrapper arrayFromDict: self.remoteHistoryItems[@"_dicts"]];
     NSDictionary *bk = comics[indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat: @"%@, %@, %@", bk[@"comicName"], bk[@"author"], bk[@"url"]];
   }

@@ -9,6 +9,7 @@
 #import "DynamoSync.h"
 #import "DSWrapper.h"
 #import "Random.h"
+#import "DLog.h"
 /*
   shouldReplace=true 是same key but different value嗎
   false的時候是different key and value嗎」
@@ -27,14 +28,6 @@
  所以就用傳入的block來判斷
 */
 
-#define debugMode YES;
-
-#ifdef debugMode
-#  define DLOG(format, ...) NSLog((@":NR: %s (L: %d) " format), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-#else
-#  define DLOG(format, ...)
-#endif
-
 @interface DynamoSync ()
 
 @end
@@ -46,7 +39,7 @@
   self = [super init];
   if (self) {
     
-    _debugMode = YES;
+    
   }
   return self;
 }
@@ -58,7 +51,7 @@
          shouldReplace:(BOOL (^)(id oldValue, id newValue))shouldReplace
             completion:(void (^)(NSDictionary* diff, NSError* error))completion {
   
-  RecordType type = [tableName isEqualToString: @"Bookmark"] ? RecordTypeBookmark : RecordTypeRecentlyVisit ;
+  RecordType type = [tableName isEqualToString: @"Bookmark"] ? RecordTypeBookmark : RecordTypeHistory ;
   BOOL isBookmark = [tableName isEqualToString: @"Bookmark"] ? YES : NO;
   
   __block NSDictionary *diff_client_shadow = [DSWrapper diffWins: dict[@"_dicts"] loses: shadow];

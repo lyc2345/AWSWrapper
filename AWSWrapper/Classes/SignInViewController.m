@@ -165,9 +165,8 @@ static NSString *LOG_TAG;
 			}];
 		}	else {
 			
-			[[LoginManager shared] logoutOfflineCompletion:^(NSError *error) {
+			[[LoginManager shared] logoutOfflineCompletion:^{
 				
-				NSLog(@"offline logout error: %@", error);
 			}];
 		}
 	}

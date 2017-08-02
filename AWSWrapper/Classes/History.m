@@ -12,15 +12,15 @@
 //
 
 
-#import "RecentVisit.h"
+#import "History.h"
 #import <sys/utsname.h>
 
 
-@implementation RecentVisit
+@implementation History
 
 + (NSString *)dynamoDBTableName {
 
-    return @"comick-mobilehub-2020998507-RecentVisit";
+    return @"comicj-mobilehub-1696511402-History";
 }
 
 + (NSString *)hashKeyAttribute {

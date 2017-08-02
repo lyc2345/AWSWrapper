@@ -11,6 +11,7 @@
 //
 //
 #import "AWSMobileClient.h"
+#import "DLog.h"
 @import AWSMobileHubHelper;
 
 @interface AWSMobileClient ()
@@ -63,7 +64,9 @@
 
     if (!_initialized) {
         [[AWSIdentityManager defaultIdentityManager] resumeSessionWithCompletionHandler:^(id result, NSError *error) {
+#ifdef debugMode
             NSLog(@"result = %@, error = %@", result, error);
+#endif
         }];
         _initialized = YES;
     }
@@ -99,10 +102,8 @@
                                                     region: _AWSCognitoUserPoolRegion
      ];
     
-    [[AWSSignInProviderFactory sharedInstance] registerAWSSignInProvider:[AWSCognitoUserPoolsSignInProvider sharedInstance]
-                                                                  forKey:AWSCognitoUserPoolsSignInProviderKey];
-	
-	
+    [[AWSSignInProviderFactory sharedInstance] registerAWSSignInProvider: [AWSCognitoUserPoolsSignInProvider sharedInstance]
+                                                                  forKey: AWSCognitoUserPoolsSignInProviderKey];
 }
 
 -(void)setupCredentialProvider {

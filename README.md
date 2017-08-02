@@ -26,7 +26,7 @@ pod "AWSWrapper", :git => 'https://github.com/lyc2345/AWSWrapper.git'
 ```
 
 1. Sign up for AWSMobileHub Service
-2. create Bookmark and RecentVisit "Amazon DynamoDb Tables" 
+2. create Bookmark and History "Amazon DynamoDb Tables" 
 ![Amazon DynamoDb Tables](https://github.com/lyc2345/AWSWrapper/blob/master/screenshot/Screen%20Shot%202017-07-23%20at%2017.21.30.png)
 3. create "Amazon Cognito Idnentity Pools", User sign-in only use Email and Password. 
 ![Cognito Idnentity Pools](https://github.com/lyc2345/AWSWrapper/blob/master/screenshot/Screen%20Shot%202017-07-23%20at%2017.21.49.png)
@@ -128,7 +128,7 @@ if ([LoginManager shared].isLogin) {
 /**
  DynamoSync push success delegate
 
- @param type Bookmark or RecentlyVisit
+ @param type Bookmark or History
  @param data as same as remote data
  @param commitId the new commidId, for the next sync
  */
@@ -141,7 +141,7 @@ if ([LoginManager shared].isLogin) {
  Need to empty shadow when remoteHash is changed or nil.
  Otherwise, the data in current device may be deleted.
 
- @param isBookmark for identify Bookmark or RecentlyVisit
+ @param isBookmark for identify Bookmark or History
  @return the shadow you actually set empty or nil.
  */
 -(id)emptyShadowIsBookmark:(BOOL)isBookmark;

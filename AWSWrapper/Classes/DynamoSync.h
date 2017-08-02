@@ -16,7 +16,7 @@
 /**
  DynamoSync push success delegate
 
- @param type Bookmark or RecentlyVisit
+ @param type Bookmark or History
  @param data as same as remote data
  @param commitId the new commidId, for the next sync
  */
@@ -29,7 +29,7 @@
  Need to empty shadow when remoteHash is changed or nil.
  Otherwise, the data in current device may be deleted.
 
- @param isBookmark for identify Bookmark or RecentlyVisit
+ @param isBookmark for identify Bookmark or History
  @return the shadow you actually set empty or nil.
  */
 -(id)emptyShadowIsBookmark:(BOOL)isBookmark;
@@ -40,7 +40,6 @@
 
 @interface DynamoSync : NSObject
 
-@property BOOL debugMode;
 @property (weak, nonatomic) id<DynamoSyncDelegate> delegate;
 
 /**

@@ -31,7 +31,7 @@
 #pragma mark (Open API)
 
 /**
- pull Bookmark or RecentlyVisit data by userId and Class
+ pull Bookmark or History data by userId and Class
  
  @param type AWS Model Type (e.g. RecordTypebookmark)
  @param userId AWS identityID
@@ -51,7 +51,7 @@
  7. diff new remote_client and remote, also apply client_shadow_diff into remote_client
  8. push the diffs by remote diff new_remote_client
 
- @param type Bookmark or RecentlyVisit
+ @param type Bookmark or History
  @param userId AWS identity id
  @param mergeCompletion return error
  */

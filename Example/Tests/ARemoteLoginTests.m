@@ -29,7 +29,12 @@ describe(@"Tests1", ^{
       testcase = [LoginTestBase new];
       dispatchQueue = [DispatchQueue new];
       cognito = [OfflineCognito shared];
-      done();
+      
+      if (testcase.isAWSLogin) {
+        [testcase logout: ^(id result, NSError *error) {
+          done();
+        }];
+      }
     });
   });
   
@@ -37,7 +42,8 @@ describe(@"Tests1", ^{
     
     waitUntil(^(DoneCallback done) {
       
-      testcase.username = @"uuu";
+      //testcase.username = @"uuu";
+      testcase.username = sampleUsername;
       testcase.password = samplePassword;
       
       [dispatchQueue performGroupedDelay: 4 block: ^{

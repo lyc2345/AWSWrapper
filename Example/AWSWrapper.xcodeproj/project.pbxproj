@@ -23,6 +23,7 @@
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		D448698D968525408A367F6F /* Pods_AWSWrapper_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8513427F95F3CFD033FB19C9 /* Pods_AWSWrapper_Example.framework */; };
 		F611F0971EEEB376000DFDFD /* DetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F611F0961EEEB376000DFDFD /* DetailVC.m */; };
+		F612FBB21F3177BE001924DC /* OfflineDBTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F612FBB11F3177BE001924DC /* OfflineDBTestBase.m */; };
 		F649A5971F2CE2D30063DCCF /* DSTests1Original.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E8E1F18BC4400184DF7 /* DSTests1Original.m */; };
 		F649A5981F2CE2D30063DCCF /* DSTests1.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0EA91F1A155200184DF7 /* DSTests1.m */; };
 		F649A5991F2CE2D30063DCCF /* DSTests2.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E961F19F01B00184DF7 /* DSTests2.m */; };
@@ -89,6 +90,8 @@
 		E64CEB5FC6FE6452E4603179 /* Pods-AWSWrapper_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSWrapper_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AWSWrapper_Tests/Pods-AWSWrapper_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		F611F0951EEEB376000DFDFD /* DetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailVC.h; sourceTree = "<group>"; };
 		F611F0961EEEB376000DFDFD /* DetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailVC.m; sourceTree = "<group>"; };
+		F612FBB01F3177BE001924DC /* OfflineDBTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineDBTestBase.h; sourceTree = "<group>"; };
+		F612FBB11F3177BE001924DC /* OfflineDBTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineDBTestBase.m; sourceTree = "<group>"; };
 		F63CFCA81F1C5896004DDE64 /* DSLocalTests3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSLocalTests3.m; sourceTree = "<group>"; };
 		F63CFCAA1F1C5CD3004DDE64 /* DSTests3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSTests3.m; sourceTree = "<group>"; };
 		F63CFCAC1F1C6058004DDE64 /* DSTests4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSTests4.m; sourceTree = "<group>"; };
@@ -220,6 +223,7 @@
 		6003F5B5195388D20070C39A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				F612FBB31F3177C4001924DC /* OfflineDB */,
 				F6E790DD1F2B440900A67CE8 /* LoginBase */,
 				F6E790DC1F2B426400A67CE8 /* Login */,
 				F64D0E941F19E94500184DF7 /* TestBase */,
@@ -247,6 +251,15 @@
 				0B7EDF545D1A9E0717E96FB2 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		F612FBB31F3177C4001924DC /* OfflineDB */ = {
+			isa = PBXGroup;
+			children = (
+				F612FBB01F3177BE001924DC /* OfflineDBTestBase.h */,
+				F612FBB11F3177BE001924DC /* OfflineDBTestBase.m */,
+			);
+			name = OfflineDB;
 			sourceTree = "<group>";
 		};
 		F64D0E941F19E94500184DF7 /* TestBase */ = {
@@ -542,6 +555,7 @@
 				F6B39F211F2C435100064766 /* ARemoteLoginTests.m in Sources */,
 				F649A5A51F2CE2D30063DCCF /* DSWrapperTests2.m in Sources */,
 				F649A5A11F2CE2D30063DCCF /* DSLocalTests4.m in Sources */,
+				F612FBB21F3177BE001924DC /* OfflineDBTestBase.m in Sources */,
 				F6B39F1F1F2C3E6300064766 /* LoginTestBase.m in Sources */,
 				F64D0E9E1F1A067900184DF7 /* NSArray+Sort.m in Sources */,
 				F64D0E931F19E7BF00184DF7 /* DispatchQueue.m in Sources */,

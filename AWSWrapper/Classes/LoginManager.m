@@ -8,6 +8,7 @@
 
 #import "LoginManager.h"
 #import "OfflineCognito.h"
+#import "DLog.h"
 @import AWSMobileHubHelper.AWSIdentityManager;
 @import AWSMobileHubHelper.AWSCognitoUserPoolsSignInProvider;
 @import AWSMobileHubHelper.AWSContentManager;
@@ -95,8 +96,10 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
   NSString *password;
   
   if (!self.userPoolSignInFlowStartUserName && !self.userPoolSignInFlowStartPassword) {
+#ifdef debugMode
     NSLog(@"handleUserPoolSignInFlowStart is error in function: %s, line: %d", __FUNCTION__, __LINE__);
     NSLog(@"userPoolSignInFlowStartUserName || userPoolSignInFlowStartPassword is null");
+#endif
     username = self.user;
     password = self.password;
     
@@ -121,13 +124,17 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 	NSError *error;
 	
 	if (isQualified) {
-		[[NSUserDefaults standardUserDefaults] setObject: user forKey: __CURRENT_USER];
-		NSLog(@"offline login success with user: %@", [[NSUserDefaults standardUserDefaults] stringForKey: __CURRENT_USER]);
-	} else {
-		// To remind user there are not qualified for offline login (because they are not had been register AWS yet)
-		[[NSUserDefaults standardUserDefaults] setObject: nil forKey: __CURRENT_USER];
-		NSLog(@"offline login failure with user: %@", user);
-		error = [NSError errorWithDomain: @"com.stan.loginmanager" code: 1 userInfo: @{@"description": @"offline login failure"}];
+    [[NSUserDefaults standardUserDefaults] setObject: user forKey: __CURRENT_USER];
+#ifdef debugMode
+    NSLog(@"offline login success with user: %@", [[NSUserDefaults standardUserDefaults] stringForKey: __CURRENT_USER]);
+#endif
+  } else {
+    // To remind user there are not qualified for offline login (because they are not had been register AWS yet)
+    [[NSUserDefaults standardUserDefaults] setObject: nil forKey: __CURRENT_USER];
+#ifdef debugMode
+    NSLog(@"offline login failure with user: %@", user);
+#endif
+    error = [NSError errorWithDomain: @"com.stan.loginmanager" code: 1 userInfo: @{@"description": @"offline login failure"}];
 		
 	}
 	completion(error);
@@ -136,7 +143,9 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 -(void)logoutOfflineCompletion:(void(^)(void))completion {
 	
 	[[NSUserDefaults standardUserDefaults] setObject: nil forKey: __CURRENT_USER];
+#ifdef debugMode
 	NSLog(@"offline logout successfully");
+#endif
   if (completion) { completion(); }
 }
 
@@ -187,21 +196,25 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 	
 	if (!self.userPool) {
 		self.userPool = [AWSCognitoIdentityUserPool CognitoIdentityUserPoolForKey: AWSCognitoUserPoolsSignInProviderKey];
-	}
-
-	[[self.userPool signUp: username password: password userAttributes: attributes validationData:nil] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityUserPoolSignUpResponse *> * _Nonnull task) {
-		NSLog(@"Successful signUp user: %@",task.result.user.username);
+  }
+  
+  [[self.userPool signUp: username password: password userAttributes: attributes validationData:nil] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityUserPoolSignUpResponse *> * _Nonnull task) {
+#ifdef debugMode
+    NSLog(@"Successful signUp user: %@",task.result.user.username);
+#endif
 		dispatch_async(dispatch_get_main_queue(), ^{
 			if(task.error){
 				
 				failHandler(task.error);
 				
-			} else if (task.result.user.confirmedStatus != AWSCognitoIdentityUserStatusConfirmed){
-
-				// success signup but still needs to confirm.
-				// Show the Confirm action way destination, e.g. phone, email... etc
-				NSLog(@"code delivery detail attributeName: %@", task.result.codeDeliveryDetails.attributeName);
-				NSLog(@"code delivery detail destination: %@", task.result.codeDeliveryDetails.destination);
+      } else if (task.result.user.confirmedStatus != AWSCognitoIdentityUserStatusConfirmed){
+        
+        // success signup but still needs to confirm.
+        // Show the Confirm action way destination, e.g. phone, email... etc
+#ifdef debugMode
+        NSLog(@"code delivery detail attributeName: %@", task.result.codeDeliveryDetails.attributeName);
+        NSLog(@"code delivery detail destination: %@", task.result.codeDeliveryDetails.destination);
+#endif
 				
 				waitToConfirmAction(task.result.codeDeliveryDetails.destination);
 				self.tmpPassword = password;
@@ -290,10 +303,12 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 	[[AWSCognitoUserPoolsSignInProvider sharedInstance] setInteractiveAuthDelegate: self];
   AWSCognitoUserPoolsSignInProvider *signInProvider = [AWSCognitoUserPoolsSignInProvider sharedInstance];
   signInProvider.userName = self.userPoolSignInFlowStartUserName();
-	[[AWSIdentityManager defaultIdentityManager] loginWithSignInProvider: signInProvider completionHandler:^(id  _Nullable result, NSError * _Nullable error) {
-		
-		if (!error) {
-			NSLog(@"user login successfully with result: %@", result);
+  [[AWSIdentityManager defaultIdentityManager] loginWithSignInProvider: signInProvider completionHandler:^(id  _Nullable result, NSError * _Nullable error) {
+    
+    if (!error) {
+#ifdef debugMode
+      NSLog(@"user login successfully with result: %@", result);
+#endif
 			
 			NSString *username = weakSelf.userPoolSignInFlowStartUserName();
 			NSString *password = weakSelf.userPoolSignInFlowStartPassword();

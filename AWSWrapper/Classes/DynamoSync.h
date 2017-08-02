@@ -40,7 +40,6 @@
 
 @interface DynamoSync : NSObject
 
-@property BOOL debugMode;
 @property (weak, nonatomic) id<DynamoSyncDelegate> delegate;
 
 /**

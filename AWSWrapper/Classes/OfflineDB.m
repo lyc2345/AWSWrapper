@@ -36,10 +36,15 @@ NSString * const __HISTORY_LIST	= @"__HISTORY_LIST";
                                 andList:(NSArray *)list
                              remoteHash:(NSString *)remoteHash {
   
-  return @{@"_commitId": commitId != nil ? commitId : @"",
-           @"_dicts": list,
-           @"_userId": identity,
-           @"_remoteHash": remoteHash};
+  if (identity && commitId && remoteHash) {
+    return @{@"_commitId": commitId,
+             @"_dicts": list != nil ? list : [NSArray array],
+             @"_userId": identity,
+             @"_remoteHash": remoteHash};
+
+  } else {
+    return nil;
+  }
 }
 
 #pragma mark Common (Private)

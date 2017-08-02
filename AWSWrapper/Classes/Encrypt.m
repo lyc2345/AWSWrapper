@@ -7,6 +7,7 @@
 //
 
 #import "Encrypt.h"
+#import "DLog.h"
 
 #include <CommonCrypto/CommonDigest.h>
 
@@ -14,6 +15,10 @@
 
 +(NSString *)SHA512From:(NSString *)source {
 	
+  if (!source) {
+    return nil;
+  }
+  
 	const char *s = [source cStringUsingEncoding: NSASCIIStringEncoding];
 	
 	NSData *keyData = [NSData dataWithBytes:s length: strlen(s)];
@@ -27,7 +32,7 @@
 	NSString *output = [out description];
 	NSString *finalOutput = [output stringByTrimmingCharactersInSet: [NSCharacterSet symbolCharacterSet]];
 	
-	NSLog(@"generate sha512: %@", finalOutput);
+	//DLog(@"generate sha512: %@", finalOutput);
 	
 	return finalOutput;
 	

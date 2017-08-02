@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *checkLoginLabel;
 
 @property (strong, nonatomic) OfflineDB *offlineDB;
+@property (strong, nonatomic) OfflineCognito *offlineCognito;
 
 @property NSString *currentUser;
 @property NSArray *userList;
@@ -52,6 +53,8 @@
 	};
 	
 	self.nameTF.delegate = self;
+  self.authorTF.delegate = self;
+  self.urlTF.delegate = self;
 	
 	[self refreshLoginStatusThroughNotification];
   
@@ -61,10 +64,18 @@
   _userTable.delegate = self;
   _userTable.dataSource = self;
   
-  self.userList = [NSArray array];
   self.currentUser = @"";
   
-  self.offlineDB = [[OfflineDB alloc] init];
+  self.offlineDB = [OfflineDB new];
+  self.offlineCognito = [OfflineCognito new];
+  
+  NSArray *userlist = [[NSUserDefaults standardUserDefaults] arrayForKey: @"__OFFLINE_USER_LIST"];
+  if (userlist) {
+    self.userList = userlist;
+  } else {
+    self.userList = [NSArray array];
+  }
+  
   
   _dsync = [[DynamoSync alloc] init];
   _dsync.delegate = self;
@@ -125,7 +136,7 @@
 
 - (IBAction)load:(id)sender {
 	
-	NSArray *userList = [[NSUserDefaults standardUserDefaults] arrayForKey: @"__USER_LIST"];
+  NSArray *userList = [[NSUserDefaults standardUserDefaults] arrayForKey: @"__OFFLINE_USER_LIST"];
 	NSString *currentUser = [[NSUserDefaults standardUserDefaults] stringForKey: @"__CURRENT_USER"];
   self.currentUser = currentUser;
   self.userList = userList;
@@ -281,16 +292,14 @@
 // MARK: TableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  
-  
   if (tableView == _userTable && indexPath.section == 1) {
     
     NSDictionary *user = self.userList[indexPath.row];
     
     DetailVC *detailVC = [self.storyboard instantiateViewControllerWithIdentifier: NSStringFromClass([DetailVC class])];
     UINavigationController *navi = self.navigationController;
-    detailVC.t = [NSString stringWithFormat: @"username: %@", user[@"_user"]];
-    detailVC.c = [NSString stringWithFormat:@"userId: %@, \n\n\npassword: %@", user[@"_userId"], user[@"_password"]];
+    detailVC.t = [NSString stringWithFormat: @"identityId: %@", user[@"_identityId"]];
+    detailVC.c = [NSString stringWithFormat:@"username: %@", user[@"_username"]];
     [navi showViewController: detailVC sender: nil];
   }
 }
@@ -368,8 +377,6 @@
   
   UITableViewRowAction *delete = [UITableViewRowAction rowActionWithStyle: UITableViewRowActionStyleDefault title: @"Delete" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
     
-    DynamoService *dynamoService = [DynamoService new];
-    
     if (indexPath.section == 0) {
       
       [tableView beginUpdates];
@@ -411,8 +418,8 @@
       default: {
         
         NSDictionary *user = self.userList[indexPath.row];
-        cell.textLabel.text = user[@"_userId"];
-        cell.detailTextLabel.text = [NSString stringWithFormat: @"user: %@, password: %@", user[@"_user"], user[@"_password"]];
+        cell.textLabel.text = user[@"_identityId"];
+        cell.detailTextLabel.text = [NSString stringWithFormat: @"identityId: %@", user[@"_username"]];
         return cell;
       }
     }

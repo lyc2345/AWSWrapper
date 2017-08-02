@@ -135,20 +135,40 @@ NSString * const __HISTORY_LIST	  = @"__HISTORY_LIST";
   }];
   return (dict != nil) ? dict : [NSDictionary dictionary];
 }
+/*
+NSMutableArray *waitToModifyRecords = [NSMutableArray array];
+[records enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+  
+  if ([obj[@"_userId"] isEqualToString: identity]) {
+    
+    NSMutableDictionary *mutableInfo = [obj mutableCopy];
+    [mutableInfo setObject: record[@"_dicts"] forKey: @"_dicts"];
+    
+    // if commit and remoteHash is nil, set a new one
+    [mutableInfo setObject:
+     record[@"_commitId"] != nil ? record[@"_commitId"] : [Random string]
+                    forKey: @"_commitId"];
+    [mutableInfo setObject:
+     record[@"_remoteHash"] != nil ? record[@"_remoteHash"] : [Random string]
+                    forKey: @"_remoteHash"];
+    [waitToModifyRecords addObject: mutableInfo];
+  } else {
+    [waitToModifyRecords addObject: obj];
+  }
+}];*/
 
 // replace the new bookmark list into the exist record in multiple records.
 -(NSArray *)modifyOfflineRecords:(NSArray *)records withRecord:(NSDictionary *)record ofIdentity:(NSString *)identity {
   
   NSMutableArray *mutableRecords = [records mutableCopy];
-  __block bool isExist = false;
+  __block bool isExist = NO;
   [mutableRecords enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-    isExist = false;
     if ([obj[@"_userId"] isEqualToString: identity]) {
-      isExist = true;
-      *stop = true;
+      isExist = YES;
+      *stop = YES;
       //NSLog(@"identity: %@, has exist record: %@", identity, obj);
     }
-    if (stop) {
+    if (*stop) {
       NSMutableDictionary *mutableInfo = [obj mutableCopy];
       [mutableInfo setObject: record[@"_dicts"] forKey: @"_dicts"];
       
@@ -163,9 +183,7 @@ NSString * const __HISTORY_LIST	  = @"__HISTORY_LIST";
       return;
     }
   }];
-  
   if (!isExist) {
-    
     [mutableRecords addObject: [OfflineDB recordFormatOFIdentity: identity commitId: [Random string] andList: record[@"_dicts"] remoteHash: [Random string]]];
   }
   return [mutableRecords copy];
@@ -223,8 +241,10 @@ NSString * const __HISTORY_LIST	  = @"__HISTORY_LIST";
   NSMutableDictionary *record = [[self obtainOfflineExistRecordFromRecords: records
                                                                 ofIdentity: identity] mutableCopy];
   NSMutableArray *list = [[DSWrapper arrayFromDict: (NSDictionary *)record[@"_dicts"]] mutableCopy];
-  __block bool isExist = false;
-  
+  if (!list) {
+    list = [NSMutableArray array];
+  }
+  __block bool isExist = NO;
   [list enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
     
     if ([obj[@"url"] isEqualToString: dict[@"url"]] &&
@@ -233,12 +253,7 @@ NSString * const __HISTORY_LIST	  = @"__HISTORY_LIST";
       *stop = YES;
       return;
     }
-    isExist = NO;
   }];
-  
-  if (!list) {
-    list = [NSMutableArray array];
-  }
   if (!isExist) {
     [list addObject: dict];
   }

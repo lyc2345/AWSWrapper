@@ -24,8 +24,4 @@
              password:(NSString *)password
            identityId:(NSString *)identityId;
 
-
--(NSArray *)allAccount:(NSError * __autoreleasing *)error;
-
-
 @end

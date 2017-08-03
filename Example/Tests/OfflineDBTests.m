@@ -157,6 +157,40 @@
   XCTAssertTrue([bookmark[@"_dicts"] isEqualToDictionary: expectBookmark]);
 }
 
+-(void)testOfflineBookmarkAddAndDeleteHundredTimes {
+  
+  NSString *userIdentityId = @"user101";
+  for (int i = 0; i < 100; i++) {
+    
+    NSString *content = [NSString stringWithFormat: @"%d", i];
+    NSDictionary *record = @{@"comicName": content, @"author": content, @"url": content};
+    [_testcase addOffline: record
+                     type: RecordTypeBookmark
+               ofIdentity: userIdentityId];
+    [NSThread sleepForTimeInterval: 0.3];
+  }
+  
+  NSDictionary *bookmark = [_testcase getOfflineRecordOfIdentity: userIdentityId
+                                                           type: RecordTypeBookmark];
+  
+  NSLog(@"expect should be 100, it is %lu", (unsigned long)[(NSArray *)bookmark[@"_dicts"] count]);
+  XCTAssertTrue([(NSArray *)bookmark[@"_dicts"] count] == 100);
+
+  
+  bookmark = [_testcase getOfflineRecordOfIdentity: userIdentityId
+                                                            type: RecordTypeBookmark];
+  for (NSString *key in [bookmark[@"_dicts"] allKeys]) {
+    NSDictionary *record = @{@"comicName": key, @"author": key, @"url": key};
+    [_testcase deleteOffline: record type: RecordTypeBookmark ofIdentity: userIdentityId];
+  }
+  
+  bookmark = [_testcase getOfflineRecordOfIdentity: userIdentityId
+                                              type: RecordTypeBookmark];
+  
+  NSLog(@"expect should be 0, it is %lu", (unsigned long)[(NSArray *)bookmark[@"_dicts"] count]);
+  XCTAssertTrue([(NSArray *)bookmark[@"_dicts"] count] == 0);
+  NSLog(@"testOfflineBookmarkAddAndDeleteHundredTimes done!");
+}
 
 
 @end

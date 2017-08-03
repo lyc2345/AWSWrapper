@@ -8,12 +8,12 @@
 
 #import "LoginTestBase.h"
 #import "DispatchQueue.h"
-#import "OfflineCognito.h"
+#import "OfflineCognitoTestBase.h"
 @import Specta;
 @import AWSWrapper;
 
 static LoginTestBase *testcase;
-static OfflineCognito *cognito;
+static OfflineCognitoTestBase *cognito;
 static DispatchQueue *dispatchQueue;
 
 static NSString *sampleUsername = @"jjj";
@@ -31,7 +31,7 @@ describe(@"Tests1", ^{
       
       testcase = [LoginTestBase new];
       dispatchQueue = [DispatchQueue new];
-      cognito = [OfflineCognito shared];
+      cognito = [OfflineCognitoTestBase shared];
       
       [cognito storeUsername: sampleUsername
                     password: samplePassword
@@ -44,6 +44,14 @@ describe(@"Tests1", ^{
       [cognito storeUsername: @"hannibal"
                     password: @"hannibalthecannibal"
                   identityId: @""];
+      
+      for (int i = 0; i < 30; i ++) {
+        
+        [cognito storeUsername: [NSString stringWithFormat: @"%d", i]
+                      password: [NSString stringWithFormat: @"%d", i]
+                    identityId: @""];
+        [NSThread sleepForTimeInterval: 0.3];
+      }
       
       done();
     });
@@ -73,27 +81,8 @@ describe(@"Tests1", ^{
       
       [dispatchQueue performGroupedDelay: 1 block: ^{
         
-        [cognito modifyUsername: sampleUsername
-                       password: editedPaassword
-                     identityId: @""];
-      }];
-      
-      
-      [dispatchQueue performGroupedDelay: 1 block: ^{
-        
-        [testcase loginOfflineWithUser: sampleUsername
-                              password: editedPaassword
-                            completion: ^(NSError *error) {
-                              
-                              expect(error).to.beNil;
-                              
-                            }];
-      }];
-      
-      [dispatchQueue performGroupedDelay: 1 block: ^{
-        
         BOOL isQualified = [cognito verifyUsername: sampleUsername
-                                          password: editedPaassword];
+                                          password: samplePassword];
         
         XCTAssertTrue(isQualified);
         done();
@@ -201,6 +190,44 @@ describe(@"Tests1", ^{
       }];
       
       
+    });
+  });
+  
+  it (@"run 30 times", ^{
+    
+    waitUntil(^(DoneCallback done) {
+      
+      for (int i = 0; i < 30; i++) {
+        
+        [dispatchQueue performGroupedDelay: 0.2 block: ^{
+          
+          [testcase loginOfflineWithUser: [NSString stringWithFormat: @"%d", i]
+                                password: [NSString stringWithFormat: @"%d", i]
+                              completion: ^(NSError *error) {
+                                
+                                expect(error).to.beNil;
+                                
+                              }];
+        }];
+        
+        [dispatchQueue performGroupedDelay: 0.2 block: ^{
+          
+          [testcase logoutOfflineCompletion: ^{
+            
+          }];
+        }];
+        
+        [dispatchQueue performGroupedDelay: 0.2 block: ^{
+          
+          [cognito modifyUsername: [NSString stringWithFormat: @"%d", i]
+                         password: [NSString stringWithFormat: @"%d%d", i, i]
+                       identityId: @""];
+        }];
+        [NSThread sleepForTimeInterval: 0.2];
+      }
+      NSArray *accounts = [cognito allAccount: nil];
+      expect(accounts.count).to.beGreaterThanOrEqualTo(30);
+      done();
     });
   });
   

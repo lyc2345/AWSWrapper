@@ -8,6 +8,7 @@
 
 #import "LoginTestBase.h"
 #import "DispatchQueue.h"
+#import "OfflineCognitoTestBase.h"
 @import Specta;
 @import AWSWrapper;
 

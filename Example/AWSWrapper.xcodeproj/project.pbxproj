@@ -47,6 +47,9 @@
 		F64D0E9E1F1A067900184DF7 /* NSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E9D1F1A067900184DF7 /* NSArray+Sort.m */; };
 		F67DA4CB1F079485005751A3 /* DynamoSyncTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F67DA4CA1F079485005751A3 /* DynamoSyncTestVC.m */; };
 		F6B39F1F1F2C3E6300064766 /* LoginTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */; };
+		F6BEEB8C1F32C235009DC649 /* RemoteLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F201F2C435100064766 /* RemoteLoginTests.m */; };
+		F6BEEB8D1F32C238009DC649 /* LocalLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F221F2C436900064766 /* LocalLoginTests.m */; };
+		F6BEEB8E1F32C2E5009DC649 /* OfflineCognitoTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A61F6C1F2C759600892C61 /* OfflineCognitoTestBase.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -556,11 +559,14 @@
 				F612FBBF1F31BDD4001924DC /* DSLocalTests2.m in Sources */,
 				F612FBC01F31BDD4001924DC /* DSLocalTests3.m in Sources */,
 				F612FBBB1F31BDD4001924DC /* DSTests4.m in Sources */,
+				F6BEEB8E1F32C2E5009DC649 /* OfflineCognitoTestBase.m in Sources */,
 				F612FBB71F31BDD4001924DC /* DSTests1Original.m in Sources */,
 				F612FBBA1F31BDD4001924DC /* DSTests3.m in Sources */,
 				F612FBC41F31BDD4001924DC /* DSWrapperTests.m in Sources */,
 				F612FBC31F31BDD4001924DC /* DSOPSLocalTests2.m in Sources */,
 				F612FBBE1F31BDD4001924DC /* DSLocalTests1.m in Sources */,
+				F6BEEB8D1F32C238009DC649 /* LocalLoginTests.m in Sources */,
+				F6BEEB8C1F32C235009DC649 /* RemoteLoginTests.m in Sources */,
 				F612FBB21F3177BE001924DC /* OfflineDBTestBase.m in Sources */,
 				F612FBC51F31BDD4001924DC /* DSWrapperTests2.m in Sources */,
 				F612FBC11F31BDD4001924DC /* DSLocalTests4.m in Sources */,

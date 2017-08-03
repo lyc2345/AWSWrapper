@@ -9,6 +9,22 @@
 #import "OfflineCognitoTestBase.h"
 @import AWSWrapper;
 
+@interface OfflineCognito (Test)
+-(NSArray *)allAccount:(NSError * __autoreleasing *)error;
+@end
+
+@implementation OfflineCognito(Test)
+
+-(NSString *)OFFLINE_USER_SERVICE {
+  return @"test_user_service";
+}
+
+-(NSString *)OFFLINE_USER_LIST {
+  return @"test_user_list";
+}
+
+@end
+
 @interface OfflineCognitoTestBase ()
 
 @property OfflineCognito *cognito;
@@ -33,7 +49,7 @@
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     
-    cognito = [OfflineCognitoTestBase new];
+    cognito = [OfflineCognito shared];
   });
   return cognito;
 }
@@ -44,8 +60,10 @@
 }
 
 
--(void)storeUsername:(NSString *)username password:(NSString *)password {
-  [_cognito storeUsername: username password: password];
+-(void)storeUsername:(NSString *)username
+            password:(NSString *)password
+          identityId:(NSString *)identityId {
+  [_cognito storeUsername: username password: password identityId: identityId];
 }
 
 -(BOOL)verifyUsername:(NSString *)username password:(NSString *)password {
@@ -53,8 +71,9 @@
 }
 
 -(void)modifyUsername:(NSString *)username
-             password:(NSString *)password {
-  [_cognito modifyUsername: username password: password];
+             password:(NSString *)password
+           identityId:(NSString *)identityId {
+  [_cognito modifyUsername: username password: password identityId: identityId];
 }
 
 -(NSArray *)allAccount:(NSError * __autoreleasing *)error {

@@ -25,6 +25,14 @@ NSString * const __OFFLINE_USER_LIST    = @"__OFFLINE_USER_LIST";
   return self;
 }
 
+-(NSString *)OFFLINE_USER_SERVICE {
+  return __OFFLINE_USER_SERVICE;
+}
+
+-(NSString *)OFFLINE_USER_LIST {
+  return __OFFLINE_USER_LIST;
+}
+
 +(OfflineCognito *)shared {
   
   static OfflineCognito *cognito = nil;
@@ -44,7 +52,7 @@ NSString * const __OFFLINE_USER_LIST    = @"__OFFLINE_USER_LIST";
 -(NSString *)password {
   
   NSError *error = nil;
-  return [SAMKeychain passwordForService: __OFFLINE_USER_SERVICE account: self.currentUser error: &error];
+  return [SAMKeychain passwordForService: self.OFFLINE_USER_SERVICE account: self.currentUser error: &error];
 }
 
 -(NSString *)identityId {
@@ -63,7 +71,7 @@ NSString * const __OFFLINE_USER_LIST    = @"__OFFLINE_USER_LIST";
   
   NSError *error = nil;
   SAMKeychainQuery *query = [[SAMKeychainQuery alloc] init];
-  query.service = __OFFLINE_USER_SERVICE;
+  query.service = self.OFFLINE_USER_SERVICE;
   [query setAccount: username];
   [query setPassword: password];
   [query save: &error];
@@ -83,7 +91,7 @@ NSString * const __OFFLINE_USER_LIST    = @"__OFFLINE_USER_LIST";
   }
   
   NSError *error = nil;
-  NSString *pw = [SAMKeychain passwordForService: __OFFLINE_USER_SERVICE account: username error: &error];
+  NSString *pw = [SAMKeychain passwordForService: self.OFFLINE_USER_SERVICE account: username error: &error];
   if (!error) {
     return [pw isEqualToString: password] ? YES : NO;
   }
@@ -98,7 +106,7 @@ NSString * const __OFFLINE_USER_LIST    = @"__OFFLINE_USER_LIST";
 }
 
 -(NSArray *)allAccount:(NSError * __autoreleasing *)error {
-  return [SAMKeychain accountsForService: __OFFLINE_USER_SERVICE error: error];
+  return [SAMKeychain accountsForService: self.OFFLINE_USER_SERVICE error: error];
 }
 
 -(void)saveProfileFromUsername:(NSString *)username identityId:(NSString *)identityId {
@@ -109,7 +117,7 @@ NSString * const __OFFLINE_USER_LIST    = @"__OFFLINE_USER_LIST";
   }
   
   NSString *userAKA = [Encrypt SHA512From: username];
-  NSMutableArray *userList = [[[NSUserDefaults standardUserDefaults] arrayForKey: __OFFLINE_USER_LIST] mutableCopy];
+  NSMutableArray *userList = [[[NSUserDefaults standardUserDefaults] arrayForKey: self.OFFLINE_USER_LIST] mutableCopy];
   if (!userList) {
     userList = [NSMutableArray array];
   }
@@ -132,7 +140,7 @@ NSString * const __OFFLINE_USER_LIST    = @"__OFFLINE_USER_LIST";
   if (!isExist) {
     [userList addObject: userProfile];
   }
-  [[NSUserDefaults standardUserDefaults] setObject: userList forKey: __OFFLINE_USER_LIST];
+  [[NSUserDefaults standardUserDefaults] setObject: userList forKey: self.OFFLINE_USER_LIST];
 }
 
 -(NSString *)offlineLoadIdentityIdFromUsername:(NSString *)username {
@@ -141,7 +149,7 @@ NSString * const __OFFLINE_USER_LIST    = @"__OFFLINE_USER_LIST";
     DLOG(@"username is nil");
   }
   
-  NSArray *userList = [[NSUserDefaults standardUserDefaults] arrayForKey: __OFFLINE_USER_LIST];
+  NSArray *userList = [[NSUserDefaults standardUserDefaults] arrayForKey: self.OFFLINE_USER_LIST];
   NSString *userAKA = [Encrypt SHA512From: username];
   
   __block NSDictionary *readyForReturn =  nil;

@@ -9,7 +9,8 @@
 #import "LoginTestBase.h"
 #import "DispatchQueue.h"
 #import "OfflineCognitoTestBase.h"
-@import Specta;
+#import "Specta/Specta.h"
+#import "Expecta/Expecta.h"
 @import AWSWrapper;
 
 static LoginTestBase *testcase;

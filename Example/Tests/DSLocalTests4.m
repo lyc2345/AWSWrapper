@@ -36,7 +36,7 @@ describe(@"Device A, A2, R2", ^{
                            @"B": @{@"author": @"B", @"url": @"B"}
                            };
   
-  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
+  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow primaryKey: @"comicName"];
   __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
@@ -131,7 +131,7 @@ describe(@"Device B, B2, R3", ^{
                            @"C": @{@"author": @"C", @"url": @"C"}
                            };
   
-  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
+  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow primaryKey: @"comicName"];
   __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
@@ -246,7 +246,7 @@ describe(@"Device A, A4, R5", ^{
                            @"G": @{@"author": @"G", @"url": @"G"}
                            };
   
-  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
+  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow primaryKey: @"comicName"];
   __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
@@ -304,7 +304,7 @@ describe(@"Device B, B4, R4", ^{
                            @"G": @{@"author": @"G", @"url": @"G"}
                            };
   
-  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
+  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow primaryKey: @"comicName"];
   __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
@@ -367,7 +367,7 @@ describe(@"Device B, B4, R6", ^{
                            @"H": @{@"author": @"H", @"url": @"H"}
                            };
   
-  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
+  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow primaryKey: @"comicName"];
   __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {

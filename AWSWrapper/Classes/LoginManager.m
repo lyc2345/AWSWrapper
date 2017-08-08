@@ -80,7 +80,7 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 }
 
 -(NSString *)password {
-  return self.user != nil ? [[OfflineCognito shared] password] : nil;
+  return self.user != nil ? [[OfflineCognito shared] passwordOfUser: self.user] : nil;
 }
 
 -(NSString *)offlineIdentity {
@@ -164,7 +164,22 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 }
 
 -(BOOL)isAWSLogin {
-	return [[AWSIdentityManager defaultIdentityManager] isLoggedIn];
+  
+  BOOL _isAWSLogin = [[AWSIdentityManager defaultIdentityManager] isLoggedIn];
+  NSString *username = [AWSIdentityManager defaultIdentityManager].userName;
+  NSString *password = [[OfflineCognito shared] passwordOfUser: username];
+  
+  if (_isAWSLogin && !self.isLogin && username && password) {
+    
+    __weak typeof(self) weakSelf = self;
+    [self loginOfflineWithUser: username password: password completion:^(NSError *error) {
+      if (weakSelf.AWSLoginStatusChangedHandler) {
+        weakSelf.AWSLoginStatusChangedHandler();
+      }
+      return;
+    }];
+  }
+	return _isAWSLogin;
 }
 
 -(NSString *)awsIdentityId {

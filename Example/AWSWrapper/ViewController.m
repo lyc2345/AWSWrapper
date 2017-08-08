@@ -104,6 +104,7 @@
 	_checkLoginLabel.text = [NSString stringWithFormat:@"status offline: %@, remote: %@", ([LoginManager shared].isLogin) ? @"YES" : @"NO" , ([LoginManager shared].isAWSLogin) ? @"YES" : @"NO"];
 }
 
+
 - (IBAction)log:(id)sender {
 	
 	if ([LoginManager shared].isAWSLogin) {
@@ -153,7 +154,12 @@
 
 
 - (IBAction)save:(id)sender {
-	
+  
+  if (![LoginManager shared].isLogin && ![LoginManager shared].isAWSLogin) {
+    [[Alert new] showAlertWithTitle: @"noooooo" message: @"Need to login" confirmHandler: ^{
+    }];
+    return;
+  }
 	// Save local
  NSDictionary *bookmark = @{@"comicName": self.nameTF.text, @"author": [NSString stringWithFormat: @"author %@", self.authorTF.text], @"url": [NSString stringWithFormat: @"http://www.wikipedia/%@", self.urlTF.text]};
   //NSDictionary *bookmark = @{@"comicName": self.nameTF.text, @"author": self.nameTF.text, @"url": self.nameTF.text};
@@ -161,29 +167,34 @@
 	if ([LoginManager shared].isLogin) {
 		
 		[self.offlineDB addOffline: bookmark type: RecordTypeBookmark ofIdentity: [LoginManager shared].awsIdentityId];
-    
-    NSDictionary *localBookmarkRecord = [self.offlineDB getOfflineRecordOfIdentity: [LoginManager shared].offlineIdentity type: RecordTypeBookmark];
-    
-    self.localBookmark = localBookmarkRecord;
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [_tableView reloadData];
-    });
+    [self reloadBookmarks];
 	}
 }
 
 - (IBAction)saveHistory:(id)sender {
-	
+  
+  if (![LoginManager shared].isLogin && ![LoginManager shared].isAWSLogin) {
+    [[Alert new] showAlertWithTitle: @"noooooo" message: @"Need to login" confirmHandler: ^{
+    }];
+    return;
+  }
 	// Save local
  NSDictionary *history = @{@"comicName": self.nameTF.text, @"author": self.nameTF.text, @"url": self.nameTF.text};
 	
 	if ([LoginManager shared].isLogin) {
 		
 		[self.offlineDB addOffline: history type: RecordTypeHistory ofIdentity: [LoginManager shared].awsIdentityId];
+    [self reloadHistory];
 	}
 }
 
 - (IBAction)syncRemote:(id)sender {
-	
+  
+  if (![LoginManager shared].isLogin && ![LoginManager shared].isAWSLogin) {
+    [[Alert new] showAlertWithTitle: @"noooooo" message: @"Need to login" confirmHandler: ^{
+    }];
+    return;
+  }
   NSString *userId = [LoginManager shared].awsIdentityId;
   NSDictionary *bk = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
   [_dsync syncWithUserId: userId
@@ -205,6 +216,11 @@
 
 - (IBAction)syncRecently:(id)sender {
   
+  if (![LoginManager shared].isLogin && ![LoginManager shared].isAWSLogin) {
+    [[Alert new] showAlertWithTitle: @"noooooo" message: @"Need to login" confirmHandler: ^{
+    }];
+    return;
+  }
   NSString *userId = [LoginManager shared].awsIdentityId;
   NSDictionary *rv = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeHistory];
   [_dsync syncWithUserId: userId
@@ -219,6 +235,12 @@
 }
 
 -(void)reloadBookmarks {
+  
+  if (![LoginManager shared].isLogin && ![LoginManager shared].isAWSLogin) {
+    self.remoteBookmark = @{};
+    [_tableView reloadData];
+    return;
+  }
   
   DynamoService *dynamoService = [DynamoService new];
   LoginManager *loginManager = [LoginManager shared];
@@ -243,6 +265,12 @@
 }
 
 -(void)reloadHistory {
+  
+  if (![LoginManager shared].isLogin && ![LoginManager shared].isAWSLogin) {
+    self.localHistoryItems = @{};
+    [_tableView reloadData];
+    return;
+  }
   
   DynamoService *dynamoService = [DynamoService new];
   LoginManager *loginManager = [LoginManager shared];
@@ -374,6 +402,10 @@
 }
 
 -(NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  if (![LoginManager shared].isLogin && ![LoginManager shared].isAWSLogin) {
+    return @[];
+  }
   
   UITableViewRowAction *delete = [UITableViewRowAction rowActionWithStyle: UITableViewRowActionStyleDefault title: @"Delete" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
     

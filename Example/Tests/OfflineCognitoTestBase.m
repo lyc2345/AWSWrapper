@@ -11,9 +11,10 @@
 
 @interface OfflineCognito (Test)
 -(NSArray *)allAccount:(NSError * __autoreleasing *)error;
+-(NSString *)password;
 @end
 
-@implementation OfflineCognito(Test)
+@implementation OfflineCognito(TestKey)
 
 -(NSString *)OFFLINE_USER_SERVICE {
   return @"test_user_service";
@@ -37,7 +38,7 @@
 {
   self = [super init];
   if (self) {
-    
+    self.cognito = [OfflineCognito shared];
   }
   return self;
 }
@@ -49,7 +50,7 @@
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     
-    cognito = [OfflineCognito shared];
+    cognito = [[self alloc] init];
   });
   return cognito;
 }

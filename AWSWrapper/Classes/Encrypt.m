@@ -21,7 +21,15 @@
   
 	const char *s = [source cStringUsingEncoding: NSASCIIStringEncoding];
 	
+  if (!s) {
+    return nil;
+  }
+  
 	NSData *keyData = [NSData dataWithBytes:s length: strlen(s)];
+  
+  if (!keyData) {
+    return nil;
+  }
 	
 	uint8_t digest[CC_SHA512_DIGEST_LENGTH] = {0};
 	

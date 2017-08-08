@@ -49,10 +49,10 @@ NSString * const __OFFLINE_USER_LIST    = @"__OFFLINE_USER_LIST";
   return [[NSUserDefaults standardUserDefaults] stringForKey: @"__CURRENT_USER"];
 }
 
--(NSString *)password {
+-(NSString *)passwordOfUser:(NSString *)username {
   
   NSError *error = nil;
-  return [SAMKeychain passwordForService: self.OFFLINE_USER_SERVICE account: self.currentUser error: &error];
+  return [SAMKeychain passwordForService: self.OFFLINE_USER_SERVICE account: username ? username : self.currentUser error: &error];
 }
 
 -(NSString *)identityId {

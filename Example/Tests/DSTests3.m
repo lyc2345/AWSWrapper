@@ -248,7 +248,7 @@ describe(@"Tests3", ^{
                                        @"F": @{@"author": @"F", @"url": @"F"},
                                        @"G": @{@"author": @"G", @"url": @"G"}
                                        };
-        NSDictionary *diff_cilent_shadow = [DSWrapper diffWins: client loses: expectShadow];
+        NSDictionary *diff_cilent_shadow = [DSWrapper diffWins: client loses: expectShadow primaryKey: @"comicName"];
         NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: actualRemote loses: client];
         NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
         newClient = [DSWrapper mergeInto: newClient
@@ -257,7 +257,7 @@ describe(@"Tests3", ^{
                            shouldReplace:^BOOL(id oldValue, id newValue) {
                              return YES;
                            }];
-        NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: actualRemote];
+        NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClient loses: actualRemote primaryKey: @"comicName"];
         
         [testcase examineSpec: @"Device A, A3, R4"
                      commitId: nil

@@ -34,6 +34,8 @@
 
 @implementation DynamoSync
 
+static NSString * const primaryKey = @"comicName";
+
 - (instancetype)init
 {
   self = [super init];
@@ -54,7 +56,7 @@
   RecordType type = [tableName isEqualToString: @"Bookmark"] ? RecordTypeBookmark : RecordTypeHistory ;
   BOOL isBookmark = [tableName isEqualToString: @"Bookmark"] ? YES : NO;
   
-  __block NSDictionary *diff_client_shadow = [DSWrapper diffWins: dict[@"_dicts"] loses: shadow];
+  __block NSDictionary *diff_client_shadow = [DSWrapper diffWins: dict[@"_dicts"] loses: shadow primaryKey: primaryKey];
 
   DynamoService *dynamoService = [[DynamoService alloc] init];
   
@@ -152,7 +154,7 @@
               DLOG(@"RemoteHash is changed, Now empty shadow...");
               id emptyShadow = [_delegate emptyShadowIsBookmark: isBookmark ofIdentity: userId];
               // diff client shadow again. becasue shadow is empty.
-              diff_client_shadow = [DSWrapper diffWins: dict[@"_dicts"] loses: emptyShadow];
+              diff_client_shadow = [DSWrapper diffWins: dict[@"_dicts"] loses: emptyShadow primaryKey: primaryKey];
               DLOG(@"Get a new diff from client and empty shadow");
             }
             // **************************************************************************************************************
@@ -169,7 +171,7 @@
             DLOG(@"conditional push whole local record");
             newClientDicts = [DSWrapper mergeInto: newClientDicts
                                         applyDiff: diff_client_shadow
-                                       primaryKey: @"comicName"
+                                       primaryKey: primaryKey
                                     shouldReplace: shouldReplace];
             NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClientDicts loses: cloud[@"_dicts"]];
             

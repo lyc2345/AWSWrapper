@@ -8,7 +8,8 @@
 
 #import "DynamoTestBase.h"
 #import "DispatchQueue.h"
-@import Specta;
+#import "Specta/Specta.h"
+#import "Expecta/Expecta.h"
 @import AWSWrapper;
 
 static DynamoTestBase *testcase;

@@ -9,7 +9,8 @@
 #import "LoginTestBase.h"
 #import "DispatchQueue.h"
 #import "OfflineCognitoTestBase.h"
-@import Specta;
+#import "Specta/Specta.h"
+#import "Expecta/Expecta.h"
 @import AWSWrapper;
 
 static LoginTestBase *testcase;
@@ -45,7 +46,7 @@ describe(@"Tests1", ^{
                     password: @"hannibalthecannibal"
                   identityId: @""];
       
-      for (int i = 0; i < 30; i ++) {
+      for (int i = 0; i < 5; i ++) {
         
         [cognito storeUsername: [NSString stringWithFormat: @"%d", i]
                       password: [NSString stringWithFormat: @"%d", i]
@@ -197,7 +198,7 @@ describe(@"Tests1", ^{
     
     waitUntil(^(DoneCallback done) {
       
-      for (int i = 0; i < 30; i++) {
+      for (int i = 0; i < 5; i++) {
         
         [dispatchQueue performGroupedDelay: 0.2 block: ^{
           
@@ -226,7 +227,7 @@ describe(@"Tests1", ^{
         [NSThread sleepForTimeInterval: 0.2];
       }
       NSArray *accounts = [cognito allAccount: nil];
-      expect(accounts.count).to.beGreaterThanOrEqualTo(30);
+      expect(accounts.count).to.beGreaterThanOrEqualTo(5);
       done();
     });
   });

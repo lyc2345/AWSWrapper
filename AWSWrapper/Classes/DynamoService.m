@@ -320,7 +320,8 @@
         }
       }];
     }];
-  } else {
+  }
+  if (addList && addList.count > 0) {
     
     [addList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
       

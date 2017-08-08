@@ -80,7 +80,7 @@ describe(@"DeviceB, B1, R2", ^{
                            @"C": @{@"author": @"C", @"url": @"C"}
                            };
   
-  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
+  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow primaryKey: @"comicName"];
   __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {

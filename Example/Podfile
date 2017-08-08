@@ -6,11 +6,20 @@ use_frameworks!
 target 'AWSWrapper_Example' do
   pod 'AWSWrapper', :path => '../'
 
-  target 'AWSWrapper_Tests' do
+  def shared_test_pods
     inherit! :search_paths
     pod 'AWSWrapper', :path => '../'
-    
+  
     pod 'Specta'
   pod 'Expecta'
   end
+
+  target 'AWSWrapper_Tests' do
+    shared_test_pods
+  end
+
+  target 'AWSWrapper_LoginTests' do
+    shared_test_pods
+  end
+
 end

@@ -205,9 +205,9 @@ describe(@"Tests4", ^{
                                        @"C": @{@"author": @"C", @"url": @"C1"},
                                        @"D": @{@"author": @"D", @"url": @"D"}
                                        };
-        NSDictionary *diff_cilent_shadow = [DSWrapper diffWins: client loses: expectShadow];
-        NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: actualRemote loses: client];
-        NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+        NSDictionary *diff_cilent_shadow = [DSWrapper diffWins: client loses: expectShadow primaryKey: @"comicName"];
+        
+        NSDictionary *newClient = actualRemote;
         newClient = [DSWrapper mergeInto: newClient
                                applyDiff: diff_cilent_shadow
                               primaryKey: @"comicName"
@@ -272,9 +272,9 @@ describe(@"Tests4", ^{
                                        @"F": @{@"author": @"F", @"url": @"F"},
                                        @"G": @{@"author": @"G", @"url": @"G"}
                                        };
-        NSDictionary *diff_cilent_shadow = [DSWrapper diffWins: client loses: expectShadow];
-        NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: actualRemote loses: client];
-        NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+        NSDictionary *diff_cilent_shadow = [DSWrapper diffWins: client loses: expectShadow primaryKey: @"comicName"];
+        
+        NSDictionary *newClient = actualRemote;
         newClient = [DSWrapper mergeInto: newClient
                                applyDiff: diff_cilent_shadow
                               primaryKey: @"comicName"
@@ -342,9 +342,9 @@ describe(@"Tests4", ^{
                                        @"F": @{@"author": @"F", @"url": @"F"},
                                        @"G": @{@"author": @"G", @"url": @"G"}
                                        };
-        NSDictionary *diff_cilent_shadow = [DSWrapper diffWins: client loses: expectShadow];
-        NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: actualRemote loses: client];
-        NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+        NSDictionary *diff_cilent_shadow = [DSWrapper diffWins: client loses: expectShadow primaryKey: @"comicName"];
+        
+        NSDictionary *newClient = actualRemote;
         newClient = [DSWrapper mergeInto: newClient
                                applyDiff: diff_cilent_shadow
                               primaryKey: @"comicName"
@@ -413,9 +413,9 @@ describe(@"Tests4", ^{
                                        @"G": @{@"author": @"G", @"url": @"G"},
                                        @"H": @{@"author": @"H", @"url": @"H"}
                                        };
-        NSDictionary *diff_cilent_shadow = [DSWrapper diffWins: client loses: expectShadow];
-        NSDictionary *need_to_apply_to_client = [DSWrapper diffWins: actualRemote loses: client];
-        NSDictionary *newClient = [DSWrapper mergeInto: client applyDiff: need_to_apply_to_client];
+        NSDictionary *diff_cilent_shadow = [DSWrapper diffWins: client loses: expectShadow primaryKey: @"comicName"];
+        
+        NSDictionary *newClient = actualRemote;
         newClient = [DSWrapper mergeInto: newClient
                                applyDiff: diff_cilent_shadow
                               primaryKey: @"comicName"

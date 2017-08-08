@@ -13,4 +13,12 @@ target 'AWSWrapper_Example' do
     pod 'Specta'
   pod 'Expecta'
   end
+  
+  target 'AWSWrapper_LoginTests' do
+    inherit! :search_paths
+    pod 'AWSWrapper', :path => '../'
+    
+    pod 'Specta'
+    pod 'Expecta'
+  end
 end

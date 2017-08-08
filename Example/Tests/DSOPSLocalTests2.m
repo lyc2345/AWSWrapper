@@ -34,7 +34,7 @@ describe(@"Test S1P1", ^{
                            @"B": @{@"author": @"B", @"url": @"B"}
                            };
   
-  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
+  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow primaryKey: @"comicName"];
   __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
@@ -84,7 +84,7 @@ describe(@"Test S1P2", ^{
                            @"E": @{@"author": @"E", @"url": @"E"}
                            };
   
-  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
+  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow primaryKey: @"comicName"];
   __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
@@ -134,7 +134,7 @@ describe(@"Test S2P1", ^{
                            @"F": @{@"author": @"F", @"url": @"F"}
                            };
   
-  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
+  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow primaryKey: @"comicName"];
   __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {
@@ -188,7 +188,7 @@ describe(@"Test S1P3", ^{
                            @"G": @{@"author": @"G", @"url": @"G"}
                            };
   
-  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow];
+  NSDictionary *diff_client_shadow = [DSWrapper diffWins: client loses: shadow primaryKey: @"comicName"];
   __block NSDictionary *newClient = remote;
   
   waitUntil(^(DoneCallback done) {

@@ -48,10 +48,11 @@
 		F66017161F357F5F00487840 /* DSTests5.m in Sources */ = {isa = PBXBuildFile; fileRef = F66017151F357F5F00487840 /* DSTests5.m */; };
 		F66017181F38335300487840 /* DSLocalTests5.m in Sources */ = {isa = PBXBuildFile; fileRef = F66017171F38335300487840 /* DSLocalTests5.m */; };
 		F67DA4CB1F079485005751A3 /* DynamoSyncTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F67DA4CA1F079485005751A3 /* DynamoSyncTestVC.m */; };
-		F6B39F1F1F2C3E6300064766 /* LoginTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */; };
-		F6BEEB8C1F32C235009DC649 /* RemoteLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F201F2C435100064766 /* RemoteLoginTests.m */; };
-		F6BEEB8D1F32C238009DC649 /* LocalLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F221F2C436900064766 /* LocalLoginTests.m */; };
-		F6BEEB8E1F32C2E5009DC649 /* OfflineCognitoTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A61F6C1F2C759600892C61 /* OfflineCognitoTestBase.m */; };
+		F68263BD1F396CFA00739335 /* AWSWrapper_LoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F68263BC1F396CFA00739335 /* AWSWrapper_LoginTests.m */; };
+		F68263C41F396D0100739335 /* RemoteLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F201F2C435100064766 /* RemoteLoginTests.m */; };
+		F68263C61F396D0500739335 /* LocalLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F221F2C436900064766 /* LocalLoginTests.m */; };
+		F68263C71F396D0B00739335 /* LoginTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */; };
+		F68263C81F396D0E00739335 /* OfflineCognitoTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A61F6C1F2C759600892C61 /* OfflineCognitoTestBase.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 6003F589195388D20070C39A;
 			remoteInfo = AWSWrapper;
+		};
+		F68263BF1F396CFA00739335 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6003F582195388D10070C39A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6003F589195388D20070C39A;
+			remoteInfo = AWSWrapper_Example;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -126,6 +134,9 @@
 		F66017171F38335300487840 /* DSLocalTests5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSLocalTests5.m; sourceTree = "<group>"; };
 		F67DA4C91F079485005751A3 /* DynamoSyncTestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamoSyncTestVC.h; sourceTree = "<group>"; };
 		F67DA4CA1F079485005751A3 /* DynamoSyncTestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamoSyncTestVC.m; sourceTree = "<group>"; };
+		F68263BA1F396CFA00739335 /* AWSWrapper_LoginTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWSWrapper_LoginTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F68263BC1F396CFA00739335 /* AWSWrapper_LoginTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWSWrapper_LoginTests.m; sourceTree = "<group>"; };
+		F68263BE1F396CFA00739335 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6A61F6B1F2C759600892C61 /* OfflineCognitoTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineCognitoTestBase.h; sourceTree = "<group>"; };
 		F6A61F6C1F2C759600892C61 /* OfflineCognitoTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineCognitoTestBase.m; sourceTree = "<group>"; };
 		F6B39F1C1F2C3E6300064766 /* LoginTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTestBase.h; sourceTree = "<group>"; };
@@ -157,6 +168,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F68263B71F396CFA00739335 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -166,6 +184,7 @@
 				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
 				6003F593195388D20070C39A /* Example for AWSWrapper */,
 				6003F5B5195388D20070C39A /* Tests */,
+				F68263BB1F396CFA00739335 /* AWSWrapper_LoginTests */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
 				FA926B13F119342B55302581 /* Pods */,
@@ -177,6 +196,7 @@
 			children = (
 				6003F58A195388D20070C39A /* AWSWrapper_Example.app */,
 				6003F5AE195388D20070C39A /* AWSWrapper_Tests.xctest */,
+				F68263BA1F396CFA00739335 /* AWSWrapper_LoginTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -291,6 +311,15 @@
 			name = TestBase;
 			sourceTree = "<group>";
 		};
+		F68263BB1F396CFA00739335 /* AWSWrapper_LoginTests */ = {
+			isa = PBXGroup;
+			children = (
+				F68263BC1F396CFA00739335 /* AWSWrapper_LoginTests.m */,
+				F68263BE1F396CFA00739335 /* Info.plist */,
+			);
+			path = AWSWrapper_LoginTests;
+			sourceTree = "<group>";
+		};
 		F6E790DB1F2B425700A67CE8 /* DS */ = {
 			isa = PBXGroup;
 			children = (
@@ -390,6 +419,24 @@
 			productReference = 6003F5AE195388D20070C39A /* AWSWrapper_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		F68263B91F396CFA00739335 /* AWSWrapper_LoginTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F68263C31F396CFA00739335 /* Build configuration list for PBXNativeTarget "AWSWrapper_LoginTests" */;
+			buildPhases = (
+				F68263B61F396CFA00739335 /* Sources */,
+				F68263B71F396CFA00739335 /* Frameworks */,
+				F68263B81F396CFA00739335 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F68263C01F396CFA00739335 /* PBXTargetDependency */,
+			);
+			name = AWSWrapper_LoginTests;
+			productName = AWSWrapper_LoginTests;
+			productReference = F68263BA1F396CFA00739335 /* AWSWrapper_LoginTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -405,6 +452,12 @@
 					};
 					6003F5AD195388D20070C39A = {
 						DevelopmentTeam = 29DN3FMVP9;
+						TestTargetID = 6003F589195388D20070C39A;
+					};
+					F68263B91F396CFA00739335 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 29DN3FMVP9;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 6003F589195388D20070C39A;
 					};
 				};
@@ -424,6 +477,7 @@
 			targets = (
 				6003F589195388D20070C39A /* AWSWrapper_Example */,
 				6003F5AD195388D20070C39A /* AWSWrapper_Tests */,
+				F68263B91F396CFA00739335 /* AWSWrapper_LoginTests */,
 			);
 		};
 /* End PBXProject section */
@@ -445,6 +499,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F68263B81F396CFA00739335 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -566,18 +627,14 @@
 				F66017161F357F5F00487840 /* DSTests5.m in Sources */,
 				F612FBC01F31BDD4001924DC /* DSLocalTests3.m in Sources */,
 				F612FBBB1F31BDD4001924DC /* DSTests4.m in Sources */,
-				F6BEEB8E1F32C2E5009DC649 /* OfflineCognitoTestBase.m in Sources */,
 				F612FBB71F31BDD4001924DC /* DSTests1Original.m in Sources */,
 				F612FBBA1F31BDD4001924DC /* DSTests3.m in Sources */,
 				F612FBC41F31BDD4001924DC /* DSWrapperTests.m in Sources */,
 				F612FBC31F31BDD4001924DC /* DSOPSLocalTests2.m in Sources */,
 				F612FBBE1F31BDD4001924DC /* DSLocalTests1.m in Sources */,
-				F6BEEB8D1F32C238009DC649 /* LocalLoginTests.m in Sources */,
-				F6BEEB8C1F32C235009DC649 /* RemoteLoginTests.m in Sources */,
 				F612FBB21F3177BE001924DC /* OfflineDBTestBase.m in Sources */,
 				F612FBC51F31BDD4001924DC /* DSWrapperTests2.m in Sources */,
 				F612FBC11F31BDD4001924DC /* DSLocalTests4.m in Sources */,
-				F6B39F1F1F2C3E6300064766 /* LoginTestBase.m in Sources */,
 				F64D0E9E1F1A067900184DF7 /* NSArray+Sort.m in Sources */,
 				F64D0E931F19E7BF00184DF7 /* DispatchQueue.m in Sources */,
 				6003F5BC195388D20070C39A /* DynamoTestBase.m in Sources */,
@@ -590,6 +647,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F68263B61F396CFA00739335 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F68263C61F396D0500739335 /* LocalLoginTests.m in Sources */,
+				F68263C81F396D0E00739335 /* OfflineCognitoTestBase.m in Sources */,
+				F68263BD1F396CFA00739335 /* AWSWrapper_LoginTests.m in Sources */,
+				F68263C71F396D0B00739335 /* LoginTestBase.m in Sources */,
+				F68263C41F396D0100739335 /* RemoteLoginTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -597,6 +666,11 @@
 			isa = PBXTargetDependency;
 			target = 6003F589195388D20070C39A /* AWSWrapper_Example */;
 			targetProxy = 6003F5B3195388D20070C39A /* PBXContainerItemProxy */;
+		};
+		F68263C01F396CFA00739335 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6003F589195388D20070C39A /* AWSWrapper_Example */;
+			targetProxy = F68263BF1F396CFA00739335 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -783,6 +857,55 @@
 			};
 			name = Release;
 		};
+		F68263C11F396CFA00739335 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 29DN3FMVP9;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = AWSWrapper_LoginTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stan.AWSWrapper-LoginTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AWSWrapper_Example.app/AWSWrapper_Example";
+			};
+			name = Debug;
+		};
+		F68263C21F396CFA00739335 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 29DN3FMVP9;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = AWSWrapper_LoginTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stan.AWSWrapper-LoginTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AWSWrapper_Example.app/AWSWrapper_Example";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -812,6 +935,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		F68263C31F396CFA00739335 /* Build configuration list for PBXNativeTarget "AWSWrapper_LoginTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F68263C11F396CFA00739335 /* Debug */,
+				F68263C21F396CFA00739335 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

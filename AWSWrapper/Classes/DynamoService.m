@@ -20,6 +20,8 @@
 
 #pragma mark DynamoService (Bookmark&History Format)
 
+static NSString * const key = @"comicName";
+
 @implementation DynamoService
 
 - (instancetype)init
@@ -291,7 +293,7 @@
 	NSMutableString *addString = [NSMutableString string];
   
   // Copy a delMutableList from delList
-  __block NSMutableArray *waitTobeDelList = [NSMutableArray array];
+  __block NSMutableArray *removeFromDelList = [NSMutableArray array];
   if (replaceList && replaceList.count > 0) {
     
     [replaceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -309,8 +311,15 @@
       NSString *key = [NSString stringWithFormat: @", #dicts.%@ = %@", additionAttributeNameKey, additionAttributeValueKey];
       [addString appendString: key];
       
+      NSPredicate *predicate = [NSPredicate predicateWithFormat: @"%K = %@", key, obj[key]];
+      NSArray *filteredArray = [delList filteredArrayUsingPredicate: predicate];
+      if (filteredArray.count > 0) {
+        [removeFromDelList addObject: filteredArray.firstObject];
+      }
+      /*
       [delList enumerateObjectsUsingBlock:^(id  _Nonnull delObj, NSUInteger delIdx, BOOL * _Nonnull stop) {
-        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat: @"%K = %@", delObj[@"comicName"], obj[@"comicName"]];
+        NSArray *filteredArray = []
         *stop = NO;
         if ([delObj[@"comicName"] isEqualToString: obj[@"comicName"]]) {
           *stop = YES;
@@ -319,9 +328,11 @@
           [waitTobeDelList addObject: delObj];
         }
       }];
+       */
     }];
-  }
-  if (addList && addList.count > 0) {
+    
+    
+  } else {
     
     [addList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
       
@@ -338,10 +349,12 @@
       NSString *key = [NSString stringWithFormat: @", #dicts.%@ = %@", additionAttributeNameKey, additionAttributeValueKey];
       [addString appendString: key];
       
+      // Because no use replace, add function use for replace,
+      // here is to find out duplicate objects between delete list and add list.
       [delList enumerateObjectsUsingBlock:^(id  _Nonnull delObj, NSUInteger delIdx, BOOL * _Nonnull stop) {
         
         if ([delObj[@"comicName"] isEqualToString: obj[@"comicName"]]) {
-          [waitTobeDelList addObject: delObj];
+          [removeFromDelList addObject: delObj];
         }
       }];
     }];
@@ -349,7 +362,7 @@
   NSMutableArray *delMutableList;
   if (delList && delList.count > 0) {
     delMutableList = [delList mutableCopy];
-    [delMutableList removeObjectsInArray: waitTobeDelList];
+    [delMutableList removeObjectsInArray: removeFromDelList];
     delList = [delMutableList copy];
   }
 	NSMutableString *delString = [NSMutableString string];

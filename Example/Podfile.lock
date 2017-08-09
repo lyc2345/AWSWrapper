@@ -32,7 +32,7 @@ PODS:
     - AWSS3 (~> 2.5.2)
     - DS (~> 0.1.10)
     - SAMKeychain
-  - DS (0.1.10)
+  - DS (0.1.11)
   - Expecta (1.0.6)
   - SAMKeychain (1.5.2)
   - Specta (1.0.6)
@@ -54,7 +54,7 @@ SPEC CHECKSUMS:
   AWSDynamoDB: 5817c47852d1548645d9eb23f809d57d763975f9
   AWSS3: c36b91edb50ccd676be4a92836bb72f0c2ac312b
   AWSWrapper: 7cf0aa63f6130efa66fad197ccd2d8e063a95045
-  DS: ea63b678be55a93adde6ffc9d02821083833164f
+  DS: 56af039c6a2afe1fece006c1d34a8106ea9e5d91
   Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
   SAMKeychain: 1865333198217411f35327e8da61b43de79b635b
   Specta: f506f3a8361de16bc0dcf3b17b75e269072ba465

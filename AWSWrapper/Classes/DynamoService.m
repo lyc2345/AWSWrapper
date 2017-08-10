@@ -20,7 +20,7 @@
 
 #pragma mark DynamoService (Bookmark&History Format)
 
-static NSString * const key = @"comicName";
+static NSString * const primaryKey = @"comicName";
 
 @implementation DynamoService
 
@@ -62,6 +62,12 @@ static NSString * const key = @"comicName";
   }
   
   NSMutableDictionary *record = [NSMutableDictionary dictionary];
+  
+  if (!remoteHash || !commitId || !userId) {
+    NSLog(@"covert from AWS attributes to normal NSDictionary failed becasue some attributes are nil");
+    return nil;
+  }
+  
   [record setObject: pureDicts forKey: @"_dicts"];
   [record setObject: remoteHash.S forKey: @"_remoteHash"];
   [record setObject: commitId.S forKey: @"_commitId"];
@@ -212,7 +218,7 @@ static NSString * const key = @"comicName";
   NSMutableDictionary *attributeValues = [NSMutableDictionary dictionary];
   [addList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
     
-    NSString *additionAttributeValueKey = [NSString stringWithFormat: @"%@", obj[@"comicName"]];
+    NSString *additionAttributeValueKey = [NSString stringWithFormat: @"%@", obj[primaryKey]];
     
     [attributeValues setObject: [DynamoService AWSFormatFromDict: obj] forKey: additionAttributeValueKey];
   }];
@@ -298,30 +304,30 @@ static NSString * const key = @"comicName";
     
     [replaceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
       
-      if([obj[@"comicName"] isEqualToString: @""]) {
+      if([obj[primaryKey] isEqualToString: @""]) {
         return;
       }
       
-      NSString *additionAttributeValueKey = [NSString stringWithFormat: @":%@", obj[@"comicName"]];
-      NSString *additionAttributeNameKey = [NSString stringWithFormat: @"#%@", obj[@"comicName"]];
+      NSString *additionAttributeValueKey = [NSString stringWithFormat: @":%@", obj[primaryKey]];
+      NSString *additionAttributeNameKey = [NSString stringWithFormat: @"#%@", obj[primaryKey]];
       
       [attributeValues setObject: [DynamoService AWSFormatFromDict: obj] forKey: additionAttributeValueKey];
-      [attributeNames setObject: obj[@"comicName"] forKey: additionAttributeNameKey];
+      [attributeNames setObject: obj[primaryKey] forKey: additionAttributeNameKey];
       
       NSString *key = [NSString stringWithFormat: @", #dicts.%@ = %@", additionAttributeNameKey, additionAttributeValueKey];
       [addString appendString: key];
       
-      NSPredicate *predicate = [NSPredicate predicateWithFormat: @"%K = %@", key, obj[key]];
+      NSPredicate *predicate = [NSPredicate predicateWithFormat: @"%K = %@", key, obj[primaryKey]];
       NSArray *filteredArray = [delList filteredArrayUsingPredicate: predicate];
       if (filteredArray.count > 0) {
         [removeFromDelList addObject: filteredArray.firstObject];
       }
       /*
       [delList enumerateObjectsUsingBlock:^(id  _Nonnull delObj, NSUInteger delIdx, BOOL * _Nonnull stop) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat: @"%K = %@", delObj[@"comicName"], obj[@"comicName"]];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat: @"%K = %@", delObj[primaryKey], obj[primaryKey]];
         NSArray *filteredArray = []
         *stop = NO;
-        if ([delObj[@"comicName"] isEqualToString: obj[@"comicName"]]) {
+        if ([delObj[primaryKey] isEqualToString: obj[primaryKey]]) {
           *stop = YES;
         }
         if (stop) {
@@ -336,15 +342,15 @@ static NSString * const key = @"comicName";
     
     [addList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
       
-      if([obj[@"comicName"] isEqualToString: @""]) {
+      if([obj[primaryKey] isEqualToString: @""]) {
         return;
       }
       
-      NSString *additionAttributeValueKey = [NSString stringWithFormat: @":%@", obj[@"comicName"]];
-      NSString *additionAttributeNameKey = [NSString stringWithFormat: @"#%@", obj[@"comicName"]];
+      NSString *additionAttributeValueKey = [NSString stringWithFormat: @":%@", obj[primaryKey]];
+      NSString *additionAttributeNameKey = [NSString stringWithFormat: @"#%@", obj[primaryKey]];
       
       [attributeValues setObject: [DynamoService AWSFormatFromDict: obj] forKey: additionAttributeValueKey];
-      [attributeNames setObject: obj[@"comicName"] forKey: additionAttributeNameKey];
+      [attributeNames setObject: obj[primaryKey] forKey: additionAttributeNameKey];
       
       NSString *key = [NSString stringWithFormat: @", #dicts.%@ = %@", additionAttributeNameKey, additionAttributeValueKey];
       [addString appendString: key];
@@ -353,7 +359,7 @@ static NSString * const key = @"comicName";
       // here is to find out duplicate objects between delete list and add list.
       [delList enumerateObjectsUsingBlock:^(id  _Nonnull delObj, NSUInteger delIdx, BOOL * _Nonnull stop) {
         
-        if ([delObj[@"comicName"] isEqualToString: obj[@"comicName"]]) {
+        if ([delObj[primaryKey] isEqualToString: obj[primaryKey]]) {
           [removeFromDelList addObject: delObj];
         }
       }];
@@ -370,9 +376,9 @@ static NSString * const key = @"comicName";
 		
 		NSString *key;
 		if (delList.count - 1 == idx) {
-			key = [NSString stringWithFormat: @"dicts.%@", obj[@"comicName"]];
+			key = [NSString stringWithFormat: @"dicts.%@", obj[primaryKey]];
 		} else {
-			key = [NSString stringWithFormat: @"dicts.%@, ", obj[@"comicName"]];
+			key = [NSString stringWithFormat: @"dicts.%@, ", obj[primaryKey]];
 		}
 		[delString appendString: key];
 	}];
@@ -414,10 +420,10 @@ static NSString * const key = @"comicName";
 	
 	[addList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
 		
-    if([obj[@"comicName"] isEqualToString: @""]) {
+    if([obj[primaryKey] isEqualToString: @""]) {
       return;
     }
-		[conditionString appendString: [NSString stringWithFormat: @"and attribute_not_exists(dict.#%@) ", obj[@"comicName"]]];
+		[conditionString appendString: [NSString stringWithFormat: @"and attribute_not_exists(dict.#%@) ", obj[primaryKey]]];
 	}];
 	
 	updateInput.conditionExpression = conditionString;

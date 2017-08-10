@@ -10,9 +10,14 @@
 
 @interface DynamoTestBase: XCTestCase
 
+// Clean Shadow at first time.
+-(void)cleanShadow;
+
+-(NSString *)identityId;
+
 -(void)initial:(NSDictionary *)dict
     exeHandler:(void(^)(NSString *commitId, NSString *remoteHash, NSDictionary *shadow, NSError *error))exeHandler
-    completion:(void(^)(NSDictionary *newShadow, NSError *error))completion;
+    completion:(void(^)(NSDictionary *newShadow, NSString* commitId, NSError *error))completion;
 
 -(void)examineSpec:(NSString *)spec
           commitId:(NSString *)commitId
@@ -22,7 +27,7 @@
     examineHandler:(void(^)(NSDictionary *shadow))examineHandler
      shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace
         exeHandler:(void(^)(NSDictionary *diff, NSError *error))exeHandler
-        completion:(void(^)(NSDictionary *newShadow, NSError *error))completion;
+        completion:(void(^)(NSDictionary *newShadow, NSString *commitId, NSError *error))completion;
 
 
 -(void)pullToCheck:(NSDictionary *)expectRemote

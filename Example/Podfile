@@ -22,4 +22,8 @@ target 'AWSWrapper_Example' do
     shared_test_pods
   end
 
+target 'AWSWrapper_MultipleUser' do
+  shared_test_pods
+end
+
 end

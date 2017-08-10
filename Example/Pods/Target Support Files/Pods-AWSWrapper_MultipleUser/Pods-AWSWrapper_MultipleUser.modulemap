@@ -1,0 +1,6 @@
+framework module Pods_AWSWrapper_MultipleUser {
+  umbrella header "Pods-AWSWrapper_MultipleUser-umbrella.h"
+
+  export *
+  module * { export * }
+}

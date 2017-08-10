@@ -160,7 +160,7 @@
 -(void)testOfflineBookmarkAddAndDeleteHundredTimes {
   
   NSString *userIdentityId = @"user101";
-  for (int i = 0; i < 100; i++) {
+  for (int i = 0; i < 10; i++) {
     
     NSString *content = [NSString stringWithFormat: @"%d", i];
     NSDictionary *record = @{@"comicName": content, @"author": content, @"url": content};
@@ -174,7 +174,7 @@
                                                            type: RecordTypeBookmark];
   
   NSLog(@"expect should be 100, it is %lu", (unsigned long)[(NSArray *)bookmark[@"_dicts"] count]);
-  XCTAssertTrue([(NSArray *)bookmark[@"_dicts"] count] == 100);
+  XCTAssertTrue([(NSArray *)bookmark[@"_dicts"] count] == 10);
 
   
   bookmark = [_testcase getOfflineRecordOfIdentity: userIdentityId

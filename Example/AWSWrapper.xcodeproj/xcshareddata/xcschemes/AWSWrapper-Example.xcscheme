@@ -48,6 +48,16 @@
                ReferencedContainer = "container:AWSWrapper.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F66A289E1F3C4B3000D44914"
+               BuildableName = "AWSWrapper_MultipleUser.xctest"
+               BlueprintName = "AWSWrapper_MultipleUser"
+               ReferencedContainer = "container:AWSWrapper.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

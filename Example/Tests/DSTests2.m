@@ -46,7 +46,7 @@ describe(@"Tests2", ^{
                  expect(commitId).notTo.beNil;
                  expect(remoteHash).notTo.beNil;
                  
-               } completion:^(NSDictionary *newShadow, NSError *error) {
+               } completion:^(NSDictionary *newShadow, NSString *commitId, NSError *error) {
                  
                  expect(error).to.beNil;
                  newShadow = dataInitialShadow;
@@ -95,7 +95,7 @@ describe(@"Tests2", ^{
                  
                  expect(error).to.beNil;
                  
-               } completion:^(NSDictionary *newShadow, NSError *error) {
+               } completion:^(NSDictionary *newShadow, NSString *commitId, NSError *error) {
                  
                  NSDictionary *expectRemote = @{
                                                 @"B": @{@"author": @"B", @"url": @"B1"},
@@ -137,7 +137,7 @@ describe(@"Tests2", ^{
                  
                  expect(error).to.beNil;
                  
-               } completion:^(NSDictionary *newShadow, NSError *error) {
+               } completion:^(NSDictionary *newShadow, NSString *commitId, NSError *error) {
                  
                  NSDictionary *expectRemote = @{
                                                 @"B": @{@"author": @"B", @"url": @"B2"},
@@ -195,7 +195,7 @@ describe(@"Tests2", ^{
                  expect(error).to.beNil;
                  expect(diff).to.equal(need_to_apply_to_remote);
                  
-               } completion:^(NSDictionary *newShadow, NSError *error) {
+               } completion:^(NSDictionary *newShadow, NSString *commitId, NSError *error) {
                  
                  NSDictionary *expectRemote = @{
                                                 @"B": @{@"author": @"B", @"url": @"B3"},
@@ -257,7 +257,7 @@ describe(@"Tests2", ^{
                  expect(error).to.beNil;
                  expect(diff).to.equal(need_to_apply_to_remote);
                  
-               } completion:^(NSDictionary *newShadow, NSError *error) {
+               } completion:^(NSDictionary *newShadow, NSString *commitId, NSError *error) {
                  
                  NSDictionary *expectRemote = @{
                                                 @"A": @{@"author": @"A", @"url": @"A1"},

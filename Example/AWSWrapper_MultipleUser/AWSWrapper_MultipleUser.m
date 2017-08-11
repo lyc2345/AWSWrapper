@@ -62,8 +62,8 @@
 
 -(id)emptyShadowIsBookmark:(BOOL)isBookmark ofIdentity:(NSString *)identity {
   
-  [self saveShadow: @{} type: nil commitId: nil identityId: identity];
-  NSDictionary *s = [self loadShadowType: nil identity: identity];
+  [self saveShadow: @{} type: 0 commitId: nil identityId: identity];
+  NSDictionary *s = [self loadShadowType: 0 identity: identity];
   return s;
 }
 
@@ -86,11 +86,11 @@ static NSString *samplePassword1 = @"88888888";
 static NSString *sampleUsername2 = @"uuu";
 static NSString *samplePassword2 = @"88888888";
 
-NSString *_commitId1 = @"";
-NSString *_commitId2 = @"";
-
 NSString *identityId1 = @"sss";
 NSString *identityId2 = @"uuu";
+
+
+dispatch_time_t waitTime = 4.0;
 
 SpecBegin(MultipleUserLoginAndSync)
 
@@ -103,6 +103,8 @@ describe(@"test1", ^{
       dynamo = [DynamoTestBase new];
       dispatchQueue = [DispatchQueue new];
       cognito = [OfflineCognito shared];
+      loginBase = [LoginTestBase new];
+      
       if (loginBase.isAWSLogin) {
         [loginBase logout: ^(id result, NSError *error) {
           done();
@@ -117,36 +119,36 @@ describe(@"test1", ^{
     
     __block NSDictionary *dataInitialShadow;
     
+    __block NSString *_commitId1 = @"";
+    __block NSString *_commitId2 = @"";
+    
     waitUntil(^(DoneCallback done) {
-      
-      //testcase.username = @"uuu";
-      loginBase.username = sampleUsername1;
-      loginBase.password = samplePassword1;
-      
       
       //MARK: sss, first
       // user login: sss
-      [dispatchQueue performGroupedDelay: 2 block: ^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
         
+        dispatch_semaphore_wait(sema, waitTime);
+        loginBase.username = sampleUsername1;
+        loginBase.password = samplePassword1;
         [loginBase login: ^(id result, NSError *error) {
           
+          NSLog(@"Now is %@ logged in", loginBase.offlineIdentity);
           expect(result).notTo.beNil;
           expect(error).to.beNil;
+          
+          dispatch_semaphore_signal(sema);
         }];
-      }];
-      
-      // Check first user is logged in
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+        
+        dispatch_semaphore_wait(sema, waitTime);
+        // Check first user is logged in
         
         BOOL isQualified = [cognito verifyUsername: sampleUsername1
                                           password: samplePassword1];
-        
         XCTAssertTrue(isQualified);
-      }];
-      
-      // First Initial Remote data for use sss.
-      [dispatchQueue performGroupedDelay: 2 block:^{
-        
+        dispatch_semaphore_signal(sema);
+        // First Initial Remote data for use sss.
+        dispatch_semaphore_wait(sema, waitTime);
         [dynamo initial: @{
                            @"A": @{@"author": @"A", @"url": @"A"},
                            @"B": @{@"author": @"B", @"url": @"B"}
@@ -162,11 +164,13 @@ describe(@"test1", ^{
                
                expect(error).to.beNil;
                newShadow = dataInitialShadow;
+               _commitId1 = commitId;
+               dispatch_semaphore_signal(sema);
              }];
-      }];
-      
-      // Second to verify thie Initial Data compares with shadow.
-      [dispatchQueue performGroupedDelay: 2 block:^{
+        
+        dispatch_semaphore_wait(sema, waitTime);
+        
+        // Second to verify thie Initial Data compares with shadow.
         [dynamo pullToCheck: dataInitialShadow
                  exeHandler:^(BOOL isSame) {
                    
@@ -176,11 +180,12 @@ describe(@"test1", ^{
                  } completion:^(NSError *error) {
                    
                    expect(error).to.beNil;
+                   dispatch_semaphore_signal(sema);
                  }];
-      }];
-      
-      // sss 2: A, B, C, D
-      [dispatchQueue performGroupedDelay: 2 block:^{
+        
+        dispatch_semaphore_wait(sema, waitTime);
+        
+        // sss 2: A, B, C, D
         NSDictionary *expectShadow = @{
                                        @"A": @{@"author": @"A", @"url": @"A"},
                                        @"B": @{@"author": @"B", @"url": @"B"}
@@ -218,47 +223,55 @@ describe(@"test1", ^{
                                               };
                
                expect(error).to.beNil;
+               expect(commitId).to.equal(_commitId1);
                expect(newShadow).to.equal(expectRemote);
+               dispatch_semaphore_signal(sema);
              }];
-      }];
-      
-      [dispatchQueue performGroupedDelay: 2 block: ^{
+        
+        dispatch_semaphore_wait(sema, waitTime);
+        
+        NSLog(@"Now is %@ logging out", loginBase.offlineIdentity);
         
         [loginBase logout: ^(id result, NSError *error) {
           
           expect(result).notTo.beNil;
           expect(error).to.beNil;
+          dispatch_semaphore_signal(sema);
+          done();
         }];
+        
       }];
       
-      
+#if NO
       // **********************************
       
-      loginBase.username = sampleUsername2;
-      loginBase.password = samplePassword2;
       
       //MARK: uuu, first
       // user login: uuu
-      [dispatchQueue performGroupedDelay: 2 block: ^{
-        
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
+        loginBase.username = sampleUsername2;
+        loginBase.password = samplePassword2;
         [loginBase login: ^(id result, NSError *error) {
           
+          NSLog(@"Now is %@ logged in", loginBase.offlineIdentity);
           expect(result).notTo.beNil;
           expect(error).to.beNil;
+          dispatch_semaphore_signal(sema);
         }];
       }];
       
       // Check first user is logged in
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
         
         BOOL isQualified = [cognito verifyUsername: sampleUsername1
                                           password: samplePassword1];
         
         XCTAssertTrue(isQualified);
+        dispatch_semaphore_signal(sema);
       }];
       
       // First Initial Remote data for use uuu.
-      [dispatchQueue performGroupedDelay: 2 block:^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
         
         [dynamo initial: @{
                            @"A": @{@"author": @"A", @"url": @"A"},
@@ -275,11 +288,12 @@ describe(@"test1", ^{
                
                expect(error).to.beNil;
                newShadow = dataInitialShadow;
+               dispatch_semaphore_signal(sema);
              }];
       }];
       
       // Second to verify thie Initial Data compares with shadow.
-      [dispatchQueue performGroupedDelay: 2 block:^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
         [dynamo pullToCheck: dataInitialShadow
                  exeHandler:^(BOOL isSame) {
                    
@@ -289,11 +303,12 @@ describe(@"test1", ^{
                  } completion:^(NSError *error) {
                    
                    expect(error).to.beNil;
+                   dispatch_semaphore_signal(sema);
                  }];
       }];
       
       // uuu 2: A, B, Y, Z
-      [dispatchQueue performGroupedDelay: 2 block:^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
         NSDictionary *expectShadow = @{
                                        @"A": @{@"author": @"A", @"url": @"A"},
                                        @"B": @{@"author": @"B", @"url": @"B"}
@@ -332,34 +347,39 @@ describe(@"test1", ^{
                
                expect(error).to.beNil;
                expect(newShadow).to.equal(expectRemote);
+               dispatch_semaphore_signal(sema);
              }];
       }];
       
-      [dispatchQueue performGroupedDelay: 2 block: ^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
+        
+        NSLog(@"Now is %@ logging out", loginBase.offlineIdentity);
         
         [loginBase logout: ^(id result, NSError *error) {
           
           expect(result).notTo.beNil;
           expect(error).to.beNil;
+          dispatch_semaphore_signal(sema);
         }];
       }];
       
       // *************************************
       
-      loginBase.username = sampleUsername1;
-      loginBase.password = samplePassword1;
       //MARK: sss, third
       // user login: sss
-      [dispatchQueue performGroupedDelay: 1 block: ^{
-        
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
+        loginBase.username = sampleUsername1;
+        loginBase.password = samplePassword1;
         [loginBase login: ^(id result, NSError *error) {
           
+          NSLog(@"Now is %@ logged in", loginBase.offlineIdentity);
           expect(result).notTo.beNil;
           expect(error).to.beNil;
+          dispatch_semaphore_signal(sema);
         }];
       }];
       
-      [dispatchQueue performGroupedDelay: 2 block:^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
         NSDictionary *expectShadow = @{
                                        @"A": @{@"author": @"A", @"url": @"A"},
                                        @"B": @{@"author": @"B", @"url": @"B"},
@@ -397,36 +417,39 @@ describe(@"test1", ^{
                                               };
                expect(error).to.beNil;
                expect(newShadow).to.equal(expectRemote);
+               dispatch_semaphore_signal(sema);
              }];
       }];
       
-      [dispatchQueue performGroupedDelay: 2 block: ^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
         
+        NSLog(@"Now is %@ logging out", loginBase.offlineIdentity);
         [loginBase logout: ^(id result, NSError *error) {
           
           expect(result).notTo.beNil;
           expect(error).to.beNil;
+          dispatch_semaphore_signal(sema);
         }];
       }];
       
       // ******************************************
       
-      loginBase.username = sampleUsername2;
-      loginBase.password = samplePassword2;
-      
       //MARK: uuu, third
       // user login: uuu
-      [dispatchQueue performGroupedDelay: 2 block: ^{
-        
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
+        loginBase.username = sampleUsername2;
+        loginBase.password = samplePassword2;
         [loginBase login: ^(id result, NSError *error) {
           
+          NSLog(@"Now is %@ logged in", loginBase.offlineIdentity);
           expect(result).notTo.beNil;
           expect(error).to.beNil;
+          dispatch_semaphore_signal(sema);
         }];
       }];
       
       // Start Scenario 2, part 1.
-      [dispatchQueue performGroupedDelay: 2 block:^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
         NSDictionary *expectShadow = @{
                                        @"A": @{@"author": @"A", @"url": @"A"},
                                        @"B": @{@"author": @"B", @"url": @"B"},
@@ -465,34 +488,38 @@ describe(@"test1", ^{
                                               };
                expect(error).to.beNil;
                expect(newShadow).to.equal(expectRemote);
+               dispatch_semaphore_signal(sema);
              }];
       }];
       
-      [dispatchQueue performGroupedDelay: 2 block: ^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
         
+        NSLog(@"Now is %@ logging out", loginBase.offlineIdentity);
         [loginBase logout: ^(id result, NSError *error) {
           
           expect(result).notTo.beNil;
           expect(error).to.beNil;
+          dispatch_semaphore_signal(sema);
         }];
       }];
       
       // ************************************************
       
-      loginBase.username = sampleUsername1;
-      loginBase.password = samplePassword1;
       //MARK: sss, fourth
       // user login: sss
-      [dispatchQueue performGroupedDelay: 2 block: ^{
-        
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
+        loginBase.username = sampleUsername1;
+        loginBase.password = samplePassword1;
         [loginBase login: ^(id result, NSError *error) {
           
+          NSLog(@"Now is %@ logged in", loginBase.offlineIdentity);
           expect(result).notTo.beNil;
           expect(error).to.beNil;
+          dispatch_semaphore_signal(sema);
         }];
       }];
       
-      [dispatchQueue performGroupedDelay: 2 block:^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
         NSDictionary *expectShadow = @{
                                        @"B": @{@"author": @"B", @"url": @"B1"},
                                        @"C": @{@"author": @"C", @"url": @"C1"},
@@ -530,36 +557,38 @@ describe(@"test1", ^{
                                               };
                expect(error).to.beNil;
                expect(newShadow).to.equal(expectRemote);
+               dispatch_semaphore_signal(sema);
              }];
       }];
       
-      [dispatchQueue performGroupedDelay: 2 block: ^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
         
+        NSLog(@"Now is %@ logging out", loginBase.offlineIdentity);
         [loginBase logout: ^(id result, NSError *error) {
           
           expect(result).notTo.beNil;
           expect(error).to.beNil;
+          dispatch_semaphore_signal(sema);
         }];
       }];
       
       // **********************************************
       
-      
-      loginBase.username = sampleUsername2;
-      loginBase.password = samplePassword2;
-      
       //MARK: uuu, fourth
       // user login: uuu
-      [dispatchQueue performGroupedDelay: 2 block: ^{
-        
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
+        loginBase.username = sampleUsername2;
+        loginBase.password = samplePassword2;
         [loginBase login: ^(id result, NSError *error) {
           
+          NSLog(@"Now is %@ logged in", loginBase.offlineIdentity);
           expect(result).notTo.beNil;
           expect(error).to.beNil;
+          dispatch_semaphore_signal(sema);
         }];
       }];
       
-      [dispatchQueue performGroupedDelay: 2 block:^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
         NSDictionary *expectShadow = @{
                                        @"B": @{@"author": @"B", @"url": @"B2"},
                                        @"Y": @{@"author": @"Y", @"url": @"Y1"},
@@ -599,15 +628,18 @@ describe(@"test1", ^{
                                               };
                expect(error).to.beNil;
                expect(newShadow).to.equal(expectRemote);
+               dispatch_semaphore_signal(sema);
              }];
       }];
       
-      [dispatchQueue performGroupedDelay: 2 block: ^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
         
+        NSLog(@"Now is %@ logging out", loginBase.offlineIdentity);
         [loginBase logout: ^(id result, NSError *error) {
           
           expect(result).notTo.beNil;
           expect(error).to.beNil;
+          dispatch_semaphore_signal(sema);
         }];
       }];
       
@@ -615,18 +647,19 @@ describe(@"test1", ^{
       // *******************************************
       
       // Final check for sss
-      loginBase.username = sampleUsername1;
-      loginBase.password = samplePassword1;
-      [dispatchQueue performGroupedDelay: 2 block: ^{
-        
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
+        loginBase.username = sampleUsername1;
+        loginBase.password = samplePassword1;
         [loginBase login: ^(id result, NSError *error) {
           
+          NSLog(@"Now is %@ logged in", loginBase.offlineIdentity);
           expect(result).notTo.beNil;
           expect(error).to.beNil;
+          dispatch_semaphore_signal(sema);
         }];
       }];
       
-      [dispatchQueue performGroupedDelay: 2 block:^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
         [dynamo pullToCheck: @{
                                @"B": @{@"author": @"B", @"url": @"B3"},
                                @"C": @{@"author": @"C", @"url": @"C1"},
@@ -637,33 +670,37 @@ describe(@"test1", ^{
                  } completion:^(NSError *error) {
                    expect(error).to.beNil;
                    expect(error).notTo.beNil;
+                   dispatch_semaphore_signal(sema);
                    done();
                  }];
       }];
       
-      [dispatchQueue performGroupedDelay: 2 block: ^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
         
+        NSLog(@"Now is %@ logging out", loginBase.offlineIdentity);
         [loginBase logout: ^(id result, NSError *error) {
           
           expect(result).notTo.beNil;
           expect(error).to.beNil;
+          dispatch_semaphore_signal(sema);
         }];
       }];
       
       
       // Final check for uuu
-      loginBase.username = sampleUsername2;
-      loginBase.password = samplePassword2;
-      [dispatchQueue performGroupedDelay: 2 block: ^{
-        
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
+        loginBase.username = sampleUsername2;
+        loginBase.password = samplePassword2;
         [loginBase login: ^(id result, NSError *error) {
           
+          NSLog(@"Now is %@ logged in", loginBase.offlineIdentity);
           expect(result).notTo.beNil;
           expect(error).to.beNil;
+          dispatch_semaphore_signal(sema);
         }];
       }];
       
-      [dispatchQueue performGroupedDelay: 2 block:^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
         [dynamo pullToCheck: @{
                                @"B": @{@"author": @"B", @"url": @"B2"},
                                @"Y": @{@"author": @"Y", @"url": @"Y1"},
@@ -675,21 +712,25 @@ describe(@"test1", ^{
                  } completion:^(NSError *error) {
                    expect(error).to.beNil;
                    expect(error).notTo.beNil;
+                   dispatch_semaphore_signal(sema);
                    done();
                  }];
       }];
       
-      [dispatchQueue performGroupedDelay: 2 block: ^{
+      [dispatchQueue performWaitBlock:^(dispatch_semaphore_t sema) {
         
+        NSLog(@"Now is %@ logging out", loginBase.offlineIdentity);
         [loginBase logout: ^(id result, NSError *error) {
           
           expect(result).notTo.beNil;
           expect(error).to.beNil;
+          dispatch_semaphore_signal(sema);
           done();
         }];
       }];
-      
+#endif
     });
+
   });
   
   afterAll(^{
@@ -700,6 +741,8 @@ describe(@"test1", ^{
     cognito = nil;
     
   });
+  
+
   
 });
 

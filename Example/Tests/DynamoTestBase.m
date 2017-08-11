@@ -81,11 +81,11 @@ static RecordType recordType = RecordTypeBookmark;
 
 -(NSString *)identityId {
   
-  return self.loginManager.awsIdentityId;
+  return self.loginManager.offlineIdentity;
 }
 
 -(void)cleanShadow {
-  [self saveShadow: @{} type: recordType commitId: @"" identityId: _userId];
+  [self saveShadow: @{} type: recordType commitId: @"" identityId: self.identityId];
 }
 
 -(void)initial:(NSDictionary *)dict
@@ -95,8 +95,6 @@ static RecordType recordType = RecordTypeBookmark;
   self.expection = [self expectationWithDescription: @"Remote Initial"];
   
   _client = @{@"_dicts": dict};
-  
-  [self cleanShadow];
   
   [_dynamoService forcePushWithType: RecordTypeBookmark record: _client userId: _userId completion:^(NSError *error, NSString *commitId, NSString *remoteHash) {
     
@@ -139,7 +137,7 @@ static RecordType recordType = RecordTypeBookmark;
                            @"_dicts": dict
                            };
   
-  NSDictionary *s = [self loadShadowType: recordType identity: self.identityId];
+  NSDictionary *s = [self loadShadowType: recordType identity: _userId];
   examineHandler(s);
   
   [_dsync syncWithUserId: _userId

@@ -51,6 +51,12 @@ NSString * const __HISTORY_LIST	  = @"__HISTORY_LIST";
              @"_userId": identity
              };
   }
+  if (!shadow && identity) {
+    return @{
+             @"_shadow": @{},
+             @"_userId": identity
+             };
+  }
   return nil;
 }
 

@@ -18,7 +18,6 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 @interface LoginManager () <AWSCognitoUserPoolsSignInHandler>
 
 @property (nonatomic, strong) NSString *tmpPassword;
-@property (nonatomic, strong) NSString *tmpIdentity;
 @property (strong, nonatomic) AWSCognitoIdentityUserPool *userPool;
 @property (strong, nonatomic) AWSCognitoIdentityUser * identityUser;
 @property (nonatomic, strong) AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails*>* passwordAuthenticationCompletion;
@@ -84,7 +83,14 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 }
 
 -(NSString *)offlineIdentity {
-	return self.tmpIdentity != nil ? self.tmpIdentity : nil;
+  
+  if ([[OfflineCognito shared] identityId]) {
+    return [[OfflineCognito shared] identityId];
+  }
+  if (self.awsIdentityId) {
+    return self.awsIdentityId;
+  }
+  return nil;
 }
 
 

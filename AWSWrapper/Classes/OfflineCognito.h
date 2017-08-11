@@ -11,6 +11,8 @@
 
 +(OfflineCognito *)shared;
 
+-(NSString *)identityId;
+
 -(NSString *)passwordOfUser:(NSString *)username;
 
 -(void)storeUsername:(NSString *)username

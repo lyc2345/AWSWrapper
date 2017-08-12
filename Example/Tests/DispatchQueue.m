@@ -17,6 +17,7 @@
     
     _dispatchGroup = dispatch_group_create();
     _requestGroup = dispatch_group_create();
+    _semaphore = dispatch_semaphore_create(1);
     
   }
   return self;
@@ -57,6 +58,22 @@
       [NSThread sleepForTimeInterval:interval];
     }
   }
+}
+
+
+-(void)performCompletion:(void(^)())block {
+  
+  block();
+  [NSThread sleepForTimeInterval: 0.4];
+  
+}
+
+-(void)performWaitBlock:(void(^)(dispatch_semaphore_t sema))block {
+  
+  dispatch_async(dispatch_get_main_queue(), ^{
+    
+    block(_semaphore);
+  });
 }
 
 

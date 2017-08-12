@@ -173,7 +173,7 @@ static NSString * const primaryKey = @"comicName";
                                         applyDiff: diff_client_shadow
                                        primaryKey: primaryKey
                                     shouldReplace: shouldReplace];
-            NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClientDicts loses: cloud[@"_dicts"] primaryKey: primaryKey];
+            NSDictionary *need_to_apply_to_remote = [DSWrapper diffWins: newClientDicts loses: cloud[@"_dicts"]];
             
             if (!need_to_apply_to_remote) {
               

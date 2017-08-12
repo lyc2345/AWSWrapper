@@ -54,18 +54,15 @@ describe(@"Tests1", ^{
           
           expect(result).notTo.beNil;
           expect(error).to.beNil;
+          
+          BOOL isQualified = [cognito verifyUsername: sampleUsername
+                                            password: samplePassword];
+          
+          XCTAssertTrue(isQualified);
+          done();
+          
         }];
       }];
-      
-      [dispatchQueue performGroupedDelay: 2 block: ^{
-        
-        BOOL isQualified = [cognito verifyUsername: sampleUsername
-                                          password: samplePassword];
-        
-        XCTAssertTrue(isQualified);
-        done();
-      }];
-      
 //      [dispatchQueue performGroupedDelay: 2 block: ^{
 //        
 //        [testcase logout: ^(id result, NSError *error) {

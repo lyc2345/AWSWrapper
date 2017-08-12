@@ -30,6 +30,8 @@
 
 @implementation DynamoTestBase
 
+static RecordType recordType = RecordTypeBookmark;
+
 - (instancetype)init
 {
   self = [super init];
@@ -42,7 +44,6 @@
     _dynamoService = [[DynamoService alloc] init];
     _dsync = [[DynamoSync alloc] init];
     _dsync.delegate = self;
-    
   }
   return self;
 }
@@ -52,19 +53,44 @@
                             data:(NSDictionary *)data
                      newCommitId:(NSString *)commitId {
   
-  _shadow = data[@"_dicts"];
+  [self saveShadow: data[@"_dicts"] type: type commitId: commitId identityId: nil];
+}
+
+-(id)emptyShadowIsBookmark:(BOOL)isBookmark ofIdentity:(NSString *)identity {
+  
+  [self saveShadow: nil type: recordType commitId: _commitId identityId: nil];
+  NSDictionary *s = [self loadShadowType: recordType identity: nil];
+  return s;
+}
+
+// MARK: For custom test
+-(void)saveShadow:(NSDictionary *)dict
+             type:(RecordType)type
+         commitId:(NSString *)commitId
+       identityId:(NSString *)identityId {
+  
+  _shadow = dict;
   _commitId = commitId;
 }
 
--(id)emptyShadowIsBookmark:(BOOL)isBookmark {
+-(NSDictionary *)loadShadowType:(RecordType)type
+                       identity:(NSString *)identity {
   
-  _shadow = nil;
   return _shadow;
+}
+
+-(NSString *)identityId {
+  
+  return self.loginManager.offlineIdentity;
+}
+
+-(void)cleanShadow {
+  [self saveShadow: @{} type: recordType commitId: @"" identityId: self.identityId];
 }
 
 -(void)initial:(NSDictionary *)dict
     exeHandler:(void(^)(NSString *commitId, NSString *remoteHash, NSDictionary *shadow, NSError *error))exeHandler
-    completion:(void(^)(NSDictionary *newShadow, NSError *error))completion {
+    completion:(void(^)(NSDictionary *newShadow, NSString *commitId, NSError *error))completion {
   
   self.expection = [self expectationWithDescription: @"Remote Initial"];
   
@@ -73,8 +99,9 @@
   [_dynamoService forcePushWithType: RecordTypeBookmark record: _client userId: _userId completion:^(NSError *error, NSString *commitId, NSString *remoteHash) {
     
     if (!error) {
-      _shadow = dict;
-      _commitId = commitId;
+      //_shadow = dict;
+      //_commitId = commitId;
+      [self saveShadow: dict type: recordType commitId: commitId identityId: _userId];
       _remoteHash = remoteHash;
     }
     exeHandler(commitId, remoteHash, _shadow, error);
@@ -83,7 +110,9 @@
   
   [self waitForExpectationsWithTimeout: 5.0 handler:^(NSError * _Nullable error) {
     
-    completion(_shadow, error);
+    //completion(_shadow, error);
+    NSDictionary *s = [self loadShadowType: recordType identity: _userId];
+    completion(s, _commitId, error);
   }];
 }
 
@@ -95,7 +124,7 @@
     examineHandler:(void(^)(NSDictionary *shadow))examineHandler
      shouldReplace:(BOOL(^)(id oldValue, id newValue))shouldReplace
         exeHandler:(void(^)(NSDictionary *diff, NSError *error))exeHandler
-        completion:(void(^)(NSDictionary *newShadow, NSError *error))completion {
+        completion:(void(^)(NSDictionary *newShadow, NSString *commitId, NSError *error))completion {
   
   self.expection = [self expectationWithDescription: spec];
   
@@ -108,7 +137,8 @@
                            @"_dicts": dict
                            };
   
-  examineHandler(_shadow);
+  NSDictionary *s = [self loadShadowType: recordType identity: _userId];
+  examineHandler(s);
   
   [_dsync syncWithUserId: _userId
                tableName: _tableName
@@ -123,7 +153,8 @@
   
   [self waitForExpectationsWithTimeout: 8.0 handler:^(NSError * _Nullable error) {
     
-    completion(_shadow, error);
+    NSDictionary *s = [self loadShadowType: recordType identity: _userId];
+    completion(s, _commitId, error);
   }];
 }
 

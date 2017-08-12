@@ -22,6 +22,7 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* DynamoTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* DynamoTestBase.m */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
+		91F07B67C8360FA0EE1E5FEA /* Pods_AWSWrapper_MultipleUser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20EA3EDDE20067075F8AA932 /* Pods_AWSWrapper_MultipleUser.framework */; };
 		D448698D968525408A367F6F /* Pods_AWSWrapper_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8513427F95F3CFD033FB19C9 /* Pods_AWSWrapper_Example.framework */; };
 		F611F0971EEEB376000DFDFD /* DetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F611F0961EEEB376000DFDFD /* DetailVC.m */; };
 		F612FBB21F3177BE001924DC /* OfflineDBTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F612FBB11F3177BE001924DC /* OfflineDBTestBase.m */; };
@@ -41,6 +42,8 @@
 		F612FBC31F31BDD4001924DC /* DSOPSLocalTests2.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0EA71F1A12E600184DF7 /* DSOPSLocalTests2.m */; };
 		F612FBC41F31BDD4001924DC /* DSWrapperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC831EE29F6700051399 /* DSWrapperTests.m */; };
 		F612FBC51F31BDD4001924DC /* DSWrapperTests2.m in Sources */ = {isa = PBXBuildFile; fileRef = F63CFCB01F1C833F004DDE64 /* DSWrapperTests2.m */; };
+		F620C2E41F3D4C5F00976FDA /* MultipleShadowTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F620C2E31F3D4C5F00976FDA /* MultipleShadowTests.m */; };
+		F620C2E71F3D97F700976FDA /* QueueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F620C2E61F3D97F700976FDA /* QueueTests.m */; };
 		F64BAC7C1EE269BA00051399 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC7A1EE269BA00051399 /* ViewController.m */; };
 		F64BAC7D1EE269BA00051399 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F64BAC7B1EE269BA00051399 /* Main.storyboard */; };
 		F64BAC821EE26BA700051399 /* DynamoDBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F64BAC811EE26BA700051399 /* DynamoDBVC.m */; };
@@ -48,13 +51,18 @@
 		F64D0E9E1F1A067900184DF7 /* NSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E9D1F1A067900184DF7 /* NSArray+Sort.m */; };
 		F66017161F357F5F00487840 /* DSTests5.m in Sources */ = {isa = PBXBuildFile; fileRef = F66017151F357F5F00487840 /* DSTests5.m */; };
 		F66017181F38335300487840 /* DSLocalTests5.m in Sources */ = {isa = PBXBuildFile; fileRef = F66017171F38335300487840 /* DSLocalTests5.m */; };
+		F66A28AA1F3C4BBC00D44914 /* OfflineDBTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F612FBB11F3177BE001924DC /* OfflineDBTestBase.m */; };
+		F66A28AB1F3C4BC300D44914 /* DynamoTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* DynamoTestBase.m */; };
+		F66A28AC1F3C4BC700D44914 /* DispatchQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E911F19E7B500184DF7 /* DispatchQueue.m */; };
+		F66A28AD1F3C4BCA00D44914 /* NSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E9D1F1A067900184DF7 /* NSArray+Sort.m */; };
+		F66A28AE1F3C4C6800D44914 /* OfflineCognitoTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A61F6C1F2C759600892C61 /* OfflineCognitoTestBase.m */; };
+		F66A28AF1F3C4C6B00D44914 /* LoginTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */; };
 		F67DA4CB1F079485005751A3 /* DynamoSyncTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F67DA4CA1F079485005751A3 /* DynamoSyncTestVC.m */; };
 		F68263C41F396D0100739335 /* RemoteLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F201F2C435100064766 /* RemoteLoginTests.m */; };
 		F68263C61F396D0500739335 /* LocalLoginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F221F2C436900064766 /* LocalLoginTests.m */; };
 		F68263C71F396D0B00739335 /* LoginTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */; };
 		F68263C81F396D0E00739335 /* OfflineCognitoTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A61F6C1F2C759600892C61 /* OfflineCognitoTestBase.m */; };
 		F68263CB1F399C1000739335 /* OfflineDBTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F612FBB11F3177BE001924DC /* OfflineDBTestBase.m */; };
-		F68263CC1F399C1400739335 /* OfflineDBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F612FBB41F3185CE001924DC /* OfflineDBTests.m */; };
 		F68263CD1F399C3900739335 /* DispatchQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = F64D0E911F19E7B500184DF7 /* DispatchQueue.m */; };
 		F68263CE1F39AF1D00739335 /* LoginTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */; };
 		F68263CF1F39AF2100739335 /* OfflineCognitoTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F6A61F6C1F2C759600892C61 /* OfflineCognitoTestBase.m */; };
@@ -67,6 +75,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 6003F589195388D20070C39A;
 			remoteInfo = AWSWrapper;
+		};
+		F66A28A41F3C4B3000D44914 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6003F582195388D10070C39A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6003F589195388D20070C39A;
+			remoteInfo = AWSWrapper_Example;
 		};
 		F68263BF1F396CFA00739335 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -81,8 +96,10 @@
 		0B7EDF545D1A9E0717E96FB2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		0B93212247F0EAB40000993D /* Pods_AWSWrapper_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWSWrapper_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DC6037ABCD2ADE584386D8A /* Pods-AWSWrapper_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSWrapper_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AWSWrapper_Tests/Pods-AWSWrapper_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		20EA3EDDE20067075F8AA932 /* Pods_AWSWrapper_MultipleUser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWSWrapper_MultipleUser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		28B4E683417D0B6C0643B70C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		37A2156AD4709723B94DB48C /* Pods-AWSWrapper_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSWrapper_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-AWSWrapper_Example/Pods-AWSWrapper_Example.release.xcconfig"; sourceTree = "<group>"; };
+		473C8095730DE799210222DC /* Pods-AWSWrapper_MultipleUser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSWrapper_MultipleUser.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AWSWrapper_MultipleUser/Pods-AWSWrapper_MultipleUser.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* AWSWrapper_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AWSWrapper_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -98,9 +115,10 @@
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		6003F5B7195388D20070C39A /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		6003F5BB195388D20070C39A /* DynamoTestBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DynamoTestBase.m; sourceTree = "<group>"; };
+		6003F5BB195388D20070C39A /* DynamoTestBase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DynamoTestBase.m; path = Tests/DynamoTestBase.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		72CEAA341F69D793C285E17C /* Pods-AWSWrapper_MultipleUser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSWrapper_MultipleUser.release.xcconfig"; path = "Pods/Target Support Files/Pods-AWSWrapper_MultipleUser/Pods-AWSWrapper_MultipleUser.release.xcconfig"; sourceTree = "<group>"; };
 		84D339A1B6B02B94CDEC9BBB /* Pods-AWSWrapper_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSWrapper_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AWSWrapper_Example/Pods-AWSWrapper_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		8513427F95F3CFD033FB19C9 /* Pods_AWSWrapper_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWSWrapper_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9304557B29ECFA6B6A464B99 /* Pods-AWSWrapper_LoginTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AWSWrapper_LoginTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AWSWrapper_LoginTests/Pods-AWSWrapper_LoginTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -110,9 +128,11 @@
 		F60DF9E34491E62FA83AEDFC /* Pods_AWSWrapper_LoginTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AWSWrapper_LoginTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F611F0951EEEB376000DFDFD /* DetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailVC.h; sourceTree = "<group>"; };
 		F611F0961EEEB376000DFDFD /* DetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailVC.m; sourceTree = "<group>"; };
-		F612FBB01F3177BE001924DC /* OfflineDBTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineDBTestBase.h; sourceTree = "<group>"; };
-		F612FBB11F3177BE001924DC /* OfflineDBTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineDBTestBase.m; sourceTree = "<group>"; };
+		F612FBB01F3177BE001924DC /* OfflineDBTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OfflineDBTestBase.h; path = Tests/OfflineDBTestBase.h; sourceTree = "<group>"; };
+		F612FBB11F3177BE001924DC /* OfflineDBTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OfflineDBTestBase.m; path = Tests/OfflineDBTestBase.m; sourceTree = "<group>"; };
 		F612FBB41F3185CE001924DC /* OfflineDBTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineDBTests.m; sourceTree = "<group>"; };
+		F620C2E31F3D4C5F00976FDA /* MultipleShadowTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultipleShadowTests.m; sourceTree = "<group>"; };
+		F620C2E61F3D97F700976FDA /* QueueTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueueTests.m; sourceTree = "<group>"; };
 		F63CFCA81F1C5896004DDE64 /* DSLocalTests3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSLocalTests3.m; sourceTree = "<group>"; };
 		F63CFCAA1F1C5CD3004DDE64 /* DSTests3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSTests3.m; sourceTree = "<group>"; };
 		F63CFCAC1F1C6058004DDE64 /* DSTests4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSTests4.m; sourceTree = "<group>"; };
@@ -124,14 +144,14 @@
 		F64BAC801EE26BA700051399 /* DynamoDBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamoDBVC.h; sourceTree = "<group>"; };
 		F64BAC811EE26BA700051399 /* DynamoDBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamoDBVC.m; sourceTree = "<group>"; };
 		F64BAC831EE29F6700051399 /* DSWrapperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSWrapperTests.m; sourceTree = "<group>"; };
-		F64D0E8D1F18B37600184DF7 /* DynamoTestBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamoTestBase.h; sourceTree = "<group>"; };
+		F64D0E8D1F18B37600184DF7 /* DynamoTestBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DynamoTestBase.h; path = Tests/DynamoTestBase.h; sourceTree = "<group>"; };
 		F64D0E8E1F18BC4400184DF7 /* DSTests1Original.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSTests1Original.m; sourceTree = "<group>"; };
-		F64D0E901F19E7B500184DF7 /* DispatchQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchQueue.h; sourceTree = "<group>"; };
-		F64D0E911F19E7B500184DF7 /* DispatchQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueue.m; sourceTree = "<group>"; };
+		F64D0E901F19E7B500184DF7 /* DispatchQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DispatchQueue.h; path = Tests/DispatchQueue.h; sourceTree = "<group>"; };
+		F64D0E911F19E7B500184DF7 /* DispatchQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DispatchQueue.m; path = Tests/DispatchQueue.m; sourceTree = "<group>"; };
 		F64D0E961F19F01B00184DF7 /* DSTests2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSTests2.m; sourceTree = "<group>"; };
 		F64D0E981F1A03C600184DF7 /* DSLocalTests1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSLocalTests1.m; sourceTree = "<group>"; };
-		F64D0E9A1F1A05FC00184DF7 /* NSArray+Sort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Sort.h"; sourceTree = "<group>"; };
-		F64D0E9D1F1A067900184DF7 /* NSArray+Sort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Sort.m"; sourceTree = "<group>"; };
+		F64D0E9A1F1A05FC00184DF7 /* NSArray+Sort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+Sort.h"; path = "Tests/NSArray+Sort.h"; sourceTree = "<group>"; };
+		F64D0E9D1F1A067900184DF7 /* NSArray+Sort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+Sort.m"; path = "Tests/NSArray+Sort.m"; sourceTree = "<group>"; };
 		F64D0E9F1F1A095D00184DF7 /* DSOPSTests1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSOPSTests1.m; sourceTree = "<group>"; };
 		F64D0EA11F1A0A9E00184DF7 /* DSLocalTests2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSLocalTests2.m; sourceTree = "<group>"; };
 		F64D0EA31F1A0B9000184DF7 /* DSOPSTests2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSOPSTests2.m; sourceTree = "<group>"; };
@@ -140,16 +160,19 @@
 		F64D0EA91F1A155200184DF7 /* DSTests1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSTests1.m; sourceTree = "<group>"; };
 		F66017151F357F5F00487840 /* DSTests5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSTests5.m; sourceTree = "<group>"; };
 		F66017171F38335300487840 /* DSLocalTests5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSLocalTests5.m; sourceTree = "<group>"; };
+		F66A289F1F3C4B3000D44914 /* AWSWrapper_MultipleUser.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWSWrapper_MultipleUser.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F66A28A11F3C4B3000D44914 /* AWSWrapper_MultipleUser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AWSWrapper_MultipleUser.m; sourceTree = "<group>"; };
+		F66A28A31F3C4B3000D44914 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F67DA4C91F079485005751A3 /* DynamoSyncTestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamoSyncTestVC.h; sourceTree = "<group>"; };
 		F67DA4CA1F079485005751A3 /* DynamoSyncTestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamoSyncTestVC.m; sourceTree = "<group>"; };
 		F68263BA1F396CFA00739335 /* AWSWrapper_LoginTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AWSWrapper_LoginTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F68263BE1F396CFA00739335 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F6A61F6B1F2C759600892C61 /* OfflineCognitoTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineCognitoTestBase.h; sourceTree = "<group>"; };
-		F6A61F6C1F2C759600892C61 /* OfflineCognitoTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineCognitoTestBase.m; sourceTree = "<group>"; };
-		F6B39F1C1F2C3E6300064766 /* LoginTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTestBase.h; sourceTree = "<group>"; };
-		F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTestBase.m; sourceTree = "<group>"; };
-		F6B39F201F2C435100064766 /* RemoteLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteLoginTests.m; sourceTree = "<group>"; };
-		F6B39F221F2C436900064766 /* LocalLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalLoginTests.m; sourceTree = "<group>"; };
+		F6A61F6B1F2C759600892C61 /* OfflineCognitoTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OfflineCognitoTestBase.h; path = Tests/OfflineCognitoTestBase.h; sourceTree = "<group>"; };
+		F6A61F6C1F2C759600892C61 /* OfflineCognitoTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OfflineCognitoTestBase.m; path = Tests/OfflineCognitoTestBase.m; sourceTree = "<group>"; };
+		F6B39F1C1F2C3E6300064766 /* LoginTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginTestBase.h; path = Tests/LoginTestBase.h; sourceTree = "<group>"; };
+		F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginTestBase.m; path = Tests/LoginTestBase.m; sourceTree = "<group>"; };
+		F6B39F201F2C435100064766 /* RemoteLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RemoteLoginTests.m; path = ../Tests/RemoteLoginTests.m; sourceTree = "<group>"; };
+		F6B39F221F2C436900064766 /* LocalLoginTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalLoginTests.m; path = ../Tests/LocalLoginTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +198,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F66A289C1F3C4B3000D44914 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91F07B67C8360FA0EE1E5FEA /* Pods_AWSWrapper_MultipleUser.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F68263B71F396CFA00739335 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -191,8 +222,10 @@
 			children = (
 				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
 				6003F593195388D20070C39A /* Example for AWSWrapper */,
+				F6BE08711F3F632900BC3C40 /* TestBase */,
 				6003F5B5195388D20070C39A /* Tests */,
 				F68263BB1F396CFA00739335 /* AWSWrapper_LoginTests */,
+				F66A28A01F3C4B3000D44914 /* AWSWrapper_MultipleUser */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
 				FA926B13F119342B55302581 /* Pods */,
@@ -205,6 +238,7 @@
 				6003F58A195388D20070C39A /* AWSWrapper_Example.app */,
 				6003F5AE195388D20070C39A /* AWSWrapper_Tests.xctest */,
 				F68263BA1F396CFA00739335 /* AWSWrapper_LoginTests.xctest */,
+				F66A289F1F3C4B3000D44914 /* AWSWrapper_MultipleUser.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -219,6 +253,7 @@
 				8513427F95F3CFD033FB19C9 /* Pods_AWSWrapper_Example.framework */,
 				0B93212247F0EAB40000993D /* Pods_AWSWrapper_Tests.framework */,
 				F60DF9E34491E62FA83AEDFC /* Pods_AWSWrapper_LoginTests.framework */,
+				20EA3EDDE20067075F8AA932 /* Pods_AWSWrapper_MultipleUser.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -260,9 +295,6 @@
 			isa = PBXGroup;
 			children = (
 				F612FBB61F3185D4001924DC /* OfflineDB */,
-				F612FBB31F3177C4001924DC /* OfflineDBBase */,
-				F6E790DD1F2B440900A67CE8 /* LoginBase */,
-				F64D0E941F19E94500184DF7 /* TestBase */,
 				F6E790DB1F2B425700A67CE8 /* DS */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 			);
@@ -289,15 +321,6 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		F612FBB31F3177C4001924DC /* OfflineDBBase */ = {
-			isa = PBXGroup;
-			children = (
-				F612FBB01F3177BE001924DC /* OfflineDBTestBase.h */,
-				F612FBB11F3177BE001924DC /* OfflineDBTestBase.m */,
-			);
-			name = OfflineDBBase;
-			sourceTree = "<group>";
-		};
 		F612FBB61F3185D4001924DC /* OfflineDB */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,9 +329,36 @@
 			name = OfflineDB;
 			sourceTree = "<group>";
 		};
-		F64D0E941F19E94500184DF7 /* TestBase */ = {
+		F66A28A01F3C4B3000D44914 /* AWSWrapper_MultipleUser */ = {
 			isa = PBXGroup;
 			children = (
+				F66A28A11F3C4B3000D44914 /* AWSWrapper_MultipleUser.m */,
+				F620C2E31F3D4C5F00976FDA /* MultipleShadowTests.m */,
+				F620C2E61F3D97F700976FDA /* QueueTests.m */,
+				F66A28A31F3C4B3000D44914 /* Info.plist */,
+			);
+			path = AWSWrapper_MultipleUser;
+			sourceTree = "<group>";
+		};
+		F68263BB1F396CFA00739335 /* AWSWrapper_LoginTests */ = {
+			isa = PBXGroup;
+			children = (
+				F6B39F201F2C435100064766 /* RemoteLoginTests.m */,
+				F6B39F221F2C436900064766 /* LocalLoginTests.m */,
+				F68263BE1F396CFA00739335 /* Info.plist */,
+			);
+			path = AWSWrapper_LoginTests;
+			sourceTree = "<group>";
+		};
+		F6BE08711F3F632900BC3C40 /* TestBase */ = {
+			isa = PBXGroup;
+			children = (
+				F612FBB01F3177BE001924DC /* OfflineDBTestBase.h */,
+				F612FBB11F3177BE001924DC /* OfflineDBTestBase.m */,
+				F6B39F1C1F2C3E6300064766 /* LoginTestBase.h */,
+				F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */,
+				F6A61F6B1F2C759600892C61 /* OfflineCognitoTestBase.h */,
+				F6A61F6C1F2C759600892C61 /* OfflineCognitoTestBase.m */,
 				F64D0E8D1F18B37600184DF7 /* DynamoTestBase.h */,
 				6003F5BB195388D20070C39A /* DynamoTestBase.m */,
 				F64D0E901F19E7B500184DF7 /* DispatchQueue.h */,
@@ -317,15 +367,6 @@
 				F64D0E9D1F1A067900184DF7 /* NSArray+Sort.m */,
 			);
 			name = TestBase;
-			sourceTree = "<group>";
-		};
-		F68263BB1F396CFA00739335 /* AWSWrapper_LoginTests */ = {
-			isa = PBXGroup;
-			children = (
-				F6E790DC1F2B426400A67CE8 /* Login */,
-				F68263BE1F396CFA00739335 /* Info.plist */,
-			);
-			path = AWSWrapper_LoginTests;
 			sourceTree = "<group>";
 		};
 		F6E790DB1F2B425700A67CE8 /* DS */ = {
@@ -352,27 +393,6 @@
 			name = DS;
 			sourceTree = "<group>";
 		};
-		F6E790DC1F2B426400A67CE8 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				F6B39F201F2C435100064766 /* RemoteLoginTests.m */,
-				F6B39F221F2C436900064766 /* LocalLoginTests.m */,
-			);
-			name = Login;
-			path = ../Tests;
-			sourceTree = "<group>";
-		};
-		F6E790DD1F2B440900A67CE8 /* LoginBase */ = {
-			isa = PBXGroup;
-			children = (
-				F6B39F1C1F2C3E6300064766 /* LoginTestBase.h */,
-				F6B39F1D1F2C3E6300064766 /* LoginTestBase.m */,
-				F6A61F6B1F2C759600892C61 /* OfflineCognitoTestBase.h */,
-				F6A61F6C1F2C759600892C61 /* OfflineCognitoTestBase.m */,
-			);
-			name = LoginBase;
-			sourceTree = "<group>";
-		};
 		FA926B13F119342B55302581 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -382,6 +402,8 @@
 				1DC6037ABCD2ADE584386D8A /* Pods-AWSWrapper_Tests.release.xcconfig */,
 				9304557B29ECFA6B6A464B99 /* Pods-AWSWrapper_LoginTests.debug.xcconfig */,
 				F43A880A40CBF6D467845CC1 /* Pods-AWSWrapper_LoginTests.release.xcconfig */,
+				473C8095730DE799210222DC /* Pods-AWSWrapper_MultipleUser.debug.xcconfig */,
+				72CEAA341F69D793C285E17C /* Pods-AWSWrapper_MultipleUser.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -430,6 +452,27 @@
 			productReference = 6003F5AE195388D20070C39A /* AWSWrapper_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		F66A289E1F3C4B3000D44914 /* AWSWrapper_MultipleUser */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F66A28A81F3C4B3000D44914 /* Build configuration list for PBXNativeTarget "AWSWrapper_MultipleUser" */;
+			buildPhases = (
+				F0937D58CB7735ED7EEDE244 /* [CP] Check Pods Manifest.lock */,
+				F66A289B1F3C4B3000D44914 /* Sources */,
+				F66A289C1F3C4B3000D44914 /* Frameworks */,
+				F66A289D1F3C4B3000D44914 /* Resources */,
+				ECEC5E081DAB642DA9E0C845 /* [CP] Embed Pods Frameworks */,
+				F07A94F59BFC1343EF575B3C /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F66A28A51F3C4B3000D44914 /* PBXTargetDependency */,
+			);
+			name = AWSWrapper_MultipleUser;
+			productName = AWSWrapper_MultipleUser;
+			productReference = F66A289F1F3C4B3000D44914 /* AWSWrapper_MultipleUser.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		F68263B91F396CFA00739335 /* AWSWrapper_LoginTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F68263C31F396CFA00739335 /* Build configuration list for PBXNativeTarget "AWSWrapper_LoginTests" */;
@@ -468,6 +511,12 @@
 						DevelopmentTeam = 29DN3FMVP9;
 						TestTargetID = 6003F589195388D20070C39A;
 					};
+					F66A289E1F3C4B3000D44914 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 29DN3FMVP9;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 6003F589195388D20070C39A;
+					};
 					F68263B91F396CFA00739335 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = 29DN3FMVP9;
@@ -492,6 +541,7 @@
 				6003F589195388D20070C39A /* AWSWrapper_Example */,
 				6003F5AD195388D20070C39A /* AWSWrapper_Tests */,
 				F68263B91F396CFA00739335 /* AWSWrapper_LoginTests */,
+				F66A289E1F3C4B3000D44914 /* AWSWrapper_MultipleUser */,
 			);
 		};
 /* End PBXProject section */
@@ -513,6 +563,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F66A289D1F3C4B3000D44914 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,6 +688,51 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		ECEC5E081DAB642DA9E0C845 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AWSWrapper_MultipleUser/Pods-AWSWrapper_MultipleUser-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F07A94F59BFC1343EF575B3C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AWSWrapper_MultipleUser/Pods-AWSWrapper_MultipleUser-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F0937D58CB7735ED7EEDE244 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		FEF8CB73F16BEBD01F3AD165 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -708,6 +810,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F66A289B1F3C4B3000D44914 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F620C2E71F3D97F700976FDA /* QueueTests.m in Sources */,
+				F66A28AD1F3C4BCA00D44914 /* NSArray+Sort.m in Sources */,
+				F66A28AC1F3C4BC700D44914 /* DispatchQueue.m in Sources */,
+				F66A28AB1F3C4BC300D44914 /* DynamoTestBase.m in Sources */,
+				F66A28AA1F3C4BBC00D44914 /* OfflineDBTestBase.m in Sources */,
+				F620C2E41F3D4C5F00976FDA /* MultipleShadowTests.m in Sources */,
+				F66A28AF1F3C4C6B00D44914 /* LoginTestBase.m in Sources */,
+				F66A28AE1F3C4C6800D44914 /* OfflineCognitoTestBase.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F68263B61F396CFA00739335 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -716,7 +833,6 @@
 				F68263C81F396D0E00739335 /* OfflineCognitoTestBase.m in Sources */,
 				F68263CB1F399C1000739335 /* OfflineDBTestBase.m in Sources */,
 				F68263C71F396D0B00739335 /* LoginTestBase.m in Sources */,
-				F68263CC1F399C1400739335 /* OfflineDBTests.m in Sources */,
 				F68263C41F396D0100739335 /* RemoteLoginTests.m in Sources */,
 				F68263CD1F399C3900739335 /* DispatchQueue.m in Sources */,
 			);
@@ -729,6 +845,11 @@
 			isa = PBXTargetDependency;
 			target = 6003F589195388D20070C39A /* AWSWrapper_Example */;
 			targetProxy = 6003F5B3195388D20070C39A /* PBXContainerItemProxy */;
+		};
+		F66A28A51F3C4B3000D44914 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6003F589195388D20070C39A /* AWSWrapper_Example */;
+			targetProxy = F66A28A41F3C4B3000D44914 /* PBXContainerItemProxy */;
 		};
 		F68263C01F396CFA00739335 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -920,6 +1041,57 @@
 			};
 			name = Release;
 		};
+		F66A28A61F3C4B3000D44914 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 473C8095730DE799210222DC /* Pods-AWSWrapper_MultipleUser.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 29DN3FMVP9;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = AWSWrapper_MultipleUser/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stan.AWSWrapper-MultipleUser";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AWSWrapper_Example.app/AWSWrapper_Example";
+			};
+			name = Debug;
+		};
+		F66A28A71F3C4B3000D44914 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 72CEAA341F69D793C285E17C /* Pods-AWSWrapper_MultipleUser.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 29DN3FMVP9;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = AWSWrapper_MultipleUser/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stan.AWSWrapper-MultipleUser";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AWSWrapper_Example.app/AWSWrapper_Example";
+			};
+			name = Release;
+		};
 		F68263C11F396CFA00739335 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9304557B29ECFA6B6A464B99 /* Pods-AWSWrapper_LoginTests.debug.xcconfig */;
@@ -997,6 +1169,15 @@
 			buildConfigurations = (
 				6003F5C3195388D20070C39A /* Debug */,
 				6003F5C4195388D20070C39A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F66A28A81F3C4B3000D44914 /* Build configuration list for PBXNativeTarget "AWSWrapper_MultipleUser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F66A28A61F3C4B3000D44914 /* Debug */,
+				F66A28A71F3C4B3000D44914 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

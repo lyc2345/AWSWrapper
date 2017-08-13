@@ -15,6 +15,7 @@
 #import "UserPoolMFAViewController.h"
 #import "LoginManager.h"
 #import "Alert.h"
+#import "DDTLog.h"
 
 static NSString *LOG_TAG;
 
@@ -33,7 +34,7 @@ static NSString *LOG_TAG;
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	NSLog(@"%@: Sign-In Loading.", LOG_TAG);
+	DDTLog(@"%@: Sign-In Loading.", LOG_TAG);
 	
 	[self.facebookButton removeFromSuperview];
 	[self.googleButton removeFromSuperview];
@@ -148,7 +149,7 @@ static NSString *LOG_TAG;
 		} else {
 			[[LoginManager shared] logout:^(id result, NSError *error) {
 				
-				NSLog(@"logout error: %@", error);
+				DDTLog(@"logout error: %@", error);
 			}];
 		}
 		

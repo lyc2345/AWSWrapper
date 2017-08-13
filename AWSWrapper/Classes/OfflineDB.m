@@ -9,6 +9,7 @@
 #import "OfflineDB.h"
 #import "DSWrapper.h"
 #import "Random.h"
+#import "DDTLog.h"
 
 // bookmark = Dictionary
 // bookmarkList = Array(Dicionary)
@@ -135,7 +136,7 @@ NSString * const __HISTORY_LIST	  = @"__HISTORY_LIST";
     NSString *localIdentity = obj[@"_userId"];
     if ([localIdentity isEqualToString: identity]) {
       
-      //NSLog(@"identity: %@, has exist record: %@", identity, obj);
+      DDTLog(@"identity: %@, has exist record: %@", identity, obj);
       dict = obj;
     }
   }];
@@ -172,7 +173,7 @@ NSMutableArray *waitToModifyRecords = [NSMutableArray array];
     if ([obj[@"_userId"] isEqualToString: identity]) {
       isExist = YES;
       *stop = YES;
-      //NSLog(@"identity: %@, has exist record: %@", identity, obj);
+      DDTLog(@"identity: %@, has exist record: %@", identity, obj);
     }
     if (*stop) {
       NSMutableDictionary *mutableInfo = [obj mutableCopy];
@@ -240,7 +241,7 @@ NSMutableArray *waitToModifyRecords = [NSMutableArray array];
 -(void)addOffline:(NSDictionary *)dict type:(RecordType)type ofIdentity:(NSString *)identity {
   
   if ([dict[@"author"] isEqualToString: @""] || [dict[@"comicName"] isEqualToString: @""] || [dict[@"url"] isEqualToString: @""]) {
-    NSLog(@"author, comicName, url is nil in Dictionary");
+    DDTLog(@"author, comicName, url is nil in Dictionary");
     return;
   }
   NSArray *records = [self obtainOfflineMutableRecordsOfType: type];

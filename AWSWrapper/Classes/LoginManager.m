@@ -8,7 +8,7 @@
 
 #import "LoginManager.h"
 #import "OfflineCognito.h"
-#import "DLog.h"
+#import "DDTLog.h"
 @import AWSMobileHubHelper.AWSIdentityManager;
 @import AWSMobileHubHelper.AWSCognitoUserPoolsSignInProvider;
 @import AWSMobileHubHelper.AWSContentManager;
@@ -102,10 +102,8 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
   NSString *password;
   
   if (!self.userPoolSignInFlowStartUserName && !self.userPoolSignInFlowStartPassword) {
-#ifdef debugMode
-    NSLog(@"handleUserPoolSignInFlowStart is error in function: %s, line: %d", __FUNCTION__, __LINE__);
-    NSLog(@"userPoolSignInFlowStartUserName || userPoolSignInFlowStartPassword is null");
-#endif
+    DDTLog(@"handleUserPoolSignInFlowStart is error in function: %s, line: %d", __FUNCTION__, __LINE__);
+    DDTLog(@"userPoolSignInFlowStartUserName || userPoolSignInFlowStartPassword is null");
     username = self.user;
     password = self.password;
     
@@ -131,15 +129,11 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 	
 	if (isQualified) {
     [[NSUserDefaults standardUserDefaults] setObject: user forKey: __CURRENT_USER];
-#ifdef debugMode
-    NSLog(@"offline login success with user: %@", [[NSUserDefaults standardUserDefaults] stringForKey: __CURRENT_USER]);
-#endif
+    DDTLog(@"offline login success with user: %@", [[NSUserDefaults standardUserDefaults] stringForKey: __CURRENT_USER]);
   } else {
     // To remind user there are not qualified for offline login (because they are not had been register AWS yet)
     [[NSUserDefaults standardUserDefaults] setObject: nil forKey: __CURRENT_USER];
-#ifdef debugMode
-    NSLog(@"offline login failure with user: %@", user);
-#endif
+    DDTLog(@"offline login failure with user: %@", user);
     error = [NSError errorWithDomain: @"com.stan.loginmanager" code: 1 userInfo: @{@"description": @"offline login failure"}];
 		
 	}
@@ -150,9 +144,7 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 	
 	[[NSUserDefaults standardUserDefaults] setObject: nil forKey: __CURRENT_USER];
   BOOL success = [[NSUserDefaults standardUserDefaults] synchronize];
-#ifdef debugMode
-	NSLog(@"offline logout successfully");
-#endif
+	DDTLog(@"offline logout successfully");
   NSError *error;
   if (completion) {
     
@@ -228,9 +220,7 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
   }
   
   [[self.userPool signUp: username password: password userAttributes: attributes validationData:nil] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityUserPoolSignUpResponse *> * _Nonnull task) {
-#ifdef debugMode
-    NSLog(@"Successful signUp user: %@",task.result.user.username);
-#endif
+    DDTLog(@"Successful signUp user: %@",task.result.user.username);
 		dispatch_async(dispatch_get_main_queue(), ^{
 			if(task.error){
 				
@@ -240,10 +230,8 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
         
         // success signup but still needs to confirm.
         // Show the Confirm action way destination, e.g. phone, email... etc
-#ifdef debugMode
-        NSLog(@"code delivery detail attributeName: %@", task.result.codeDeliveryDetails.attributeName);
-        NSLog(@"code delivery detail destination: %@", task.result.codeDeliveryDetails.destination);
-#endif
+        DDTLog(@"code delivery detail attributeName: %@", task.result.codeDeliveryDetails.attributeName);
+        DDTLog(@"code delivery detail destination: %@", task.result.codeDeliveryDetails.destination);
 				
 				waitToConfirmAction(task.result.codeDeliveryDetails.destination);
 				self.tmpPassword = password;
@@ -339,9 +327,7 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
       return;
     }
     if (!error) {
-#ifdef debugMode
-      NSLog(@"user login successfully with result: %@", result);
-#endif
+      DDTLog(@"user login successfully with result: %@", result);
 			NSString *username = weakSelf.userPoolSignInFlowStartUserName();
 			NSString *password = weakSelf.userPoolSignInFlowStartPassword();
       if (username && password) {
@@ -374,7 +360,7 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
           weakSelf.AWSLoginStatusChangedHandler();
         }];
       }
-      //NSLog(@"%@: %@ Logout Successful", LOG_TAG, [signInProvider getDisplayName]);
+      //DDTLog(@"%@: %@ Logout Successful", LOG_TAG, [signInProvider getDisplayName]);
       completion(result, error);
     }];
   } else if (self.isLogin == YES) {
@@ -441,7 +427,7 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 //	[query save: &error];
 //
 //	if (error) {
-//		NSLog(@"lock store user info error: %@", error);
+//		DDTLog(@"lock store user info error: %@", error);
 //	}
 //}
 //
@@ -507,18 +493,18 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 //	}];
 //
 //	if (!isUserExist) {
-//		NSLog(@"user: %@ not exist, save a new user and password!", user);
+//		DDTLog(@"user: %@ not exist, save a new user and password!", user);
 //		NSDictionary *userInfo = [LoginManager userFormatOfUser: user password: password identity: identity];
 //		[offlineUserMutableList addObject: userInfo];
 //		[[NSUserDefaults standardUserDefaults] setObject: offlineUserMutableList forKey: @"__USER_LIST"];
 //		[[NSUserDefaults standardUserDefaults] synchronize];
 //		return;
 //	}
-//	NSLog(@"user %@ is existed, no need to save again", user);
+//	DDTLog(@"user %@ is existed, no need to save again", user);
 //	// check modify
 //
 //	bool isQualified = [self compareOfflineUserListWithUser: user password: password];
-//	NSLog(@"is qualified: %@", isQualified ? @"YES" : @"NO");
+//	DDTLog(@"is qualified: %@", isQualified ? @"YES" : @"NO");
 //	if (!isQualified) {
 //		[self modifyUser: user password: password identity: identity];
 //  }
@@ -539,7 +525,7 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 //		}
 //
 //		if (*stop) {
-//			NSLog(@"modify offline user: %@, with password: %@", user, [Encrypt SHA512From: password]);
+//			DDTLog(@"modify offline user: %@, with password: %@", user, [Encrypt SHA512From: password]);
 //			NSDictionary *userInfo = [LoginManager userFormatOfUser: user password: password identity: identity];
 //			[offlineUserMutableList replaceObjectAtIndex: idx withObject: userInfo];
 //		}
@@ -556,8 +542,8 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 //	NSString *hashPassword = [Encrypt SHA512From: password];
 //
 //	[offlineUserList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//		NSLog(@"user: %@", obj);
-//		NSLog(@"user: %@, password: %@", user, hashPassword);
+//		DDTLog(@"user: %@", obj);
+//		DDTLog(@"user: %@, password: %@", user, hashPassword);
 //
 //
 //		if ([obj[@"_user"] isEqualToString: user] &&

@@ -11,6 +11,7 @@
 #import "History.h"
 #import "DSWrapper.h"
 #import "Random.h"
+#import "DDTLog.h"
 
 @interface DynamoService ()
 
@@ -41,7 +42,7 @@ static NSString * const primaryKey = @"comicName";
   AWSDynamoDBAttributeValue *userId = attributeDictionary[@"userId"];
   
   if (dictsValue == nil || remoteHash == nil || commitId == nil) {
-    NSLog(@"Some of attribute is nil");
+    DDTLog(@"Some of attribute is nil");
     return nil;
   }
   
@@ -64,7 +65,7 @@ static NSString * const primaryKey = @"comicName";
   NSMutableDictionary *record = [NSMutableDictionary dictionary];
   
   if (!remoteHash || !commitId || !userId) {
-    NSLog(@"covert from AWS attributes to normal NSDictionary failed becasue some attributes are nil");
+    DDTLog(@"covert from AWS attributes to normal NSDictionary failed becasue some attributes are nil");
     return nil;
   }
   
@@ -117,7 +118,7 @@ static NSString * const primaryKey = @"comicName";
   [dynamoDB query: queryInput completionHandler:^(AWSDynamoDBQueryOutput * _Nullable response, NSError * _Nullable error) {
     
     if (error) {
-      NSLog(@"AWS DynamoDB load error: %@", error);
+      DDTLog(@"AWS DynamoDB load error: %@", error);
       //completionHandler(nil, error);
       completionHandler(nil, [DSError pullFailed]);
       return;
@@ -149,7 +150,7 @@ static NSString * const primaryKey = @"comicName";
 		completionHandler: ^(AWSDynamoDBPaginatedOutput * _Nullable response, NSError * _Nullable error) {
 			
 			if (error) {
-				NSLog(@"AWS DynamoDB load error: %@", error);
+				DDTLog(@"AWS DynamoDB load error: %@", error);
 				completionHandler(nil, error);
 				return;
 			}
@@ -165,11 +166,11 @@ static NSString * const primaryKey = @"comicName";
   [objectMapper save: (AWSDynamoDBObjectModel<AWSDynamoDBModeling> *)bkSuitable completionHandler:^(NSError * _Nullable error) {
     
     if (error) {
-      NSLog(@"AWS DynamoDB save error: %@", error);
+      DDTLog(@"AWS DynamoDB save error: %@", error);
       completion(error, nil);
       return;
     }
-    NSLog(@"AWS DynamoDB save successful");
+    DDTLog(@"AWS DynamoDB save successful");
     RecordType type = [bkSuitable isKindOfClass: [Bookmark class]] ? RecordTypeBookmark : RecordTypeHistory;
     NSMutableDictionary *record = [NSMutableDictionary dictionary];
     [record setObject: bkSuitable._commitId forKey: @"_commitId"];
@@ -238,7 +239,7 @@ static NSString * const primaryKey = @"comicName";
   [[dynamoDB putItem: putItemInput] continueWithBlock:^id(AWSTask *task) {
     
     if (task.error) {
-      NSLog(@"force push error: %@", task.error);
+      DDTLog(@"force push error: %@", task.error);
       completion(task.error, nil, nil);
       return nil;
     } else {

@@ -78,11 +78,8 @@
                    type: RecordTypeBookmark
              ofIdentity: userIdentityId];
   
-  
-  
-  
-  NSDictionary *bookmark = [_testcase getOfflineRecordOfIdentity: userIdentityId
-                                                            type: RecordTypeBookmark];
+  NSDictionary *bookmark = [_testcase loadOfflineRecordType: RecordTypeBookmark
+                                                 ofIdentity: userIdentityId];
   
   NSDictionary *expectBookmark = @{
                                    @"A": @{@"author": @"A", @"url": @"A"},
@@ -102,8 +99,9 @@
                    type: RecordTypeHistory
              ofIdentity: userIdentityId];
   
-  NSDictionary *history = [_testcase getOfflineRecordOfIdentity: userIdentityId
-                                                            type: RecordTypeHistory];
+  
+  NSDictionary *history = [_testcase loadOfflineRecordType: RecordTypeHistory
+                                                ofIdentity: userIdentityId ];
   
   NSDictionary *expectHistory = @{
                                    @"Y": @{@"author": @"Y", @"url": @"Y"}
@@ -129,8 +127,8 @@
                    type: RecordTypeBookmark
              ofIdentity: userIdentityId];
   
-  NSDictionary *bookmark = [_testcase getOfflineRecordOfIdentity: userIdentityId
-                                                            type: RecordTypeBookmark];
+  NSDictionary *bookmark = [_testcase loadOfflineRecordType: RecordTypeBookmark
+                                                 ofIdentity: userIdentityId];
   
   NSDictionary *expectBookmark = @{
                                    @"A": @{@"author": @"A", @"url": @"A"},
@@ -146,8 +144,8 @@
              ofIdentity: userIdentityId];
   
   
-  bookmark = [_testcase getOfflineRecordOfIdentity: userIdentityId
-                                                            type: RecordTypeBookmark];
+  bookmark = [_testcase loadOfflineRecordType: RecordTypeBookmark
+                                   ofIdentity: userIdentityId];
   
   expectBookmark = @{
                                    @"A": @{@"author": @"A", @"url": @"A"},
@@ -170,22 +168,22 @@
     [NSThread sleepForTimeInterval: 0.3];
   }
   
-  NSDictionary *bookmark = [_testcase getOfflineRecordOfIdentity: userIdentityId
-                                                           type: RecordTypeBookmark];
+  NSDictionary *bookmark = [_testcase loadOfflineRecordType: RecordTypeBookmark
+                                                           ofIdentity: userIdentityId];
   
   NSLog(@"expect should be 100, it is %lu", (unsigned long)[(NSArray *)bookmark[@"_dicts"] count]);
   XCTAssertTrue([(NSArray *)bookmark[@"_dicts"] count] == 10);
 
   
-  bookmark = [_testcase getOfflineRecordOfIdentity: userIdentityId
-                                                            type: RecordTypeBookmark];
+  bookmark = [_testcase loadOfflineRecordType: RecordTypeBookmark
+                                             ofIdentity: userIdentityId];
   for (NSString *key in [bookmark[@"_dicts"] allKeys]) {
     NSDictionary *record = @{@"comicName": key, @"author": key, @"url": key};
     [_testcase deleteOffline: record type: RecordTypeBookmark ofIdentity: userIdentityId];
   }
   
-  bookmark = [_testcase getOfflineRecordOfIdentity: userIdentityId
-                                              type: RecordTypeBookmark];
+  bookmark = [_testcase loadOfflineRecordType: RecordTypeBookmark
+                                             ofIdentity: userIdentityId];
   
   NSLog(@"expect should be 0, it is %lu", (unsigned long)[(NSArray *)bookmark[@"_dicts"] count]);
   XCTAssertTrue([(NSArray *)bookmark[@"_dicts"] count] == 0);

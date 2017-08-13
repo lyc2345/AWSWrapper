@@ -7,6 +7,7 @@
 //
 
 #import "OfflineDBTestBase.h"
+@import AWSWrapper;
 
 @interface OfflineDB (Test)
 
@@ -77,7 +78,7 @@ NSString * const __HISTORY_SHADOW_TEST = @"__HISTORY_SHADOW_TEST";
 
 @interface OfflineDBTestBase ()
 
-@property OfflineDB *offlineDB;
+@property DynamoSync *dynamoSync;
 
 @end
 
@@ -88,8 +89,7 @@ NSString * const __HISTORY_SHADOW_TEST = @"__HISTORY_SHADOW_TEST";
   self = [super init];
   if (self) {
   
-    self.offlineDB = [OfflineDB new];
-    
+    _dynamoSync = [DynamoSync new];
   }
   return self;
 }
@@ -102,16 +102,19 @@ NSString * const __HISTORY_SHADOW_TEST = @"__HISTORY_SHADOW_TEST";
   return [OfflineDB setShadow: dict isBookmark: isBookmark ofIdentity: identity];
 }
 
--(void)addOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity {
-  [self.offlineDB addOffline: r type: type ofIdentity: identity];
+-(NSDictionary *)addOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity {
+  //[self.offlineDB addOffline: r type: type ofIdentity: identity];
+  return [_dynamoSync addOffline: r type: type ofIdentity: identity];
 }
 
 -(NSDictionary *)deleteOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity {
-  return [self.offlineDB deleteOffline: r type: type ofIdentity: identity];
+  //return [self.offlineDB deleteOffline: r type: type ofIdentity: identity];
+  return [_dynamoSync deleteOffline: r type: type ofIdentity: identity];
 }
 
--(NSDictionary *)getOfflineRecordOfIdentity:(NSString *)identity type:(RecordType)type {
-  return [self.offlineDB getOfflineRecordOfIdentity: identity type: type];
+-(NSDictionary *)loadOfflineRecordType:(RecordType)type ofIdentity:(NSString *)identity {
+  //return [self.offlineDB getOfflineRecordOfIdentity: identity type: type];
+  return [_dynamoSync loadOfflineRecordType: type ofIdentity: identity];
 }
 
 @end

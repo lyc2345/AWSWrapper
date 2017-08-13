@@ -61,7 +61,6 @@ static NSString *samplePassword = @"88888888";
     
     //      expect(result).to.beNil;
     //      expect(error).to.beNil;
-    XCTAssertNotNil(result);
     XCTAssertNil(error);
     
     BOOL isQualified = [_cognito verifyUsername: sampleUsername

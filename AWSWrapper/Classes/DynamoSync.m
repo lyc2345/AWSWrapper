@@ -58,7 +58,7 @@ static NSString * const primaryKey = @"comicName";
   
   __block NSDictionary *diff_client_shadow = [DSWrapper diffWins: dict[@"_dicts"] loses: shadow primaryKey: primaryKey];
 
-  DynamoService *dynamoService = [[DynamoService alloc] init];
+  DynamoService *dynamoService = [DynamoService new];
   
   DDTLog(@"start: 1");
   // push local AWS model and the diff we get before.
@@ -205,6 +205,15 @@ static NSString * const primaryKey = @"comicName";
   }];
 }
 
+
+-(void)pullType:(RecordType)type
+           user:(NSString *)userId
+     completion:(void(^)(NSDictionary *item, DSError *error))completionHandler {
+  
+  DynamoService *dynamoService = [DynamoService new];
+  [dynamoService pullType: type user: userId completion: completionHandler];
+}
+
 /**
  * @param diff the diff object between two dictionaries. it contains keys ("add", "delete", "replace")
  * @param dict the dictionary that will be patched by diff
@@ -212,6 +221,34 @@ static NSString * const primaryKey = @"comicName";
 - (NSDictionary*)applyDiff:(NSDictionary*)diff toDictionary:(NSDictionary*)dict {
   
   return [DSWrapper mergeInto: dict applyDiff: diff];
+}
+
+-(NSDictionary *)addOffline:(NSDictionary *)dict
+                       type:(RecordType)type
+                 ofIdentity:(NSString *)identity {
+  
+  OfflineDB *offlineDB = [OfflineDB new];
+  return [offlineDB addOffline: dict
+                          type: type
+                    ofIdentity: identity];
+}
+
+-(NSDictionary *)deleteOffline:(NSDictionary *)dict
+                          type:(RecordType)type
+                    ofIdentity:(NSString *)identity {
+  
+  OfflineDB *offlineDB = [OfflineDB new];
+  return [offlineDB deleteOffline: dict
+                             type: type
+                       ofIdentity: identity];
+}
+
+-(NSDictionary *)loadOfflineRecordType:(RecordType)type
+                            ofIdentity:(NSString *)identity {
+  
+  OfflineDB *offlineDB = [OfflineDB new];
+  return [offlineDB getOfflineRecordOfIdentity: identity
+                                          type: type];
 }
 
 @end

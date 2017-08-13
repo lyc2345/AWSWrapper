@@ -238,11 +238,11 @@ NSMutableArray *waitToModifyRecords = [NSMutableArray array];
 
 #pragma mark - Bookmark (Open)
 
--(void)addOffline:(NSDictionary *)dict type:(RecordType)type ofIdentity:(NSString *)identity {
+-(NSDictionary *)addOffline:(NSDictionary *)dict type:(RecordType)type ofIdentity:(NSString *)identity {
   
   if ([dict[@"author"] isEqualToString: @""] || [dict[@"comicName"] isEqualToString: @""] || [dict[@"url"] isEqualToString: @""]) {
     DDTLog(@"author, comicName, url is nil in Dictionary");
-    return;
+    return nil;
   }
   NSArray *records = [self obtainOfflineMutableRecordsOfType: type];
   NSMutableDictionary *record = [[self obtainOfflineExistRecordFromRecords: records
@@ -266,7 +266,7 @@ NSMutableArray *waitToModifyRecords = [NSMutableArray array];
   }
   
   [record setValue: [DSWrapper dictFromArray: list] forKey: @"_dicts"];
-  [self setOfflineNewRecord: record type: type identity: identity];
+  return [self setOfflineNewRecord: record type: type identity: identity];
 }
 
 -(NSDictionary *)deleteOffline:(NSDictionary *)dict type:(RecordType)type ofIdentity:(NSString *)identity {

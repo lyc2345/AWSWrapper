@@ -166,7 +166,7 @@
 	
 	if ([LoginManager shared].isLogin) {
 		
-		[self.offlineDB addOffline: bookmark type: RecordTypeBookmark ofIdentity: [LoginManager shared].awsIdentityId];
+		[_dsync addOffline: bookmark type: RecordTypeBookmark ofIdentity: [LoginManager shared].awsIdentityId];
     [self reloadBookmarks];
 	}
 }
@@ -183,7 +183,7 @@
 	
 	if ([LoginManager shared].isLogin) {
 		
-		[self.offlineDB addOffline: history type: RecordTypeHistory ofIdentity: [LoginManager shared].awsIdentityId];
+		[_dsync addOffline: history type: RecordTypeHistory ofIdentity: [LoginManager shared].awsIdentityId];
     [self reloadHistory];
 	}
 }
@@ -196,7 +196,7 @@
     return;
   }
   NSString *userId = [LoginManager shared].awsIdentityId;
-  NSDictionary *bk = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
+  NSDictionary *bk = [_dsync loadOfflineRecordType: RecordTypeBookmark ofIdentity: userId];
   [_dsync syncWithUserId: userId
                tableName: @"Bookmark"
               dictionary: bk
@@ -222,7 +222,7 @@
     return;
   }
   NSString *userId = [LoginManager shared].awsIdentityId;
-  NSDictionary *rv = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeHistory];
+  NSDictionary *rv = [_dsync loadOfflineRecordType: RecordTypeHistory ofIdentity: userId];
   [_dsync syncWithUserId: userId
                tableName: @"History"
               dictionary: rv
@@ -245,7 +245,7 @@
   DynamoService *dynamoService = [DynamoService new];
   LoginManager *loginManager = [LoginManager shared];
   NSString *userId = loginManager.awsIdentityId != nil ? loginManager.awsIdentityId : loginManager.offlineIdentity;
-  NSDictionary *localBookmarkRecord = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeBookmark];
+  NSDictionary *localBookmarkRecord = [_dsync loadOfflineRecordType: RecordTypeBookmark ofIdentity: userId];
   
   self.localBookmark = localBookmarkRecord;
   dispatch_async(dispatch_get_main_queue(), ^{
@@ -275,7 +275,7 @@
   DynamoService *dynamoService = [DynamoService new];
   LoginManager *loginManager = [LoginManager shared];
   NSString *userId = loginManager.awsIdentityId != nil ? loginManager.awsIdentityId : loginManager.offlineIdentity;
-  NSDictionary *localHistory = [self.offlineDB getOfflineRecordOfIdentity: userId type: RecordTypeHistory];
+  NSDictionary *localHistory = [_dsync loadOfflineRecordType: RecordTypeHistory ofIdentity: userId];
   
   self.localHistoryItems = localHistory;
   
@@ -412,7 +412,7 @@
     if (indexPath.section == 0) {
       
       [tableView beginUpdates];
-      self.localBookmark = [self.offlineDB deleteOffline: [DSWrapper arrayFromDict: self.localBookmark[@"_dicts"]][indexPath.row] type: RecordTypeBookmark ofIdentity: self.localBookmark[@"_userId"]];
+      self.localBookmark = [_dsync deleteOffline: [DSWrapper arrayFromDict: self.localBookmark[@"_dicts"]][indexPath.row] type: RecordTypeBookmark ofIdentity: self.localBookmark[@"_userId"]];
       [tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationLeft];
       [tableView reloadSectionIndexTitles];
       [tableView endUpdates];
@@ -420,7 +420,7 @@
     } else if (indexPath.section == 2) {
       
       [tableView beginUpdates];
-      self.localHistoryItems = [self.offlineDB deleteOffline: [DSWrapper arrayFromDict: self.localHistoryItems[@"_dicts"]][indexPath.row] type: RecordTypeHistory ofIdentity: self.localHistoryItems[@"_userId"]];
+      self.localHistoryItems = [_dsync deleteOffline: [DSWrapper arrayFromDict: self.localHistoryItems[@"_dicts"]][indexPath.row] type: RecordTypeHistory ofIdentity: self.localHistoryItems[@"_userId"]];
       [tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationLeft];
       [tableView reloadSectionIndexTitles];
       [tableView endUpdates];

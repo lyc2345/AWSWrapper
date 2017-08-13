@@ -121,19 +121,21 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 
 @implementation LoginManager (Offline)
 
--(void)loginOfflineWithUser:(NSString *)user password:(NSString *)password completion:(void(^)(NSError *error))completion {
+-(void)loginOfflineWithUsername:(NSString *)username
+                       password:(NSString *)password
+                     completion:(void(^)(NSError *error))completion {
 	
-  bool isQualified = [[OfflineCognito shared] verifyUsername: user password: password];
+  bool isQualified = [[OfflineCognito shared] verifyUsername: username password: password];
 	
 	NSError *error;
 	
 	if (isQualified) {
-    [[NSUserDefaults standardUserDefaults] setObject: user forKey: __CURRENT_USER];
+    [[NSUserDefaults standardUserDefaults] setObject: username forKey: __CURRENT_USER];
     DDTLog(@"offline login success with user: %@", [[NSUserDefaults standardUserDefaults] stringForKey: __CURRENT_USER]);
   } else {
     // To remind user there are not qualified for offline login (because they are not had been register AWS yet)
     [[NSUserDefaults standardUserDefaults] setObject: nil forKey: __CURRENT_USER];
-    DDTLog(@"offline login failure with user: %@", user);
+    DDTLog(@"offline login failure with user: %@", username);
     error = [NSError errorWithDomain: @"com.stan.loginmanager" code: 1 userInfo: @{@"description": @"offline login failure"}];
 		
 	}
@@ -178,7 +180,7 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
   if (_isAWSLogin && !self.isLogin && username && password) {
     
     __weak typeof(self) weakSelf = self;
-    [self loginOfflineWithUser: username password: password completion:^(NSError *error) {
+    [self loginOfflineWithUsername: username password: password completion:^(NSError *error) {
       if (weakSelf.AWSLoginStatusChangedHandler) {
         weakSelf.AWSLoginStatusChangedHandler();
       }
@@ -333,7 +335,7 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
       if (username && password) {
         
         [[OfflineCognito shared] modifyUsername: username password: password identityId: self.awsIdentityId];
-        [weakSelf loginOfflineWithUser: username password: password completion:^(NSError *error) {
+        [weakSelf loginOfflineWithUsername: username password: password completion:^(NSError *error) {
           if (!error) {
             weakSelf.AWSLoginStatusChangedHandler();
           }

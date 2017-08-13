@@ -36,7 +36,7 @@ describe(@"Tests5", ^{
     waitUntil(^(DoneCallback done) {
       
       // Device A, A1, R1
-      [dispatchQueue performGroupedDelay: 2 block:^{
+      [dispatchQueue performGroupedDelay: 0.3 block:^{
         [testcase initial: @{
                              @"A": @{@"author": @"A", @"url": @"A"},
                              @"B": @{@"author": @"B", @"url": @"B"}
@@ -55,7 +55,7 @@ describe(@"Tests5", ^{
       }];
       
       // Second to verify thie Initial Data compares with shadow.
-      [dispatchQueue performGroupedDelay: 2 block:^{
+      [dispatchQueue performGroupedDelay: 0.3 block:^{
         [testcase pullToCheck: dataInitialShadow
                    exeHandler:^(BOOL isSame) {
                      
@@ -69,7 +69,7 @@ describe(@"Tests5", ^{
       }];
       
       // Device A, A2, R2
-      [dispatchQueue performGroupedDelay: 2 block:^{
+      [dispatchQueue performGroupedDelay: 0.3 block:^{
         NSDictionary *expectShadow = @{
                                        @"A": @{@"author": @"A", @"url": @"A"},
                                        @"B": @{@"author": @"B", @"url": @"B"}
@@ -110,7 +110,7 @@ describe(@"Tests5", ^{
       }];
       
       // Device B, B1, R2
-      [dispatchQueue performGroupedDelay: 2 block:^{
+      [dispatchQueue performGroupedDelay: 0.3 block:^{
         NSDictionary *expectShadow = @{
                                        @"A": @{@"author": @"A", @"url": @"A"},
                                        @"C": @{@"author": @"C", @"url": @"C"}
@@ -151,7 +151,7 @@ describe(@"Tests5", ^{
       }];
       
       // Device B, B3, R3
-      [dispatchQueue performGroupedDelay: 2 block:^{
+      [dispatchQueue performGroupedDelay: 0.3 block:^{
         NSDictionary *expectShadow = @{
                                        @"A": @{@"author": @"A", @"url": @"A1"},
                                        @"B": @{@"author": @"B", @"url": @"B1"},
@@ -193,7 +193,7 @@ describe(@"Tests5", ^{
       }];
       
       // Device A, A3, R4
-      [dispatchQueue performGroupedDelay: 2 block:^{
+      [dispatchQueue performGroupedDelay: 0.3 block:^{
         NSDictionary *expectShadow = @{
                                        @"A": @{@"author": @"A", @"url": @"A1"},
                                        @"B": @{@"author": @"B", @"url": @"B1"},
@@ -251,7 +251,7 @@ describe(@"Tests5", ^{
       
       
       // Device C, B1, R5
-      [dispatchQueue performGroupedDelay: 2 block:^{
+      [dispatchQueue performGroupedDelay: 0.3 block:^{
         NSDictionary *expectShadow = @{
                                        @"A": @{@"author": @"A", @"url": @"A1"},
                                        @"B": @{@"author": @"B", @"url": @"B1"},
@@ -310,7 +310,7 @@ describe(@"Tests5", ^{
       }];
       
       // Final check if remote data is the same with expectData.
-      [dispatchQueue performGroupedDelay: 2 block:^{
+      [dispatchQueue performGroupedDelay: 0.3 block:^{
         [testcase pullToCheck: @{
                                  @"A": @{@"author": @"A", @"url": @"A2"},
                                  @"C": @{@"author": @"C", @"url": @"C1"},

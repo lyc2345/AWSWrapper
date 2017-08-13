@@ -32,10 +32,10 @@
   
   [NSThread sleepForTimeInterval: delay];
   dispatch_group_enter(self.dispatchGroup);
-  [self performBlock:^{
+  //[self performBlock:^{
     block();
     [NSThread sleepForTimeInterval: delay];
-  }];
+  //}];
 }
 
 - (void)waitForGroup {

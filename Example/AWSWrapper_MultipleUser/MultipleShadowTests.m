@@ -61,7 +61,7 @@ describe(@"test", ^{
     waitUntil(^(DoneCallback done) {
       
       // User 1 login
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         NSDictionary *toBeSaveShadow = @{
                                          @"A": @{@"author": @"A", @"url": @"A"},
@@ -82,9 +82,9 @@ describe(@"test", ^{
       }];
       
       // User 1 logout
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
-        [testcase logoutOfflineCompletion: ^{
+        [testcase logoutOfflineCompletion: ^(NSError *error) {
           
         }];
       }];
@@ -92,7 +92,7 @@ describe(@"test", ^{
       // *************************************************************************
       
       // User 2 login
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         NSDictionary *toBeSaveShadow = @{
                                          @"X": @{@"author": @"X", @"url": @"X"},
@@ -113,9 +113,9 @@ describe(@"test", ^{
       }];
       
       // User 2 logout
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
-        [testcase logoutOfflineCompletion: ^{
+        [testcase logoutOfflineCompletion: ^(NSError *error) {
           
         }];
       }];
@@ -123,7 +123,7 @@ describe(@"test", ^{
       // *************************************************************************
       
       // User 1 login
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         NSDictionary *toBeSaveShadow = @{
                                          @"A": @{@"author": @"A", @"url": @"A"},
@@ -146,9 +146,9 @@ describe(@"test", ^{
       }];
       
       // User 1 logout
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
-        [testcase logoutOfflineCompletion: ^{
+        [testcase logoutOfflineCompletion: ^(NSError *error) {
           
         }];
       }];
@@ -156,7 +156,7 @@ describe(@"test", ^{
       // *************************************************************************
       
       // User 2 login
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         NSDictionary *toBeSaveShadow = @{
                                          @"X": @{@"author": @"X", @"url": @"X"},
@@ -180,9 +180,9 @@ describe(@"test", ^{
       }];
       
       // User 2 logout
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
-        [testcase logoutOfflineCompletion: ^{
+        [testcase logoutOfflineCompletion: ^(NSError *error) {
           
         }];
       }];
@@ -190,7 +190,7 @@ describe(@"test", ^{
       // *************************************************************************
       
       // User 1 login
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         NSDictionary *toBeSaveShadow = @{
                                          @"A": @{@"author": @"A", @"url": @"A"},
@@ -213,9 +213,9 @@ describe(@"test", ^{
       }];
       
       // User 1 logout
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
-        [testcase logoutOfflineCompletion: ^{
+        [testcase logoutOfflineCompletion: ^(NSError *error) {
           
         }];
       }];
@@ -223,7 +223,7 @@ describe(@"test", ^{
       // *************************************************************************
       
       // User 2 login
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         NSDictionary *toBeSaveShadow = @{
                                          @"KKK": @{@"author": @"KKK", @"url": @"KKK"},
@@ -246,9 +246,9 @@ describe(@"test", ^{
       }];
       
       // User 2 logout
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
-        [testcase logoutOfflineCompletion: ^{
+        [testcase logoutOfflineCompletion: ^(NSError *error) {
           
         }];
       }];
@@ -259,7 +259,7 @@ describe(@"test", ^{
       // Exam result
       
       // User 2 login
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         [testcase loginOfflineWithUser: username2
                               password: password
@@ -281,9 +281,9 @@ describe(@"test", ^{
       }];
       
       // User 2 logout
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
-        [testcase logoutOfflineCompletion: ^{
+        [testcase logoutOfflineCompletion: ^(NSError *error) {
           
         }];
       }];
@@ -291,7 +291,7 @@ describe(@"test", ^{
       // *************************************************************************
       
       // User 1 login
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         [testcase loginOfflineWithUser: username1
                               password: password
@@ -313,9 +313,9 @@ describe(@"test", ^{
       }];
       
       // User 1 logout
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
-        [testcase logoutOfflineCompletion: ^{
+        [testcase logoutOfflineCompletion: ^(NSError *error) {
           
           done();
         }];

@@ -39,7 +39,7 @@
   __block NSDictionary *dataInitialShadow;
   
   // First Initial Remote data.
-  [_dispatchQueue performGroupedDelay: 2 block:^{
+  [_dispatchQueue performGroupedDelay: 0.3 block:^{
     [_testcase initial: @{
                           @"A": @{@"author": @"A", @"url": @"A"},
                           @"B": @{@"author": @"B", @"url": @"B"}
@@ -58,7 +58,7 @@
   }];
   
   // Second to verify thie Initial Data compares with shadow.
-  [_dispatchQueue performGroupedDelay: 2 block:^{
+  [_dispatchQueue performGroupedDelay: 0.3 block:^{
     [_testcase pullToCheck: dataInitialShadow
                 exeHandler:^(BOOL isSame) {
                   
@@ -71,7 +71,7 @@
   }];
   
   // Start Scenario 1, part 1.
-  [_dispatchQueue performGroupedDelay: 2 block:^{
+  [_dispatchQueue performGroupedDelay: 0.3 block:^{
     NSDictionary *expectShadow = @{
                                    @"A": @{@"author": @"A", @"url": @"A"},
                                    @"B": @{@"author": @"B", @"url": @"B"}
@@ -116,7 +116,7 @@
   }];
   
   // Start Scenario 1, part 2.
-  [_dispatchQueue performGroupedDelay: 2 block:^{
+  [_dispatchQueue performGroupedDelay: 0.3 block:^{
     NSDictionary *expectShadow = @{
                                    @"A": @{@"author": @"A", @"url": @"A"},
                                    @"B": @{@"author": @"B", @"url": @"B"},
@@ -162,7 +162,7 @@
   }];
   
   // Start Scenario 2, part 1.
-  [_dispatchQueue performGroupedDelay: 2 block:^{
+  [_dispatchQueue performGroupedDelay: 0.3 block:^{
     NSDictionary *expectShadow = @{
                                    @"A": @{@"author": @"A", @"url": @"A"},
                                    @"B": @{@"author": @"B", @"url": @"B"},
@@ -228,7 +228,7 @@
   }];
   
   // Start Scenario 1, part 3.
-  [_dispatchQueue performGroupedDelay: 2 block:^{
+  [_dispatchQueue performGroupedDelay: 0.3 block:^{
     NSDictionary *expectShadow = @{
                                    @"B": @{@"author": @"B", @"url": @"B"},
                                    @"C": @{@"author": @"C", @"url": @"C"},
@@ -293,7 +293,7 @@
   }];
   
   // Final check if remote data is the same with expectData.
-  [_dispatchQueue performGroupedDelay: 2 block:^{
+  [_dispatchQueue performGroupedDelay: 0.3 block:^{
     [_testcase pullToCheck: @{
                               @"A": @{@"author": @"A", @"url": @"A"},
                               @"B": @{@"author": @"B", @"url": @"B1"},

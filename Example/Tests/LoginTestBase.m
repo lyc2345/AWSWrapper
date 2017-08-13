@@ -1,4 +1,4 @@
-//
+
 //  LoginTestBase.m
 //  AWSWrapper
 //
@@ -111,12 +111,40 @@
 
 -(void)loginOfflineWithUser:(NSString *)user password:(NSString *)password completion:(void(^)(NSError *error))completion {
   
-  [self.loginManager loginOfflineWithUser: user password: password completion: completion];
+  self.expection = [self expectationWithDescription: @"_login_offline"];
+  
+  [self.loginManager loginOfflineWithUser: user password: password completion: ^(NSError *error) {
+    
+    [self.expection fulfill];
+  }];
+  
+  [self waitForExpectationsWithTimeout: 5.0 handler:^(NSError * _Nullable error) {
+    
+    if (error) {
+      
+    }
+    completion(error);
+  }];
 }
 
--(void)logoutOfflineCompletion:(void(^)(void))completion {
+-(void)logoutOfflineCompletion:(void(^)(NSError *error))completion {
   
-  [self.loginManager logoutOfflineCompletion: completion];
+  self.expection = [self expectationWithDescription: @"_logout_offline"];
+  
+  __block NSError *_error;
+  [self.loginManager logoutOfflineCompletion: ^(NSError *error) {
+    
+    _error = error;
+    [self.expection fulfill];
+  }];
+  
+  [self waitForExpectationsWithTimeout: 5.0 handler:^(NSError * _Nullable error) {
+    
+    if (error) {
+      
+    }
+    completion(_error);
+  }];
 }
 
 // MARK: AWS
@@ -196,17 +224,65 @@
 -(void)forgotPasswordOfUser:(NSString *)username
                  completion:(void(^)(NSError *error))completion {
   
-  [self.loginManager forgotPasswordOfUser: username completion: completion];
+  self.expection = [self expectationWithDescription: @"_forgot_password"];
+  __block NSError *_error;
+  [self.loginManager forgotPasswordOfUser: username completion: ^(NSError *error) {
+    _error = error;
+    [self.expection fulfill];
+  }];
+  
+  [self waitForExpectationsWithTimeout: 5.0 handler:^(NSError * _Nullable error) {
+    
+    if (error) {
+      
+    }
+    completion(_error);
+  }];
 }
 
 -(void)login:(void(^)(id result, NSError * error))completion {
-
-  [self.loginManager login: completion];
+  
+  XCTestExpectation *expection = [self expectationWithDescription: @"_remote_login"];
+  __block id _result;
+  __block NSError *_error;
+  [self.loginManager login: ^(id result, NSError *error) {
+    
+    XCTAssertNotNil(result);
+    XCTAssertNil(error);
+    _result = result;
+    _error = error;
+    [expection fulfill];
+  }];
+  
+  [self waitForExpectationsWithTimeout: 5.0 handler:^(NSError * _Nullable error) {
+    
+    if (error) {
+      
+    }
+    completion(_result, _error);
+  }];
 }
 
 -(void)logout:(void(^)(id result, NSError *error))completion {
   
-  [self.loginManager logout: completion];
+  self.expection = [self expectationWithDescription: @"_remote_logout"];
+  __block id _result;
+  __block NSError *_error;
+  
+  [self.loginManager logout: ^(id result, NSError *error) {
+    
+    _result = result;
+    _error = error;
+    [self.expection fulfill];
+  }];
+  
+  [self waitForExpectationsWithTimeout: 5.0 handler:^(NSError * _Nullable error) {
+    
+    if (error) {
+      
+    }
+    completion(_result, _error);
+  }];
 }
 
 

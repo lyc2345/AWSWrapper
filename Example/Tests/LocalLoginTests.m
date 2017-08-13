@@ -63,7 +63,7 @@ describe(@"Tests1", ^{
     
     waitUntil(^(DoneCallback done) {
       
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         [testcase loginOfflineWithUser: sampleUsername
                               password: samplePassword
@@ -74,14 +74,14 @@ describe(@"Tests1", ^{
                             }];
       }];
       
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
-        [testcase logoutOfflineCompletion: ^{
-          
+        [testcase logoutOfflineCompletion: ^(NSError *error) {
+          XCTAssertNil(error);
         }];
       }];
       
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         BOOL isQualified = [cognito verifyUsername: sampleUsername
                                           password: samplePassword];
@@ -91,7 +91,7 @@ describe(@"Tests1", ^{
       }];
       
       
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         [testcase loginOfflineWithUser: @"jonsnow"
                               password: @"kingofgameofthrone"
@@ -102,14 +102,14 @@ describe(@"Tests1", ^{
                             }];
       }];
       
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
-        [testcase logoutOfflineCompletion: ^{
-          
+        [testcase logoutOfflineCompletion: ^(NSError *error) {
+          XCTAssertNil(error);
         }];
       }];
       
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         [cognito modifyUsername: @"jonsnow"
                        password: @"iamjonsnow"
@@ -117,7 +117,7 @@ describe(@"Tests1", ^{
       }];
       
       
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         [testcase loginOfflineWithUser: @"jonsnow"
                               password: @"iamjonsnow"
@@ -128,7 +128,7 @@ describe(@"Tests1", ^{
                             }];
       }];
       
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         BOOL isQualified = [cognito verifyUsername: @"jonsnow"
                                           password: @"iamjonsnow"];
@@ -137,7 +137,7 @@ describe(@"Tests1", ^{
       }];
       
       
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         [testcase loginOfflineWithUser: @"hannibal"
                               password: @"hannibalthecannibal"
@@ -148,14 +148,14 @@ describe(@"Tests1", ^{
                             }];
       }];
       
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
-        [testcase logoutOfflineCompletion: ^{
-          
+        [testcase logoutOfflineCompletion: ^(NSError *error) {
+          XCTAssertNil(error);
         }];
       }];
       
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         [cognito modifyUsername: @"hannibal"
                        password: @"hannibaliscannibal"
@@ -163,7 +163,7 @@ describe(@"Tests1", ^{
       }];
       
       
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         [testcase loginOfflineWithUser: @"hannibal"
                               password: @"hannibaliscannibal"
@@ -174,7 +174,7 @@ describe(@"Tests1", ^{
                             }];
       }];
       
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         BOOL isQualified = [cognito verifyUsername: @"hannibal"
                                           password: @"hannibaliscannibal"];
@@ -182,7 +182,7 @@ describe(@"Tests1", ^{
         XCTAssertTrue(isQualified);
       }];
       
-      [dispatchQueue performGroupedDelay: 1 block: ^{
+      [dispatchQueue performGroupedDelay: 0.5 block: ^{
         
         NSError *error = nil;
         NSArray *accounts = [cognito allAccount: &error];
@@ -214,8 +214,8 @@ describe(@"Tests1", ^{
         
         [dispatchQueue performGroupedDelay: 0.2 block: ^{
           
-          [testcase logoutOfflineCompletion: ^{
-            
+          [testcase logoutOfflineCompletion: ^(NSError *error) {
+            XCTAssertNil(error);
           }];
         }];
         

@@ -146,13 +146,21 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 	completion(error);
 }
 
--(void)logoutOfflineCompletion:(void(^)(void))completion {
+-(void)logoutOfflineCompletion:(void(^)(NSError *error))completion {
 	
 	[[NSUserDefaults standardUserDefaults] setObject: nil forKey: __CURRENT_USER];
+  BOOL success = [[NSUserDefaults standardUserDefaults] synchronize];
 #ifdef debugMode
 	NSLog(@"offline logout successfully");
 #endif
-  if (completion) { completion(); }
+  NSError *error;
+  if (completion) {
+    
+    if (!success) {
+       error = [NSError errorWithDomain: @"_offline_domain_logout" code: 1 userInfo: nil];
+    }
+    completion(error);
+  }
 }
 
 @end
@@ -326,14 +334,16 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
   signInProvider.userName = self.userPoolSignInFlowStartUserName();
   [[AWSIdentityManager defaultIdentityManager] loginWithSignInProvider: signInProvider completionHandler:^(id  _Nullable result, NSError * _Nullable error) {
     
+    if (error) {
+      completion(result, error);
+      return;
+    }
     if (!error) {
 #ifdef debugMode
       NSLog(@"user login successfully with result: %@", result);
 #endif
-			
 			NSString *username = weakSelf.userPoolSignInFlowStartUserName();
 			NSString *password = weakSelf.userPoolSignInFlowStartPassword();
-      
       if (username && password) {
         
         [[OfflineCognito shared] modifyUsername: username password: password identityId: self.awsIdentityId];
@@ -343,8 +353,9 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
           }
         }];
       }
+      completion(result, error);
+      return;
 		}
-		completion(result, error);
 	}];
 }
 
@@ -359,7 +370,7 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
       if (!error) {
         [[AWSIdentityManager defaultIdentityManager].credentialsProvider clearKeychain];
         [[AWSIdentityManager defaultIdentityManager].credentialsProvider clearCredentials];
-        [weakSelf logoutOfflineCompletion: ^{
+        [weakSelf logoutOfflineCompletion: ^(NSError *error) {
           weakSelf.AWSLoginStatusChangedHandler();
         }];
       }
@@ -368,8 +379,9 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
     }];
   } else if (self.isLogin == YES) {
     
-    [weakSelf logoutOfflineCompletion: ^{
+    [weakSelf logoutOfflineCompletion: ^(NSError *error) {
       weakSelf.AWSLoginStatusChangedHandler();
+      completion(nil, error);
     }];
   }
 }

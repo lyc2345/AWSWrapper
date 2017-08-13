@@ -164,7 +164,7 @@ static RecordType recordType = RecordTypeBookmark;
   
   self.expection = [self expectationWithDescription: @"finalLoadCheck"];
   
-  [_dynamoService pullType: RecordTypeBookmark user: _userId completion: ^(NSDictionary *item, NSError *error) {
+  [_dsync pullType: RecordTypeBookmark user: _userId completion: ^(NSDictionary *item, NSError *error) {
     
     exeHandler([item[@"_dicts"] isEqualToDictionary: expectRemote]);
     

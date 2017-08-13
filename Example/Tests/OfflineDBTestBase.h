@@ -15,10 +15,12 @@
 
 +(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark ofIdentity:(NSString *)identity;
 
--(void)addOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity;
+
+
+-(NSDictionary *)addOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity;
 
 -(NSDictionary *)deleteOffline:(NSDictionary *)r type:(RecordType)type ofIdentity:(NSString *)identity;
 
--(NSDictionary *)getOfflineRecordOfIdentity:(NSString *)identity type:(RecordType)type;
+-(NSDictionary *)loadOfflineRecordType:(RecordType)type ofIdentity:(NSString *)identity;
 
 @end

@@ -113,7 +113,7 @@
   
   self.expection = [self expectationWithDescription: @"_login_offline"];
   
-  [self.loginManager loginOfflineWithUser: user password: password completion: ^(NSError *error) {
+  [self.loginManager loginOfflineWithUsername: user password: password completion: ^(NSError *error) {
     
     [self.expection fulfill];
   }];

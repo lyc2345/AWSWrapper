@@ -49,13 +49,13 @@ mobileClient.CognitoPoolID = @"";
 
 ```
 
-### Turn on Debug Mode
+## Turn on Debug Mode
 1. Choose pod project in your workspace
 2. Choose AWSWrapper in pod project
 3. Select `build settings` -> find `Preprocessor Macros` -> add `debugMode=1` in DEBUG shows below
 ![DebugMode](https://github.com/lyc2345/AWSWrapper/blob/master/screenshot/Screen%20Shot%202017-08-13%20at%2015.54.51.png)
 
-### Documentation
+## Documentation
 [Documentation](https://github.com/lyc2345/AWSWrapper/wiki/Documentation)
 
 

@@ -157,7 +157,7 @@ static NSString *LOG_TAG;
 		
 		if (![LoginManager shared].isLogin) {
 			
-			[[LoginManager shared] loginOfflineWithUser: self.customUserIdField.text password: self.customPasswordField.text completion:^(NSError *error) {
+			[[LoginManager shared] loginOfflineWithUsername: self.customUserIdField.text password: self.customPasswordField.text completion:^(NSError *error) {
 				
 				if (!error) {
 					[weakSelf.navigationController popViewControllerAnimated: YES];

@@ -40,11 +40,17 @@ typedef NS_ENUM(NSInteger, RecordType) {
 +(BOOL)setShadow:(NSDictionary *)dict isBookmark:(BOOL)isBookmark ofIdentity:(NSString *)identity;
 
 //MARK: Bookmark
--(void)addOffline:(NSDictionary *)dict type:(RecordType)type ofIdentity:(NSString *)identity;
 
--(NSDictionary *)deleteOffline:(NSDictionary *)dict type:(RecordType)type ofIdentity:(NSString *)identity;
+-(NSDictionary *)addOffline:(NSDictionary *)dict
+                       type:(RecordType)type
+                 ofIdentity:(NSString *)identity;
 
--(NSDictionary *)getOfflineRecordOfIdentity:(NSString *)identity type:(RecordType)type;
+-(NSDictionary *)deleteOffline:(NSDictionary *)dict
+                          type:(RecordType)type
+                    ofIdentity:(NSString *)identity;
+
+-(NSDictionary *)getOfflineRecordOfIdentity:(NSString *)identity
+                                       type:(RecordType)type;
 
 @end
 

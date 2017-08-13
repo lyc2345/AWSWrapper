@@ -11,7 +11,7 @@ NSString * const __OFFLINE_USER_LIST    = @"__OFFLINE_USER_LIST";
 
 #import "OfflineCognito.h"
 #import "Encrypt.h"
-#import "DLog.h"
+#import "DDTLog.h"
 @import SAMKeychain;
 
 @implementation OfflineCognito
@@ -65,7 +65,7 @@ NSString * const __OFFLINE_USER_LIST    = @"__OFFLINE_USER_LIST";
           identityId:(NSString *)identityId {
   
   if (!username || !identityId || !password) {
-    DLOG(@"save username or identityId or password is nil");
+    DDTLog(@"save username or identityId or password is nil");
     return;
   }
   
@@ -77,7 +77,7 @@ NSString * const __OFFLINE_USER_LIST    = @"__OFFLINE_USER_LIST";
   [query save: &error];
   
   if (error) {
-    DLOG(@"lock store user info error: %@", error.localizedDescription);
+    DDTLog(@"lock store user info error: %@", error.localizedDescription);
   }
   [self saveProfileFromUsername: username identityId: identityId];
 }
@@ -86,7 +86,7 @@ NSString * const __OFFLINE_USER_LIST    = @"__OFFLINE_USER_LIST";
              password:(NSString *)password {
   
   if (!username || !password) {
-    DLOG(@"varify username or password is nil");
+    DDTLog(@"varify username or password is nil");
     return NO;
   }
   
@@ -95,7 +95,7 @@ NSString * const __OFFLINE_USER_LIST    = @"__OFFLINE_USER_LIST";
   if (!error) {
     return [pw isEqualToString: password] ? YES : NO;
   }
-  DLOG(@"verify error: %@", error.localizedDescription);
+  DDTLog(@"verify error: %@", error.localizedDescription);
   return NO;
 }
 
@@ -112,7 +112,7 @@ NSString * const __OFFLINE_USER_LIST    = @"__OFFLINE_USER_LIST";
 -(void)saveProfileFromUsername:(NSString *)username identityId:(NSString *)identityId {
   
   if (!username || !identityId) {
-    DLOG(@"save username or identityId is nil");
+    DDTLog(@"save username or identityId is nil");
     return;
   }
   
@@ -146,7 +146,7 @@ NSString * const __OFFLINE_USER_LIST    = @"__OFFLINE_USER_LIST";
 -(NSString *)offlineLoadIdentityIdFromUsername:(NSString *)username {
   
   if (!username) {
-    DLOG(@"username is nil");
+    DDTLog(@"username is nil");
   }
   
   NSArray *userList = [[NSUserDefaults standardUserDefaults] arrayForKey: self.OFFLINE_USER_LIST];

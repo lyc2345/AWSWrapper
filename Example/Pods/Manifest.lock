@@ -23,7 +23,7 @@ PODS:
     - AWSCore (= 2.5.9)
   - AWSS3 (2.5.9):
     - AWSCore (= 2.5.9)
-  - AWSWrapper (0.1.5):
+  - AWSWrapper (0.1.6):
     - AFNetworking (~> 3.0)
     - AWSCognito (~> 2.5.2)
     - AWSCognitoIdentityProvider (~> 2.5.2)
@@ -53,7 +53,7 @@ SPEC CHECKSUMS:
   AWSCore: c71840dd51f271dc0af8de8fd6f352767ebde8b4
   AWSDynamoDB: 5817c47852d1548645d9eb23f809d57d763975f9
   AWSS3: c36b91edb50ccd676be4a92836bb72f0c2ac312b
-  AWSWrapper: 7cf0aa63f6130efa66fad197ccd2d8e063a95045
+  AWSWrapper: a3d1d9d7b5dece3002502e2ea31a256ca8c1c7ee
   DS: 56af039c6a2afe1fece006c1d34a8106ea9e5d91
   Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
   SAMKeychain: 1865333198217411f35327e8da61b43de79b635b

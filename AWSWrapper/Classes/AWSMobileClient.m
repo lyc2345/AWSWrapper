@@ -11,7 +11,8 @@
 //
 //
 #import "AWSMobileClient.h"
-#import "DLog.h"
+
+
 @import AWSMobileHubHelper;
 
 @interface AWSMobileClient ()
@@ -64,9 +65,7 @@
 
     if (!_initialized) {
         [[AWSIdentityManager defaultIdentityManager] resumeSessionWithCompletionHandler:^(id result, NSError *error) {
-#ifdef debugMode
-            NSLog(@"result = %@, error = %@", result, error);
-#endif
+          AWSLogDebug(@"result = %@, error = %@", result, error);
         }];
         _initialized = YES;
     }

@@ -7,7 +7,7 @@
 //
 
 #import "Encrypt.h"
-#import "DLog.h"
+#import "DDTLog.h"
 
 #include <CommonCrypto/CommonDigest.h>
 

@@ -234,7 +234,7 @@
   [self waitForExpectationsWithTimeout: 5.0 handler:^(NSError * _Nullable error) {
     
     if (error) {
-      
+      XCTAssertNil(error);
     }
     completion(_error);
   }];
@@ -242,7 +242,7 @@
 
 -(void)login:(void(^)(id result, NSError * error))completion {
   
-  XCTestExpectation *expection = [self expectationWithDescription: @"_remote_login"];
+  self.expection = [self expectationWithDescription: @"_remote_login"];
   __block id _result;
   __block NSError *_error;
   [self.loginManager login: ^(id result, NSError *error) {
@@ -251,13 +251,13 @@
     XCTAssertNil(error);
     _result = result;
     _error = error;
-    [expection fulfill];
+    [self.expection fulfill];
   }];
   
   [self waitForExpectationsWithTimeout: 5.0 handler:^(NSError * _Nullable error) {
     
     if (error) {
-      
+      XCTAssertNil(error);
     }
     completion(_result, _error);
   }];
@@ -279,7 +279,7 @@
   [self waitForExpectationsWithTimeout: 5.0 handler:^(NSError * _Nullable error) {
     
     if (error) {
-      
+      XCTAssertNil(error);
     }
     completion(_result, _error);
   }];

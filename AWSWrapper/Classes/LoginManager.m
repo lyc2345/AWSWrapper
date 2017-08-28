@@ -66,7 +66,6 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
 -(BOOL)isLogin {
 	
 	NSString *u = [[NSUserDefaults standardUserDefaults] stringForKey: __CURRENT_USER];
-	
 	if (!u) {
 		return NO;
 	}
@@ -326,11 +325,9 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
     
     if (error) {
       completion(result, error);
-      return;
-    }
-    if (!error) {
+    } else {
       DDTLog(@"user login successfully with result: %@", result);
-			NSString *username = weakSelf.userPoolSignInFlowStartUserName();
+      NSString *username = weakSelf.userPoolSignInFlowStartUserName() != nil ? weakSelf.userPoolSignInFlowStartUserName() : signInProvider.userName;
 			NSString *password = weakSelf.userPoolSignInFlowStartPassword();
       if (username && password) {
         
@@ -340,9 +337,10 @@ NSString * const __CURRENT_USER = @"__CURRENT_USER";
             weakSelf.AWSLoginStatusChangedHandler();
           }
         }];
+        completion(result, error);
+      } else {
+        completion(result, [NSError errorWithDomain: @"com.error.username_password_empty" code: 1 userInfo: nil]);
       }
-      completion(result, error);
-      return;
 		}
 	}];
 }
